@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Welcome from '@/components/Welcome'
 import Signin from '@/components/Signin'
 import Signup from '@/components/Signup'
+import Office from  '@/components/Office'
 
 Vue.use(Router)
 
@@ -26,6 +27,12 @@ export default new Router({
       path: '/signup',
       name: 'Signup',
       component: Signup
+    },
+
+    {
+      path: '/office/create',
+      name: 'Office',
+      component: Office
     }
   ]
 })

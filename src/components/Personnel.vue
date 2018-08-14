@@ -8,15 +8,15 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <v-text-field prepend-icon="person" name="office_name" label="Office Name" type="text" v-model="office_name"></v-text-field>
-              <v-text-field prepend-icon="email" name="identification_code" label="Identification Code eg. DDO Code/IFSC/DISE Code alike" type="text" v-model="identification_code"></v-text-field>
-              <v-select :items="subdivisions" item-text= "name" item-value= "id" prepend-icon="list" label="Subdivision" v-model="subdivision_id"></v-select>
+              <v-text-field prepend-icon="person" name="personnel_name" label="Office Name" type="text" v-model="office_name"></v-text-field>
+              <v-text-field prepend-icon="email" name="designation" label="Official Designation" type="text" v-model="designation"></v-text-field>
+              <v-select :items="offices" item-text= "name" item-value= "id" prepend-icon="list" label="Office" v-model="office_id"></v-select>
 
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="saveOffice">Save</v-btn>
+            <v-btn color="primary" @click="savePersonnel">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -28,17 +28,17 @@
     name: 'Office',
     data (){
       return {
-        subdivisions: [],
-        office_name: '',
-        identification_code: '',
-        subdivision_id: '',
+        offices: [],
+        personnel_name: '',
+        designation: '',
+        office_id: '',
       }
     },
     created() {
-      axios.get('/subdivisions')
+      axios.get('/offices')
       .then((response, data) => {
        response.data.forEach(item => {
-          this.subdivisions.push(item)
+          this.offices.push(item)
         });
       })
       .catch(error => {
@@ -46,11 +46,11 @@
       })
     },
     methods: {
-      saveOffice(){
-        axios.post('/office',{
-          office_name: this.office_name,
-          identification_code: this.identification_code,
-          subdivision_id: this.subdivision_id
+      savePersonnel(){
+        axios.post('/personnel',{
+          personnel_name: this.personnel_name,
+          designation: this.designation,
+          office_id: this.office_id
         })
         .then(response => {
           console.log(response)
