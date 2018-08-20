@@ -1,10 +1,10 @@
 <template>
     <v-select
-      :items="subdivisions"
+      :items="block_munis"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Subdivision"
+      label="Block or Municipality"
       :error-messages="error"
       @input="$emit('input',$event)"
     >
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'SubdivisionList',
+  name: 'BlockMuniList',
   props: {
     error: {
       type: Array,
@@ -22,7 +22,7 @@ export default {
   },
   data(){
     return {
-      subdivisions: [],
+      block_munis: [],
     }
   },
 
@@ -31,10 +31,10 @@ export default {
   },
 
   created(){
-    axios.get('/subdivisions')
+    axios.get('/blockmunis')
       .then((response, data) => {
        response.data.forEach(item => {
-          this.subdivisions.push(item)
+          this.block_munis.push(item)
         });
       })
       .catch(error => {

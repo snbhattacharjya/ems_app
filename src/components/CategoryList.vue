@@ -1,10 +1,10 @@
 <template>
     <v-select
-      :items="subdivisions"
+      :items="categories"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Subdivision"
+      label="Office Category"
       :error-messages="error"
       @input="$emit('input',$event)"
     >
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'SubdivisionList',
+  name: 'CategoryList',
   props: {
     error: {
       type: Array,
@@ -22,7 +22,7 @@ export default {
   },
   data(){
     return {
-      subdivisions: [],
+      categories: [],
     }
   },
 
@@ -31,10 +31,10 @@ export default {
   },
 
   created(){
-    axios.get('/subdivisions')
+    axios.get('/categories')
       .then((response, data) => {
        response.data.forEach(item => {
-          this.subdivisions.push(item)
+          this.categories.push(item)
         });
       })
       .catch(error => {
