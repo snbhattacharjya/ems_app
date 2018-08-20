@@ -6,8 +6,10 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
+import VeeValidate from 'vee-validate'
 
 Vue.use(Vuetify)
+Vue.use(VeeValidate)
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://service.ems.test/api'
