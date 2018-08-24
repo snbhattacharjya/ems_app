@@ -4,7 +4,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Block or Municipality"
+      :label="label ? label : 'Block or Municipality'"
       :error-messages="error"
       @input="$emit('input',$event)"
     >
@@ -15,6 +15,10 @@
 export default {
   name: 'BlockMuniList',
   props: {
+    label: {
+      type: String,
+      required: false
+    },
     error: {
       type: Array,
       required: false

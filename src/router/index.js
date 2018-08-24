@@ -5,6 +5,7 @@ import Welcome from '@/components/Welcome'
 import Signin from '@/components/Signin'
 import Signup from '@/components/Signup'
 import Office from  '@/components/Office'
+import Personnel from  '@/components/Personnel'
 
 Vue.use(Router)
 
@@ -33,6 +34,12 @@ export default new Router({
       path: '/office/create',
       name: 'Office',
       component: Office
+    },
+
+    {
+      path: '/personnel/create',
+      name: 'Personnel',
+      component: Personnel
     }
   ]
 })

@@ -1,10 +1,10 @@
 <template>
     <v-select
-      :items="assemblies"
+      :items="offices"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      :label="label ? label : 'Assembly Constituency'"
+      label="Select Office"
       :error-messages="error"
       @input="$emit('input',$event)"
     >
@@ -13,12 +13,8 @@
 
 <script>
 export default {
-  name: 'AssemblyList',
+  name: 'OfficeList',
   props: {
-    label: {
-      type: String,
-      required: false
-    },
     error: {
       type: Array,
       required: false
@@ -26,7 +22,7 @@ export default {
   },
   data(){
     return {
-      assemblies: [],
+      offices: [],
     }
   },
 
@@ -35,10 +31,10 @@ export default {
   },
 
   created(){
-    axios.get('/assemblies')
+    axios.get('/offices')
       .then((response, data) => {
        response.data.forEach(item => {
-          this.assemblies.push(item)
+          this.offices.push(item)
         });
       })
       .catch(error => {
