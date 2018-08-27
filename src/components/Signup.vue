@@ -36,7 +36,7 @@
         designation: '',
         mobile: '',
         aadhaar: '',
-
+        level: '',
         levels: [
           'State',
           'District'
@@ -61,8 +61,8 @@
           aadhaar: this.aadhaar,
           level: this.level
         })
-        .then(reponse => {
-
+        .then(response => {
+          console.log(response)
         })
         .catch(error => {
           console.log(error)

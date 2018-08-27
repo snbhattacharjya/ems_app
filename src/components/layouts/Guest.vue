@@ -1,6 +1,5 @@
 <template>
   <v-toolbar>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title> <router-link to="/" tag="span" style="cursor: pointer">EMS</router-link></v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">

@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <layout></layout>
+    <guest v-if="!loggedIn"></guest>
+    <user v-else></user>
     <v-content>
       <router-view/>
     </v-content>
@@ -8,16 +9,23 @@
 </template>
 
 <script>
-import layout from './components/layouts/Guest'
+import guest from './components/layouts/Guest'
+import user from './components/layouts/User'
 export default {
   data () {
     return {
-
+      loggedIn: false
     }
   },
   name: 'App',
   components: {
-    layout
+    guest,
+    user
+  },
+  computed: {
+    loggedIn(){
+      this.loggedIn = true
+    }
   }
 }
 </script>

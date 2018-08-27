@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
 import VeeValidate from 'vee-validate'
+import store from './store'
 
 Vue.use(Vuetify)
 Vue.use(VeeValidate)
@@ -18,6 +19,7 @@ window.axios = axios
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
