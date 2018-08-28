@@ -1,15 +1,8 @@
 <template>
 <v-container fluid>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md8>
-        <v-alert
-          :value=show_message
-          :color=message_type
-          :icon=message_icon
-          outline
-        >
-          {{message_text}}
-        </v-alert>
+      <v-flex xs12>
+
         <v-card class="elevation-6">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Create New Office</v-toolbar-title>
@@ -55,7 +48,7 @@
                 label="Office Address"
                 type="text"
                 v-model="office_address"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('office_address')"
                 data-vv-name="office_address"
               ></v-text-field>
@@ -212,6 +205,9 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
+            <v-alert :value=show_message :color=message_type :icon=message_icon outline>
+             {{message_text}}
+            </v-alert>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
@@ -338,17 +334,17 @@
           female_staff: this.female_staff,
         })
         .then(response => {
+          //this.$refs.form.reset()
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
-          this.message_text = 'Office Added Successfully'
+          this.message_text = 'Office Added Successfully with Office code - '+response.data
         })
         .catch(error => {
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
-          this.message_text = 'Error Occurred!!!'
-          console.log(error.statusText)
+          this.message_text = 'Error Occurred!!! '+error
         })
       }
     },

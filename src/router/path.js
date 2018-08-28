@@ -126,4 +126,13 @@ export default [
         '@/components/Office'
       )
     },
+    {
+      path: '/personnel/create',
+      meta: {title:'Create new office | Welcome to EMS'},
+      name: 'CreateOffice',
+      component: () => import(
+
+        '@/components/personnel'
+      )
+    },
   ];
