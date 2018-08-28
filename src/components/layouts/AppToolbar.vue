@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar :clipped-left="true" app color="primary">
+  <v-toolbar :clipped-left="true" app color="warning">
     <v-toolbar-side-icon ></v-toolbar-side-icon>
     <v-toolbar-title> <v-avatar  :tile="true" color="grey lighten-4">
           <img src="/static/Election_Commission_of_India_Logo.png" alt="avatar">
