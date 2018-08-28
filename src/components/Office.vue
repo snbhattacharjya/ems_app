@@ -180,10 +180,11 @@
                 name="male_staff"
                 label="Male Staff (in count)"
                 type="text"
-                v-model="male_staff"
+                v-model.number="male_staff"
                 v-validate="'required|numeric'"
                 :error-messages="errors.collect('male_staff')"
                 data-vv-name="male_staff"
+                @input="calculateTotalStaff"
               ></v-text-field>
 
               <v-text-field
@@ -191,10 +192,11 @@
                 name="female_staff"
                 label="Female Staff (in count)"
                 type="text"
-                v-model="female_staff"
+                v-model.number="female_staff"
                 v-validate="'required|numeric'"
                 :error-messages="errors.collect('female_staff')"
                 data-vv-name="female_staff"
+                @input="calculateTotalStaff"
               ></v-text-field>
 
               <v-text-field
@@ -202,7 +204,7 @@
                 name="total_staff"
                 label="Total Staff"
                 type="text"
-                v-model="total_staff"
+                v-model.number="total_staff"
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
@@ -293,14 +295,6 @@
 
       }
     },
-    watch:{
-      male_staff: (value) => {
-        this.total_staff = value + this.female_staff
-      },
-      female_staff: (value) => {
-        this.total_staff = this.male_staff + value
-      }
-    },
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
@@ -359,7 +353,9 @@
       }
     },
     computed: {
-
+      calculateTotalStaff(){
+        this.total_staff = this.male_staff + this.female_staff
+      }
     }
 
   }
