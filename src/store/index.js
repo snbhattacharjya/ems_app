@@ -8,7 +8,10 @@ export default new Vuex.Store({
 
   },
   state: {
-    token: ''
+    token: '',
+    username: '',
+    level: '',
+    area: ''
   },
   getters: {
     getAccessToken(state){

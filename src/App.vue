@@ -1,31 +1,58 @@
 <template>
-  <v-app>
-    <guest v-if="!loggedIn"></guest>
-    <user v-else></user>
-    <v-content>
-      <router-view/>
-    </v-content>
-  </v-app>
+  <div id="appRoot">
+    <template v-if="!$route.meta.public">
+      <v-app>
+        <app-drawer></app-drawer>
+        <app-toolbar></app-toolbar>
+        <v-content>
+          <v-container fluid>
+            <v-slide-y-transition mode="out-in">
+              <router-view></router-view>
+            </v-slide-y-transition>
+          </v-container>
+          <!-- App Footer -->
+          <v-footer height="auto" class="white pa-3 app--footer" absolute color="primary lighten-1">
+            <span class="caption">Designed & Developped by NIC </span>
+            <v-spacer></v-spacer>
+            <span class="caption mr-1"> National Informatics Center All Rights Reserved &copy; {{ new Date().getFullYear() }} </span>
+          </v-footer>
+        </v-content>
+      </v-app>
+    </template>
+    <template v-else>
+      <v-app>
+      <Toolbar></Toolbar>
+        <transition>
+            <router-view></router-view>
+        </transition>
+        <!-- Public App Footer -->
+          <v-footer height="auto" class="white pa-3 app--footer" absolute color="primary lighten-1">
+            <span class="caption">Designed & Developped by NIC </span>
+            <v-spacer></v-spacer>
+            <span class="caption mr-1"> National Informatics Center All Rights Reserved &copy; {{ new Date().getFullYear() }} </span>
+          </v-footer>
+      </v-app>
+    </template>
+
+  </div>
 </template>
 
 <script>
-import guest from './components/layouts/Guest'
-import user from './components/layouts/User'
+import Toolbar from './components/layouts/Toolbar.vue' //Public menu
+import AppDrawer from '@/components/layouts/AppDrawer' //Dashboard left menu
+import AppToolbar from '@/components/layouts/AppToolbar' //Dashboard top menu
+
 export default {
   data () {
     return {
-      loggedIn: false
+
     }
   },
   name: 'App',
   components: {
-    guest,
-    user
+    Toolbar,
+    AppDrawer,
+    AppToolbar
   },
-  computed: {
-    loggedIn(){
-      this.loggedIn = true
-    }
-  }
 }
 </script>

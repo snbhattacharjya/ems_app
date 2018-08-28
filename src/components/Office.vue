@@ -203,9 +203,8 @@
                 label="Total Staff"
                 type="text"
                 v-model="total_staff"
-                v-validate="'required|digits:4'"
-                :error-messages="errors.collect('total_staff')"
                 data-vv-name="total_staff"
+                readonly
               ></v-text-field>
 
             </v-form>
@@ -265,9 +264,9 @@
         phone: '',
         mobile: '',
         fax: '',
-        total_staff: 0,
         male_staff: 0,
         female_staff: 0,
+        total_staff: 0,
         show_message: false,
         message_type: "",
         message_icon: "",
@@ -292,6 +291,14 @@
           }
         }
 
+      }
+    },
+    watch:{
+      male_staff: (value) => {
+        this.total_staff = value + this.female_staff
+      },
+      female_staff: (value) => {
+        this.total_staff = this.male_staff + value
       }
     },
     mounted () {

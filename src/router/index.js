@@ -1,45 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Welcome from '@/components/Welcome'
-import Signin from '@/components/Signin'
-import Signup from '@/components/Signup'
-import Office from  '@/components/Office'
-import Personnel from  '@/components/Personnel'
+import paths from './path'
+
 
 Vue.use(Router)
-
-export default new Router({
+const router =  new Router({
+  base: '/',
   mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: 'Welcome',
-      component: Welcome
-    },
-
-    {
-      path: '/signin',
-      name: 'Signin',
-      component: Signin
-    },
-
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    },
-
-    {
-      path: '/office/create',
-      name: 'Office',
-      component: Office
-    },
-
-    {
-      path: '/personnel/create',
-      name: 'Personnel',
-      component: Personnel
-    }
-  ]
+  linkActiveClass: 'active',
+  routes: paths
 })
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+})
+
+export default router
