@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class="blue lighten-3" :clipped="true" absolute app>
+  <v-navigation-drawer class="grey lighten-3" :clipped="true" app>
   <v-divider></v-divider>
     <v-list dense class="pt-1">
       <v-list-tile

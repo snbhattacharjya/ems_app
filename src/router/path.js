@@ -129,7 +129,7 @@ export default [
     {
       path: '/personnel/create',
       meta: {title:'Create new office | Welcome to EMS'},
-      name: 'CreateOffice',
+      name: 'CreatePersonnel',
       component: () => import(
 
         '@/components/personnel'
