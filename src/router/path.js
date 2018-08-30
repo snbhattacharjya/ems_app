@@ -127,12 +127,39 @@ export default [
       )
     },
     {
+      path: `/office/:id/edit/`,
+      meta: {title:'Edit office | Welcome to EMS'},
+      name: 'OfficeEdit',
+      component: () => import(
+
+        '@/components/OfficeEdit'
+      )
+    },
+    {
+      path: '/personnel/list',
+      meta: {title:'View Personnel | Welcome to EMS'},
+      name: 'Viewpersonnel',
+      component: () => import(
+
+        '@/components/PersonnelView.vue'
+      )
+    },
+    {
       path: '/personnel/create',
-      meta: {title:'Create new office | Welcome to EMS'},
+      meta: {title:'Create new personnel | Welcome to EMS'},
       name: 'CreatePersonnel',
       component: () => import(
 
-        '@/components/personnel'
+        '@/components/Personnel'
       )
     },
+    {
+      path: `/personnel/:id/edit/`,
+      meta: {title:'Edit personnel | Welcome to EMS'},
+      name: 'PersonnelEdit',
+      component: () => import(
+
+        '@/components/PersonnelEdit'
+      )
+    }
   ];

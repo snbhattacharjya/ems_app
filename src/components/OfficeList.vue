@@ -8,6 +8,7 @@
       :error-messages="error"
       @input="$emit('input',$event)"
     >
+
     </v-select>
 </template>
 
@@ -23,6 +24,7 @@ export default {
   data(){
     return {
       offices: [],
+      selected:''
     }
   },
 

@@ -5,7 +5,7 @@
 
         <v-card class="elevation-6">
           <v-toolbar dark color="blue-grey darken-3">
-            <v-toolbar-title>Create New Office</v-toolbar-title>
+            <v-toolbar-title>Edit Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
@@ -21,7 +21,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="credit_card"
+                prepend-icon="email"
                 name="identification_code"
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
                 type="text"
@@ -80,6 +80,7 @@
                 v-validate="'required'"
                 data-vv-name="subdivision_id"
                 :error="errors.collect('subdivision_id')"
+                :selected_item="subdivision_id"
               ></subdivision-list>
 
               <block-muni-list
@@ -226,7 +227,7 @@
   import InstituteList from '@/components/InstituteList'
 
   export default{
-    name: 'Office',
+    name: 'OfficeEdit',
 
     components: {
       'subdivision-list': SubdivisionList,
@@ -245,6 +246,7 @@
     data (){
       return {
         valid: true,
+        office_id:'',
         office_name: '',
         identification_code: '',
         subdivision_id: '',
@@ -291,10 +293,47 @@
 
       }
     },
+    created(){
+      this.office_id=this.$route.params.id
+      this.initialize()
+    },
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
     methods: {
+      initialize () {
+
+        axios.get('/office/'+this.office_id,{
+          id: this.office_id
+        })
+        .then((response, data) => {
+        response.data.forEach(item => {
+              this.office_name= item.name,
+              this.identification_code= item.identification_code,
+              this.subdivision_id= item.subdivision_id,
+              this.block_muni_id= item.block_muni_id,
+              this.office_address= item.address,
+              this.officer_designation= item.officer_designation,
+              this.post_office= item.post_office,
+              this.pin= item.pin,
+              this.police_station_id= item.police_station_id,
+              this.ac_id= item.ac_id,
+              this.pc_id= item.pc_id,
+              this.category_id= item.category_id,
+              this.institute_id= item.institute_id,
+              this.email= item.email,
+              this.phone= item.phone,
+              this.mobile= item.mobile,
+              this.fax= item.fax,
+              this.male_staff= item.male_staff,
+              this.female_staff= item.female_staff,
+              this.total_staff= item.total_staff
+          });
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
       validateOffice(){
         this.disable_save = true
         this.$validator.validate()
@@ -310,7 +349,8 @@
         this.message_text = 'Error Occurred!!!'
       },
       saveOffice(){
-        axios.post('/office',{
+        axios.post('/office/update',{
+          office_id:this.office_id,
           office_name: this.office_name,
           identification_code: this.identification_code,
           officer_designation: this.officer_designation,
@@ -338,7 +378,7 @@
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
-          this.message_text = 'Office Added Successfully with Office code - '+response.data
+          this.message_text = 'Office Updated Successfully '
         })
         .catch(error => {
           this.show_message = true

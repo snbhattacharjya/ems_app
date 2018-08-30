@@ -5,7 +5,7 @@
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>All Offices</v-toolbar-title>
+      <v-toolbar-title>All Personnel</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
@@ -23,7 +23,7 @@
     </v-toolbar>
     <v-data-table
       :headers="headers"
-      :items="offices"
+      :items="personnels"
       :search="search"
       class="elevation-1"
     >
@@ -34,8 +34,8 @@
         <td >{{ props.item.mobile }}</td>
         <td >{{ props.item.pin }}</td>
         <td class="justify-center layout px-0">
-          <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>
+          <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
+          <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>
         </td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -56,7 +56,7 @@
       search: '',
       headers: [
         {
-          text: 'Office Name',
+          text: 'Personnel Name',
           align: 'left',
           sortable: false,
           value: 'name'
@@ -67,7 +67,7 @@
         { text: 'Pin', value: 'pin',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false }
       ],
-      offices: [],
+      personnels: [],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -104,10 +104,10 @@
     methods: {
       initialize () {
 
-        axios.get('/offices')
+        axios.get('/personnel')
         .then((response, data) => {
         response.data.forEach(item => {
-            this.offices.push(item)
+            this.personnels.push(item)
           });
         })
         .catch(error => {
@@ -116,14 +116,14 @@
       },
 
       editItem (item) {
-        this.editedIndex = this.offices.indexOf(item)
+        this.editedIndex = this.personnels.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.offices.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.offices.splice(index, 1)
+        const index = this.personnels.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.personnels.splice(index, 1)
       },
 
       close () {
@@ -136,9 +136,9 @@
 
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.offices[this.editedIndex], this.editedItem)
+          Object.assign(this.personnels[this.editedIndex], this.editedItem)
         } else {
-          this.offices.push(this.editedItem)
+          this.personnels.push(this.editedItem)
         }
         this.close()
       }

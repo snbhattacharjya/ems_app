@@ -8,6 +8,9 @@
       :error-messages="error"
       @input="$emit('input',$event)"
     >
+    <template slot="selection" index: 0 selected: true>
+
+    </template>
     </v-select>
 </template>
 
@@ -18,11 +21,16 @@ export default {
     error: {
       type: Array,
       required: false
+    },
+    selected_item: {
+      type: String,
+      required: false
     }
   },
   data(){
     return {
       subdivisions: [],
+      selected_index: 0,
     }
   },
 
@@ -36,6 +44,7 @@ export default {
        response.data.forEach(item => {
           this.subdivisions.push(item)
         });
+
       })
       .catch(error => {
         console.log(error)

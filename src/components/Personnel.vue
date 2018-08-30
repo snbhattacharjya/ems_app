@@ -1,10 +1,10 @@
 <template>
 <v-container fluid>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md8>
+      <v-flex xs12>
         <v-card class="elevation-12">
           <v-toolbar dark color="blue-grey darken-3">
-            <v-toolbar-title>Create New Office</v-toolbar-title>
+            <v-toolbar-title>Create New Personnel</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
