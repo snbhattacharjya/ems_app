@@ -8,7 +8,7 @@
         </v-avatar><router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link></v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to='' v-on:click="window.getApp.$emit('APP_LOGOUT')">Sign Out</v-btn>
+      <v-btn flat to='' v-on:click="logout">Sign Out</v-btn>
       <v-btn flat to='/user/profile'>Profile</v-btn>
     </v-toolbar-items>
   </v-toolbar>
@@ -26,6 +26,11 @@ import AppDrawer from '@/components/layouts/AppDrawer'
     },
     components: {
       AppDrawer,
+    },
+    methods: {
+      logout(){
+        this.$router.replace("/")
+      }
     }
   }
 </script>
