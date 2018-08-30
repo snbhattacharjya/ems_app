@@ -205,9 +205,8 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-alert :value=show_message :color=message_type :icon=message_icon outline>
-             {{message_text}}
-            </v-alert>
+            <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
@@ -245,6 +244,7 @@
     data (){
       return {
         valid: true,
+        snackbar: false,
         office_name: '',
         identification_code: '',
         subdivision_id: '',
@@ -308,6 +308,7 @@
         this.message_type = 'error'
         this.message_icon = 'warning'
         this.message_text = 'Error Occurred!!!'
+        this.snackbar =true
       },
       saveOffice(){
         axios.post('/office',{
@@ -339,12 +340,14 @@
           this.message_type = 'success'
           this.message_icon = 'check_circle'
           this.message_text = 'Office Added Successfully with Office code - '+response.data
+          this.snackbar =true
         })
         .catch(error => {
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
           this.message_text = 'Error Occurred!!! '+error
+          this.snackbar =true
         })
       }
     },

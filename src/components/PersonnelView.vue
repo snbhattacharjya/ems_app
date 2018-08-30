@@ -30,9 +30,9 @@
       <template slot="items" slot-scope="props">
         <td>{{ props.item.name }}</td>
         <td >{{ props.item.id }}</td>
-        <td >{{ props.item.address }}</td>
+        <td >{{ props.item.designation }}</td>
+        <td >{{ props.item.permanent_address }}</td>
         <td >{{ props.item.mobile }}</td>
-        <td >{{ props.item.pin }}</td>
         <td class="justify-center layout px-0">
           <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
           <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>
@@ -62,9 +62,9 @@
           value: 'name'
         },
         { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Address', value: 'adress',align: 'left', },
-        { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Pin', value: 'pin',align: 'left', },
+        { text: 'Designation', value: 'adress',align: 'left', },
+        { text: 'Permanent Address', value: 'mobile',align: 'left', },
+        { text: 'Mobile', value: 'pin',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false }
       ],
       personnels: [],

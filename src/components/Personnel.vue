@@ -352,14 +352,13 @@
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
-                    v-validate="'required'"
+                    v-validate="'required|confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
 
 
-                  <v-btn color="primary" @click="personnel_form = 1">Continue</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+
                 </v-stepper-content>
 
               </v-stepper>
@@ -368,8 +367,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="savePersonnel">Save</v-btn>
+            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
+          <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          </v-snackbar>
         </v-card>
       </v-flex>
     </v-layout>
@@ -391,8 +392,13 @@ import AssemblyList from '@/components/AssemblyList'
       BlockMuniList,
       AssemblyList,
     },
+    $_veeValidate: {
+      validator: 'new'
+    },
     data (){
       return {
+        valid: true,
+        snackbar: false,
         office_id: '',
         officer_name: '',
         designation: '',
@@ -458,10 +464,33 @@ import AssemblyList from '@/components/AssemblyList'
         assembly_off_id: '',
         branch_ifsc: '',
         bank_account_no: '',
+        show_message: false,
+        message_type: "",
+        message_icon: "",
+        message_text: "",
+        disable_save: false,
         personnel_form: 1,
       }
     },
+    mounted () {
+      //this.$validator.localize('en', this.dictionary)
+    },
     methods: {
+      validatePersonnel(){
+        this.disable_save = true
+        this.$validator.validate()
+          .then(result => {
+            result ? this.savePersonnel() : this.showError()
+            this.disable_save = false
+          })
+      },
+      showError(){
+        this.show_message = true
+        this.message_type = 'error'
+        this.message_icon = 'warning'
+        this.message_text = 'Error Occurred!!!'
+        this.snackbar =true
+      },
       savePersonnel(){
         axios.post('/personnel',{
           office_id: this.office_id,
@@ -496,10 +525,19 @@ import AssemblyList from '@/components/AssemblyList'
           bank_account_no: this.bank_account_no,
         })
         .then(response => {
-          console.log(response)
+          //this.$refs.form.reset()
+          this.show_message = true
+          this.message_type = 'success'
+          this.message_icon = 'check_circle'
+          this.message_text = 'Personnel Added Successfully with code - '+response.data
+          this.snackbar =true
         })
         .catch(error => {
-          console.log(error)
+          this.show_message = true
+          this.message_type = 'error'
+          this.message_icon = 'warning'
+          this.message_text = 'Error Occurred!!! '+error
+          this.snackbar =true
         })
       }
     },

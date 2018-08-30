@@ -15,10 +15,7 @@
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-       <v-list-group
-        prepend-icon="business"
-        value="true"
-      >
+       <v-list-group prepend-icon="business" value="true">
         <v-list-tile slot="activator">
           <v-list-tile-title>Offices</v-list-tile-title>
         </v-list-tile>
@@ -30,7 +27,11 @@
               <v-icon v-text="office.icon"></v-icon>
             </v-list-tile-action>
             <v-list-tile-title v-text="office.title"></v-list-tile-title>
-
+          </v-list-tile>
+        </v-list-group>
+        <v-list-group prepend-icon="people" value="true">
+          <v-list-tile slot="activator">
+            <v-list-tile-title>Personnel</v-list-tile-title>
           </v-list-tile>
           <v-list-tile
             v-for="personnel in personnel"
@@ -56,12 +57,14 @@
           { title: 'About', icon: 'help', link:'/office/help' }
         ],
         offices: [
-          { title: 'Office Lists', icon: 'view_list', link:'/office/list' },
-          { title: 'Create new office', icon: 'create', link:'/office/create' }
+          { title: 'Create new office', icon: 'create', link:'/office/create' },
+          { title: 'Office Lists', icon: 'list_alt', link:'/office/list' }
+
         ],
          personnel: [
-          { title: 'Personnel Lists', icon: 'view_list', link:'/personnel/list' },
-          { title: 'Create new personnel', icon: 'create', link:'/personnel/create' }
+          { title: 'Create new personnel', icon: 'create', link:'/personnel/create' },
+          { title: 'Personnel Lists', icon: 'list_alt', link:'/personnel/list' }
+
         ],
         right: null
       }
