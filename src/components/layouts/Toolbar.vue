@@ -4,7 +4,6 @@
     <router-link to="/" tag="span" style="cursor: pointer">
     <v-avatar
       color="grey lighten-5"
-      tile="false"
     >
       <img src="/static/national20emblem.jpg" alt="avatar">
     </v-avatar></router-link>
