@@ -56,18 +56,19 @@ export default [
           '@/components/pages/Sandbox.vue'
         )
       },
-    {
-      path: '/signin',
-      meta: {
-        public: true,
-        title:'Login | Welcome to EMS'
-      },
-      name: 'Signin',
-      component: () => import(
+      {
+        path: '/signin',
+        meta: {
+          public: true,
+          title:'Login | Welcome to EMS'
+        },
+        name: 'Signin',
+        component: () => import(
 
-        '@/components/Signin.vue'
-      )
-    },
+          '@/components/Signin.vue'
+        )
+      },
+
     {
       path: '/signup',
       meta: {
