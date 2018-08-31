@@ -1,6 +1,7 @@
 <template>
     <v-select
       :items="subdivisions"
+      v-model="selected_item"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
@@ -8,9 +9,6 @@
       :error-messages="error"
       @input="$emit('input',$event)"
     >
-    <template slot="selection" index: 0 selected: true>
-
-    </template>
     </v-select>
 </template>
 
@@ -30,7 +28,6 @@ export default {
   data(){
     return {
       subdivisions: [],
-      selected_index: 0,
     }
   },
 
