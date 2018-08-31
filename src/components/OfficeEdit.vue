@@ -80,7 +80,7 @@
                 v-validate="'required'"
                 data-vv-name="subdivision_id"
                 :error="errors.collect('subdivision_id')"
-                :selected_item="subdivision_id"
+                :selected="subdivision_id"
               ></subdivision-list>
 
               <block-muni-list

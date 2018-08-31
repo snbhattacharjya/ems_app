@@ -1,7 +1,7 @@
 <template>
     <v-select
       :items="subdivisions"
-      v-model="selected_item"
+      v-model="selected"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
@@ -20,7 +20,7 @@ export default {
       type: Array,
       required: false
     },
-    selected_item: {
+    selected: {
       type: String,
       required: false
     }
