@@ -32,7 +32,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_box"
                 name="officer_designation"
                 label="Designation of Head of Office"
                 type="text"
@@ -43,7 +43,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_balance"
                 name="office_address"
                 label="Office Address"
                 type="text"
@@ -54,7 +54,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="local_post_office"
                 name="post_office"
                 label="Post Office"
                 type="text"
@@ -65,7 +65,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="fiber_pin"
                 name="pin"
                 label="Pincode"
                 type="text"
@@ -136,7 +136,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="phone"
                 name="phone"
                 label="Phone No"
                 type="text"
@@ -147,7 +147,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="phone_android"
                 name="mobile"
                 label="Mobile of Head of Office"
                 type="text"
@@ -158,7 +158,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="print"
                 name="fax"
                 label="Fax"
                 type="text"
@@ -169,7 +169,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_circle"
                 name="male_staff"
                 label="Male Staff (in count)"
                 type="text"
@@ -181,7 +181,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="face"
                 name="female_staff"
                 label="Female Staff (in count)"
                 type="text"
@@ -193,7 +193,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="add_comment"
                 name="total_staff"
                 label="Total Staff"
                 type="text"

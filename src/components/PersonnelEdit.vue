@@ -13,6 +13,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_id')"
                 data-vv-name="office_id"
+                :selected="office_id"
               ></office-list>
 
               <v-stepper v-model="personnel_form" vertical>
@@ -22,7 +23,8 @@
                 </v-stepper-step>
 
                 <v-stepper-content step="1">
-                 <v-text-field
+
+                <v-text-field
                   prepend-icon="person"
                   name="officer_name"
                   label="Officer Name"
@@ -34,7 +36,7 @@
                 ></v-text-field>
 
                 <v-text-field
-                  prepend-icon="email"
+                  prepend-icon="account_box"
                   name="designation"
                   label="Officer Designation"
                   type="text"
@@ -45,7 +47,7 @@
                 ></v-text-field>
 
                 <v-text-field
-                  prepend-icon="email"
+                  prepend-icon="fingerprint"
                   name="aadhaar"
                   label="Officer Aadhaar No (optional)"
                   type="text"
@@ -100,6 +102,7 @@
                   v-validate="'required'"
                   data-vv-name="qualification_id"
                   :error="errors.collect('qualification_id')"
+                  :selected="qualification_id"
                 ></qualification-list>
 
                 <language-list
@@ -107,6 +110,7 @@
                   v-validate="'required'"
                   data-vv-name="language_id"
                   :error="errors.collect('language_id')"
+                  :selected="language_id"
                 ></language-list>
 
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
@@ -117,7 +121,7 @@
 
                 <v-stepper-content step="2">
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="grade"
                     name="scale"
                     label="Pay Scale"
                     type="text"
@@ -128,7 +132,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="stars"
                     name="basic_pay"
                     label="Basic Pay"
                     type="text"
@@ -139,7 +143,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay"
                     type="text"
@@ -148,6 +152,7 @@
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
+
 
                   <v-select
                     :items="emp_groups"
@@ -179,7 +184,7 @@
 
                 <v-stepper-content step="3">
                   <v-textarea
-                    prepend-icon="email"
+                    prepend-icon="location_on"
                     name="present_address"
                     label="Present Address"
                     type="text"
@@ -190,7 +195,7 @@
                   ></v-textarea>
 
                   <v-textarea
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="permanent_address"
                     label="permanent Address"
                     type="text"
@@ -212,7 +217,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="phone"
                     name="phone"
                     label="Phone"
                     type="text"
@@ -223,7 +228,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="smartphone"
                     name="mobile"
                     label="Mobile"
                     type="text"
@@ -239,6 +244,7 @@
                     v-validate="'required'"
                     data-vv-name="block_muni_temp_id"
                     :error="errors.collect('block_muni_temp_id')"
+                    :selected="block_muni_temp_id"
                   ></block-muni-list>
 
                   <block-muni-list
@@ -247,6 +253,7 @@
                     v-validate="'required'"
                     data-vv-name="block_muni_perm_id"
                     :error="errors.collect('block_muni_perm_id')"
+                    :selected="block_muni_perm_id"
                   ></block-muni-list>
 
                   <block-muni-list
@@ -255,16 +262,17 @@
                     v-validate="'required'"
                     data-vv-name="block_muni_off_id"
                     :error="errors.collect('block_muni_off_id')"
+                    :selected="block_muni_off_id"
                   ></block-muni-list>
 
                   <v-btn color="primary" @click="personnel_form = 4">Continue</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-btn color="warning" @click="personnel_form = 2">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="4" :complete="personnel_form > 4" editable>Electoral Details</v-stepper-step>
                 <v-stepper-content step="4">
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="perm_identity"
                     name="epic"
                     label="EPIC No"
                     type="text"
@@ -275,7 +283,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="receipt"
                     name="part_no"
                     label="Part no"
                     type="text"
@@ -286,7 +294,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="toc"
                     name="sl_no"
                     label="Serial No"
                     type="text"
@@ -302,6 +310,7 @@
                     v-validate="'required'"
                     data-vv-name="assembly_temp_id"
                     :error="errors.collect('assembly_temp_id')"
+                    :selected="assembly_temp_id"
                   ></assembly-list>
 
                   <assembly-list
@@ -310,6 +319,7 @@
                     v-validate="'required'"
                     data-vv-name="assembly_perm_id"
                     :error="errors.collect('assembly_perm_id')"
+                    :selected="assembly_perm_id"
                   ></assembly-list>
 
                   <assembly-list
@@ -318,15 +328,16 @@
                     v-validate="'required'"
                     data-vv-name="assembly_off_id"
                     :error="errors.collect('assembly_off_id')"
+                    :selected="assembly_off_id"
                   ></assembly-list>
                   <v-btn color="primary" @click="personnel_form = 5">Continue</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-btn color="warning" @click="personnel_form = 3">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="5" editable>Bank Details</v-stepper-step>
                 <v-stepper-content step="5">
-                  <v-text-field
-                    prepend-icon="email"
+                 <v-text-field
+                    prepend-icon="account_balance_wallet"
                     name="branch_ifsc"
                     label="IFSC No"
                     type="text"
@@ -337,8 +348,9 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="bank_account_no"
+                    ref="bank_account_no"
                     label="Bank Account no"
                     type="text"
                     v-model="bank_account_no"
@@ -348,11 +360,11 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
-                    v-validate="'confirmed:bank_account_no'"
                     type="password"
+                    v-validate="'confirmed:bank_account_no|required'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
@@ -486,14 +498,13 @@ import AssemblyList from '@/components/AssemblyList'
         axios.get('/personnel/'+this.personnel_id,{
           id: this.personnel_id
         })
-        .then((response, data) => { console.log(data)
+        .then((response, data) => {
         response.data.forEach(item => {
           this.office_id= item.office_id,
           this.officer_name= item.name,
           this.designation= item.designation,
           this.aadhaar= item.aadhaar,
           this.dob= item.dob,
-          this.gender= item.gender,
           this.qualification_id= item.qualification_id,
           this.language_id= item.language_id,
           this.scale= item.scale,
@@ -514,6 +525,8 @@ import AssemblyList from '@/components/AssemblyList'
           this.part_no= item.part_no,
           this.sl_no= item.sl_no,
           this.assembly_temp_id= item.assembly_temp_id,
+          this.assembly_temp_selected = item.assembly_temp_id,
+
           this.assembly_perm_id= item.assembly_perm_id,
           this.assembly_off_id= item.assembly_off_id,
           this.branch_ifsc= item.branch_ifsc,
@@ -547,7 +560,6 @@ import AssemblyList from '@/components/AssemblyList'
           designation: this.designation,
           aadhaar: this.aadhaar,
           dob: this.dob,
-          gender: this.gender,
           qualification_id: this.qualification_id,
           language_id: this.language_id,
           scale: this.scale,

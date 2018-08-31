@@ -1,6 +1,7 @@
 <template>
     <v-select
       :items="assemblies"
+      v-model="selected"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
@@ -15,6 +16,10 @@
 export default {
   name: 'AssemblyList',
   props: {
+    selected: {
+      type: String,
+      required: false
+    },
     label: {
       type: String,
       required: false

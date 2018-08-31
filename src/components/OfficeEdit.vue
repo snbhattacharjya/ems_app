@@ -21,7 +21,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="credit_card"
                 name="identification_code"
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
                 type="text"
@@ -32,7 +32,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_box"
                 name="officer_designation"
                 label="Designation of Head of Office"
                 type="text"
@@ -43,7 +43,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_balance"
                 name="office_address"
                 label="Office Address"
                 type="text"
@@ -54,7 +54,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="local_post_office"
                 name="post_office"
                 label="Post Office"
                 type="text"
@@ -65,7 +65,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="fiber_pin"
                 name="pin"
                 label="Pincode"
                 type="text"
@@ -88,6 +88,7 @@
                 v-validate="'required'"
                 data-vv-name="block_muni_id"
                 :error="errors.collect('block_muni_id')"
+                :selected="block_muni_id"
               ></block-muni-list>
 
               <police-station-list
@@ -95,6 +96,7 @@
                 v-validate="'required'"
                 data-vv-name="police_station_id"
                 :error="errors.collect('police_station_id')"
+                :selected="police_station_id"
               ></police-station-list>
 
               <assembly-list
@@ -102,6 +104,7 @@
                 v-validate="'required'"
                 data-vv-name="ac_id"
                 :error="errors.collect('ac_id')"
+                :selected="ac_id"
               ></assembly-list>
 
               <pc-list
@@ -109,6 +112,7 @@
                 v-validate="'required'"
                 data-vv-name="pc_id"
                 :error="errors.collect('pc_id')"
+                :selected="pc_id"
               ></pc-list>
 
               <category-list
@@ -116,6 +120,7 @@
                 v-validate="'required'"
                 data-vv-name="category_id"
                 :error="errors.collect('category_id')"
+                :selected="category_id"
               ></category-list>
 
               <institute-list
@@ -123,6 +128,7 @@
                 v-validate="'required'"
                 data-vv-name="institute_id"
                 :error="errors.collect('institute_id')"
+                :selected="institute_id"
               ></institute-list>
 
               <v-text-field
@@ -137,7 +143,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="phone"
                 name="phone"
                 label="Phone No"
                 type="text"
@@ -148,7 +154,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="phone_android"
                 name="mobile"
                 label="Mobile of Head of Office"
                 type="text"
@@ -159,7 +165,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="print"
                 name="fax"
                 label="Fax"
                 type="text"
@@ -170,7 +176,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="account_circle"
                 name="male_staff"
                 label="Male Staff (in count)"
                 type="text"
@@ -182,7 +188,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="face"
                 name="female_staff"
                 label="Female Staff (in count)"
                 type="text"
@@ -194,7 +200,7 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="email"
+                prepend-icon="add_comment"
                 name="total_staff"
                 label="Total Staff"
                 type="text"

@@ -1,6 +1,7 @@
 <template>
     <v-select
       :items="qualifications"
+      v-model="selected"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
@@ -18,6 +19,10 @@ export default {
     error: {
       type: Array,
       required: false
+    },
+    selected: {
+      type:Number,
+      required:false
     }
   },
   data(){

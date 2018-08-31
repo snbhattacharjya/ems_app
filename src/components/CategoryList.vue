@@ -1,6 +1,7 @@
 <template>
     <v-select
       :items="categories"
+      v-model="selected"
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
@@ -17,6 +18,10 @@ export default {
   props: {
     error: {
       type: Array,
+      required: false
+    },
+    selected:{
+      type: String,
       required: false
     }
   },

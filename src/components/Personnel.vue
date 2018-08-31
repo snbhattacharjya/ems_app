@@ -34,7 +34,7 @@
                 ></v-text-field>
 
                 <v-text-field
-                  prepend-icon="email"
+                  prepend-icon="account_box"
                   name="designation"
                   label="Officer Designation"
                   type="text"
@@ -45,7 +45,7 @@
                 ></v-text-field>
 
                 <v-text-field
-                  prepend-icon="email"
+                  prepend-icon="fingerprint"
                   name="aadhaar"
                   label="Officer Aadhaar No (optional)"
                   type="text"
@@ -117,7 +117,7 @@
 
                 <v-stepper-content step="2">
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="grade"
                     name="scale"
                     label="Pay Scale"
                     type="text"
@@ -128,7 +128,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="stars"
                     name="basic_pay"
                     label="Basic Pay"
                     type="text"
@@ -139,7 +139,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay"
                     type="text"
@@ -179,7 +179,7 @@
 
                 <v-stepper-content step="3">
                   <v-textarea
-                    prepend-icon="email"
+                    prepend-icon="location_on"
                     name="present_address"
                     label="Present Address"
                     type="text"
@@ -190,7 +190,7 @@
                   ></v-textarea>
 
                   <v-textarea
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="permanent_address"
                     label="permanent Address"
                     type="text"
@@ -212,7 +212,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="phone"
                     name="phone"
                     label="Phone"
                     type="text"
@@ -223,7 +223,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="smartphone"
                     name="mobile"
                     label="Mobile"
                     type="text"
@@ -258,13 +258,13 @@
                   ></block-muni-list>
 
                   <v-btn color="primary" @click="personnel_form = 4">Continue</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-btn color="warning" @click="personnel_form = 2">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="4" :complete="personnel_form > 4" editable>Electoral Details</v-stepper-step>
                 <v-stepper-content step="4">
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="perm_identity"
                     name="epic"
                     label="EPIC No"
                     type="text"
@@ -275,7 +275,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="receipt"
                     name="part_no"
                     label="Part no"
                     type="text"
@@ -286,7 +286,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="toc"
                     name="sl_no"
                     label="Serial No"
                     type="text"
@@ -320,13 +320,14 @@
                     :error="errors.collect('assembly_off_id')"
                   ></assembly-list>
                   <v-btn color="primary" @click="personnel_form = 5">Continue</v-btn>
+                  <v-btn color="warning" @click="personnel_form = 3">Cancel</v-btn>
                   <v-btn flat>Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="5" editable>Bank Details</v-stepper-step>
                 <v-stepper-content step="5">
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="account_balance_wallet"
                     name="branch_ifsc"
                     label="IFSC No"
                     type="text"
@@ -337,8 +338,9 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="bank_account_no"
+                    ref="bank_account_no"
                     label="Bank Account no"
                     type="text"
                     v-model="bank_account_no"
@@ -348,11 +350,11 @@
                   ></v-text-field>
 
                   <v-text-field
-                    prepend-icon="email"
+                    prepend-icon="account_balance"
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
-                    v-validate="'required|confirmed:bank_account_no'"
+                    v-validate="'confirmed:bank_account_no|required'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
