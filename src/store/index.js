@@ -27,7 +27,8 @@ export default new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
       axios.get('/user')
       .then(response => {
-        context.commit('storeUserDetails',response.data)
+        context.commit('storeUserDetails',response.data.user)
+        //console.log(response.data)
       })
       .catch(error => {
         console.log(error)
