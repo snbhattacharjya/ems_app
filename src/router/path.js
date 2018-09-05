@@ -1,3 +1,4 @@
+import store from '../store'
 export default [
 
     {
@@ -100,6 +101,18 @@ export default [
        '@/components/Dashboard/Office'
       )
     },
+
+    {
+      path: '/dashboard',
+      meta: {
+        breadcrumb: true,
+        title:'Dashboard | Welcome to EMS'
+      },
+      name: 'Dashboard',
+      component: () =>
+        import('@/components/Dashboard/Main')
+    },
+
     {
       path: '/office/help',
       meta: { breadcrumb: true,title:'Help | Welcome to EMS' },

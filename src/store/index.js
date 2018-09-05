@@ -8,34 +8,38 @@ export default new Vuex.Store({
 
   },
   state: {
-    token: '',
-    username: '',
-    level: '',
-    area: ''
+    user: {
+      token: '',
+      name: '',
+      level: '',
+      area: ''
+    }
   },
   getters: {
     getAccessToken(state){
-      return state.token
+      return state.user.token
     },
     getUserName(state){
-      return state.username
+      return state.user.name
+    },
+    getUserLevel(state){
+      return state.user.level
     }
   },
   actions: {
     storeAccessToken(context, token){
       context.commit('storeAccessToken', token)
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.user.token
       axios.get('/user')
       .then(response => {
-        context.commit('storeUserDetails',response.data.user)
-        //console.log(response.data)
+        context.commit('storeUserDetails',response.data)
       })
       .catch(error => {
         console.log(error)
       })
     },
     destroyToken(context, state){
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.user.token
       axios.get('/logout',{
 
       })
@@ -50,18 +54,18 @@ export default new Vuex.Store({
   },
   mutations: {
     storeAccessToken(state, token){
-      state.token = token
+      state.user.token = token
     },
     storeUserDetails(state, user){
-      state.username = user.name
-      state.level = user.level
-      state.area = user.area
+      state.user.name = user.name
+      state.user.level = user.level
+      state.user.area = user.area
     },
     destroyToken(state){
-      state.token = ''
-      state.username = ''
-      state.level = ''
-      state.area = ''
+      state.user.token = ''
+      state.user.name = ''
+      state.user.level = ''
+      state.user.area = ''
     }
   }
 

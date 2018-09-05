@@ -1,9 +1,9 @@
 <template>
-  <v-toolbar color="grey lighten-5">
+  <v-toolbar color="white">
     <v-toolbar-title>
     <router-link to="/" tag="span" style="cursor: pointer">
     <v-avatar
-      color="grey lighten-5"
+      color="white"
       :tile="true"
     >
       <img src="/static/national20emblem.jpg" alt="avatar">

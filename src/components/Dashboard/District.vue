@@ -9,7 +9,7 @@
         <v-layout align-center justify-center>
           <v-flex xs12>
                 <div class="ml-3">
-                  Office Dashboard
+                  District Dashboard
                 </div>
               </v-flex>
         </v-layout>
