@@ -7,7 +7,7 @@
           </v-avatar><router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
 
-        Welcome {{username}}
+        Welcome {{getUserName}}
         <v-menu bottom left>
 
             <v-btn
@@ -47,8 +47,10 @@ import AppDrawer from '@/components/layouts/AppDrawer'
 
       }
     },
-    created(){
-      this.username = this.$store.getters.getUserName
+    computed: {
+      getUserName(){
+        return this.$store.getters.getUserName
+      }
     },
     components: {
       AppDrawer,
