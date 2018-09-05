@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-toolbar :clipped-left="true" color="primary" app dark>
+    <v-toolbar :clipped-left="true" color="blue-grey darken-3" app dark>
       <v-toolbar-side-icon ></v-toolbar-side-icon>
-      <v-toolbar-title> <v-avatar color="primary">
+      <v-toolbar-title> <v-avatar color="white">
             <img src="/static/Election_Commission_of_India_Logo.png" alt="avatar">
           </v-avatar><router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -48,8 +48,8 @@ import AppDrawer from '@/components/layouts/AppDrawer'
       }
     },
     computed: {
-      getUserName(){
-        return this.$store.getters.getUserName
+      getUserName() {
+        return this.username = this.$store.getters.getUserName
       }
     },
     components: {
