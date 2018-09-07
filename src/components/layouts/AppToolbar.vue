@@ -7,7 +7,7 @@
           </v-avatar><router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
 
-        Welcome {{username}}
+        Welcome {{ getUser.name }}
         <v-menu bottom left>
 
             <v-btn
@@ -42,13 +42,14 @@ import AppDrawer from '@/components/layouts/AppDrawer'
       return {
         username: '',
         items: [
-          {title: 'Profile', path: '/user/profile'}
+          {title: 'Profile', path: '/#'},
+          {title: 'Settings', path: '/#'}
         ]
 
       }
     },
     created(){
-      this.username = this.$store.getters.getUserName
+
     },
     components: {
       AppDrawer,
@@ -58,6 +59,10 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         this.$store.dispatch('destroyToken')
         this.$router.replace("/")
       }
+    },
+    computed: {
+      getUser:function(){
+        return this.$store.getters.getUser      }
     }
   }
 </script>

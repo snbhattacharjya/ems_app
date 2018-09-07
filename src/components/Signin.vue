@@ -69,7 +69,7 @@
             .then(response => {
               this.$store.dispatch('storeAccessToken', response.data.access_token)
               this.loading = false
-              this.$router.replace("/dashboard/office")
+              this.$router.replace("/dashboard")
             })
             .catch(error => {
               this.password = ''

@@ -4,19 +4,10 @@
       <v-flex xs12>
         <v-card class="elevation-12">
           <v-toolbar dark color="blue-grey darken-3">
-            <v-toolbar-title>Edit Personnel</v-toolbar-title>
+            <v-toolbar-title>Edit Your Personnel</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <template v-if="this.getuser.level != 10">
-                <office-list
-                  v-model="office_id"
-                  v-validate="'required'"
-                  :error-messages="errors.collect('office_id')"
-                  data-vv-name="office_id"
-                  :selected="office_id"
-                ></office-list>
-              </template>
               <v-stepper v-model="personnel_form" vertical>
                 <v-stepper-step :complete="personnel_form > 1" step="1" editable>
                   Personal Details
@@ -365,7 +356,7 @@
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
-                    v-validate="'confirmed:bank_account_no'"
+                    v-validate="'confirmed:bank_account_no|required'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
@@ -390,16 +381,16 @@
   </v-container>
 </template>
 <script>
-import OfficeList from '@/components/OfficeList'
+//import OfficeList from '@/components/OfficeList'
 import QualificationList from '@/components/QualificationList'
 import LanguageList from '@/components/LanguageList'
 import BlockMuniList from '@/components/BlockMuniList'
 import AssemblyList from '@/components/AssemblyList'
 
   export default{
-    name: 'PersonnelEdit',
+    name: 'EditPersonnel',
     components: {
-      OfficeList,
+      //OfficeList,
       QualificationList,
       LanguageList,
       BlockMuniList,
@@ -413,7 +404,7 @@ import AssemblyList from '@/components/AssemblyList'
         valid: true,
         snackbar: false,
         personnel_id: '',
-        office_id: '',
+        //office_id: '',
         officer_name: '',
         designation: '',
         aadhaar: '',
@@ -490,11 +481,10 @@ import AssemblyList from '@/components/AssemblyList'
       this.personnel_id=this.$route.params.id
       this.initialize()
     },
-    computed: {
-      getuser(){
-          return this.$store.getters.getUser
-       }
+    mounted () {
+      //this.$validator.localize('en', this.dictionary)
     },
+
     methods: {
       initialize () {
 
@@ -503,7 +493,7 @@ import AssemblyList from '@/components/AssemblyList'
         })
         .then((response, data) => {
         response.data.forEach(item => {
-          this.office_id= item.office_id,
+         // this.office_id= item.office_id,
           this.officer_name= item.name,
           this.designation= item.designation,
           this.aadhaar= item.aadhaar,
@@ -558,7 +548,7 @@ import AssemblyList from '@/components/AssemblyList'
       savePersonnel(){
         axios.post('/personnel/update',{
           id:this.personnel_id,
-          office_id: this.office_id,
+         // office_id: this.office_id,
           officer_name: this.officer_name,
           designation: this.designation,
           aadhaar: this.aadhaar,

@@ -8,12 +8,15 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <office-list
-                v-model="office_id"
-                v-validate="'required'"
-                :error-messages="errors.collect('office_id')"
-                data-vv-name="office_id"
-              ></office-list>
+             <template v-if="this.getuser.level != 10">
+                <office-list
+                  v-model="office_id"
+                  v-validate="'required'"
+                  :error-messages="errors.collect('office_id')"
+                  data-vv-name="office_id"
+                  :selected="office_id"
+                ></office-list>
+              </template>
 
               <v-stepper v-model="personnel_form" vertical>
                 <v-stepper-step :complete="personnel_form > 1" step="1" editable>
@@ -354,7 +357,7 @@
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
-                    v-validate="'confirmed:bank_account_no|required'"
+                    v-validate="'confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
@@ -474,8 +477,10 @@ import AssemblyList from '@/components/AssemblyList'
         personnel_form: 1,
       }
     },
-    mounted () {
-      //this.$validator.localize('en', this.dictionary)
+   computed: {
+      getuser(){
+          return this.$store.getters.getUser
+       }
     },
     methods: {
       validatePersonnel(){
@@ -542,10 +547,8 @@ import AssemblyList from '@/components/AssemblyList'
           this.snackbar =true
         })
       }
-    },
-    computed: {
-
     }
+
 
   }
 </script>

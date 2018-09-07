@@ -92,8 +92,8 @@ export default [
     },
 
     {
-      path: '/dashboard/office',
-      meta: { breadcrumb: true,title:'Office Dashboard | Welcome to EMS' },
+      path: '/dashboard',
+      meta: { breadcrumb: true,title:'Dashboard | Welcome to EMS' },
       name: 'DashboardOffice',
       component: () => import(
 
@@ -101,7 +101,7 @@ export default [
       )
     },
     {
-      path: '/office/help',
+      path: '/dashboard/help',
       meta: { breadcrumb: true,title:'Help | Welcome to EMS' },
       name: 'Help',
       component: () => import(
@@ -137,6 +137,15 @@ export default [
       )
     },
     {
+      path: `/office/edit/`,
+      meta: {title:'Edit your office | Welcome to EMS'},
+      name: 'EditOffice',
+      component: () => import(
+
+        '@/components/EditOffice'
+      )
+    },
+    {
       path: '/personnel/list',
       meta: {title:'View Personnel | Welcome to EMS'},
       name: 'Viewpersonnel',
@@ -161,6 +170,15 @@ export default [
       component: () => import(
 
         '@/components/PersonnelEdit'
+      )
+    },
+    {
+      path: `/users/create`,
+      meta: {title:'Create User | Welcome to EMS'},
+      name: 'UserCreate',
+      component: () => import(
+
+        '@/components/UserCreate'
       )
     }
   ];

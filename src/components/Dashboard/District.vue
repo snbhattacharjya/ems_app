@@ -30,7 +30,7 @@
 <script>
 
 export default {
-  name: 'OfficeDashboard',
+  name: 'DistrictDashboard',
   data () {
     return {
       drawer: false

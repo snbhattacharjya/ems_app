@@ -9,16 +9,22 @@ export default new Vuex.Store({
   },
   state: {
     token: '',
-    username: '',
-    level: '',
-    area: ''
+    user: [],
+    menus :[],
+    previllege:[]
   },
   getters: {
     getAccessToken(state){
       return state.token
     },
-    getUserName(state){
-      return state.username
+    getUser(state){
+      return state.user
+    },
+    getMenu(state){
+      return state.menus
+    },
+    getPrevillege(state){
+      return state.previllege
     }
   },
   actions: {
@@ -28,6 +34,8 @@ export default new Vuex.Store({
       axios.get('/user')
       .then(response => {
         context.commit('storeUserDetails',response.data.user)
+        context.commit('storeMenuDetails',response.data.menu)
+        context.commit('storePrevillegeDetails',response.data.previllege)
         //console.log(response.data)
       })
       .catch(error => {
@@ -53,15 +61,19 @@ export default new Vuex.Store({
       state.token = token
     },
     storeUserDetails(state, user){
-      state.username = user.name
-      state.level = user.level
-      state.area = user.area
+      state.user = user
+    },
+    storeMenuDetails(state, menu){
+      state.menus = menu
+    },
+    storePrevillegeDetails(state, previllege){
+      state.previllege = previllege
     },
     destroyToken(state){
       state.token = ''
-      state.username = ''
-      state.level = ''
-      state.area = ''
+      state.user = ''
+      state.menus = ''
+      state.previllege = ''
     }
   }
 
