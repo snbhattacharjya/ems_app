@@ -55,10 +55,12 @@
           group: 'user',
           menu_icon_name: 'people',
           submenu: [
-            { menu_name: 'Create new user', menu_icon_name: 'create', menu_link:'/users/create' }
-
+            { menu_name: 'Create new user', menu_icon_name: 'create', menu_link:'/users/create' },
+            { menu_name: 'User Lists', menu_icon_name: 'list_alt', menu_link:'/users/list' }
+            //{ menu_name: 'user level', menu_icon_name: 'list_alt', menu_link:'/user/level' }
           ]
         },
+
         {
           menu_name: 'Office',
           group: 'office',
@@ -115,7 +117,7 @@
         ],
       }
     },
-    created(){
+    mounted(){
        this.loadmenu
     },
     computed: {

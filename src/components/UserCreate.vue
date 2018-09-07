@@ -9,120 +9,45 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <v-text-field
-                prepend-icon="person"
-                name="office_name"
-                label="Office Name"
-                type="text"
-                v-model="office_name"
+              <user-level
+                v-model="user_level"
                 v-validate="'required'"
-                :error-messages="errors.collect('office_name')"
-                data-vv-name="office_name"
-              ></v-text-field>
+                data-vv-name="user_level"
+                :error="errors.collect('user_level')"
+                v-on:change="getSubuserlevels(user_level)"
+              ></user-level>
+              <user-sublevel
+                v-model="user_sublevel"
+                v-validate="'required'"
+                data-vv-name="user_sublevel"
+                :error="errors.collect('user_sublevel')"
+                :disabled="makedisable"
+
+              ></user-sublevel>
 
               <v-text-field
-                prepend-icon="credit_card"
-                name="identification_code"
-                label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
+                prepend-icon="person"
+                name="name"
+                label="User Name"
                 type="text"
-                v-model="identification_code"
+                v-model="name"
                 v-validate="'required'"
-                :error-messages="errors.collect('identification_code')"
-                data-vv-name="identification_code"
+                :error-messages="errors.collect('name')"
+                data-vv-name="name"
               ></v-text-field>
+
 
               <v-text-field
                 prepend-icon="account_box"
-                name="officer_designation"
-                label="Designation of Head of Office"
+                name="designation"
+                label="Designation of User"
                 type="text"
-                v-model="officer_designation"
+                v-model="designation"
                 v-validate="'required|alpha'"
-                :error-messages="errors.collect('officer_designation')"
-                data-vv-name="officer_designation"
+                :error-messages="errors.collect('designation')"
+                data-vv-name="designation"
               ></v-text-field>
 
-              <v-text-field
-                prepend-icon="account_balance"
-                name="office_address"
-                label="Office Address"
-                type="text"
-                v-model="office_address"
-                v-validate="'required'"
-                :error-messages="errors.collect('office_address')"
-                data-vv-name="office_address"
-              ></v-text-field>
-
-              <v-text-field
-                prepend-icon="local_post_office"
-                name="post_office"
-                label="Post Office"
-                type="text"
-                v-model="post_office"
-                v-validate="'required|alpha'"
-                :error-messages="errors.collect('post_office')"
-                data-vv-name="post_office"
-              ></v-text-field>
-
-              <v-text-field
-                prepend-icon="fiber_pin"
-                name="pin"
-                label="Pincode"
-                type="text"
-                v-model="pin"
-                v-validate="'required|digits:6'"
-                :error-messages="errors.collect('pin')"
-                data-vv-name="pin"
-              ></v-text-field>
-
-              <subdivision-list
-                v-model="subdivision_id"
-                v-validate="'required'"
-                data-vv-name="subdivision_id"
-                :error="errors.collect('subdivision_id')"
-              ></subdivision-list>
-
-              <block-muni-list
-                v-model="block_muni_id"
-                v-validate="'required'"
-                data-vv-name="block_muni_id"
-                :error="errors.collect('block_muni_id')"
-              ></block-muni-list>
-
-              <police-station-list
-                v-model="police_station_id"
-                v-validate="'required'"
-                data-vv-name="police_station_id"
-                :error="errors.collect('police_station_id')"
-              ></police-station-list>
-
-              <assembly-list
-                v-model="ac_id"
-                v-validate="'required'"
-                data-vv-name="ac_id"
-                :error="errors.collect('ac_id')"
-              ></assembly-list>
-
-              <pc-list
-                v-model="pc_id"
-                v-validate="'required'"
-                data-vv-name="pc_id"
-                :error="errors.collect('pc_id')"
-              ></pc-list>
-
-              <category-list
-                v-model="category_id"
-                v-validate="'required'"
-                data-vv-name="category_id"
-                :error="errors.collect('category_id')"
-              ></category-list>
-
-              <institute-list
-                v-model="institute_id"
-                v-validate="'required'"
-                data-vv-name="institute_id"
-                :error="errors.collect('institute_id')"
-              ></institute-list>
 
               <v-text-field
                 prepend-icon="email"
@@ -136,71 +61,25 @@
               ></v-text-field>
 
               <v-text-field
-                prepend-icon="phone"
-                name="phone"
-                label="Phone No"
-                type="text"
-                v-model="phone"
-                v-validate="'digits:11'"
-                :error-messages="errors.collect('phone')"
-                data-vv-name="phone"
-              ></v-text-field>
-
-              <v-text-field
                 prepend-icon="phone_android"
                 name="mobile"
-                label="Mobile of Head of Office"
+                label="Mobile of User"
                 type="text"
                 v-model="mobile"
                 v-validate="'required|digits:10'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
-
               <v-text-field
-                prepend-icon="print"
-                name="fax"
-                label="Fax"
-                type="text"
-                v-model="fax"
-                v-validate="'numeric'"
-                :error-messages="errors.collect('fax')"
-                data-vv-name="fax"
-              ></v-text-field>
-
-              <v-text-field
-                prepend-icon="account_circle"
-                name="male_staff"
-                label="Male Staff (in count)"
-                type="text"
-                v-model.number="male_staff"
-                v-validate="'required|numeric'"
-                :error-messages="errors.collect('male_staff')"
-                data-vv-name="male_staff"
-
-              ></v-text-field>
-
-              <v-text-field
-                prepend-icon="face"
-                name="female_staff"
-                label="Female Staff (in count)"
-                type="text"
-                v-model.number="female_staff"
-                v-validate="'required|numeric'"
-                :error-messages="errors.collect('female_staff')"
-                data-vv-name="female_staff"
-
-              ></v-text-field>
-
-              <v-text-field
-                prepend-icon="add_comment"
-                name="total_staff"
-                label="Total Staff"
-                type="text"
-                v-model.number="total_staff"
-                data-vv-name="total_staff"
-                readonly
-              ></v-text-field>
+                  prepend-icon="fingerprint"
+                  name="aadhaar"
+                  label="User Aadhaar No (optional)"
+                  type="text"
+                  v-model="aadhaar"
+                  v-validate="'digits:12'"
+                  :error-messages="errors.collect('aadhaar')"
+                  data-vv-name="aadhaar"
+                ></v-text-field>
 
             </v-form>
           </v-card-text>
@@ -208,7 +87,7 @@
             <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="validateUser" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -216,25 +95,16 @@
   </v-container>
 </template>
 <script>
-  import SubdivisionList from '@/components/SubdivisionList'
-  import BlockMuniList from '@/components/BlockMuniList'
-  import PoliceStationList from '@/components/PoliceStationList'
-  import AssemblyList from '@/components/AssemblyList'
-  import PcList from '@/components/PcList'
-  import CategoryList from '@/components/CategoryList'
-  import InstituteList from '@/components/InstituteList'
+
+  import UserLevel from '@/components/UserLevel'
+  import UserSublevel from '@/components/UserSublevel'
 
   export default{
     name: 'UserCreate',
 
     components: {
-      'subdivision-list': SubdivisionList,
-      'block-muni-list': BlockMuniList,
-      'police-station-list': PoliceStationList,
-      'assembly-list': AssemblyList,
-      'pc-list': PcList,
-      'category-list': CategoryList,
-      'institute-list': InstituteList,
+      'user-sublevel' : UserSublevel,
+      'user-level' : UserLevel,
     },
 
     $_veeValidate: {
@@ -245,31 +115,22 @@
       return {
         valid: true,
         snackbar: false,
-        office_name: '',
-        identification_code: '',
+        name: '',
         subdivision_id: '',
-        block_muni_id: '',
-        office_address: '',
-        officer_designation: '',
-        post_office: '',
-        pin: '',
-        police_station_id: '',
-        ac_id: '',
-        pc_id: '',
-        category_id: '',
-        institute_id: '',
+        designation: '',
         email: '',
-        phone: '',
         mobile: '',
-        fax: '',
-        male_staff: 0,
-        female_staff: 0,
-        total_staff: 0,
+        user_level : '',
+        user_sublevel : '',
+        makedisable: true,
+        aadhaar : '',
         show_message: false,
         message_type: "",
         message_icon: "",
         message_text: "",
         disable_save: false,
+
+
 
         dictionary: {
 
@@ -295,11 +156,11 @@
       this.$validator.localize('en', this.dictionary)
     },
     methods: {
-      validateOffice(){
+      validateUser(){
         this.disable_save = true
         this.$validator.validate()
           .then(result => {
-            result ? this.saveOffice() : this.showError()
+            result ? this.saveUser() : this.showError()
             this.disable_save = false
           })
       },
@@ -310,36 +171,28 @@
         this.message_text = 'Error Occurred!!!'
         this.snackbar =true
       },
-      saveOffice(){
-        axios.post('/office',{
-          office_name: this.office_name,
-          identification_code: this.identification_code,
-          officer_designation: this.officer_designation,
-          office_address: this.office_address,
-          post_office: this.post_office,
-          pin: this.pin,
-          subdivision_id: this.subdivision_id,
-          block_muni_id: this.block_muni_id,
-          police_station_id: this.police_station_id,
-          ac_id: this.ac_id,
-          pc_id: this.pc_id,
-          category_id: this.category_id,
-          institute_id: this.institute_id,
-          identification_code: this.identification_code,
-          email: this.email,
-          phone: this.phone,
-          mobile: this.mobile,
-          fax: this.fax,
-          total_staff: this.total_staff,
-          male_staff: this.male_staff,
-          female_staff: this.female_staff,
+      saveUser(){
+        axios.post('/createuser',{
+        name: this.name,
+        designation: this.designation,
+        email:this.email,
+        mobile: this.mobile,
+        level : this.user_level,
+        sub_level : this.user_sublevel,
+        aadhaar : this.aadhaar,
         })
         .then(response => {
-          //this.$refs.form.reset()
+          this.name= '',
+          this.designation= '',
+          this.email='',
+          this.mobile= '',
+          this.user_level = '',
+          this.user_sublevel = '',
+          this.aadhaar = '',
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
-          this.message_text = 'Office Added Successfully with Office code - '+response.data
+          this.message_text = 'User Added Successfully with code - '+response.data
           this.snackbar =true
         })
         .catch(error => {
@@ -349,12 +202,27 @@
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
+      },
+      getSubuserlevels(level){ console.log(level)
+      axios.get('/sublevel/'+level)
+      .then((response, data) => {
+       if(response.data.length === 0 ) {
+        this.makedisable=true
+       }else{
+         this.makedisable=false
+        response.data.forEach(item => {
+            this.sublevels.push(item)
+          });
+       }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
       }
     },
     computed: {
-      calculateTotalStaff(){
-        this.total_staff = this.male_staff + this.female_staff
-      }
+
     }
 
   }

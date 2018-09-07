@@ -151,7 +151,7 @@ export default [
       name: 'Viewpersonnel',
       component: () => import(
 
-        '@/components/PersonnelView.vue'
+        '@/components/PersonnelView'
       )
     },
     {
@@ -180,5 +180,33 @@ export default [
 
         '@/components/UserCreate'
       )
-    }
+    },
+    {
+      path: '/users/list',
+      meta: {title:'View User | Welcome to EMS'},
+      name: 'ViewUser',
+      component: () => import(
+
+        '@/components/UsersView'
+      )
+    },
+    {
+      path: `/user/:id/edit/`,
+      meta: {title:'Edit user | Welcome to EMS'},
+      name: 'UserEdit',
+      component: () => import(
+
+        '@/components/PersonnelEdit'
+      )
+    },
+    ,
+    {
+      path: `/user/level`,
+      meta: {title:'User Level | Welcome to EMS'},
+      name: 'UserLevel',
+      component: () => import(
+
+        '@/components/UserLevel'
+      )
+    },
   ];
