@@ -118,16 +118,22 @@
       }
     },
     mounted(){
-       this.loadmenu
+      //alert("test1")
+       //this.loadmenu
+    },
+    beforeUpdate(){
+      this.loadmenu
     },
     computed: {
       loadmenu:function(){
+        //alert('User level - '+this.getuser.level)
         console.log('User level - '+this.getuser.level)
         if(this.getuser.level === 3){
           this.district_items.forEach(item => {
             return this.menus.push(item)
           })
         }else if(this.getuser.level === 10){
+          //alert("test")
           this.office_items.forEach(item => {
            return this.menus.push(item)
           })

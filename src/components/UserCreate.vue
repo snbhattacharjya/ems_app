@@ -18,7 +18,7 @@
               ></user-level>
               <user-sublevel
                 v-model="user_sublevel"
-                v-validate="'required'"
+                v-validate="''"
                 data-vv-name="user_sublevel"
                 :error="errors.collect('user_sublevel')"
                 :disabled="makedisable"
@@ -28,7 +28,7 @@
               <v-text-field
                 prepend-icon="person"
                 name="name"
-                label="User Name"
+                label="Name of the User"
                 type="text"
                 v-model="name"
                 v-validate="'required'"
@@ -43,7 +43,7 @@
                 label="Designation of User"
                 type="text"
                 v-model="designation"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('designation')"
                 data-vv-name="designation"
               ></v-text-field>
@@ -55,7 +55,7 @@
                 label="Email"
                 type="text"
                 v-model="email"
-                v-validate="'required|email'"
+                v-validate="'email'"
                 :error-messages="errors.collect('email')"
                 data-vv-name="email"
               ></v-text-field>
@@ -152,6 +152,9 @@
 
       }
     },
+    created(){
+      console.log('user' +this.user_level)
+    },
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
@@ -186,7 +189,7 @@
           this.designation= '',
           this.email='',
           this.mobile= '',
-          this.user_level = '',
+          this.user_level = '04',
           this.user_sublevel = '',
           this.aadhaar = '',
           this.show_message = true

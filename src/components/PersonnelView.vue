@@ -26,10 +26,12 @@
       :items="personnels"
       :search="search"
       class="elevation-1"
+      :loading="tableloading"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td >{{ props.item.id }}</td>
+        <td>{{ props.item.id }}</td>
+        <td >{{ props.item.office_id }}</td>
+        <td >{{ props.item.name }}</td>
         <td >{{ props.item.designation }}</td>
         <td >{{ props.item.permanent_address }}</td>
         <td >{{ props.item.mobile }}</td>
@@ -54,17 +56,14 @@
     data: () => ({
       dialog: false,
       search: '',
+      tableloading:false,
       headers: [
-        {
-          text: 'Personnel Name',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
         { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Designation', value: 'adress',align: 'left', },
-        { text: 'Permanent Address', value: 'mobile',align: 'left', },
-        { text: 'Mobile', value: 'pin',align: 'left', },
+        { text: 'Office ID', value: 'office_id',align: 'left', },
+        { text: 'Personnel Name',align: 'left',sortable: false,value: 'name'},
+        { text: 'Designation', value: 'designation',align: 'left', },
+        { text: 'Permanent Address', value: 'permanent_address',align: 'left', sortable: false},
+        { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false }
       ],
       personnels: [],
@@ -103,15 +102,21 @@
 
     methods: {
       initialize () {
-
+        this.tableloading=true
         axios.get('/personnel')
         .then((response, data) => {
-        response.data.forEach(item => {
-            this.personnels.push(item)
-          });
-        })
+          if(response.data.length === 0){this.tableloading=false}
+         else{
+            response.data.forEach(item => {
+                this.personnels.push(item)
+                //console.log('Pesonel - '+this.personnels)
+              })
+              this.tableloading=false
+         }
+            })
         .catch(error => {
           console.log(error)
+          this.tableloading=false
         })
       },
 

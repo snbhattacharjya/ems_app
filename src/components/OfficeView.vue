@@ -26,10 +26,11 @@
       :items="offices"
       :search="search"
       class="elevation-1"
+      :loading="tableloading"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td >{{ props.item.id }}</td>
+        <td>{{ props.item.id }}</td>
+        <td >{{ props.item.name }}</td>
         <td >{{ props.item.address }}</td>
         <td >{{ props.item.mobile }}</td>
         <td >{{ props.item.pin }}</td>
@@ -54,14 +55,10 @@
     data: () => ({
       dialog: false,
       search: '',
+      tableloading:false,
       headers: [
-        {
-          text: 'Office Name',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
         { text: 'ID', value: 'id',align: 'left', },
+        { text: 'Office Name', align: 'left', sortable: false, value: 'name'},
         { text: 'Address', value: 'adress',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Pin', value: 'pin',align: 'left', },
@@ -103,15 +100,20 @@
 
     methods: {
       initialize () {
-
+        this.tableloading=true
         axios.get('/offices')
         .then((response, data) => {
-        response.data.forEach(item => {
-            this.offices.push(item)
-          });
-        })
+          if(response.data.length === 0){this.tableloading=false}
+         else{
+            response.data.forEach(item => {
+                this.offices.push(item)
+              })
+              this.tableloading=false
+         }
+            })
         .catch(error => {
           console.log(error)
+          this.tableloading=false
         })
       },
 

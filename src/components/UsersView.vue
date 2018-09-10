@@ -26,10 +26,11 @@
       :items="users"
       :search="search"
       class="elevation-1"
+      :loading="tableloading"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td >{{ props.item.user_id }}</td>
+        <td>{{ props.item.user_id }}</td>
+        <td >{{ props.item.name }}</td>
         <td >{{ props.item.designation }}</td>
         <td >{{ props.item.mobile }}</td>
         <td >{{ props.item.email }}</td>
@@ -54,18 +55,14 @@
     data: () => ({
       dialog: false,
       search: '',
+      tableloading:false,
       headers: [
-        {
-          text: 'Name',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
-        { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Designation', value: 'adress',align: 'left', },
+        { text: 'ID', value: 'user_id',align: 'left', },
+        { text: 'Name',align: 'left',sortable: false,value: 'name'},
+        { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Email', value: 'pin',align: 'left', },
-        { text: 'Actions', value: 'name', sortable: false }
+        { text: 'Email', value: 'email',align: 'left', }
+        //{ text: 'Actions', value: 'name', sortable: false }
       ],
       users: [],
 
@@ -85,15 +82,20 @@
 
     methods: {
       initialize () {
-
+        this.tableloading=true
         axios.get('/alluser')
         .then((response, data) => {
-        response.data.forEach(item => {
-            this.users.push(item)
-          });
-        })
+         if(response.data.length === 0){this.tableloading=false}
+         else{
+          response.data.forEach(item => {
+              this.users.push(item)
+            })
+            this.tableloading=false
+         }
+          })
         .catch(error => {
           console.log(error)
+          this.tableloading=false
         })
       },
 
