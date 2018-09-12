@@ -7,7 +7,8 @@
       prepend-icon="list"
       label="Subdivision"
       :error-messages="error"
-      @input="$emit('input',$event)"
+      @input="$emit('inputsub',$event)"
+
     >
     </v-select>
 </template>

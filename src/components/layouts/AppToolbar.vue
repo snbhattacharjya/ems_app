@@ -31,7 +31,7 @@
           <v-icon @click="logout">exit_to_app</v-icon>
 
     </v-toolbar>
-    <app-drawer :drawer="show" v-model="drawer" ></app-drawer>
+    <app-drawer :drawer="show"></app-drawer>
     <!-- <v-navigation-drawer class="grey lighten-3" :clipped="true" app v-model="drawer">
   <v-divider></v-divider>
   <v-list dense class="pt-1">
@@ -48,8 +48,8 @@ import AppDrawer from '@/components/layouts/AppDrawer'
     data () {
       return {
         username: '',
-        show:null,
-        drawer:null,
+        show:true,
+        //drawer:null,
         items: [
           {title: 'Profile', path: '/#'},
           {title: 'Settings', path: '/#'}

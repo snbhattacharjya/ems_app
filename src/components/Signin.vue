@@ -32,6 +32,7 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
+              <v-card-text v-if="!isHidden" class="info--text"><strong> <h4>Please wait while dashboard is loading....</h4></strong></v-card-text>
               <v-spacer></v-spacer>
               <v-btn color="primary" @click="login" :loading="loading">Login</v-btn>
             </v-card-actions>
@@ -48,7 +49,8 @@
       return {
         username: '',
         password: '',
-        loading: false
+        loading: false,
+        isHidden:true
       }
     },
 
@@ -58,18 +60,23 @@
 
     methods: {
       login(){
-        this.loading = true
+
         this.$validator.validate()
         .then(result =>{
           if(result){
+            this.loading = true
             axios.post('/login',{
               username: this.username,
               password: this.password
             })
             .then(response => {
               this.$store.dispatch('storeAccessToken', response.data.access_token)
-              this.loading = false
-              this.$router.replace("/dashboard")
+              this.isHidden = !this.isHidden
+              setTimeout(() => {
+                this.$router.replace("/dashboard")
+                this.loading = false
+              },3000)
+
             })
             .catch(error => {
               this.password = ''

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import paths from './path'
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 
 Vue.use(Router)
@@ -11,8 +13,13 @@ const router =  new Router({
   routes: paths
 })
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   document.title = to.meta.title
   next()
 })
+router.afterEach((to, from) => {
+  //console.log( this.$store.getters.getUser)
+  NProgress.done();
+});
 
 export default router
