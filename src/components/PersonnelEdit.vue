@@ -178,7 +178,6 @@
                   </v-select>
 
                   <v-btn color="primary" @click="personnel_form = 3">Continue</v-btn>
-                  <v-btn color="warning" @click="personnel_form = 1">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step :complete="personnel_form > 3" step="3" editable>Address Details</v-stepper-step>
@@ -267,7 +266,6 @@
                   ></block-muni-list>
 
                   <v-btn color="primary" @click="personnel_form = 4">Continue</v-btn>
-                  <v-btn color="warning" @click="personnel_form = 2">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="4" :complete="personnel_form > 4" editable>Electoral Details</v-stepper-step>
@@ -332,7 +330,6 @@
                     :selected="assembly_off_id"
                   ></assembly-list>
                   <v-btn color="primary" @click="personnel_form = 5">Continue</v-btn>
-                  <v-btn color="warning" @click="personnel_form = 3">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-step step="5" editable>Bank Details</v-stepper-step>

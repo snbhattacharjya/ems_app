@@ -13,15 +13,15 @@
 
 export default {
   components: {
-    
+
   },
   data: () => ({
-    
-    
-    
+
+
+
   }),
   computed: {
-   
+
   },
 
 };

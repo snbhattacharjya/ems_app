@@ -1,10 +1,10 @@
 <template>
   <v-app id="sandbox" :dark="dark">
     <v-navigation-drawer
-      v-model="primaryDrawer.model"
+      v-model="drawer"
       clipped
       absolute
-      
+
       app
     ></v-navigation-drawer>
     <v-toolbar :clipped-left="true" app >
@@ -66,6 +66,7 @@
   export default {
     data: () => ({
       dark: true,
+      drawer:null,
       drawers: ['Default (no property)', 'Permanent', 'Temporary'],
       primaryDrawer: {
         model: null,

@@ -36,7 +36,7 @@
         <td >{{ props.item.email }}</td>
         <td class="justify-center layout px-0" style="display:none;">
           <v-btn flat :to="'/user/'+props.item.user_id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <v-btn flat :to="'/user/'+props.item.user_id+ '/delete'"><v-icon small> delete</v-icon></v-btn>
+          <!--<v-btn flat :to="'/user/'+props.item.user_id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
         </td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">

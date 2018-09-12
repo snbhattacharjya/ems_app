@@ -37,7 +37,7 @@
         <td >{{ props.item.mobile }}</td>
         <td class="justify-center layout px-0">
           <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>
+          <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
         </td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
