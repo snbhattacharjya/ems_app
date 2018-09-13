@@ -3,8 +3,8 @@
     <v-container fluid>
       <section>
       <v-layout row wrap  class="my-5">
+      <v-flex x12 v-if="this.getuser.level != 10">
       <v-flex xs4>
-
           <v-select
           :items="subdivisions"
           v-model="subdivision_id"
@@ -33,6 +33,7 @@
     </v-select>
       </v-flex>
       <v-flex xs1><v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn></v-flex>
+      </v-flex>
       <v-flex xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>All Personnel</v-toolbar-title>
@@ -112,7 +113,9 @@
       validator: 'new'
     },
     computed: {
-
+       getuser:function(){
+          return this.$store.getters.getUser
+       },
     },
 
     mounted() {
@@ -120,7 +123,11 @@
     },
 
     created () {
-      this.getsubdivision()
+      if(this.getuser.level != 10){this.getsubdivision()}
+      else{
+        this.initialize_personnel()
+      }
+
     },
 
     methods: {
@@ -174,8 +181,30 @@
           this.tableloading=false
         })
       },
+      initialize_personnel () {
+        //console.log('creating filter....')
+        this.tableloading=true
+        axios.get('/personnelbyoffice/'+this.getuser.user_id,{
+          //office_id: this.office_id
+        })
+        .then((response, data) => {
+          if(response.data.length === 0){this.tableloading=false}
+         else{
+           this.personnels=[]
+            response.data.forEach(item => {
+                this.personnels.push(item)
+
+              })
+              this.tableloading=false
+         }
+            })
+        .catch(error => {
+          console.log(error)
+          this.tableloading=false
+        })
+      },
       getOfficelist(){
-        console.log('SUB - '+this.subdivision_id)
+        //console.log('SUB - '+this.subdivision_id)
         axios.get('/offices/'+this.subdivision_id)
           .then((response, data) => {
             this.isdisabled=false

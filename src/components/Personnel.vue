@@ -362,7 +362,11 @@
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
 
-
+                  <!-- <v-checkbox :label="agrrelable" v-model="agree"  color="success"
+                    v-validate="'agree'"
+                    :error-messages="errors.collect('agree')"
+                    data-vv-name="agree"
+                  ></v-checkbox> -->
 
                 </v-stepper-content>
 
@@ -474,6 +478,8 @@ import AssemblyList from '@/components/AssemblyList'
         message_icon: "",
         message_text: "",
         disable_save: false,
+        agrrelable: "Certified that the detail information furnished earlier in PP-1 format and also PP-2 format are verified with office record and genuine.Names of all officials have been included in the PP-2 format and no information has been concealed.",
+        agree:false,
         personnel_form: 1,
       }
     },

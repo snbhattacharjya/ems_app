@@ -8,22 +8,27 @@
             <v-toolbar-title>Create New User</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
-              <user-level
+            <v-form autocomplete="off">
+              <v-select
+                :items="levels"
                 v-model="user_level"
-                v-validate="'required'"
-                data-vv-name="user_level"
-                :error="errors.collect('user_level')"
-                v-on:change="getSubuserlevels(user_level)"
-              ></user-level>
-              <user-sublevel
+                item-text= "name"
+                item-value= "user_type_code"
+                prepend-icon="list"
+                label="Select Type(Level) of User you want to create"
+                @change="getSubuserlevels(user_level)">
+              </v-select>
+              <v-select
+                :items="sublevels"
                 v-model="user_sublevel"
-                v-validate="''"
-                data-vv-name="user_sublevel"
-                :error="errors.collect('user_sublevel')"
+                item-text= "sub_user_name"
+                item-value= "sub_user_code"
+                prepend-icon="list"
+                label="Select Sub Type(Sub Level) of User you want to create"
                 :disabled="makedisable"
+                >
+              </v-select>
 
-              ></user-sublevel>
 
               <v-text-field
                 prepend-icon="person"
@@ -96,15 +101,12 @@
 </template>
 <script>
 
-  import UserLevel from '@/components/UserLevel'
-  import UserSublevel from '@/components/UserSublevel'
 
   export default{
     name: 'UserCreate',
 
     components: {
-      'user-sublevel' : UserSublevel,
-      'user-level' : UserLevel,
+
     },
 
     $_veeValidate: {
@@ -120,6 +122,8 @@
         designation: '',
         email: '',
         mobile: '',
+        levels:[],
+        sublevels:[],
         user_level : '',
         user_sublevel : '',
         makedisable: true,
@@ -154,6 +158,7 @@
     },
     created(){
       console.log('user' +this.user_level)
+      this.getuserlevels()
     },
     mounted () {
       this.$validator.localize('en', this.dictionary)
@@ -195,7 +200,7 @@
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
-          this.message_text = 'User Added Successfully with code - '+response.data
+          this.message_text = response.data
           this.snackbar =true
         })
         .catch(error => {
@@ -206,6 +211,17 @@
           this.snackbar =true
         })
       },
+      getuserlevels(){
+        axios.get('/creationlevel')
+          .then((response, data) => {
+          response.data.forEach(item => {
+              this.levels.push(item)
+            });
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
       getSubuserlevels(level){ console.log(level)
       axios.get('/sublevel/'+level)
       .then((response, data) => {
@@ -213,6 +229,7 @@
         this.makedisable=true
        }else{
          this.makedisable=false
+         this.sublevels=[]
         response.data.forEach(item => {
             this.sublevels.push(item)
           });

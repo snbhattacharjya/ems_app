@@ -75,7 +75,7 @@
               setTimeout(() => {
                 this.$router.replace("/dashboard")
                 this.loading = false
-              },3000)
+              },8000)
 
             })
             .catch(error => {

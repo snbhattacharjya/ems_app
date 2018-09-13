@@ -4,8 +4,8 @@
             <v-container grid-list-md align-center>
               <v-layout row wrap fill-height>
 
-                  <v-flex xs3>
-                    <v-card color="pink" class="white--text">
+                  <v-flex xs12 sm6 md3 >
+                    <v-card color="pink" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">business</i>
                         <div class="headline pb-5">As per Office PP1</div>
@@ -17,8 +17,8 @@
                     </v-card>
                   </v-flex>
 
-                  <v-flex xs3>
-                    <v-card color="cyan darken-2" class="white--text">
+                  <v-flex xs12 sm6 md3 >
+                    <v-card color="cyan darken-2" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">perm_identity</i>
                         <h1 class="pb-4">Total Male Registerd</h1>
@@ -29,8 +29,8 @@
                     </v-card>
                   </v-flex>
 
-                  <v-flex xs3>
-                    <v-card color="purple" class="white--text">
+                  <v-flex xs12 sm6 md3 >
+                    <v-card color="purple" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">face</i>
                         <h1>Total Female Registerd</h1>
@@ -41,8 +41,8 @@
                     </v-card>
                   </v-flex>
 
-                  <v-flex xs3>
-                    <v-card color="blue-grey" class="white--text">
+                  <v-flex xs12 sm6 md3 >
+                    <v-card color="blue-grey" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">people_outline</i>
                         <h1>Total Employee Registerd</h1>
