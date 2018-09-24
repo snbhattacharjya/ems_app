@@ -4,6 +4,7 @@
       <section>
       <v-layout row wrap  class="my-5">
       <v-flex x12 v-if="this.getuser.level != 10">
+      <v-layout row wrap  >
       <v-flex xs4>
           <v-select
           :items="subdivisions"
@@ -18,21 +19,21 @@
         </v-select>
       </v-flex>
       <v-flex xs7>
-
-         <v-select
-      :items="offices"
-      v-model="office_id"
-      item-text= "name"
-      item-value= "id"
-      prepend-icon="list"
-      label="Select Office"
-
-      :disabled="isdisabled"
-    >
-
-    </v-select>
+        <v-select
+        :items="offices"
+        v-model="office_id"
+        item-text= "name"
+        item-value= "id"
+        prepend-icon="list"
+        label="Select Office"
+        :disabled="isdisabled"
+        >
+        </v-select>
       </v-flex>
-      <v-flex xs1><v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn></v-flex>
+      <v-flex xs1>
+        <v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn>
+      </v-flex>
+      </v-layout>
       </v-flex>
       <v-flex xs12>
         <v-toolbar flat color="white">
@@ -144,7 +145,7 @@
           })
       },
       dofilter(){
-        console.log('SUB - '+this.subdivision_id)
+        //console.log('SUB - '+this.subdivision_id)
         this.disable_save = true
         this.$validator.validate()
           .then(result => {

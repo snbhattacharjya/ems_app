@@ -19,6 +19,17 @@
                 @change="getSubuserlevels(user_level)">
               </v-select>
               <v-select
+                :items="subdivisions"
+                v-model="subdivision_id"
+                item-text= "sub_user_name"
+                item-value= "sub_user_code"
+                prepend-icon="list"
+                label="Select Sub Division"
+                :disabled="makedisable_subdiv"
+                @change="getBDO(subdivision_id,user_level)"
+                >
+              </v-select>
+              <v-select
                 :items="sublevels"
                 v-model="user_sublevel"
                 item-text= "sub_user_name"
@@ -26,6 +37,17 @@
                 prepend-icon="list"
                 label="Select Sub Type(Sub Level) of User you want to create"
                 :disabled="makedisable"
+                @change="getppcelllevels(user_sublevel)"
+                >
+              </v-select>
+              <v-select
+                :items="pplevels"
+                v-model="user_pplevel"
+                item-text= "name"
+                item-value= "code"
+                prepend-icon="list"
+                label="Select Type of PPCELL user you want to create"
+                :disabled="makedisable_ppcell"
                 >
               </v-select>
 
@@ -89,7 +111,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+            <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateUser" :disabled="disable_save">Save</v-btn>
@@ -117,6 +139,7 @@
       return {
         valid: true,
         snackbar: false,
+        timeout: 0,
         name: '',
         subdivision_id: '',
         designation: '',
@@ -124,9 +147,18 @@
         mobile: '',
         levels:[],
         sublevels:[],
+        subdivisions:[],
+        pplevels:[
+          {name: 'OC', code: 'OC'},
+          {name: 'HC', code: 'HC'},
+          {name: 'DEO', code: 'DEO'}
+        ],
         user_level : '',
         user_sublevel : '',
+        user_pplevel:'',
         makedisable: true,
+        makedisable_subdiv: true,
+        makedisable_ppcell:true,
         aadhaar : '',
         show_message: false,
         message_type: "",
@@ -188,6 +220,8 @@
         level : this.user_level,
         sub_level : this.user_sublevel,
         aadhaar : this.aadhaar,
+        ppcell : this.user_pplevel,
+        subdiv_block_id : this.subdivision_id
         })
         .then(response => {
           this.name= '',
@@ -197,6 +231,11 @@
           this.user_level = '04',
           this.user_sublevel = '',
           this.aadhaar = '',
+          this.subdivision_id='',
+          this.makedisable_ppcell=true,
+          this.makedisable_subdiv=true,
+          this.sublevels=[],
+          this.subdivisions=[],
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
@@ -223,23 +262,102 @@
           })
       },
       getSubuserlevels(level){ console.log(level)
-      axios.get('/sublevel/'+level)
-      .then((response, data) => {
-       if(response.data.length === 0 ) {
-        this.makedisable=true
-       }else{
-         this.makedisable=false
-         this.sublevels=[]
-        response.data.forEach(item => {
-            this.sublevels.push(item)
-          });
-       }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+          if(level === '07' || level === '06'){
+            this.makedisable=true
+            this.sublevels=[]
+            this.subdivisions=[]
+                axios.get('/sublevel/06')
+              .then((response, data) => {
+              if(response.data.length === 0 ) {
+                this.makedisable_subdiv=true
+              }else{
 
-      }
+                this.subdivisions=[]
+                response.data.forEach(item => {
+                    this.subdivisions.push(item)
+                  });
+              }
+              this.makedisable_subdiv=false
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+          else{
+            this.makedisable=true
+            this.makedisable_ppcell=true
+
+            this.sublevels=[]
+                this.makedisable_subdiv=true
+              this.subdivisions=[]
+              axios.get('/sublevel/'+level)
+              .then((response, data) => {
+                console.log('data - '+response.data.length)
+              if(response.data.length === 0 ) {
+                this.makedisable=true
+              }else{
+
+                this.sublevels=[]
+                response.data.forEach(item => {
+                    this.sublevels.push(item)
+                  });
+                  this.makedisable=false
+              }
+
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+      },
+      getBDO(id,level){ console.log(level)
+        if(level === '07'){
+          axios.get('/getbdo/'+id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+
+            this.sublevels=[]
+            response.data.forEach(item => {
+                this.sublevels.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
+      getppcelllevels(level){ console.log('ppcell - '+level)
+        if(level === '06'){
+
+            this.subdivisions=[]
+                axios.get('/sublevel/06')
+              .then((response, data) => {
+              if(response.data.length === 0 ) {
+                this.makedisable_subdiv=true
+              }else{
+
+                this.subdivisions=[]
+                response.data.forEach(item => {
+                    this.subdivisions.push(item)
+                  });
+              }
+              this.makedisable_subdiv=false
+              this.makedisable_ppcell=false
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+          else if(level === 'DT'){
+            this.makedisable_ppcell=false
+            this.makedisable_subdiv=true
+             this.subdivisions=[]
+          }
+      },
     },
     computed: {
 

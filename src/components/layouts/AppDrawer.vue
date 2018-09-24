@@ -54,9 +54,9 @@
     computed: {
       loadmenu:function(){
 
-        console.log('User level - '+this.getuser.level)
+        //console.log('User level - '+this.getuser.level)
 
-        console.log(this.getmenu.length)
+        //console.log(this.getmenu.length)
         this.getmenu.forEach(item => {
            this.menus.push(item)
           })
