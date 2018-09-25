@@ -199,14 +199,22 @@ export default [
         '@/components/PersonnelEdit'
       )
     },
-    ,
     {
-      path: `/user/level`,
-      meta: {title:'User Level | Welcome to EMS'},
+      path: `/misreport`,
+      meta: {title:'See All Report | Welcome to EMS'},
       name: 'UserLevel',
       component: () => import(
 
-        '@/components/UserLevel'
+        '@/components/MisReport'
+      )
+    },
+    {
+      path: `/misreport/:id`,
+      meta: {title:'See All Report | Welcome to EMS'},
+      name: 'UserLevel',
+      component: () => import(
+
+        '@/components/MisreportSubdivision'
       )
     },
   ];
