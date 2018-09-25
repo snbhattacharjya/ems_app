@@ -29,6 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.district_id">
                   <td >{{ report.district_id }}</td>
                   <td ><router-link :to="{ path: 'misreport/'+report.district_id}">{{ report.name }}</router-link></td>

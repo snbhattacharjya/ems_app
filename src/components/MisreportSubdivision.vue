@@ -29,8 +29,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="report in reports" :prop="report" :key="report.name">
-                  <td ></td>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-for="report in reports" :prop="report" :key="report.subdivision_id">
+                  <td >{{ report.subdivision_id }}</td>
                   <td >{{ report.name }}</td>
                   <td >{{ report.party }}</td>
                   <td >{{ report.PR_M }}</td>
