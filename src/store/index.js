@@ -12,7 +12,8 @@ export default new Vuex.Store({
     user: [],
     menus :[],
     previllege:[],
-    dashboard:[]
+    dashboard:[],
+    election:[]
   },
   getters: {
     getAccessToken(state){
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     getDashboard(state){
       return state.dashboard
+    },
+    getElection(state){
+      return state.election
     }
   },
   actions: {
@@ -41,6 +45,7 @@ export default new Vuex.Store({
         context.commit('storeMenuDetails',response.data.menu)
         context.commit('storePrevillegeDetails',response.data.previllege)
         context.commit('storeDashboard',response.data.dashboard)
+        context.commit('storeElection',response.data.election)
         //console.log(response.data)
       })
       .catch(error => {
@@ -77,12 +82,16 @@ export default new Vuex.Store({
     storeDashboard(state, dashboard){
       state.dashboard = dashboard
     },
+    storeElection(state, election){
+      state.election = election
+    },
     destroyToken(state){
       state.token = ''
       state.user = ''
       state.menus = ''
       state.previllege = ''
       state.dashboard = ''
+      state.election= ''
     }
   }
 

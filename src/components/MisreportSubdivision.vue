@@ -1,19 +1,19 @@
 <template>
   <div id="pageDashboard">
     <v-container fluid>
-      <section>
-        <v-layout row wrap  class="my-5">
-          <v-flex xs12>
-            <h1 class="headline">MIS Report (Subdivisionwise)</h1>
+      <section id="report">
+        <h1 class="headline" >MIS Report for {{district}} <v-spacer></v-spacer>As On {{ new Date().toLocaleString() }} </h1><v-spacer></v-spacer><v-btn fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Subdivisionwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
+        <v-layout row wrap>
+          <v-flex xs12 class="my-5">
+            <h1 class="headline">Subdivisionwise Male</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
                 <th rowspan="2"><strong>Subdiv ID</strong></th>
                 <th rowspan="2"><strong>Subdivision</strong></th>
-                <th rowspan="2"><strong>Subdivisionwise<br> Requirement</strong></th>
-                <th colspan="5"><strong>Male</strong></th>
-                <th colspan="5"><strong>Female</strong></th>
+                <th rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th colspan="5"><strong>Available Male</strong></th>
                 </tr>
                 <tr>
                 <th>PR</th>
@@ -21,6 +21,39 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-for="report in reports" :prop="report" :key="report.subdivision_id">
+                  <td class="nopad">{{ report.subdivision_id }}</td>
+                  <td class="nopad">{{ report.name }}</td>
+                  <td class="nopad">{{ report.male_party }}</td>
+                  <td class="nopad">{{ report.PR_M }}</td>
+                  <td class="nopad">{{ report.P1_M }}</td>
+                  <td class="nopad">{{ report.P2_M }}</td>
+                  <td class="nopad">{{ report.P3_M }}</td>
+                  <td class="nopad">{{ report.MO_M }}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-flex>
+          <v-flex xs12>
+            <h1 class="headline">Subdivisionwise Female</h1>
+            <v-layout row wrap >
+              <table class="v-datatable v-table dark" style=""  border=1>
+                <thead>
+                <tr>
+                <th rowspan="2"><strong>Subdiv ID</strong></th>
+                <th rowspan="2"><strong>Subdivision</strong></th>
+                <th rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th colspan="5"><strong>Available Female</strong></th>
+                </tr>
+                <tr>
+
                 <th>PR</th>
                 <th>P1</th>
                 <th>P2</th>
@@ -31,19 +64,15 @@
                 <tbody>
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.subdivision_id">
-                  <td >{{ report.subdivision_id }}</td>
-                  <td >{{ report.name }}</td>
-                  <td >{{ report.party }}</td>
-                  <td >{{ report.PR_M }}</td>
-                  <td >{{ report.P1_M }}</td>
-                  <td >{{ report.P2_M }}</td>
-                  <td >{{ report.P3_M }}</td>
-                  <td >{{ report.MO_M }}</td>
-                  <td >{{ report.PR_F }}</td>
-                  <td >{{ report.P1_F }}</td>
-                  <td >{{ report.P2_F }}</td>
-                  <td >{{ report.P3_F }}</td>
-                  <td >{{ report.MO_F }}</td>
+                  <td class="nopad">{{ report.subdivision_id }}</td>
+                  <td class="nopad">{{ report.name }}</td>
+                  <td class="nopad">{{ report.female_party }}</td>
+
+                  <td class="nopad">{{ report.PR_F }}</td>
+                  <td class="nopad">{{ report.P1_F }}</td>
+                  <td class="nopad">{{ report.P2_F }}</td>
+                  <td class="nopad">{{ report.P3_F }}</td>
+                  <td class="nopad">{{ report.MO_F }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -71,6 +100,7 @@ export default {
       reports:[],
       search: '',
       tableloading:false,
+      district:'',
     }
   },
 
@@ -83,9 +113,10 @@ export default {
     this.tableloading=true
     axios.get('/subdivisionreport/'+this.$route.params.id)
       .then((response, data) => { //console.log(response.data['available'])
-       response.data.forEach(item => { //console.log(item)
+       response.data['available'].forEach(item => { //console.log(item)
           this.reports.push(item)
         });
+        this.district=response.data['district']
         this.tableloading=false
       })
       .catch(error => {
@@ -95,7 +126,10 @@ export default {
 }
 </script>
 <style scoped>
+table{table-layout: fixed; width: 100%;}
+table tr td.nopad{ padding: 0 !important; text-align: center;}
 table th tr, .application .theme--light.v-table tbody tr:not(:last-child), .theme--light .v-table tbody tr:not(:last-child){ border-bottom: 1px solid ! important;}
-.application .theme--light.v-table thead th, .theme--light .v-table thead th{ color: rgba(0,0,0,1);}
+.application .theme--light.v-table thead th, .theme--light .v-table thead th{ color: rgba(0,0,0,1); padding: 0 10px !important;  border-bottom: 1px solid;}
+table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child){ padding: 0 24px;}
 </style>
 

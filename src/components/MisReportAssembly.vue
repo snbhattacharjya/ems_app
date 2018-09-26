@@ -1,0 +1,123 @@
+<template>
+  <div id="pageDashboard">
+    <v-container fluid>
+      <section id="report">
+        <h1 class="headline" >MIS Report for {{ this.district}} <v-spacer></v-spacer>As On {{ new Date().toLocaleString() }}</h1><v-btn fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: ''  ,css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
+        <v-layout row wrap>
+          <v-flex xs12 class="my-5">
+            <v-layout row wrap >
+              <v-flex xs9>
+                <v-select
+                :items="districts"
+                v-model="district_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select district"
+                >
+              </v-select>
+              </v-flex>
+              <v-flex xs3>
+                <v-btn color="primary" @click="show" :disabled="disable_save">Show</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs12 >
+            <h1 class="headline">Assemblywise Report </h1>
+            <v-layout row wrap >
+              <table  class="v-datatable v-table dark my-5" id=""  border=1>
+                <thead>
+                <tr>
+                <th ><strong>Assembly ID</strong></th>
+                <th ><strong>Assembly Name</strong></th>
+                <th ><strong>Male Party Count</strong></th>
+                <th ><strong>Female Party Count</strong></th>
+                </tr>
+
+                </thead>
+                <tbody>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-for="report in reports" :prop="report" :key="report.id">
+                  <td class="nopad">{{ report.id }}</td>
+                  <td class="nopad">{{ report.name }}</td>
+                  <td class="nopad">{{ report.male_party_count }}</td>
+                  <td class="nopad">{{ report.female_party_count }}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-flex>
+        </v-layout>
+      </section>
+    </v-container>
+
+  </div>
+
+</template>
+
+
+
+
+<script>
+export default {
+  name: 'MisReportAssembly',
+  props: {
+
+  },
+  data(){
+    return {
+      reports:[],
+      districts:[],
+      district:'',
+      district_id:'',
+      search: '',
+      tableloading:false,
+      disable_save:false,
+    }
+  },
+
+  methods:{
+     show:function(){
+       this.tableloading=true
+       this.disable_save=true
+        axios.get('/assemblyreport/'+this.district_id)
+          .then((response, data) => { //console.log(response.data['available'])
+          this.reports=[]
+          response.data['available'].forEach(item => { //console.log(item)
+              this.reports.push(item)
+            });
+            this.district=response.data['district']
+            this.tableloading=false
+            this.disable_save=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+     }
+
+  },
+
+  created(){
+
+    axios.get('/getdistrict')
+      .then((response, data) => { //console.log(response.data['available'])
+       response.data.forEach(item => { //console.log(item)
+          this.districts.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+}
+</script>
+<style scoped>
+table{table-layout: fixed; width: 100%;}
+table tr td.nopad{ padding: 0 !important; text-align: center;}
+table th tr, .application .theme--light.v-table tbody tr:not(:last-child), .theme--light .v-table tbody tr:not(:last-child){ border-bottom: 1px solid ! important;}
+.application .theme--light.v-table thead th, .theme--light .v-table thead th{ color: rgba(0,0,0,1); padding: 0 10px !important;    border-bottom: 1px solid;}
+table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child){ padding: 0 24px;}
+</style>
+

@@ -8,12 +8,14 @@ import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
 import VeeValidate from 'vee-validate'
 import store from './store'
+import printjs from 'print-js'
 
 
 Vue.use(Vuetify)
 Vue.use(VeeValidate)
 const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
+//Vue.use(printjs)
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://service.ems.test/api'
 window.axios = axios

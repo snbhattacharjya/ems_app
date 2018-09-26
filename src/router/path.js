@@ -200,21 +200,30 @@ export default [
       )
     },
     {
-      path: `/misreport`,
-      meta: {title:'See All Report | Welcome to EMS'},
-      name: 'UserLevel',
+      path: `/misreport/district`,
+      meta: {title:'See All Report for District | Welcome to EMS'},
+      name: 'MISReport District',
       component: () => import(
 
         '@/components/MisReport'
       )
     },
     {
-      path: `/misreport/:id`,
-      meta: {title:'See All Report | Welcome to EMS'},
-      name: 'UserLevel',
+      path: `/misreport/district/:id`,
+      meta: {title:'See All Report for Subdivision | Welcome to EMS'},
+      name: 'MISReportSubdivision',
       component: () => import(
 
         '@/components/MisreportSubdivision'
+      )
+    },
+    {
+      path: `/misreport/assembly`,
+      meta: {title:'See All Report for Assembly | Welcome to EMS'},
+      name: 'MISReport Assembly',
+      component: () => import(
+
+        '@/components/MisReportAssembly'
       )
     },
   ];

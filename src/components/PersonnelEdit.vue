@@ -15,6 +15,7 @@
                   :error-messages="errors.collect('office_id')"
                   data-vv-name="office_id"
                   :selected="office_id"
+                  :disabled=true
                 ></office-list>
               </template>
               <v-stepper v-model="personnel_form" vertical>
