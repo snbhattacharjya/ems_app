@@ -28,16 +28,18 @@
               <table  class="v-datatable v-table dark my-5" id=""  border=1>
                 <thead>
                 <tr>
-                <th ><strong>Assembly ID</strong></th>
-                <th ><strong>Assembly Name</strong></th>
-                <th ><strong>Male Party Count</strong></th>
-                <th ><strong>Female Party Count</strong></th>
+                <th width="10%" ><strong>Serial No</strong></th>
+                <th width="10%"><strong>Assembly ID</strong></th>
+                <th width="30%" ><strong>Assembly Name</strong></th>
+                <th width="25%" ><strong>Male Party Count</strong></th>
+                <th width="25%"><strong>Female Party Count</strong></th>
                 </tr>
 
                 </thead>
                 <tbody>
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.id">
+                  <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{ report.id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.male_party_count }}</td>
@@ -72,6 +74,7 @@ export default {
       district:'',
       district_id:'',
       search: '',
+      count:1,
       tableloading:false,
       disable_save:false,
     }
@@ -85,7 +88,9 @@ export default {
           .then((response, data) => { //console.log(response.data['available'])
           this.reports=[]
           response.data['available'].forEach(item => { //console.log(item)
+              item['sl']=this.count
               this.reports.push(item)
+              this.count++
             });
             this.district=response.data['district']
             this.tableloading=false

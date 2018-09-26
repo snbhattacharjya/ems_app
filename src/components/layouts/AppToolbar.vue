@@ -6,11 +6,15 @@
         <v-avatar color="primary"><img src="/static/Election_Commission_of_India_Logo.png" alt="avatar"></v-avatar>
         <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link>
       </v-toolbar-title>
-      <v-toolbar-title class="ml-5">
-        <h1>{{getElection[0].name}} - {{getElection[0].year}}</h1>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
 
+
+      <v-spacer></v-spacer>
+      <v-toolbar-title class="ml-0 mr-5">
+        {{getElection[0].name}} - {{getElection[0].year}}
+      </v-toolbar-title>
+      <v-toolbar-title class="ml-5 mr-5">
+        {{ new Date().toLocaleString() }}
+      </v-toolbar-title>
         Welcome {{ getUser.name }}
         <v-menu bottom left>
 

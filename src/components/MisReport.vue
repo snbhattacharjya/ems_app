@@ -10,10 +10,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th rowspan="2"><strong>Dist ID</strong></th>
-                <th rowspan="2"><strong>District</strong></th>
-                <th rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
-                <th colspan="5"><strong>Available Male</strong></th>
+                <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
+                <th width="25%" rowspan="2"><strong>District</strong></th>
+                <th width="15%" rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th width="50%" colspan="5"><strong>Available Male</strong></th>
 
                 </tr>
                 <tr>
@@ -48,11 +48,11 @@
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>
                 <tr>
-                <th rowspan="2"><strong>Dist ID</strong></th>
-                <th rowspan="2"><strong>District</strong></th>
-                <th rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
+                <th width="25%" rowspan="2"><strong>District</strong></th>
+                <th width="15%" rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
 
-                <th colspan="5"><strong>Available Female</strong></th>
+                <th width="50%" colspan="5"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
 
