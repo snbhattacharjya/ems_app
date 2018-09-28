@@ -13,7 +13,8 @@ export default new Vuex.Store({
     menus :[],
     previllege:[],
     dashboard:[],
-    election:[]
+    election:[],
+    misreport:[]
   },
   getters: {
     getAccessToken(state){
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     },
     getElection(state){
       return state.election
+    },
+    getMisreport(state){
+      return state.misreport
     }
   },
   actions: {
@@ -63,6 +67,9 @@ export default new Vuex.Store({
       .catch(error => {
 
       })
+    },
+    storeMISreport(context,misdata){
+      context.commit('storeMisreport', misdata)
     }
 
   },
@@ -85,6 +92,9 @@ export default new Vuex.Store({
     storeElection(state, election){
       state.election = election
     },
+    storeMisreport(state,misdata){
+      state.misreport = misdata
+    },
     destroyToken(state){
       state.token = ''
       state.user = ''
@@ -92,6 +102,7 @@ export default new Vuex.Store({
       state.previllege = ''
       state.dashboard = ''
       state.election= ''
+      state.misreport= ''
     }
   }
 

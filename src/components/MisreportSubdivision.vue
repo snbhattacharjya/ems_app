@@ -12,7 +12,7 @@
                 <tr>
                 <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
                 <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
-                <th width="15%" rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
                 <th width="50%" colspan="5"><strong>Available Male</strong></th>
                 </tr>
                 <tr>
@@ -30,10 +30,10 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.male_party }}</td>
-                  <td class="nopad">{{ report.PR_M }}</td>
-                  <td class="nopad">{{ report.P1_M }}</td>
-                  <td class="nopad">{{ report.P2_M }}</td>
-                  <td class="nopad">{{ report.P3_M }}</td>
+                  <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
+                  <td class="nopad" :class="report.P1_M_class">{{ report.P1_M }}</td>
+                  <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
+                  <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
 
                   </tr>
@@ -49,7 +49,7 @@
                 <tr>
                 <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
                 <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
-                <th width="15%" rowspan="2"><strong>Requirement <br>of Polling <br>Personnel</strong></th>
+                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
                 <th width="50%" colspan="5"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
@@ -67,11 +67,10 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.female_party }}</td>
-
-                  <td class="nopad">{{ report.PR_F }}</td>
-                  <td class="nopad">{{ report.P1_F }}</td>
-                  <td class="nopad">{{ report.P2_F }}</td>
-                  <td class="nopad">{{ report.P3_F }}</td>
+                  <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
+                  <td class="nopad" :class="report.P1_F_class">{{ report.P1_F }}</td>
+                  <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
+                  <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad">{{ report.MO_F }}</td>
                   </tr>
                 </tbody>
@@ -101,11 +100,18 @@ export default {
       search: '',
       tableloading:false,
       district:'',
+      item_class:''
     }
   },
 
   methods:{
+    createclass:function(item,compare){
+      if(compare > item){this.item_class='red--text'}
+      else if(compare <= item){this.item_class='green--text'}
+      else{ this.item_class='green--text' }
 
+      return this.item_class
+    }
 
   },
 
@@ -114,6 +120,14 @@ export default {
     axios.get('/subdivisionreport/'+this.$route.params.id)
       .then((response, data) => { //console.log(response.data['available'])
        response.data['available'].forEach(item => { //console.log(item)
+       item.PR_M_class=this.createclass(item.PR_M,item.male_party)
+          item.P1_M_class=this.createclass(item.P1_M,item.male_party)
+          item.P2_M_class=this.createclass(item.P2_M,item.male_party)
+          item.P3_M_class=this.createclass(item.P3_M,item.male_party)
+          item.PR_F_class=this.createclass(item.PR_F,item.female_party)
+          item.P1_F_class=this.createclass(item.P1_F,item.female_party)
+          item.P2_F_class=this.createclass(item.P2_F,item.female_party)
+          item.P3_F_class=this.createclass(item.P3_F,item.female_party)
           this.reports.push(item)
         });
         this.district=response.data['district']

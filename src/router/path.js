@@ -226,4 +226,13 @@ export default [
         '@/components/MisReportAssembly'
       )
     },
+    {
+      path: `/change_password`,
+      meta: {title:'Change your password | Welcome to EMS'},
+      name: 'Change password',
+      component: () => import(
+
+        '@/components/ChangePassword'
+      )
+    },
   ];

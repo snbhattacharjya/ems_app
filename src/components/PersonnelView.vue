@@ -54,6 +54,7 @@
                 <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
                 <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
               </td>
+              <td>{{ props.item.updated_at=== null ?  "Not Updated": new Date(props.item.updated_at).toLocaleString()  }}</td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
               Your search for "{{ search }}" found no results.
@@ -87,7 +88,8 @@
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Permanent Address', value: 'permanent_address',align: 'left', sortable: false},
         { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Actions', value: 'name', sortable: false }
+        { text: 'Actions', value: 'name', sortable: false },
+        { text: 'Updated at', value: 'updated_at', sortable: false }
       ],
       personnels: [],
       editedIndex: -1,

@@ -87,6 +87,7 @@ export default {
         axios.get('/assemblyreport/'+this.district_id)
           .then((response, data) => { //console.log(response.data['available'])
           this.reports=[]
+          this.count=1
           response.data['available'].forEach(item => { //console.log(item)
               item['sl']=this.count
               this.reports.push(item)

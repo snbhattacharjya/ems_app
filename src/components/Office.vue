@@ -201,6 +201,10 @@
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
+                <label><h3>DECLARATION</h3></label>
+                <v-checkbox :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
+                :error-messages="errors.collect('agree')"
+                data-vv-name="agree"></v-checkbox>
 
             </v-form>
           </v-card-text>
@@ -270,6 +274,8 @@
         message_icon: "",
         message_text: "",
         disable_save: false,
+        agree:'',
+        agree_text:'Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.',
 
         dictionary: {
 
@@ -285,6 +291,9 @@
             },
             block_muni_id: {
               required: 'Block/Municipality is required'
+            },
+            agree: {
+              required: 'You must give the declartion on the above information'
             }
           }
         }
@@ -333,6 +342,7 @@
           total_staff: this.total_staff,
           male_staff: this.male_staff,
           female_staff: this.female_staff,
+          agree: this.agree,
         })
         .then(response => {
           //this.$refs.form.reset()
@@ -359,3 +369,7 @@
 
   }
 </script>
+
+<style scoped>
+.theme--light .v-label{ color: rgba(255, 255, 255,1) !important;}
+</style>

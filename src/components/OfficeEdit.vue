@@ -8,7 +8,7 @@
             <v-toolbar-title>Edit Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form id="form">
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
@@ -37,7 +37,7 @@
                 label="Designation of Head of Office"
                 type="text"
                 v-model="officer_designation"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
               ></v-text-field>
@@ -59,7 +59,7 @@
                 label="Post Office"
                 type="text"
                 v-model="post_office"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
               ></v-text-field>
@@ -209,12 +209,16 @@
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
-
+               <label><h3>DECLARATION</h3></label>
+              <v-checkbox :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
+                :error-messages="errors.collect('agree')"
+                data-vv-name="agree"></v-checkbox>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
+            <v-btn v-if="this.message_type === 'success'" fab dark small color="primary" onclick="printJS({ printable: 'form', type: 'html', header: 'Declaration',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
@@ -279,7 +283,8 @@
         message_icon: "",
         message_text: "",
         disable_save: false,
-
+        agree:'',
+        agree_text:'Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.',
         dictionary: {
 
           custom: {
@@ -294,6 +299,9 @@
             },
             block_muni_id: {
               required: 'Block/Municipality is required'
+            },
+            agree: {
+              required: 'You must give the declartion on the above information'
             }
           }
         }
@@ -379,9 +387,11 @@
           total_staff: this.total_staff,
           male_staff: this.male_staff,
           female_staff: this.female_staff,
+          agree: this.agree,
         })
         .then(response => {
           //this.$refs.form.reset()
+          this.agree=false
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'

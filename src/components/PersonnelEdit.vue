@@ -54,7 +54,7 @@
                   label="Officer Aadhaar No (optional)"
                   type="text"
                   v-model="aadhaar"
-                  v-validate="'digits:12'"
+
                   :error-messages="errors.collect('aadhaar')"
                   data-vv-name="aadhaar"
                 ></v-text-field>
@@ -212,7 +212,7 @@
                     label="Email"
                     type="text"
                     v-model="email"
-                    v-validate="'required'"
+                    v-validate=""
                     :error-messages="errors.collect('email')"
                     data-vv-name="email"
                   ></v-text-field>
@@ -223,7 +223,7 @@
                     label="Phone"
                     type="text"
                     v-model="phone"
-                    v-validate="'required'"
+                    v-validate=""
                     :error-messages="errors.collect('phone')"
                     data-vv-name="phone"
                   ></v-text-field>
