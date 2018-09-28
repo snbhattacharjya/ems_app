@@ -121,12 +121,7 @@ export default {
 
   created(){
     this.tableloading=true
-    if(getmisreport !=''){
-      console.log(getmisreport)
-      this.tableloading=false
-    }
-    else{
-      axios.get('/report')
+    axios.get('/report')
       .then((response, data) => { //console.log(response.data['available'])
        response.data.forEach(item => { //console.log(item)
           item.PR_M_class=this.createclass(item.PR_M,item.male_party)
@@ -147,11 +142,6 @@ export default {
       .catch(error => {
         console.log(error)
       })
-    }
-
-  },
-  getmisreport:function(){
-    return this.$store.getters.getMisreport
   }
 }
 </script>
