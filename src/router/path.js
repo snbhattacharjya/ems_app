@@ -105,6 +105,15 @@ export default [
       )
     },
     {
+      path: '/downloads',
+      meta: { breadcrumb: true,title:'Downloads | Welcome to EMS' },
+      name: 'Downloads',
+      component: () => import(
+
+       '@/components/Downloads'
+      )
+    },
+    {
       path: '/dashboard/help',
       meta: { breadcrumb: true,title:'Help | Welcome to EMS' },
       name: 'Help',
