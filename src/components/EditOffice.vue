@@ -37,7 +37,7 @@
                 label="Designation of Head of Office"
                 type="text"
                 v-model="officer_designation"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
               ></v-text-field>
