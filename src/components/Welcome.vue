@@ -17,7 +17,7 @@
               class="blue lighten-2 mt-5"
               dark
               large
-              href="/signin"
+             to='/signin'
             >
               Get Started
             </v-btn>
@@ -67,7 +67,7 @@
               class="blue lighten-2 mt-5"
               dark
               large
-              href="/signin"
+              to='/signin'
             >
               Get Started
             </v-btn>
