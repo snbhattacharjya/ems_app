@@ -5,10 +5,10 @@
               <v-layout row wrap fill-height>
 
                   <v-flex xs12 sm6 md3 >
-                    <v-card color="pink" class="white--text" fill-height elevation-6>
+                    <v-card color="green" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">business</i>
-                        <div class="headline pb-5">As per Office PP1</div>
+                        <h1 class="pb-5">As per Office PP1</h1>
 
                       </v-card-title>
                       <v-divider></v-divider>
@@ -30,7 +30,7 @@
                   </v-flex>
 
                   <v-flex xs12 sm6 md3 >
-                    <v-card color="purple" class="white--text" fill-height elevation-6>
+                    <v-card color="blue" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">face</i>
                         <h1>Total Female Registerd</h1>

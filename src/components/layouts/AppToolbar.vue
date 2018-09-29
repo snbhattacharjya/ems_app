@@ -15,7 +15,7 @@
       <v-toolbar-title class="ml-5 mr-5">
         {{ new Date().toLocaleString() }}
       </v-toolbar-title>
-        Welcome {{ getUser.name }}
+        Welcome : {{ getUser.name }} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
 
             <v-btn

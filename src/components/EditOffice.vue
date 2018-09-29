@@ -372,6 +372,7 @@
           total_staff: this.total_staff,
           male_staff: this.male_staff,
           female_staff: this.female_staff,
+          agree: this.agree,
         })
         .then(response => {
           //this.$refs.form.reset()
