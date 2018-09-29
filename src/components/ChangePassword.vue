@@ -1,8 +1,12 @@
 <template>
 <v-container fluid>
     <v-layout align-center justify-center>
-      <v-flex xs12>
 
+
+      <v-flex xs6>
+<v-alert :value="firstlogin" type="error">
+      Password change is mandatory after first login.
+      </v-alert>
         <v-card class="elevation-6">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Change Password</v-toolbar-title>
@@ -17,7 +21,7 @@
                   type="password"
                   v-model="old_password"
                   v-validate="'required'"
-                  data-vv-name="password"
+                  data-vv-name="old_password"
                   :error-messages="errors.collect('old_password')"
                 ></v-text-field>
 
@@ -29,7 +33,7 @@
                   label="New Password"
                   type="password"
                   v-model="new_password"
-                  v-validate="'required'"
+                  v-validate="'required|min:8|verify_password'"
                   data-vv-name="new_password"
                   :error-messages="errors.collect('new_password')"
                 ></v-text-field>
@@ -48,7 +52,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+            <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validatepassword" :disabled="disable_save">Save</v-btn>
@@ -63,15 +67,6 @@
 
   export default{
     name: 'ChangePassword',
-
-    components: {
-
-    },
-
-    $_veeValidate: {
-      validator: 'new'
-    },
-
     data (){
       return {
         valid: true,
@@ -84,35 +79,48 @@
         message_icon: "",
         message_text: "",
         disable_save: false,
-
+        firstlogin:false,
         dictionary: {
 
           custom: {
-            office_name: {
-              required: 'Office Name can not be empty',
+            old_password: {
+              required: 'Old password can not be empty'
             },
-            identification_code: {
-              required: 'Identification Code is required'
+            new_password: {
+              required: 'New password is required',
+              min:'Password must be at least 8 characters '
             },
-            subdivision_id: {
-              required: 'Subdivision is required'
-            },
-            block_muni_id: {
-              required: 'Block/Municipality is required'
+            confirm_password: {
+              required: 'Confirm password is required',
+              confirmed:'Password mismatch'
             }
           }
         }
+      }
+    },
+    $_veeValidate: {
+      validator: 'new'
+    },
+    beforeUpdate() {
 
+      if(this.getuser.change_password === 0){
+          this.firstlogin=true
       }
     },
     created(){
-
     },
     mounted () {
-      //this.$validator.localize('en', this.dictionary)
+      this.$validator.localize('en', this.dictionary)
+      this.$validator.extend('verify_password', {
+        getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. , .$ @ # & ? etc)`,
+        validate: value => {
+            var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+            return strongRegex.test(value);
+        }
+       })
     },
-    methods: {
-      change_password () {
+    methods:{
+      change_password:function () {
 
         axios.post('/changepassword',{
           old_password: this.old_password,
@@ -120,13 +128,25 @@
         })
         .then((response, data) => {
 
+          if(this.getuser.change_password === 0){
+            this.$store.dispatch('destroyToken')
+            this.$router.replace("/signin")
+          }
+          else if(this.getuser.change_password === 1){
+            this.old_password=''
+            this.new_password=''
+            this.confirm_password=''
+            this.showMessage('Password Has Been Changed')
+          }
         })
         .catch(error => {
-          console.log(error)
-          this.showError(error)
+          this.old_password=''
+            this.new_password=''
+            this.confirm_password=''
+          this.showError(error.response.data)
         })
       },
-      validatepassword(){
+      validatepassword:function(){
         this.disable_save = true
         this.$validator.validate()
           .then(result => {
@@ -134,18 +154,29 @@
             this.disable_save = false
           })
       },
-      showError(error){
+      showError:function(error){
         this.show_message = true
         this.message_type = 'error'
         this.message_icon = 'warning'
         this.message_text = error
         this.snackbar =true
       },
+      showMessage:function(msg){
+        this.show_message = true
+        this.message_type = 'success'
+        this.message_icon = 'success'
+        this.message_text = msg
+        this.snackbar =true
+      },
 
     },
-    computed: {
+    computed:{
+       getuser:function(){
+          return this.$store.getters.getUser
+       },
+    },
 
-    }
+
 
   }
 </script>

@@ -57,7 +57,8 @@
     $_veeValidate: {
       validator: 'new'
     },
-
+    beforeUpdate(){
+    },
     methods: {
       login(){
 
@@ -92,6 +93,12 @@
         })
 
       }
-    }
+
+    },
+    computed:{
+      getmenu:function(){
+          return this.$store.getters.getMenu
+       }
+    },
   }
 </script>

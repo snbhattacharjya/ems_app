@@ -49,7 +49,7 @@
 
     },
     beforeUpdate(){
-      this.loadmenu()
+        this.loadmenu()
     },
     computed: {
       loadmenu:function(){

@@ -39,7 +39,7 @@
           <v-icon @click="logout">exit_to_app</v-icon>
 
     </v-toolbar>
-    <app-drawer :drawer="show"></app-drawer>
+    <app-drawer v-if="show"></app-drawer>
     <!-- <v-navigation-drawer class="grey lighten-3" :clipped="true" app v-model="drawer">
   <v-divider></v-divider>
   <v-list dense class="pt-1">
@@ -64,6 +64,17 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         ]
 
       }
+    },
+    beforeUpdate(){
+
+        // console.log('Pasword = '+this.getUser.change_password)
+      if(this.getUser.change_password === 0){
+        this.$router.replace("/change_password")
+        this.show=false
+        }
+        else if(this.getUser.change_password === 1){
+        this.show=true
+        }
     },
     created(){
 

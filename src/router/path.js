@@ -63,6 +63,10 @@ export default [
           title:'Login | Welcome to EMS'
         },
         name: 'Signin',
+        beforeEnter: (to, from, next) => {
+          //console.log('from -'+this.$route.redirectedFrom)
+          next()
+        },
         component: () => import(
 
           '@/components/Signin.vue'

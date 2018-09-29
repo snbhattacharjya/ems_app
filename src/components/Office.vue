@@ -209,7 +209,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-snackbar v-model="snackbar" :multi-line="false" :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+            <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>

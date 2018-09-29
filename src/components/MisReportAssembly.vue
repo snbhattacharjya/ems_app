@@ -37,7 +37,7 @@
 
                 </thead>
                 <tbody>
-                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingtxt}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{ report.id }}</td>
@@ -77,29 +77,49 @@ export default {
       count:1,
       tableloading:false,
       disable_save:false,
+      loadingtxt:'Loading...',
+      dist_old:''
     }
   },
 
   methods:{
      show:function(){
-       this.tableloading=true
-       this.disable_save=true
-        axios.get('/assemblyreport/'+this.district_id)
-          .then((response, data) => { //console.log(response.data['available'])
+       if(this.dist_old != '' && this.district_id === this.dist_old){
+          console.log('same district')
+
+       }
+       else{
+          this.dist_old=this.district_id
+          this.tableloading=true
+          this.disable_save=true
           this.reports=[]
           this.count=1
-          response.data['available'].forEach(item => { //console.log(item)
-              item['sl']=this.count
-              this.reports.push(item)
-              this.count++
-            });
-            this.district=response.data['district']
-            this.tableloading=false
-            this.disable_save=false
-          })
-          .catch(error => {
-            console.log(error)
-          })
+          this.loadingtxt='Loading...'
+            axios.get('/assemblyreport/'+this.district_id)
+              .then((response, data) => { console.log(response.data['available'].length)
+                if(response.data['available'].length === 0){
+
+                  this.loadingtxt='No data found'
+                  this.disable_save=false
+
+                }
+                else{
+
+                  response.data['available'].forEach(item => { //console.log(item)
+                      item['sl']=this.count
+                      this.reports.push(item)
+                      this.count++
+                    });
+                    this.district=response.data['district']
+                    this.tableloading=false
+                    this.disable_save=false
+                }
+              })
+              .catch(error => {
+                console.log(error)
+              })
+       }
+
      }
 
   },
