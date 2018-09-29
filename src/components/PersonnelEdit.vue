@@ -115,6 +115,14 @@
                   :selected="language_id"
                 ></language-list>
 
+                  <remark-list
+                  v-model="remark_id"
+                  v-validate="'required'"
+                  data-vv-name="remark_id"
+                  :error="errors.collect('remark_id')"
+                  :selected="remark_id"
+                ></remark-list>
+
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
 
                 </v-stepper-content>
@@ -363,6 +371,7 @@
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
+                    v-model="confirm_bank_account_no"
                     v-validate="'confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
@@ -393,6 +402,7 @@ import QualificationList from '@/components/QualificationList'
 import LanguageList from '@/components/LanguageList'
 import BlockMuniList from '@/components/BlockMuniList'
 import AssemblyList from '@/components/AssemblyList'
+import RemarkList from '@/components/RemarkList'
 
   export default{
     name: 'PersonnelEdit',
@@ -402,6 +412,7 @@ import AssemblyList from '@/components/AssemblyList'
       LanguageList,
       BlockMuniList,
       AssemblyList,
+      RemarkList,
     },
     $_veeValidate: {
       validator: 'new'
@@ -420,6 +431,7 @@ import AssemblyList from '@/components/AssemblyList'
         gender: '',
         qualification_id: '',
         language_id: '',
+        remark_id: '',
         scale: '',
         basic_pay: 0,
         grade_pay: 0,
@@ -508,6 +520,7 @@ import AssemblyList from '@/components/AssemblyList'
           this.dob= item.dob,
           this.qualification_id= item.qualification_id,
           this.language_id= item.language_id,
+          this.remark_id= item.remark_id,
           this.scale= item.scale,
           this.basic_pay= item.basic_pay,
           this.grade_pay= item.grade_pay,
@@ -542,15 +555,16 @@ import AssemblyList from '@/components/AssemblyList'
         this.disable_save = true
         this.$validator.validate()
           .then(result => {
-            result ? this.savePersonnel() : this.showError()
+            result ? this.savePersonnel() : this.showError('invalid')
             this.disable_save = false
           })
       },
-      showError(){
+      showError(txt){
         this.show_message = true
         this.message_type = 'error'
         this.message_icon = 'warning'
-        this.message_text = 'Error Occurred!!!'
+        if(txt === 'invalid'){this.message_text = 'Validation failed. Pleae check all fields again'}
+        else{this.message_text = 'Server Error Occured !'}
         this.snackbar =true
       },
       savePersonnel(){
@@ -563,6 +577,7 @@ import AssemblyList from '@/components/AssemblyList'
           dob: this.dob,
           qualification_id: this.qualification_id,
           language_id: this.language_id,
+          remark_id:this.remark_id,
           scale: this.scale,
           basic_pay: this.basic_pay,
           grade_pay: this.grade_pay,
