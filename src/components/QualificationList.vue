@@ -39,6 +39,7 @@ export default {
     axios.get('/qualifications')
       .then((response, data) => {
        response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
           this.qualifications.push(item)
         });
       })

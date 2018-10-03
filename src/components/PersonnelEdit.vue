@@ -48,7 +48,7 @@
                   data-vv-name="designation"
                 ></v-text-field>
 
-                <v-text-field
+                <!-- <v-text-field
                   prepend-icon="fingerprint"
                   name="aadhaar"
                   label="Officer Aadhaar No (optional)"
@@ -57,7 +57,7 @@
 
                   :error-messages="errors.collect('aadhaar')"
                   data-vv-name="aadhaar"
-                ></v-text-field>
+                ></v-text-field> -->
 
                 <v-menu
                   ref="dob_menu"
@@ -83,7 +83,10 @@
                     :error-messages="errors.collect('dob')"
                     data-vv-name="dob"
                   ></v-text-field>
-                  <v-date-picker v-model="dob" @input="$refs.dob_menu.save(dob)"></v-date-picker>
+                  <v-date-picker v-model="dob"
+                  min="1950-01-01"
+                  :max="moment().subtract(18,'years').format('YYYY-MM-DD')"
+                  ></v-date-picker>
                 </v-menu>
 
                 <v-select

@@ -7,7 +7,7 @@
       prepend-icon="list"
       label="Subdivision"
       :error-messages="error"
-      @input="$emit('inputsub',$event)"
+      @input="$emit('input',$event)"
 
     >
     </v-select>
@@ -40,6 +40,7 @@ export default {
     axios.get('/subdivisions')
       .then((response, data) => {
        response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
           this.subdivisions.push(item)
         });
 

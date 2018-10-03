@@ -13,7 +13,7 @@
         {{getElection[0].name}} - {{getElection[0].year}}
       </v-toolbar-title>
       <v-toolbar-title class="ml-5 mr-5">
-        {{ new Date().toLocaleString() }}
+        {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}}
       </v-toolbar-title>
         Welcome : {{ getUser.name }} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
@@ -57,7 +57,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
       return {
         username: '',
         show:true,
-        //drawer:null,
+        datetime:'',
         items: [
           {title: 'Profile', path: '/#'},
           {title: 'Settings', path: '/#'}
@@ -66,7 +66,6 @@ import AppDrawer from '@/components/layouts/AppDrawer'
       }
     },
     beforeUpdate(){
-
         // console.log('Pasword = '+this.getUser.change_password)
       if(this.getUser.change_password === 0){
         this.$router.replace("/change_password")

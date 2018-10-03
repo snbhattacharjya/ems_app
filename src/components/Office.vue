@@ -8,7 +8,7 @@
             <v-toolbar-title>Create New Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form autocomplete="off">
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
@@ -18,6 +18,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -37,7 +38,7 @@
                 label="Designation of Head of Office"
                 type="text"
                 v-model="officer_designation"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
               ></v-text-field>
@@ -59,9 +60,10 @@
                 label="Post Office"
                 type="text"
                 v-model="post_office"
-                v-validate="'required|alpha'"
+                v-validate="'required'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
+
               ></v-text-field>
 
               <v-text-field
@@ -75,7 +77,7 @@
                 data-vv-name="pin"
               ></v-text-field>
 
-              <subdivision-list
+             <subdivision-list
                 v-model="subdivision_id"
                 v-validate="'required'"
                 data-vv-name="subdivision_id"
@@ -292,6 +294,33 @@
             block_muni_id: {
               required: 'Block/Municipality is required'
             },
+            officer_designation: {
+              required: 'Officer Designation is required'
+            },
+            officer_address: {
+              required: 'Officer Address is required'
+            },
+            post_office: {
+              required: 'Post Office is required'
+            },
+            police_station_id: {
+              required: 'Police Station is required'
+            },
+            ac_id: {
+              required: 'Assembly Constituency is required'
+            },
+            pc_id: {
+              required: 'Parliamentary Constituency is required'
+            },
+            pc_id: {
+              required: 'Parliamentary Constituency is required'
+            },
+            category_id: {
+              required: 'Office Category is required'
+            },
+            institute_id: {
+              required: 'Office Institute is required'
+            },
             agree: {
               required: 'You must give the declartion on the above information'
             }
@@ -345,7 +374,28 @@
           agree: this.agree,
         })
         .then(response => {
-          //this.$refs.form.reset()
+        this.office_name= ''
+        this.identification_code= ''
+        this.subdivision_id= ''
+        this.block_muni_id= ''
+        this.office_address= ''
+        this.officer_designation= ''
+        this.post_office= ''
+        this.pin= ''
+        this.police_station_id= ''
+        this.ac_id= ''
+        this.pc_id= ''
+        this.category_id= ''
+        this.institute_id= ''
+        this.email= ''
+        this.phone= ''
+        this.mobile= ''
+        this.fax= ''
+        this.male_staff= 0
+        this.female_staff= 0
+        this.total_staff= 0
+        this.agree=''
+
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
@@ -364,6 +414,13 @@
     computed: {
       calculateTotalStaff(){
         this.total_staff = this.male_staff + this.female_staff
+      },
+      uppercase:function(){
+        this.office_name=this.office_name.toUpperCase()
+        this.identification_code= this.identification_code.toUpperCase()
+        this.officer_designation=this.officer_designation.toUpperCase()
+        this.office_address=this.office_address.toUpperCase()
+        this.post_office=this.post_office.toUpperCase()
       }
     }
 

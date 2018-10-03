@@ -97,7 +97,7 @@
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
-              <v-text-field
+              <!-- <v-text-field
                   prepend-icon="fingerprint"
                   name="aadhaar"
                   label="User Aadhaar No (optional)"
@@ -106,7 +106,7 @@
                   v-validate="'digits:12'"
                   :error-messages="errors.collect('aadhaar')"
                   data-vv-name="aadhaar"
-                ></v-text-field>
+                ></v-text-field> -->
 
             </v-form>
           </v-card-text>
@@ -219,7 +219,7 @@
         mobile: this.mobile,
         level : this.user_level,
         sub_level : this.user_sublevel,
-        aadhaar : this.aadhaar,
+        //aadhaar : this.aadhaar,
         ppcell : this.user_pplevel,
         subdiv_block_id : this.subdivision_id
         })
@@ -230,7 +230,7 @@
           this.mobile= '',
           this.user_level = '04',
           this.user_sublevel = '',
-          this.aadhaar = '',
+          //this.aadhaar = '',
           this.subdivision_id='',
           this.makedisable_ppcell=true,
           this.makedisable_subdiv=true,

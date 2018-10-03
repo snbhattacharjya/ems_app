@@ -159,6 +159,24 @@ export default [
       )
     },
     {
+      path: `/print/pp1/:id`,
+      meta: {title:'Print PP1 Data | Welcome to EMS'},
+      name: 'PrintPP1Data',
+      component: () => import(
+
+        '@/components/PrintPP1Data'
+      )
+    },
+    {
+      path: `/print/pp2/:id`,
+      meta: {title:'Print PP2 Data | Welcome to EMS'},
+      name: 'PrintPP2Data',
+      component: () => import(
+
+        '@/components/PrintPP2Data'
+      )
+    },
+    {
       path: '/personnel/list',
       meta: {title:'View Personnel | Welcome to EMS'},
       name: 'Viewpersonnel',

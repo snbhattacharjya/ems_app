@@ -58,6 +58,7 @@
 
         //console.log(this.getmenu.length)
         this.getmenu.forEach(item => {
+
            this.menus.push(item)
           })
       },

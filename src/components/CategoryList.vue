@@ -39,6 +39,7 @@ export default {
     axios.get('/categories')
       .then((response, data) => {
        response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
           this.categories.push(item)
         });
       })

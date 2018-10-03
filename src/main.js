@@ -9,8 +9,9 @@ import axios from 'axios'
 import VeeValidate from 'vee-validate'
 import store from './store'
 import printjs from 'print-js'
+import moment from 'moment'
 
-
+Vue.prototype.moment = moment
 Vue.use(Vuetify)
 Vue.use(VeeValidate)
 const VueScrollTo = require('vue-scrollto')

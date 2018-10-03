@@ -8,7 +8,7 @@
             <v-toolbar-title>Edit Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form id="form">
+            <v-form id="form" autocomplete="off">
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
@@ -18,6 +18,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -59,7 +60,7 @@
                 label="Post Office"
                 type="text"
                 v-model="post_office"
-                v-validate="'required'"
+                v-validate="'required|alpha'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
               ></v-text-field>
@@ -218,7 +219,7 @@
           <v-card-actions>
             <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
-            <v-btn v-if="this.message_type === 'success'" fab dark small color="primary" onclick="printJS({ printable: 'form', type: 'html', header: 'Declaration',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
+            <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.office_id"><v-icon dark>print</v-icon></v-btn></label>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
@@ -410,6 +411,13 @@
     computed: {
       calculateTotalStaff(){
         this.total_staff = this.male_staff + this.female_staff
+      },
+      uppercase:function(){
+        this.office_name=this.office_name.toUpperCase()
+        this.identification_code= this.identification_code.toUpperCase()
+        this.officer_designation=this.officer_designation.toUpperCase()
+        this.office_address=this.office_address.toUpperCase()
+        this.post_office=this.post_office.toUpperCase()
       }
     }
 

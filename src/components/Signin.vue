@@ -17,6 +17,7 @@
                   v-validate="'required'"
                   data-vv-name="username"
                   :error-messages="errors.collect('username')"
+                  @input="uppercase"
                 ></v-text-field>
                 <v-text-field
                   id="password"
@@ -29,6 +30,8 @@
                   data-vv-name="password"
                   :error-messages="errors.collect('password')"
                 ></v-text-field>
+
+                <my-captcha :callSuccess="captchaOk" color="red"  resolve="digit"></my-captcha>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -43,6 +46,8 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha';
+import myCaptcha from 'vue-captcha'
   export default {
     name: 'Signin',
     data(){
@@ -53,13 +58,19 @@
         isHidden:true
       }
     },
-
+   components: {
+     VueRecaptcha,
+     'my-captcha': myCaptcha
+    },
     $_veeValidate: {
       validator: 'new'
     },
     beforeUpdate(){
     },
     methods: {
+      captchaOk () {
+      console.log('captcha ok.!')
+    },
       login(){
 
         this.$validator.validate()
@@ -98,6 +109,9 @@
     computed:{
       getmenu:function(){
           return this.$store.getters.getMenu
+       },
+       uppercase:function(){
+         this.username=this.username.toUpperCase()
        }
     },
   }

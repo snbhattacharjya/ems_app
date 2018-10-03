@@ -12,8 +12,8 @@
             <v-toolbar-title>Downloads</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <router-link to="/docs/pdf/PP1 FORMAT AS PER ASSEMBLY ELECTION 2016.pdf" tag="span" style="cursor: pointer">PP1 Format</router-link><br>
-                      <router-link to="/docs/pdf/PP2-FORMAT-AS PER ELECTION 2016 ASSEMBLY.pdf" tag="span" style="cursor: pointer">PP2 Format</router-link>
+            <a target="_blank" href="/static/docs/pdf/PP1 FORMAT AS PER ASSEMBLY ELECTION 2016.pdf" tag="span" style="cursor: pointer">PP1 Format</a><br>
+            <a target="_blank" href="/static/docs/pdf/PP2-FORMAT-AS PER ELECTION 2016 ASSEMBLY.pdf" tag="span" style="cursor: pointer">PP2 Format</a>
           </v-card-text>
           <v-card-actions>
 
