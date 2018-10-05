@@ -86,6 +86,7 @@
                   <v-date-picker v-model="dob"
                   min="1950-01-01"
                   :max="moment().subtract(18,'years').format('YYYY-MM-DD')"
+                  @input="$refs.dob_menu.save(dob)"
                   ></v-date-picker>
                 </v-menu>
 
