@@ -7,7 +7,6 @@
       prepend-icon="list"
       :label="label ? label : 'Block or Municipality'"
       :error-messages="error"
-      @input="$emit('input',$event)"
     >
     </v-select>
 </template>

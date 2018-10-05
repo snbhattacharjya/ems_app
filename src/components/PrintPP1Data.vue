@@ -132,7 +132,7 @@ export default {
     this.tableloading=true
     axios.get('/print/pp1/'+this.getuser.user_id,{
           report: 'pp1',
-          officeId: this.$route.params.id
+          officeId: this.getuser.user_id
         })
       .then((response, data) => {
         //console.log(response.data)

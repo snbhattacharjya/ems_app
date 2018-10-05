@@ -143,7 +143,7 @@
                 label="Phone No"
                 type="text"
                 v-model="phone"
-                v-validate="'digits:11'"
+                v-validate="'digits'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>

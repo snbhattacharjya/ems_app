@@ -107,7 +107,11 @@ export default {
 
     }
   },
-
+  computed:{
+     getmisdata:function(){
+       return this.$store.getters.getMisreport
+     }
+  },
   methods:{
     createclass:function(item,compare){
       if(compare > item){this.item_class='red--text'}
@@ -115,33 +119,39 @@ export default {
       else{ this.item_class='green--text' }
 
       return this.item_class
+    },
+    initialize:function(){
+      this.tableloading=true
+        axios.get('/report')
+          .then((response, data) => {this.$store.dispatch('storeMISreport', response.data)
+          response.data.forEach(item => { //console.log(item)
+              item.PR_M_class=this.createclass(item.PR_M,item.male_party)
+              item.P1_M_class=this.createclass(item.P1_M,item.male_party)
+              item.P2_M_class=this.createclass(item.P2_M,item.male_party)
+              item.P3_M_class=this.createclass(item.P3_M,item.male_party)
+              item.PR_F_class=this.createclass(item.PR_F,item.female_party)
+              item.P1_F_class=this.createclass(item.P1_F,item.female_party)
+              item.P2_F_class=this.createclass(item.P2_F,item.female_party)
+              item.P3_F_class=this.createclass(item.P3_F,item.female_party)
+              this.reports.push(item)
+            });
+            this.tableloading=false
+
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
 
   },
 
   created(){
-    this.tableloading=true
-    axios.get('/report')
-      .then((response, data) => { //console.log(response.data['available'])
-       response.data.forEach(item => { //console.log(item)
-          item.PR_M_class=this.createclass(item.PR_M,item.male_party)
-          item.P1_M_class=this.createclass(item.P1_M,item.male_party)
-          item.P2_M_class=this.createclass(item.P2_M,item.male_party)
-          //console.log(item.P3_M,item.male_party)
-          item.P3_M_class=this.createclass(item.P3_M,item.male_party)
-          item.PR_F_class=this.createclass(item.PR_F,item.female_party)
-          item.P1_F_class=this.createclass(item.P1_F,item.female_party)
-          item.P2_F_class=this.createclass(item.P2_F,item.female_party)
-          item.P3_F_class=this.createclass(item.P3_F,item.female_party)
-          //console.log(item)
-          this.reports.push(item)
-        });
-        this.tableloading=false
-        this.$store.dispatch('storeMISreport', response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      if(this.getmisdata != ''){
+     this.reports=this.getmisdata
+    }
+    else{
+        this.initialize()
+    }
   }
 }
 </script>

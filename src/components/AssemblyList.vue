@@ -7,7 +7,6 @@
       prepend-icon="list"
       :label="label ? label : 'Assembly Constituency'"
       :error-messages="error"
-      @input="$emit('input',$event)"
     >
     </v-select>
 </template>

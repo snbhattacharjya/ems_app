@@ -7,7 +7,7 @@
       prepend-icon="list"
       label="Qualification"
       :error-messages="error"
-      @input="$emit('input',$event)"
+
     >
     </v-select>
 </template>

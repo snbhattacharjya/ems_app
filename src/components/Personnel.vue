@@ -57,7 +57,7 @@
                   data-vv-name="aadhaar"
                 ></v-text-field> -->
 
-                <v-menu
+                <!-- <v-menu
                   ref="dob_menu"
                   :close-on-content-click="false"
                   v-model="dob_menu"
@@ -81,13 +81,34 @@
                     :error-messages="errors.collect('dob')"
                     data-vv-name="dob"
                   ></v-text-field>
-                  <v-date-picker
-                  v-model="dob"
-                  min="1950-01-01"
-                  :max="moment().subtract(18,'years').format('YYYY-MM-DD')"
-                  ></v-date-picker>
-                </v-menu>
-
+                  <v-date-picker v-model="dob" :max="new Date().toISOString().substr(0, 10)"
+      min="1950-01-01"></v-date-picker>
+                </v-menu> -->
+<v-menu
+    ref="menu"
+    :close-on-content-click="false"
+    v-model="menu"
+    :nudge-right="40"
+    lazy
+    transition="scale-transition"
+    offset-y
+    full-width
+    min-width="290px"
+  >
+    <v-text-field
+      slot="activator"
+      v-model="date"
+      label="Birthday date"
+      prepend-icon="event"
+      readonly
+    ></v-text-field>
+    <v-date-picker
+      ref="picker"
+      v-model="date"
+      :max="new Date().toISOString().substr(0, 10)"
+      min="1950-01-01"
+    ></v-date-picker>
+  </v-menu>
                 <v-select
                   :items="genders"
                   item-text= "name"

@@ -14,7 +14,8 @@ export default new Vuex.Store({
     previllege:[],
     dashboard:[],
     election:[],
-    misreport:[]
+    misreport:[],
+    pp2report:[],
   },
   getters: {
     getAccessToken(state){
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
     getMisreport(state){
       return state.misreport
+    },
+    getpp2report(state){
+      return state.pp2report
     }
   },
   actions: {
@@ -73,6 +77,9 @@ export default new Vuex.Store({
     },
     storeofficecategory(context,id){
       context.commit('storeofficecategory',id)
+    },
+    storePP2report(context,pp2data){
+      context.commit('storePP2report', pp2data)
     }
 
   },
@@ -98,6 +105,9 @@ export default new Vuex.Store({
     storeMisreport(state,misdata){
       state.misreport = misdata
     },
+    storePP2report(state,pp2data){
+      state.pp2report = pp2data
+    },
     storeofficecategory(state,id){
      // if(id === '01'){}
       state.user['officelevel'] = id
@@ -110,6 +120,7 @@ export default new Vuex.Store({
       state.dashboard = ''
       state.election= ''
       state.misreport= ''
+      state.pp2report=''
     }
   }
 

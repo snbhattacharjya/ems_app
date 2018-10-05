@@ -7,7 +7,6 @@
       prepend-icon="list"
       label="Language known other than English"
       :error-messages="error"
-      @input="$emit('input',$event)"
     >
     </v-select>
 </template>
