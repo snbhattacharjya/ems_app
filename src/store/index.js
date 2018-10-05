@@ -70,6 +70,9 @@ export default new Vuex.Store({
     },
     storeMISreport(context,misdata){
       context.commit('storeMisreport', misdata)
+    },
+    storeofficecategory(context,id){
+      context.commit('storeofficecategory',id)
     }
 
   },
@@ -94,6 +97,10 @@ export default new Vuex.Store({
     },
     storeMisreport(state,misdata){
       state.misreport = misdata
+    },
+    storeofficecategory(state,id){
+     // if(id === '01'){}
+      state.user['officelevel'] = id
     },
     destroyToken(state){
       state.token = ''

@@ -124,6 +124,7 @@
                   data-vv-name="remark_id"
                   :error="errors.collect('remark_id')"
                   :selected="remark_id"
+                  :remark_comment="remark_comment"
                 ></remark-list>
 
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
@@ -155,7 +156,7 @@
                     data-vv-name="basic_pay"
                   ></v-text-field>
 
-                  <v-text-field
+                  <v-text-field v-if="this.getuser.officelevel != '01'"
                     prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay"
@@ -165,6 +166,17 @@
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
+                  <v-select v-if="this.getuser.officelevel === '01'"
+                    :items="pay_levels"
+                    prepend-icon="list"
+                    label="Pay Level"
+                    v-model="pay_level"
+                    v-validate="'required'"
+                    data-vv-name="pay_level"
+                    :error-messages="errors.collect('pay_level')"
+                    :selected="this.pay_level"
+                  >
+                  </v-select>
 
 
                   <v-select
@@ -355,6 +367,8 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
+                    @blur="ifsc"
+                    :suffix="ifsc_hint"
                   ></v-text-field>
 
                   <v-text-field
@@ -378,6 +392,7 @@
                     v-validate="'confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
+
                   ></v-text-field>
 
 
@@ -433,8 +448,10 @@ import RemarkList from '@/components/RemarkList'
         dob_menu: '',
         gender: '',
         qualification_id: '',
+        ifsc_hint:'',
         language_id: '',
         remark_id: '',
+        remark_reason:'',
         scale: '',
         basic_pay: 0,
         grade_pay: 0,
@@ -448,6 +465,23 @@ import RemarkList from '@/components/RemarkList'
           'Y',
           'N'
         ],
+        pay_levels: [
+          'LEVEL1',
+          'LEVEL2',
+          'LEVEL3',
+          'LEVEL4',
+          'LEVEL5',
+          'LEVEL6',
+          'LEVEL7',
+          'LEVEL8',
+          'LEVEL9',
+          'LEVEL10',
+          'LEVEL11',
+          'LEVEL12',
+          'LEVEL13',
+          'LEVEL14',
+        ],
+        pay_level:'',
         genders: [
           {
             id: 'M',
@@ -502,6 +536,7 @@ import RemarkList from '@/components/RemarkList'
     created(){
       this.personnel_id=this.$route.params.id
       this.initialize()
+      this.ifsc()
     },
     computed: {
       getuser(){
@@ -509,6 +544,23 @@ import RemarkList from '@/components/RemarkList'
        }
     },
     methods: {
+      ifsc:function(){
+        if(this.branch_ifsc != ''){ this.ifsc_hint=''
+          axios.get('/ifsc/'+this.branch_ifsc,{
+          branch_ifsc: this.branch_ifsc
+          })
+          .then((response, data) => {
+            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is outside of West Bengal '}
+            else{
+              response.data.forEach(item => {
+                this.ifsc_hint= 'Branch - '+item.branch
+              })
+            }
+
+          })
+        }
+        else{this.ifsc_hint='' }
+      },
       initialize () {
 
         axios.get('/personnel/'+this.personnel_id,{
@@ -524,9 +576,11 @@ import RemarkList from '@/components/RemarkList'
           this.qualification_id= item.qualification_id,
           this.language_id= item.language_id,
           this.remark_id= item.remark_id,
+          this.remark_comment= item.remark_reason,
           this.scale= item.scale,
           this.basic_pay= item.basic_pay,
           this.grade_pay= item.grade_pay,
+          this.pay_level= item.pay_level,
           this.emp_group= item.emp_group,
           this.working_status= item.working_status,
           this.gender= item.gender,
@@ -543,7 +597,6 @@ import RemarkList from '@/components/RemarkList'
           this.sl_no= item.sl_no,
           this.assembly_temp_id= item.assembly_temp_id,
           this.assembly_temp_selected = item.assembly_temp_id,
-
           this.assembly_perm_id= item.assembly_perm_id,
           this.assembly_off_id= item.assembly_off_id,
           this.branch_ifsc= item.branch_ifsc,
@@ -583,7 +636,8 @@ import RemarkList from '@/components/RemarkList'
           remark_id:this.remark_id,
           scale: this.scale,
           basic_pay: this.basic_pay,
-          grade_pay: this.grade_pay,
+          grade_pay: this.grade_pay ? this.grade_pay : '0',
+          pay_level: this.pay_level? this.pay_level :'null',
           emp_group: this.emp_group,
           working_status: this.working_status,
           gender: this.gender,

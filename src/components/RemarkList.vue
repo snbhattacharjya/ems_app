@@ -1,4 +1,5 @@
 <template>
+<div>
     <v-select
       :items="remarks"
       v-model="selected"
@@ -7,9 +8,22 @@
       prepend-icon="list"
       label="Remarks"
       :error-messages="error"
-      @input="$emit('input',$event)"
+      @input="showcomment"
     >
     </v-select>
+     <v-text-field v-if="comment === true || selected === '13'"
+                  prepend-icon="feedback"
+                  name="remark_comment"
+                  label="Type Reasone (Maximum 128 charecter)"
+                  type="text"
+                  counter
+                  maxlength="128"
+                  v-model="remark_comment"
+                  v-validate="'required|max:128'"
+                  :error-messages="errors.collect('remark_comment')"
+                  data-vv-name="remark_comment"
+                ></v-text-field>
+</div>
 </template>
 
 <script>
@@ -21,18 +35,28 @@ export default {
       required: false
     },
     selected: {
-      type:Number,
+      type:String,
       required:false
-    }
+    },
+    remark_comment:{
+      type:String,
+      required:false
+    },
   },
   data(){
     return {
       remarks: [],
+      comment:false,
     }
   },
 
   methods:{
-
+      showcomment:function(value){ //alert(this.remark_selected)
+        if(value === '13'){this.comment=true}
+        else{
+           this.comment=false
+           }
+      }
   },
 
   created(){

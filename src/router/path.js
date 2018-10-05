@@ -159,7 +159,7 @@ export default [
       )
     },
     {
-      path: `/print/pp1/:id`,
+      path: `/print/pp1`,
       meta: {title:'Print PP1 Data | Welcome to EMS'},
       name: 'PrintPP1Data',
       component: () => import(
@@ -168,7 +168,7 @@ export default [
       )
     },
     {
-      path: `/print/pp2/:id`,
+      path: `/print/pp2`,
       meta: {title:'Print PP2 Data | Welcome to EMS'},
       name: 'PrintPP2Data',
       component: () => import(

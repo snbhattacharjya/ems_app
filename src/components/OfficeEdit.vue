@@ -219,7 +219,7 @@
           <v-card-actions>
             <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
-            <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.office_id"><v-icon dark>print</v-icon></v-btn></label>
+            <!-- <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.office_id"><v-icon dark>print</v-icon></v-btn></label> -->
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>

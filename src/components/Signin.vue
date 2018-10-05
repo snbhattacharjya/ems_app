@@ -13,6 +13,7 @@
                   name="login"
                   label="Username"
                   type="text"
+                  autofocus="true"
                   v-model="username"
                   v-validate="'required'"
                   data-vv-name="username"
@@ -30,11 +31,17 @@
                   data-vv-name="password"
                   :error-messages="errors.collect('password')"
                 ></v-text-field>
-
-                <my-captcha :callSuccess="captchaOk" color="red"  resolve="digit"></my-captcha>
+                <v-layout row wrap class="my-2">
+                <v-flex xs6></v-flex>
+                <v-flex xs6>
+                <my-captcha :callSuccess="captchaOk" color="black"  resolve="digit"></my-captcha>
+                </v-flex>
+                </v-layout>
               </v-form>
             </v-card-text>
             <v-card-actions>
+              <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          </v-snackbar>
               <v-card-text v-if="!isHidden" class="info--text"><strong> <h4>Please wait while dashboard is loading....</h4></strong></v-card-text>
               <v-spacer></v-spacer>
               <v-btn color="primary" @click="login" :loading="loading">Login</v-btn>
@@ -55,7 +62,13 @@ import myCaptcha from 'vue-captcha'
         username: '',
         password: '',
         loading: false,
-        isHidden:true
+        isHidden:true,
+        captcha:false,
+        snackbar: false,
+        show_message: false,
+        message_type: "",
+        message_icon: "",
+        message_text: "",
       }
     },
    components: {
@@ -69,39 +82,50 @@ import myCaptcha from 'vue-captcha'
     },
     methods: {
       captchaOk () {
+          this.captcha= true
       console.log('captcha ok.!')
     },
       login(){
+        if(this.captcha === true){
+          this.$validator.validate()
+          .then(result =>{
+            if(result){
+              this.loading = true
+              axios.post('/login',{
+                username: this.username,
+                password: this.password
+              })
+              .then(response => {
+                this.$store.dispatch('storeAccessToken', response.data.access_token)
+                this.isHidden = !this.isHidden
+                setTimeout(() => {
+                  this.$router.replace("/dashboard")
+                  this.loading = false
+                },8000)
 
-        this.$validator.validate()
-        .then(result =>{
-          if(result){
-            this.loading = true
-            axios.post('/login',{
-              username: this.username,
-              password: this.password
-            })
-            .then(response => {
-              this.$store.dispatch('storeAccessToken', response.data.access_token)
-              this.isHidden = !this.isHidden
-              setTimeout(() => {
-                this.$router.replace("/dashboard")
+              })
+              .catch(error => {
+                this.password = ''
+                this.errors.add(
+                  {
+                    field: 'username',
+                    msg: 'Invalid Username or Password'
+                  }
+                )
                 this.loading = false
-              },8000)
+              })
+            }
+          })
+        }
+        else{
+          //alert('Captcha is invalid')
+          this.show_message = true
+          this.message_type = 'error'
+          this.message_icon = 'warning'
+          this.message_text = 'Captcha is invalid!!! '
+          this.snackbar =true
+        }
 
-            })
-            .catch(error => {
-              this.password = ''
-              this.errors.add(
-                {
-                  field: 'username',
-                  msg: 'Invalid Username or Password'
-                }
-              )
-              this.loading = false
-            })
-          }
-        })
 
       }
 

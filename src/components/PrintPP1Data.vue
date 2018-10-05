@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-        <v-flex xs11><h1 class="headline" >Office Details in PP1 Format As On {{ moment(new Date()).format('DD/MM/YYYY h:mm a') }}<br>{{reports[0].name}}({{reports[0].officeID}}) , {{reports[0].district}}</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        <v-flex xs11><h1 class="headline" >Office Details in PP1 Format As On {{ moment(new Date()).format('DD/MM/YYYY h:mm a') }}<br>{{reports[0].name}}({{reports[0].officeID}}) , {{reports[0].district}}</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-5">
@@ -12,88 +12,84 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                   <tr>
-                    <td width="30%"><h2>Office</h2></td>
-                    <td width="70%"><h2>Details</h2></td>
+                    <td width="30%"><h2><strong>Office</strong></h2></td>
+                    <td width="70%"><h2><strong>Details</strong></h2></td>
                   </tr>
                 </thead>
                 <tbody>
 
                   <tr>
-                    <td>Office Name </td>
-                    <td><strong>{{reports[0].name}}</strong> ({{reports[0].officeID}})<br> <strong>Identification code: </strong>{{reports[0].identification_code}}</td>
+                    <td><strong>Office Name</strong> </td>
+                    <td><strong>{{reports[0].name}}</strong> ({{reports[0].officeID}})<br> <strong>Identification code(Like DDO/IFSC/DISE CODE) : </strong>{{reports[0].identification_code}}</td>
                   </tr>
                   <tr>
-                    <td>Office Address</td>
-                    <td>{{reports[0].address}}<br> <strong>Post Office:</strong> {{reports[0].post_office}}, <strong>Pin:</strong> {{reports[0].pin}}
-                    <br> <strong>Subdivision:</strong> {{reports[0].subdivision}}<br> <strong>Block/ Municipality:</strong> {{reports[0].block}}<br>
-                    <strong>Police Station: </strong>{{reports[0].police}}, <strong>Assembly Constituency: </strong>{{reports[0].acname}}<br>
+                    <td><strong>Office Address</strong></td>
+                    <td>{{reports[0].address}}<br> <strong>Post Office :</strong> {{reports[0].post_office}}, <strong>Pin :</strong> {{reports[0].pin}}
+                    <br> <strong>Subdivision :</strong> {{reports[0].subdivision}}, <strong>Block/ Municipality :</strong> {{reports[0].block}}<br>
+                    <strong>Police Station : </strong>{{reports[0].police}}, <strong>Assembly Constituency : </strong>{{reports[0].acname}}<br>
                     </td>
                   </tr>
                   <tr>
-                    <td>Office Category </td>
-                    <td>{{reports[0].category}}</td>
+                    <td><strong>Office Category & Office type</strong> </td>
+                    <td>{{reports[0].category}} , {{reports[0].institute}}</td>
                   </tr>
                   <tr>
-                    <td>Office type </td>
-                    <td>{{reports[0].institute}}</td>
-                  </tr>
-                  <tr>
-                    <td>Email </td>
+                    <td><strong>Email</strong> </td>
                     <td>{{reports[0].email}}</td>
                   </tr>
                   <tr>
-                    <td>Contact Details(Mobile/Phone/fax) </td>
+                    <td><strong>Contact Details(Mobile/Phone/fax)</strong> </td>
                     <td>{{reports[0].mobile}} / {{reports[0].phone}} / {{reports[0].fax}}</td>
                   </tr>
                   <tr>
-                    <td>Total Employees </td>
+                    <td><strong>Total Employees</strong> </td>
                     <td>{{reports[0].total_staff}}</td>
                   </tr>
                   <tr>
-                    <td>Male </td>
+                    <td><strong>Male</strong> </td>
                     <td>{{reports[0].male_staff}}</td>
                   </tr>
                   <tr>
-                    <td>Female </td>
+                    <td><strong>Female</strong> </td>
                     <td>{{reports[0].female_staff}}</td>
                   </tr>
                   <tr>
-                    <td>PP1 Last Updated at </td>
+                    <td><strong>PP1 Last Updated at</strong> </td>
                     <td>{{moment(reports[0].updated_at).format('DD/MM/YYYY h:mm a')}}</td>
                   </tr>
                   <tr>
-                    <td colspan="2"><h3>Employee Details</h3></td>
+                    <td colspan="2"><h3>Employee Details registered so far online</h3></td>
                   </tr>
                   <tr>
-                    <td>Total Employees </td>
-                    <td>{{reports[0].total_staff}}</td>
+                    <td><strong>Total Employees</strong> </td>
+                    <td>{{parseInt(reports[1].maleEntry) + parseInt(reports[1].femaleEntry)}}</td>
                   </tr>
                   <tr>
-                    <td>Male </td>
-                    <td>{{reports[0].male_staff}}</td>
+                    <td><strong>Male</strong> </td>
+                    <td>{{reports[1].maleEntry}}</td>
                   </tr>
                   <tr>
-                    <td>Female </td>
-                    <td>{{reports[0].female_staff}}</td>
+                    <td><strong>Female</strong> </td>
+                    <td>{{reports[1].femaleEntry}}</td>
                   </tr>
+
                   <tr>
-                    <td colspan="2"><h3>Employee Remarks</h3></td>
-                  </tr>
-                  <tr>
-                    <td><h3>Remarks</h3> </td>
-                    <td><h3>Employee Count</h3></td>
-                  </tr>
-                  <tr>
-                    <td>Physically Handicapped </td>
-                    <td>{{reports[0].phy}}</td>
-                  </tr>
-                  <tr>
-                    <td>NONE </td>
-                    <td>{{reports[0].none}}</td>
+                    <td colspan="2">
+                      <v-layout row wrap class="my-2">
+                        <v-flex xs12>
+                          <h2>DECLARATION :</h2>
+                          <h3>Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.</h3>
+                        </v-flex>
+                      </v-layout>
+                    </td>
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <h3><i class="material-icons">done_all</i>  Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.</h3>
+                      <v-layout row wrap class="mb-2">
+                        <v-flex class="xs7 mt-5"><h3 class="mt-5">----------------------------------------------------------<br>
+                        Signature with Office Seal of Officer-in-Charge<br>({{reports[0].name}})</h3></v-flex>
+                        <v-flex class="xs5 mt-5"><strong>Date : </strong><br><br><strong>Place : </strong></v-flex>
+                      </v-layout>
                     </td>
                   </tr>
                 </tbody>
@@ -134,20 +130,29 @@ export default {
 
   created(){
     this.tableloading=true
-    axios.get('/print/pp1/'+this.$route.params.id,{
+    axios.get('/print/pp1/'+this.getuser.user_id,{
           report: 'pp1',
           officeId: this.$route.params.id
         })
       .then((response, data) => {
-       response.data.forEach(item => {
-
+        //console.log(response.data)
+       response.data['result'].forEach(item => {
           this.reports.push(item)
         });
+        response.data['actualEMpEntry'].forEach(item => {
+          this.reports.push(item)
+        });
+        console.log(this.reports)
         this.tableloading=false
       })
       .catch(error => {
         console.log(error)
       })
+  },
+  computed:{
+     getuser(){
+        return this.$store.getters.getUser
+      }
   }
 }
 </script>

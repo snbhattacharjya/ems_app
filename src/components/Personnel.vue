@@ -120,6 +120,7 @@
                   v-validate="'required'"
                   data-vv-name="remark_id"
                   :error="errors.collect('remark_id')"
+                  :selected="this.remark_id"
                 ></remark-list>
 
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
@@ -151,7 +152,7 @@
                     data-vv-name="basic_pay"
                   ></v-text-field>
 
-                  <v-text-field
+                  <v-text-field v-if="this.getuser.officelevel != '01'"
                     prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay"
@@ -161,6 +162,16 @@
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
+                  <v-select v-if="this.getuser.officelevel === '01'"
+                    :items="pay_levels"
+                    prepend-icon="list"
+                    label="Pay Level"
+                    v-model="pay_level"
+                    v-validate="'required'"
+                    data-vv-name="pay_level"
+                    :error-messages="errors.collect('pay_level')"
+                  >
+                  </v-select>
 
                   <v-select
                     :items="emp_groups"
@@ -348,6 +359,8 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
+                    @blur="ifsc"
+                    :suffix="ifsc_hint"
                   ></v-text-field>
 
                   <v-text-field
@@ -355,11 +368,13 @@
                     name="bank_account_no"
                     ref="bank_account_no"
                     label="Bank Account no"
-                    type="text"
+                    :type="type_text"
                     v-model="bank_account_no"
                     v-validate="'required'"
                     :error-messages="errors.collect('bank_account_no')"
                     data-vv-name="bank_account_no"
+                    @blur="changetype"
+                    @focus="changetype"
                   ></v-text-field>
 
                   <v-text-field
@@ -427,9 +442,11 @@ import RemarkList from '@/components/RemarkList'
         qualification_id: '',
         language_id: '',
         remark_id: '',
+        ifsc_hint:'',
         scale: '',
         basic_pay: 0,
         grade_pay: 0,
+        type_text:'text',
         emp_groups: [
           'A',
           'B',
@@ -440,6 +457,23 @@ import RemarkList from '@/components/RemarkList'
           'Y',
           'N'
         ],
+        pay_levels: [
+          'LEVEL1',
+          'LEVEL2',
+          'LEVEL3',
+          'LEVEL4',
+          'LEVEL5',
+          'LEVEL6',
+          'LEVEL7',
+          'LEVEL8',
+          'LEVEL9',
+          'LEVEL10',
+          'LEVEL11',
+          'LEVEL12',
+          'LEVEL13',
+          'LEVEL14',
+        ],
+        pay_level:'',
         genders: [
           {
             id: 'M',
@@ -491,10 +525,11 @@ import RemarkList from '@/components/RemarkList'
         agrrelable: "Certified that the detail information furnished earlier in PP-1 format and also PP-2 format are verified with office record and genuine.Names of all officials have been included in the PP-2 format and no information has been concealed.",
         agree:false,
         personnel_form: 1,
+        remark_selected:'',
       }
     },
    created(){
-
+      console.log('User data in PP2 '+this.getuser.name)
    },
    computed: {
       getuser(){
@@ -502,6 +537,27 @@ import RemarkList from '@/components/RemarkList'
        }
     },
     methods: {
+      changetype:function(){
+        if(this.bank_account_no != '' && this.type_text === 'text'){this.type_text = 'password'}
+        else if(this.bank_account_no != '' && this.type_text === 'password'){this.type_text = 'text'}
+      },
+      ifsc:function(){
+        if(this.branch_ifsc != ''){ this.ifsc_hint=''
+          axios.get('/ifsc/'+this.branch_ifsc,{
+          branch_ifsc: this.branch_ifsc
+          })
+          .then((response, data) => {
+            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is outside of West Bengal '}
+            else{
+              response.data.forEach(item => {
+                this.ifsc_hint= 'Branch - '+item.branch
+              })
+            }
+
+          })
+        }
+        else{this.ifsc_hint='' }
+      },
       validatePersonnel(){
         this.disable_save = true
         this.$validator.validate()
@@ -531,7 +587,8 @@ import RemarkList from '@/components/RemarkList'
           remark_id:this.remark_id,
           scale: this.scale,
           basic_pay: this.basic_pay,
-          grade_pay: this.grade_pay,
+          grade_pay: this.grade_pay ? this.grade_pay : 'null',
+          pay_level: this.pay_level? this.pay_level :'null',
           emp_group: this.emp_group,
           working_status: this.working_status,
           gender: this.gender,
