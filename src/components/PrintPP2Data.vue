@@ -71,7 +71,7 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-        this.$store.dispatch('storePP2report', response.data)
+
         response.data['personel'].forEach(item => {
             this.reports.push(item)
           });
@@ -81,7 +81,7 @@ export default {
           response.data['assembly'].forEach(item => {
             this.reports.push(item)
           });
-
+          this.$store.dispatch('storePP2report', reports)
           this.tableloading=false
         })
         .catch(error => {
@@ -93,7 +93,8 @@ export default {
 
   created(){
     if(this.getppdata != ''){console.log('PP2 -'+this.getppdata)
-     this.reports=this.getppdata
+    this.reports=this.getppdata
+    console.log('PP2 from store - '+this.reports)
     }
     else{console.log('PP2 - No data')
         this.initialize()
