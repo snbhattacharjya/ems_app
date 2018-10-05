@@ -12,19 +12,20 @@
               <table class="v-datatable v-table dark" style=""  border=1>
               <tbody>
                 <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
-              <tr v-for="report in reports[0]" :prop="report" :key="report[0].office_id">
+              <tr v-for="report in reports" :prop="report" :key="report.office_id">
               <td>
                 <v-layout row wrap class="my-2">
                   <v-flex xs12>
-                    <strong>Name : </strong>{{report[0].empname}} <strong>Designation : </strong>{{report[0].designation}}
-                    <strong>Present Address : </strong>{{report[0].present_address}} <strong>Permanent Address : </strong>{{report[0].permanent_address}}
-                    <strong>Date of Birth : </strong>{{report[0].dob}} <strong>Gender : </strong>{{report[0].gender}}
-                    <strong>Pay Scale : </strong>{{report[0].scale}} <strong>Basic Pay : </strong>{{report[0].basic_pay}} <strong>Grade Pay : </strong>{{report[0].grade_pay}} <strong>Pay Level : </strong>{{report[0].pay_level}}
-                    <strong>Employee Group : </strong>{{report[0].emp_group}} <strong>Working Status : </strong>{{report[0].working_status}} <strong>Email : </strong>{{report[0].email}} <strong>Phone : </strong>{{report[0].phone}} <strong>Mobile : </strong>{{report[0].mobile}}
-                    <strong>Epic No : </strong>{{report[0].epic}} <strong>Part No : </strong>{{report[0].part_no}} <strong>Serial No : </strong>{{report[0].sl_no}} <strong>Post Status : </strong>{{report[0].post_stat}}
-                    <strong>Qualification : </strong>{{report[1].qualification}} <strong>Bank AC Number : </strong>{{report[0].bank_account_no}} <strong>Branch IFSC Number : </strong>{{report[0].branch_ifsc}}
-                    <strong>Subdivision : </strong>{{report[2].subdivision}} <strong>Temporary Assembly Constituency : </strong>{{report[2].actemp}} <strong>Permanent Assembly Constituency : </strong>{{report[2].acpermanent}} <strong>Office Assembly Constituency : </strong>{{report[2].acofficename}}
-                    <strong>Remark : </strong>{{report[1].remark}}
+                    <strong>{{report.sl}} ) </strong>
+                    <strong>Name : </strong>{{report.empname}} <strong>Designation : </strong>{{report.designation}}
+                    <strong>Present Address : </strong>{{report.present_address}} <strong>Permanent Address : </strong>{{report.permanent_address}}
+                    <strong>Date of Birth : </strong>{{report.dob}} <strong>Gender : </strong>{{report.gender}}
+                    <strong>Pay Scale : </strong>{{report.scale}} <strong>Basic Pay : </strong>{{report.basic_pay}} <strong>Grade Pay : </strong>{{report.grade_pay}} <strong>Pay Level : </strong>{{report.pay_level}}
+                    <strong>Employee Group : </strong>{{report.emp_group}} <strong>Working Status : </strong>{{report.working_status}} <strong>Email : </strong>{{report.email}} <strong>Phone : </strong>{{report.phone}} <strong>Mobile : </strong>{{report.mobile}}
+                    <strong>Epic No : </strong>{{report.epic}} <strong>Part No : </strong>{{report.part_no}} <strong>Serial No : </strong>{{report.sl_no}} <strong>Post Status : </strong>{{report.post_stat}}
+                    <strong>Qualification : </strong>{{report.qualification}} <strong>Bank AC Number : </strong>{{report.bank_account_no}} <strong>Branch IFSC Number : </strong>{{report.branch_ifsc}}
+                    <strong>Subdivision : </strong>{{report.subdivision}} <strong>Temporary Assembly Constituency : </strong>{{report.actemp}} <strong>Permanent Assembly Constituency : </strong>{{report.acpermanent}} <strong>Office Assembly Constituency : </strong>{{report.acofficename}}
+                    <strong>Remark : </strong>{{report.remark}}
                   </v-flex>
                 </v-layout>
               </td>
@@ -71,17 +72,15 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-
-        response.data['personel'].forEach(item => {
+        var i=1;
+        response.data.forEach(item => {
+            item['sl']=i
             this.reports.push(item)
-          });
-          response.data['qualification'].forEach(item => {
-            this.reports.push(item)
-          });
-          response.data['assembly'].forEach(item => {
-            this.reports.push(item)
-          });
-          this.$store.dispatch('storePP2report', reports)
+            i++
+        })
+          
+          console.log('PP2 data from response '+this.reports)
+          this.$store.dispatch('storePP2report', this.reports)
           this.tableloading=false
         })
         .catch(error => {
