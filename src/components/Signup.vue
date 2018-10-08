@@ -13,7 +13,7 @@
               <v-text-field prepend-icon="person_pin" name="Designation" label="Designation" type="text" v-model="designation"></v-text-field>
               <v-text-field prepend-icon="contact_phone" name="Mobile" label="Mobile" type="text" v-model="mobile"></v-text-field>
               <v-text-field prepend-icon="fingerprint" name="Aadhaar" label="Aadhaar" type="text" v-model="aadhaar"></v-text-field>
-              <v-select :items="levels" prepend-icon="list" label="User Level" v-model="level"></v-select>
+              <v-select :itPPMS="levels" prepend-icon="list" label="User Level" v-model="level"></v-select>
 
             </v-form>
           </v-card-text>

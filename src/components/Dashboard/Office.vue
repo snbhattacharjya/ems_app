@@ -8,7 +8,7 @@
                     <v-card color="green" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">business</i>
-                        <h1 class="pb-5">As per Office PP1</h1>
+                        <h1 class="pb-5">Total Office Registered</h1>
 
                       </v-card-title>
                       <v-divider></v-divider>
@@ -55,8 +55,8 @@
 
               </v-layout>
               <v-layout row wrap>
-                  <v-card-title primary-title class="layout"><div class="headline">Welcome to EMS</div></v-card-title>
-                  <v-card-text><v-divider class="my-3"></v-divider>A simple way to work with Polling Personnel Data.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</v-card-text>
+                  <v-card-title primary-title class="layout"><div class="headline">Welcome to PPMS</div></v-card-title>
+                  <v-card-text><v-divider class="my-3"></v-divider>A simple way to work with Polling Personnel Data</v-card-text>
               </v-layout>
             </v-container>
 

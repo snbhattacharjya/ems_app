@@ -23,12 +23,12 @@
     </v-toolbar>
     <v-data-table
       :headers="headers"
-      :items="users"
+      :itPPMS="users"
       :search="search"
       class="elevation-1"
       :loading="tableloading"
     >
-      <template slot="items" slot-scope="props">
+      <template slot="itPPMS" slot-scope="props">
         <td>{{ props.item.user_id }}</td>
         <td >{{ props.item.name }}</td>
         <td >{{ props.item.designation }}</td>

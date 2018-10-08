@@ -4,7 +4,7 @@
       <v-toolbar-side-icon @click="viw" ></v-toolbar-side-icon>
       <v-toolbar-title>
         <v-avatar color="primary"><img src="/static/Election_Commission_of_India_Logo.png" alt="avatar"></v-avatar>
-        <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">EMS</router-link>
+        <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">PPMS</router-link>
       </v-toolbar-title>
 
 
@@ -15,7 +15,7 @@
       <v-toolbar-title class="ml-5 mr-5">
         {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}}
       </v-toolbar-title>
-        Welcome : {{ getUser.name }} <br>District : {{getUser.district[0]}}
+        Welcome : {{ getUser.name }}({{getUser.user_id}}) <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
 
             <v-btn
@@ -28,7 +28,7 @@
 
             <v-list>
               <v-list-tile
-                v-for="(item, i) in items"
+                v-for="(item, i) in itPPMS"
                 :key="i"
                 :to="item.path"
               >
@@ -58,7 +58,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         username: '',
         show:true,
         datetime:'',
-        items: [
+        itPPMS: [
           {title: 'Profile', path: '/#'},
           {title: 'Settings', path: '/#'}
         ]

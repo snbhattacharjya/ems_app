@@ -1,7 +1,7 @@
 <template>
 <div>
     <v-select
-      :items="remarks"
+      :itPPMS="remarks"
       v-model="selected"
       item-text= "name"
       item-value= "id"

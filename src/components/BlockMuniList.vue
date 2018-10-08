@@ -1,6 +1,6 @@
 <template>
     <v-select
-      :items="block_munis"
+      :itPPMS="block_munis"
       v-model="selected"
       item-text= "name"
       item-value= "id"

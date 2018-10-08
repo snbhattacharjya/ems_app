@@ -11,7 +11,7 @@
 
               <img src="/static/Election_Commission_of_India_Logo.png" alt="avatar">
 
-            <h1 class="white--text mb-2 display-3 text-xs-center font-weight-black">Welcome to EMS</h1>
+            <h1 class="white--text mb-2 display-3 text-xs-center font-weight-black">Welcome to PPMS</h1>
             <div class="title mb-3 text-xs-center">A simple way to work with Polling Personnel Data</div>
             <v-btn
               class="blue lighten-2 mt-5"
@@ -46,7 +46,7 @@
                 <v-flex xs12 md12>
                   <v-card class="elevation-0 transparent">
                     <v-card-text>
-                     <p>It is axiomatic that India, as the largest practising democracy in the world and with over 60 years’ record of holding effective, transparent and credible elections, should play a leading role in promoting participatory democracy and election administration world-wide. There are huge opportunities for democracy promotion and electoral support particularly in the Arab world, Gulf countries, and Central Asian countries, which have still not established themselves as functional democracies. Further, Election Commission of India has also felt the need to continuously engage itself and others in generating innovative ideas and practices to respond to the emerging challenges in election management. This necessarily calls for bilateral and multilateral cooperation in promoting participatory democracy and best practices in election administration, professional contact and exchange activities, study and observation missions and technical support and advice.</p>
+                     <p>It is axiomatic that India, as the largest practising democracy in the world and with over 60 years’ record of holding effective, transparent and credible elections, should play a leading role in promoting participatory democracy and election administration world-wide. There are huge opportunities for democracy promotion and electoral support particularly in the Arab world, Gulf countries, and Central Asian countries, which have still not established thPPMSelves as functional democracies. Further, Election Commission of India has also felt the need to continuously engage itself and others in generating innovative ideas and practices to respond to the emerging challenges in election management. This necessarily calls for bilateral and multilateral cooperation in promoting participatory democracy and best practices in election administration, professional contact and exchange activities, study and observation missions and technical support and advice.</p>
                     <p>Over the last decade, therefore, the Election Commission of India, has been making incremental efforts to promote inter-institutional contacts, and to provide technical support and user-friendly resources and advice to Election authorities elsewhere, on request. In the process, Election Commission of India has also acquired valuable learnings from its counterparts in other countries. This international cooperation outreach has been made in conjunction with India’s foreign policy objectives, to promote democracy and strengthen election administration world-wide.</p>
                     </v-card-text>
                   </v-card>

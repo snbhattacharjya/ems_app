@@ -10,7 +10,7 @@
           <v-card-text>
             <v-form autocomplete="off">
               <v-select
-                :items="levels"
+                :itPPMS="levels"
                 v-model="user_level"
                 item-text= "name"
                 item-value= "user_type_code"
@@ -19,7 +19,7 @@
                 @change="getSubuserlevels(user_level)">
               </v-select>
               <v-select
-                :items="subdivisions"
+                :itPPMS="subdivisions"
                 v-model="subdivision_id"
                 item-text= "sub_user_name"
                 item-value= "sub_user_code"
@@ -30,7 +30,7 @@
                 >
               </v-select>
               <v-select
-                :items="sublevels"
+                :itPPMS="sublevels"
                 v-model="user_sublevel"
                 item-text= "sub_user_name"
                 item-value= "sub_user_code"
@@ -41,7 +41,7 @@
                 >
               </v-select>
               <v-select
-                :items="pplevels"
+                :itPPMS="pplevels"
                 v-model="user_pplevel"
                 item-text= "name"
                 item-value= "code"

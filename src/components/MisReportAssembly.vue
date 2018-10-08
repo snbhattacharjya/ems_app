@@ -8,7 +8,7 @@
             <v-layout row wrap >
               <v-flex xs9>
                 <v-select
-                :items="districts"
+                :itPPMS="districts"
                 v-model="district_id"
                 item-text= "name"
                 item-value= "id"

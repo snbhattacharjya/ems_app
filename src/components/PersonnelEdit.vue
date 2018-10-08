@@ -91,7 +91,7 @@
                 </v-menu>
 
                 <v-select
-                  :items="genders"
+                  :itPPMS="genders"
                   item-text= "name"
                   item-value= "id"
                   prepend-icon="list"
@@ -168,7 +168,7 @@
                     data-vv-name="grade_pay"
                   ></v-text-field>
                   <v-select v-if="this.getuser.officelevel === '01'"
-                    :items="pay_levels"
+                    :itPPMS="pay_levels"
                     prepend-icon="list"
                     label="Pay Level"
                     v-model="pay_level"
@@ -181,7 +181,7 @@
 
 
                   <v-select
-                    :items="emp_groups"
+                    :itPPMS="emp_groups"
                     prepend-icon="list"
                     label="Employee Group"
                     v-model="emp_group"
@@ -192,7 +192,7 @@
                   </v-select>
 
                   <v-select
-                    :items="working_statuses"
+                    :itPPMS="working_statuses"
                     prepend-icon="list"
                     label="Working Status"
                     v-model="working_status"
@@ -506,7 +506,7 @@ import RemarkList from '@/components/RemarkList'
         phone: '',
         mobile: '',
         block_muni_labels: [
-          'Temporary Block or Municipality',
+          'Present Block or Municipality',
           'Permanent Block or Municipality',
           'Office Block or Municipality',
         ],
@@ -517,7 +517,7 @@ import RemarkList from '@/components/RemarkList'
         part_no: '',
         sl_no: '',
         assembly_labels: [
-          'Temporary Assembly Constituency',
+          'Present Assembly Constituency',
           'Permanent Assembly Constituency',
           'Office Assembly Constituency',
         ],

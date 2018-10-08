@@ -60,7 +60,7 @@ export default [
         path: '/signin',
         meta: {
           public: true,
-          title:'Login | Welcome to EMS'
+          title:'Login | Welcome to PPMS'
         },
         name: 'Signin',
         beforeEnter: (to, from, next) => {
@@ -77,7 +77,7 @@ export default [
       path: '/signup',
       meta: {
         public: true,
-        title:'Sign up here | Welcome to EMS'
+        title:'Sign up here | Welcome to PPMS'
       },
       name: 'Signup',
       component: () => import(
@@ -87,7 +87,7 @@ export default [
     },
     {
       path: '/',
-      meta: { public: true,title:'Welcome to EMS'},
+      meta: { public: true,title:'Welcome to PPMS'},
       name: 'Welcome',
       component: () => import(
 
@@ -97,7 +97,7 @@ export default [
 
     {
       path: '/dashboard',
-      meta: { breadcrumb: true,title:'Dashboard | Welcome to EMS' },
+      meta: { breadcrumb: true,title:'Dashboard | Welcome to PPMS' },
       name: 'DashboardOffice',
       component: () => import(
 
@@ -106,7 +106,7 @@ export default [
     },
     {
       path: '/downloads',
-      meta: { breadcrumb: true,title:'Downloads | Welcome to EMS' },
+      meta: { breadcrumb: true,title:'Downloads | Welcome to PPMS' },
       name: 'Downloads',
       component: () => import(
 
@@ -115,7 +115,7 @@ export default [
     },
     {
       path: '/dashboard/help',
-      meta: { breadcrumb: true,title:'Help | Welcome to EMS' },
+      meta: { breadcrumb: true,title:'Help | Welcome to PPMS' },
       name: 'Help',
       component: () => import(
 
@@ -124,7 +124,7 @@ export default [
     },
     {
       path: '/office/list',
-      meta: {title:'View office | Welcome to EMS'},
+      meta: {title:'View office | Welcome to PPMS'},
       name: 'ViewOffice',
       component: () => import(
 
@@ -133,7 +133,7 @@ export default [
     },
     {
       path: '/office/create',
-      meta: {title:'Create new office | Welcome to EMS'},
+      meta: {title:'Create new office | Welcome to PPMS'},
       name: 'CreateOffice',
       component: () => import(
 
@@ -142,7 +142,7 @@ export default [
     },
     {
       path: `/office/:id/edit/`,
-      meta: {title:'Edit office | Welcome to EMS'},
+      meta: {title:'Edit office | Welcome to PPMS'},
       name: 'OfficeEdit',
       component: () => import(
 
@@ -151,7 +151,7 @@ export default [
     },
     {
       path: `/office/edit/`,
-      meta: {title:'Edit your office | Welcome to EMS'},
+      meta: {title:'Edit your office | Welcome to PPMS'},
       name: 'EditOffice',
       component: () => import(
 
@@ -160,7 +160,7 @@ export default [
     },
     {
       path: `/report/pp1`,
-      meta: {title:'Print PP1 Data | Welcome to EMS'},
+      meta: {title:'Print PP1 Data | Welcome to PPMS'},
       name: 'PrintPP1Data',
       component: () => import(
 
@@ -169,7 +169,7 @@ export default [
     },
     {
       path: `/report/pp2`,
-      meta: {title:'Print PP2 Data | Welcome to EMS'},
+      meta: {title:'Print PP2 Data | Welcome to PPMS'},
       name: 'PrintPP2Data',
       component: () => import(
 
@@ -178,7 +178,7 @@ export default [
     },
     {
       path: '/personnel/list',
-      meta: {title:'View Personnel | Welcome to EMS'},
+      meta: {title:'View Personnel | Welcome to PPMS'},
       name: 'Viewpersonnel',
       component: () => import(
 
@@ -187,7 +187,7 @@ export default [
     },
     {
       path: '/personnel/create',
-      meta: {title:'Create new personnel | Welcome to EMS'},
+      meta: {title:'Create new personnel | Welcome to PPMS'},
       name: 'CreatePersonnel',
       component: () => import(
 
@@ -196,7 +196,7 @@ export default [
     },
     {
       path: `/personnel/:id/edit/`,
-      meta: {title:'Edit personnel | Welcome to EMS'},
+      meta: {title:'Edit personnel | Welcome to PPMS'},
       name: 'PersonnelEdit',
       component: () => import(
 
@@ -205,7 +205,7 @@ export default [
     },
     {
       path: `/users/create`,
-      meta: {title:'Create User | Welcome to EMS'},
+      meta: {title:'Create User | Welcome to PPMS'},
       name: 'UserCreate',
       component: () => import(
 
@@ -214,7 +214,7 @@ export default [
     },
     {
       path: '/users/list',
-      meta: {title:'View User | Welcome to EMS'},
+      meta: {title:'View User | Welcome to PPMS'},
       name: 'ViewUser',
       component: () => import(
 
@@ -223,7 +223,7 @@ export default [
     },
     {
       path: `/user/:id/edit/`,
-      meta: {title:'Edit user | Welcome to EMS'},
+      meta: {title:'Edit user | Welcome to PPMS'},
       name: 'UserEdit',
       component: () => import(
 
@@ -232,7 +232,7 @@ export default [
     },
     {
       path: `/misreport/district`,
-      meta: {title:'See All Report for District | Welcome to EMS'},
+      meta: {title:'See All Report for District | Welcome to PPMS'},
       name: 'MISReport District',
       component: () => import(
 
@@ -241,7 +241,7 @@ export default [
     },
     {
       path: `/misreport/district/:id`,
-      meta: {title:'See All Report for Subdivision | Welcome to EMS'},
+      meta: {title:'See All Report for Subdivision | Welcome to PPMS'},
       name: 'MISReportSubdivision',
       component: () => import(
 
@@ -250,7 +250,7 @@ export default [
     },
     {
       path: `/misreport/assembly`,
-      meta: {title:'See All Report for Assembly | Welcome to EMS'},
+      meta: {title:'See All Report for Assembly | Welcome to PPMS'},
       name: 'MISReport Assembly',
       component: () => import(
 
@@ -259,7 +259,7 @@ export default [
     },
     {
       path: `/change_password`,
-      meta: {title:'Change your password | Welcome to EMS'},
+      meta: {title:'Change your password | Welcome to PPMS'},
       name: 'Change password',
       component: () => import(
 
