@@ -2,7 +2,9 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section id="report">
-        <h1 class="headline" >MIS Report for {{district}} <v-spacer></v-spacer>As On {{ new Date().toLocaleString() }} </h1><v-spacer></v-spacer><v-btn fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Subdivisionwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
+        <v-layout row wrap>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-5">
             <h1 class="headline">Subdivisionwise Male</h1>

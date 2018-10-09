@@ -2,7 +2,7 @@
 
 
     <v-select
-      :itPPMS="sublevels"
+      :items="sublevels"
       v-model="user_sub_level"
       item-text= "sub_user_name"
       item-value= "sub_user_code"

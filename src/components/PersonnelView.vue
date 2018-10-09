@@ -7,7 +7,7 @@
       <v-layout row wrap  >
       <v-flex xs4>
           <v-select
-          :itPPMS="subdivisions"
+          :items="subdivisions"
           v-model="subdivision_id"
           item-text= "name"
           item-value= "id"
@@ -20,7 +20,7 @@
       </v-flex>
       <v-flex xs7>
         <v-select
-        :itPPMS="offices"
+        :items="offices"
         v-model="office_id"
         item-text= "name"
         item-value= "id"
@@ -42,8 +42,8 @@
             <v-spacer></v-spacer>
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
-          <v-data-table :headers="headers" :itPPMS="personnels" :search="search" class="elevation-1" :loading="tableloading">
-            <template slot="itPPMS" slot-scope="props">
+          <v-data-table :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
+            <template slot="items" slot-scope="props">
               <td>{{ props.item.id }}</td>
               <td >{{ props.item.office_id }}</td>
               <td >{{ props.item.name }}</td>

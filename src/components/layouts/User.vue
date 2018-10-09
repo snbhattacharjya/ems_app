@@ -3,7 +3,7 @@
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title> <router-link to="/" tag="span" style="cursor: pointer">PPMS</router-link></v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-itPPMS class="hidden-sm-and-down">
+    <v-toolbar-items class="hidden-sm-and-down">
       <v-menu :nudge-width="100">
         <v-toolbar-title slot="activator">
           <span>My Account</span>
@@ -12,14 +12,14 @@
 
         <v-list>
           <v-list-tile
-            v-for="item in itPPMS"
+            v-for="item in items"
             :key="item"
           >
             <v-list-tile-title v-text="item"></v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
-    </v-toolbar-itPPMS>
+    </v-toolbar-items>
   </v-toolbar>
 </template>
 
@@ -27,7 +27,7 @@
   export default {
     data () {
       return {
-        itPPMS: [
+        items: [
           'Profile', 'Change Password', 'Logout'
         ]
       }

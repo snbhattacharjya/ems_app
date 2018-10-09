@@ -15,7 +15,7 @@
       <v-toolbar-title class="ml-5 mr-5">
         {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}}
       </v-toolbar-title>
-        Welcome : {{ getUser.name }}({{getUser.user_id}}) <br>District : {{getUser.district[0]}}
+        Welcome : {{ getUser.name }}<br> Code: {{getUser.user_id}} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
 
             <v-btn
@@ -28,7 +28,7 @@
 
             <v-list>
               <v-list-tile
-                v-for="(item, i) in itPPMS"
+                v-for="(item, i) in items"
                 :key="i"
                 :to="item.path"
               >
@@ -58,7 +58,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         username: '',
         show:true,
         datetime:'',
-        itPPMS: [
+        items: [
           {title: 'Profile', path: '/#'},
           {title: 'Settings', path: '/#'}
         ]

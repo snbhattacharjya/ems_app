@@ -2,7 +2,9 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section id="report">
-        <h1 class="headline" >MIS Report <v-spacer></v-spacer>As On {{ new Date().toLocaleString() }}</h1><v-btn fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css' })"><v-icon dark>print</v-icon></v-btn>
+        <v-layout row wrap>
+         <v-flex xs11><h1 class="headline" >MIS Report As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-5">
             <h1 class="headline">Districtwise Male</h1>
@@ -13,7 +15,7 @@
                 <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
                 <th width="25%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="5"><strong>Available Male</strong></th>
+                <th width="50%" colspan="6"><strong>Available Male</strong></th>
 
                 </tr>
                 <tr>
@@ -22,7 +24,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-
+                <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,8 +38,9 @@
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
                   <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
-
+                  <td>{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M) }}</td>
                   </tr>
+                  <tr><td>Total</td><td>Total</td><td>Total</td><td>Total -  </td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td></tr>
                 </tbody>
               </table>
             </v-layout>
@@ -52,7 +55,7 @@
                 <th width="25%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
 
-                <th width="50%" colspan="5"><strong>Available Female</strong></th>
+                <th width="50%" colspan="6"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
 
@@ -61,6 +64,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
+                <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +79,10 @@
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
                   <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad" >{{ report.MO_F }}</td>
+                  <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F) }}</td>
                   </tr>
+                  <tr><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td></tr>
+
                 </tbody>
               </table>
             </v-layout>
@@ -124,6 +131,7 @@ export default {
       this.tableloading=true
         axios.get('/report')
           .then((response, data) => {this.$store.dispatch('storeMISreport', response.data)
+          item.PR_M_COUNT=0
           response.data.forEach(item => { //console.log(item)
               item.PR_M_class=this.createclass(item.PR_M,item.male_party)
               item.P1_M_class=this.createclass(item.P1_M,item.male_party)
@@ -133,8 +141,10 @@ export default {
               item.P1_F_class=this.createclass(item.P1_F,item.female_party)
               item.P2_F_class=this.createclass(item.P2_F,item.female_party)
               item.P3_F_class=this.createclass(item.P3_F,item.female_party)
+              item.PR_M_COUNT+=parseInt(PR_M)
               this.reports.push(item)
             });
+            console.log('Count - '+reports)
             this.tableloading=false
 
           })

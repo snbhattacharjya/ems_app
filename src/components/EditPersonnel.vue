@@ -77,7 +77,7 @@
                 </v-menu>
 
                 <v-select
-                  :itPPMS="genders"
+                  :items="genders"
                   item-text= "name"
                   item-value= "id"
                   prepend-icon="list"
@@ -147,7 +147,7 @@
 
 
                   <v-select
-                    :itPPMS="emp_groups"
+                    :items="emp_groups"
                     prepend-icon="list"
                     label="Employee Group"
                     v-model="emp_group"
@@ -158,7 +158,7 @@
                   </v-select>
 
                   <v-select
-                    :itPPMS="working_statuses"
+                    :items="working_statuses"
                     prepend-icon="list"
                     label="Working Status"
                     v-model="working_status"

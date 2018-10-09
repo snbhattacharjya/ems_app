@@ -70,6 +70,7 @@
                 label="Pincode"
                 type="text"
                 v-model="pin"
+                maxlength="6"
                 v-validate="'required|digits:6'"
                 :error-messages="errors.collect('pin')"
                 data-vv-name="pin"

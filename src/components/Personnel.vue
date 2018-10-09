@@ -89,7 +89,7 @@
                 </v-menu>
 
                 <v-select
-                  :itPPMS="genders"
+                  :items="genders"
                   item-text= "name"
                   item-value= "id"
                   prepend-icon="list"
@@ -163,7 +163,7 @@
                     data-vv-name="grade_pay"
                   ></v-text-field>
                   <v-select v-if="this.getuser.officelevel === '01'"
-                    :itPPMS="pay_levels"
+                    :items="pay_levels"
                     prepend-icon="list"
                     label="Pay Level"
                     v-model="pay_level"
@@ -174,7 +174,7 @@
                   </v-select>
 
                   <v-select
-                    :itPPMS="emp_groups"
+                    :items="emp_groups"
                     prepend-icon="list"
                     label="Employee Group"
                     v-model="emp_group"
@@ -185,7 +185,7 @@
                   </v-select>
 
                   <v-select
-                    :itPPMS="working_statuses"
+                    :items="working_statuses"
                     prepend-icon="list"
                     label="Working Status"
                     v-model="working_status"

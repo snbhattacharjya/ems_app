@@ -1,6 +1,6 @@
 <template>
     <v-select
-      :itPPMS="institutes"
+      :items="institutes"
       v-model="selected"
       item-text= "name"
       item-value= "id"
