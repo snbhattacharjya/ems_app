@@ -8,7 +8,8 @@
       prepend-icon="list"
       label="Remarks"
       :error-messages="error"
-      @input="showcomment"
+      @change="showcomment"
+      @input="$emit('input',$event)"
     >
     </v-select>
      <v-text-field v-if="comment === true || selected === '13'"

@@ -7,6 +7,9 @@
       prepend-icon="list"
       label="Language known other than English"
       :error-messages="error"
+      @input="$emit('input',$event)"
+      autocomplete
+      :search-input.sync="searchInput"
     >
     </v-select>
 </template>
@@ -27,6 +30,7 @@ export default {
   data(){
     return {
       languages: [],
+      searchInput:''
     }
   },
 

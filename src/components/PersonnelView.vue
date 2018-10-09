@@ -169,7 +169,10 @@
           //office_id: this.office_id
         })
         .then((response, data) => {
-          if(response.data.length === 0){this.tableloading=false}
+          if(response.data.length === 0){
+            this.tableloading=false
+            this.personnels=[]
+          }
          else{
            this.personnels=[]
             response.data.forEach(item => {

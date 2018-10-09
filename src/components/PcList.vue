@@ -5,9 +5,11 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Parliamentary Constituency"
+      label="Parliamentary Constituency(*)"
       :error-messages="error"
       @input="$emit('input',$event)"
+       autocomplete
+      :search-input.sync="searchInput"
     >
     </v-select>
 </template>
@@ -28,6 +30,7 @@ export default {
   data(){
     return {
       pcs: [],
+      searchInput:''
     }
   },
 

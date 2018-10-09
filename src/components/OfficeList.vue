@@ -8,6 +8,8 @@
       label="Select Office"
       :error-messages="error"
       @input="$emit('input',$event)"
+       autocomplete
+      :search-input.sync="searchInput"
     >
 
     </v-select>
@@ -29,7 +31,8 @@ export default {
   data(){
     return {
       offices: [],
-      selected:''
+      selected:'',
+      searchInput:''
     }
   },
 

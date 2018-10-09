@@ -7,6 +7,9 @@
       prepend-icon="list"
       :label="label ? label : 'Block or Municipality'"
       :error-messages="error"
+      autocomplete
+      :search-input.sync="searchInput"
+      @input="$emit('input',$event)"
     >
     </v-select>
 </template>
@@ -31,10 +34,14 @@ export default {
   data(){
     return {
       block_munis: [],
+      searchInput: ''
     }
   },
 
   methods:{
+
+  },
+  watch: {
 
   },
 
@@ -44,6 +51,7 @@ export default {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.block_munis.push(item)
+          this.block_munis.push({name:"OTHER",id:"999901"})
         });
       })
       .catch(error => {

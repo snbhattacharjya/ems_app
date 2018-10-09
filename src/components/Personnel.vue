@@ -127,7 +127,7 @@
 
                 </v-stepper-content>
 
-                <v-stepper-step :complete="personnel_form > 2" step="2" editable>Salary Details</v-stepper-step>
+                <v-stepper-step :complete="personnel_form > 2" step="2" editable >Salary Details</v-stepper-step>
 
                 <v-stepper-content step="2">
                   <v-text-field
@@ -241,7 +241,9 @@
                     label="Phone"
                     type="text"
                     v-model="phone"
-                    v-validate=""
+                    counter
+                    maxlength="10"
+                    v-validate="'numeric'"
                     :error-messages="errors.collect('phone')"
                     data-vv-name="phone"
                   ></v-text-field>
@@ -252,7 +254,9 @@
                     label="Mobile"
                     type="text"
                     v-model="mobile"
-                    v-validate="'required'"
+                    counter
+                    maxlength="10"
+                    v-validate="'required|numeric|digits:10'"
                     :error-messages="errors.collect('mobile')"
                     data-vv-name="mobile"
                   ></v-text-field>
@@ -260,7 +264,7 @@
                   <block-muni-list
                     :label="block_muni_labels[0]"
                     v-model="block_muni_temp_id"
-                    v-validate="'required'"
+                    v-validate=""
                     data-vv-name="block_muni_temp_id"
                     :error="errors.collect('block_muni_temp_id')"
                   ></block-muni-list>
@@ -268,7 +272,7 @@
                   <block-muni-list
                     :label="block_muni_labels[1]"
                     v-model="block_muni_perm_id"
-                    v-validate="'required'"
+                    v-validate=""
                     data-vv-name="block_muni_perm_id"
                     :error="errors.collect('block_muni_perm_id')"
                   ></block-muni-list>
@@ -276,7 +280,7 @@
                   <block-muni-list
                     :label="block_muni_labels[2]"
                     v-model="block_muni_off_id"
-                    v-validate="'required'"
+                    v-validate=""
                     data-vv-name="block_muni_off_id"
                     :error="errors.collect('block_muni_off_id')"
                   ></block-muni-list>
@@ -304,7 +308,7 @@
                     label="Part no"
                     type="text"
                     v-model="part_no"
-                    v-validate="'required'"
+                    v-validate=""
                     :error-messages="errors.collect('part_no')"
                     data-vv-name="part_no"
                   ></v-text-field>
@@ -315,7 +319,7 @@
                     label="Serial No"
                     type="text"
                     v-model="sl_no"
-                    v-validate="'required'"
+                    v-validate=""
                     :error-messages="errors.collect('sl_no')"
                     data-vv-name="sl_no"
                   ></v-text-field>
@@ -356,7 +360,7 @@
                     label="IFSC No"
                     type="text"
                     v-model="branch_ifsc"
-                    v-validate="'required'"
+                    v-validate="'required|alpha_num'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
                     @blur="ifsc"
@@ -370,7 +374,9 @@
                     label="Bank Account no"
                     :type="type_text"
                     v-model="bank_account_no"
-                    v-validate="'required'"
+                    counter
+                    maxlength="16"
+                    v-validate="'required|numeric'"
                     :error-messages="errors.collect('bank_account_no')"
                     data-vv-name="bank_account_no"
                     @blur="changetype"
@@ -382,8 +388,10 @@
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No"
                     type="password"
+                    counter
+                    maxlength="16"
                     v-model="confirm_bank_account_no"
-                    v-validate="'required|confirmed:bank_account_no'"
+                    v-validate="'required|numeric|confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
                   ></v-text-field>
@@ -517,6 +525,7 @@ import RemarkList from '@/components/RemarkList'
         assembly_off_id: '',
         branch_ifsc: '',
         bank_account_no: '',
+        confirm_bank_account_no: '',
         show_message: false,
         message_type: "",
         message_icon: "",
@@ -526,6 +535,68 @@ import RemarkList from '@/components/RemarkList'
         agree:false,
         personnel_form: 1,
         remark_selected:'',
+        dictionary: {
+        custom: {
+          office_name: {
+            required: "Office Name can not be empty"
+          },
+          identification_code: {
+            required: "Identification Code is required"
+          },
+          block_muni_id: {
+            required: "Block/Municipality is required"
+          },
+          post_office: {
+            required: "Post Office is required"
+          },
+          pin: {
+            required: "Pin Code is required"
+          },
+          post_office: {
+            required: "Post Office is required"
+          },
+          police_station_id: {
+            required: "Police Station is required"
+          },
+          ac_id: {
+            required: "Assembly Constituency is required"
+          },
+          pc_id: {
+            required: "Parliament Constituency is required"
+          },
+          category_id: {
+            required: "Office Category is required"
+          },
+          institute_id: {
+            required: "Institute is required"
+          },
+          email: {
+            required: "Email is required",
+            email: "Email is not valid"
+          },
+          phone: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          mobile: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          fax: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          male_staff: {
+            required: "Please provide total number of male staff"
+          },
+          female_staff: {
+            required: "Please provide total number of female staff"
+          },
+          agree: {
+            required: "You must give the declartion on the above information"
+          }
+        }
+      }
       }
     },
    created(){

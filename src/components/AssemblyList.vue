@@ -7,6 +7,9 @@
       prepend-icon="list"
       :label="label ? label : 'Assembly Constituency'"
       :error-messages="error"
+      autocomplete
+      :search-input.sync="searchInput"
+      @input="$emit('input',$event)"
     >
     </v-select>
 </template>
@@ -31,6 +34,7 @@ export default {
   data(){
     return {
       assemblies: [],
+      searchInput: ''
     }
   },
 
@@ -44,6 +48,7 @@ export default {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.assemblies.push(item)
+          this.block_munis.push({name:"OTHER",id:"999901"})
         });
       })
       .catch(error => {

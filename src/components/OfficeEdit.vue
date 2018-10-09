@@ -8,7 +8,7 @@
             <v-toolbar-title>Edit Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form id="form" autocomplete="off">
+            <v-form autocomplete="off">
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
@@ -18,7 +18,6 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
-                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -27,7 +26,7 @@
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
                 type="text"
                 v-model="identification_code"
-                v-validate="'required'"
+                v-validate="'required|alpha_num'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
               ></v-text-field>
@@ -38,7 +37,7 @@
                 label="Designation of Head of Office"
                 type="text"
                 v-model="officer_designation"
-                v-validate="'required'"
+                v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
               ></v-text-field>
@@ -60,7 +59,7 @@
                 label="Post Office"
                 type="text"
                 v-model="post_office"
-                v-validate="'required|alpha'"
+                v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
               ></v-text-field>
@@ -71,7 +70,9 @@
                 label="Pincode"
                 type="text"
                 v-model="pin"
-                v-validate="'required|digits:6'"
+                counter
+                maxlength="6"
+                v-validate="'required|numeric|digits:6'"
                 :error-messages="errors.collect('pin')"
                 data-vv-name="pin"
               ></v-text-field>
@@ -83,7 +84,6 @@
                 :error="errors.collect('subdivision_id')"
                 :selected="subdivision_id"
               ></subdivision-list>
-
               <block-muni-list
                 v-model="block_muni_id"
                 v-validate="'required'"
@@ -100,14 +100,6 @@
                 :selected="police_station_id"
               ></police-station-list>
 
-              <pc-list
-                v-model="pc_id"
-                v-validate="'required'"
-                data-vv-name="pc_id"
-                :error="errors.collect('pc_id')"
-                :selected="pc_id"
-              ></pc-list>
-
               <assembly-list
                 v-model="ac_id"
                 v-validate="'required'"
@@ -116,6 +108,13 @@
                 :selected="ac_id"
               ></assembly-list>
 
+              <pc-list
+                v-model="pc_id"
+                v-validate="'required'"
+                data-vv-name="pc_id"
+                :error="errors.collect('pc_id')"
+                :selected="pc_id"
+              ></pc-list>
 
               <category-list
                 v-model="category_id"
@@ -150,7 +149,9 @@
                 label="Phone No"
                 type="text"
                 v-model="phone"
-                v-validate="'digits:11'"
+                counter
+                maxlength="10"
+                v-validate="'numeric|digits:10'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -161,7 +162,9 @@
                 label="Mobile of Head of Office"
                 type="text"
                 v-model="mobile"
-                v-validate="'required|digits:10'"
+                counter
+                maxlength="10"
+                v-validate="'required|numeric|digits:10'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
@@ -172,6 +175,8 @@
                 label="Fax"
                 type="text"
                 v-model="fax"
+                counter
+                maxlength="10"
                 v-validate="'numeric'"
                 :error-messages="errors.collect('fax')"
                 data-vv-name="fax"
@@ -210,7 +215,7 @@
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
-               <label><h3>DECLARATION</h3></label>
+              <label><h3>DECLARATION</h3></label>
               <v-checkbox :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
                 :error-messages="errors.collect('agree')"
                 data-vv-name="agree"></v-checkbox>
@@ -229,144 +234,186 @@
   </v-container>
 </template>
 <script>
-  import SubdivisionList from '@/components/SubdivisionList'
-  import BlockMuniList from '@/components/BlockMuniList'
-  import PoliceStationList from '@/components/PoliceStationList'
-  import AssemblyList from '@/components/AssemblyList'
-  import PcList from '@/components/PcList'
-  import CategoryList from '@/components/CategoryList'
-  import InstituteList from '@/components/InstituteList'
+import SubdivisionList from "@/components/SubdivisionList";
+import BlockMuniList from "@/components/BlockMuniList";
+import PoliceStationList from "@/components/PoliceStationList";
+import AssemblyList from "@/components/AssemblyList";
+import PcList from "@/components/PcList";
+import CategoryList from "@/components/CategoryList";
+import InstituteList from "@/components/InstituteList";
 
-  export default{
-    name: 'OfficeEdit',
+export default {
+  name: "OfficeEdit",
 
-    components: {
-      'subdivision-list': SubdivisionList,
-      'block-muni-list': BlockMuniList,
-      'police-station-list': PoliceStationList,
-      'assembly-list': AssemblyList,
-      'pc-list': PcList,
-      'category-list': CategoryList,
-      'institute-list': InstituteList,
-    },
+  components: {
+    "subdivision-list": SubdivisionList,
+    "block-muni-list": BlockMuniList,
+    "police-station-list": PoliceStationList,
+    "assembly-list": AssemblyList,
+    "pc-list": PcList,
+    "category-list": CategoryList,
+    "institute-list": InstituteList
+  },
 
-    $_veeValidate: {
-      validator: 'new'
-    },
+  $_veeValidate: {
+    validator: "new"
+  },
 
-    data (){
-      return {
-        valid: true,
-        snackbar: false,
-        office_id:'',
-        office_name: '',
-        identification_code: '',
-        subdivision_id: '',
-        block_muni_id: '',
-        office_address: '',
-        officer_designation: '',
-        post_office: '',
-        pin: '',
-        police_station_id: '',
-        ac_id: '',
-        pc_id: '',
-        category_id: '',
-        institute_id: '',
-        email: '',
-        phone: '',
-        mobile: '',
-        fax: '',
-        male_staff: 0,
-        female_staff: 0,
-        total_staff: 0,
-        show_message: false,
-        message_type: "",
-        message_icon: "",
-        message_text: "",
-        disable_save: false,
-        agree:'',
-        agree_text:'Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.',
-        dictionary: {
-
-          custom: {
-            office_name: {
-              required: 'Office Name can not be empty',
-            },
-            identification_code: {
-              required: 'Identification Code is required'
-            },
-            subdivision_id: {
-              required: 'Subdivision is required'
-            },
-            block_muni_id: {
-              required: 'Block/Municipality is required'
-            },
-            agree: {
-              required: 'You must give the declartion on the above information'
-            }
+  data() {
+    return {
+      valid: true,
+      snackbar: false,
+      office_id: "",
+      office_name: "",
+      identification_code: "",
+      subdivision_id: "",
+      block_muni_id: "",
+      office_address: "",
+      officer_designation: "",
+      post_office: "",
+      pin: "",
+      police_station_id: "",
+      ac_id: "",
+      pc_id: "",
+      category_id: "",
+      institute_id: "",
+      email: "",
+      phone: "",
+      mobile: "",
+      fax: "",
+      male_staff: 0,
+      female_staff: 0,
+      total_staff: 0,
+      show_message: false,
+      message_type: "",
+      message_icon: "",
+      message_text: "",
+      disable_save: false,
+      agree: "",
+      agree_text:
+        "Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.",
+      dictionary: {
+        custom: {
+          office_name: {
+            required: "Office Name can not be empty"
+          },
+          identification_code: {
+            required: "Identification Code is required"
+          },
+          block_muni_id: {
+            required: "Block/Municipality is required"
+          },
+          post_office: {
+            required: "Post Office is required"
+          },
+          pin: {
+            required: "Pin Code is required"
+          },
+          post_office: {
+            required: "Post Office is required"
+          },
+          police_station_id: {
+            required: "Police Station is required"
+          },
+          ac_id: {
+            required: "Assembly Constituency is required"
+          },
+          pc_id: {
+            required: "Parliament Constituency is required"
+          },
+          category_id: {
+            required: "Office Category is required"
+          },
+          institute_id: {
+            required: "Institute is required"
+          },
+          email: {
+            required: "Email is required",
+            email: "Email is not valid"
+          },
+          phone: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          mobile: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          fax: {
+            numeric: "Phone must be numeric",
+            digits: "Phone exactly contain 10 digits"
+          },
+          male_staff: {
+            required: "Please provide total number of male staff"
+          },
+          female_staff: {
+            required: "Please provide total number of female staff"
+          },
+          agree: {
+            required: "You must give the declartion on the above information"
           }
         }
-
       }
-    },
-    created(){
-      this.office_id=this.$route.params.id
-      this.initialize()
-    },
-    mounted () {
-      this.$validator.localize('en', this.dictionary)
-    },
-    methods: {
-      initialize () {
-
-        axios.get('/office/'+this.office_id,{
+    };
+  },
+  created() {
+    this.office_id = this.$route.params.id;
+    this.initialize();
+  },
+  mounted() {
+    this.$validator.localize("en", this.dictionary);
+  },
+  methods: {
+    initialize() {
+      axios
+        .get("/office/" + this.office_id, {
           id: this.office_id
         })
         .then((response, data) => {
-        response.data.forEach(item => {
-              this.office_name= item.name,
-              this.identification_code= item.identification_code,
-              this.subdivision_id= item.subdivision_id,
-              this.block_muni_id= item.block_muni_id,
-              this.office_address= item.address,
-              this.officer_designation= item.officer_designation,
-              this.post_office= item.post_office,
-              this.pin= item.pin,
-              this.police_station_id= item.police_station_id,
-              this.ac_id= item.ac_id,
-              this.pc_id= item.pc_id,
-              this.category_id= item.category_id,
-              this.institute_id= item.institute_id,
-              this.email= item.email,
-              this.phone= item.phone,
-              this.mobile= item.mobile,
-              this.fax= item.fax,
-              this.male_staff= item.male_staff,
-              this.female_staff= item.female_staff,
-              this.total_staff= item.total_staff
-          })
+          response.data.forEach(item => {
+            (this.office_name = item.name),
+              (this.identification_code = item.identification_code),
+              (this.subdivision_id = item.subdivision_id),
+              (this.block_muni_id = item.block_muni_id),
+              (this.office_address = item.address),
+              (this.officer_designation = item.officer_designation),
+              (this.post_office = item.post_office),
+              (this.pin = item.pin),
+              (this.police_station_id = item.police_station_id),
+              (this.ac_id = item.ac_id),
+              (this.pc_id = item.pc_id),
+              (this.category_id = item.category_id),
+              (this.institute_id = item.institute_id),
+              (this.email = item.email),
+              (this.phone = item.phone),
+              (this.mobile = item.mobile),
+              (this.fax = item.fax),
+              (this.male_staff = item.male_staff),
+              (this.female_staff = item.female_staff),
+              (this.total_staff = item.total_staff);
+          });
         })
         .catch(error => {
-          console.log(error)
-        })
-      },
-      validateOffice(){
-        this.disable_save = true
-        this.$validator.validate()
-          .then(result => {
-            result ? this.saveOffice() : this.showError()
-            this.disable_save = false
-          })
-      },
-      showError(){
-        this.show_message = true
-        this.message_type = 'error'
-        this.message_icon = 'warning'
-        this.message_text = 'Error Occurred!!!'
-      },
-      saveOffice(){
-        axios.post('/office/update',{
-          office_id:this.office_id,
+          console.log(error);
+        });
+    },
+    validateOffice() {
+      this.disable_save = true;
+      this.$validator.validate().then(result => {
+        result ? this.saveOffice() : this.showError();
+        this.disable_save = false;
+      });
+    },
+    showError() {
+      this.show_message = true;
+      this.message_type = "error";
+      this.message_icon = "warning";
+      this.message_text = "Error Occurred!!!";
+    },
+    saveOffice() {
+      axios
+        .post("/office/update", {
+          office_id: this.office_id,
           office_name: this.office_name,
           identification_code: this.identification_code,
           officer_designation: this.officer_designation,
@@ -388,38 +435,38 @@
           total_staff: this.total_staff,
           male_staff: this.male_staff,
           female_staff: this.female_staff,
-          agree: this.agree,
+          agree: this.agree
         })
         .then(response => {
           //this.$refs.form.reset()
-          this.agree=false
-          this.show_message = true
-          this.message_type = 'success'
-          this.message_icon = 'check_circle'
-          this.message_text = 'Office Updated Successfully '
-          this.snackbar =true
+          this.agree = false;
+          this.show_message = true;
+          this.message_type = "success";
+          this.message_icon = "check_circle";
+          this.message_text = "Office Updated Successfully ";
+          this.snackbar = true;
         })
         .catch(error => {
-          this.show_message = true
-          this.message_type = 'error'
-          this.message_icon = 'warning'
-          this.message_text = 'Error Occurred!!! '+error.response.data.message
-          this.snackbar =true
-        })
-      }
-    },
-    computed: {
-      calculateTotalStaff(){
-        this.total_staff = this.male_staff + this.female_staff
-      },
-      uppercase:function(){
-        this.office_name=this.office_name.toUpperCase()
-        this.identification_code= this.identification_code.toUpperCase()
-        this.officer_designation=this.officer_designation.toUpperCase()
-        this.office_address=this.office_address.toUpperCase()
-        this.post_office=this.post_office.toUpperCase()
-      }
+          this.show_message = true;
+          this.message_type = "error";
+          this.message_icon = "warning";
+          this.message_text =
+            "Error Occurred!!! " + error.response.data.message;
+          this.snackbar = true;
+        });
     }
-
+  },
+  computed: {
+    calculateTotalStaff() {
+      this.total_staff = this.male_staff + this.female_staff;
+    },
+    uppercase: function() {
+      this.office_name = this.office_name.toUpperCase();
+      this.identification_code = this.identification_code.toUpperCase();
+      this.officer_designation = this.officer_designation.toUpperCase();
+      this.office_address = this.office_address.toUpperCase();
+      this.post_office = this.post_office.toUpperCase();
+    }
   }
+};
 </script>

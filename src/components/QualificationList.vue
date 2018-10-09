@@ -7,7 +7,9 @@
       prepend-icon="list"
       label="Qualification"
       :error-messages="error"
-
+      @input="$emit('input',$event)"
+      autocomplete
+      :search-input.sync="searchInput"
     >
     </v-select>
 </template>
@@ -21,13 +23,14 @@ export default {
       required: false
     },
     selected: {
-      type:Number,
-      required:false
+      type: String,
+      required: false
     }
   },
   data(){
     return {
       qualifications: [],
+      searchInput:''
     }
   },
 
