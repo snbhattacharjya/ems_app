@@ -3,10 +3,10 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 class="my-5">
+        <v-layout row wrap >
+          <v-flex xs12 class="my-5" id="exclude">
             <v-layout row wrap >
               <v-flex xs9>
                 <v-select
@@ -32,9 +32,9 @@
                 <tr>
                 <th width="10%" ><strong>Serial No</strong></th>
                 <th width="10%"><strong>Assembly ID</strong></th>
-                <th width="30%" ><strong>Assembly Name</strong></th>
-                <th width="25%" ><strong>No of Polling Booth(Male)</strong></th>
-                <th width="25%"><strong>No of Polling Booth(Female)</strong></th>
+                <th width="40%" ><strong>Assembly Name</strong></th>
+                <th width="20%" ><strong>No of Polling Booth(Male)</strong></th>
+                <th width="20%"><strong>No of Polling Booth(Female)</strong></th>
                 </tr>
 
                 </thead>

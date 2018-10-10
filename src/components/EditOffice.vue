@@ -26,7 +26,7 @@
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike(*)"
                 type="text"
                 v-model="identification_code"
-                v-validate="'required|alpha_num'"
+                v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
               ></v-text-field>

@@ -15,6 +15,8 @@
                 label="Office Name"
                 type="text"
                 v-model="office_name"
+                counter
+                maxlength="50"
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
@@ -27,6 +29,8 @@
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
                 type="text"
                 v-model="identification_code"
+                counter
+                maxlength="50"
                 v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
@@ -38,6 +42,8 @@
                 label="Designation of Head of Office"
                 type="text"
                 v-model="officer_designation"
+                counter
+                maxlength="50"
                 v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
@@ -49,6 +55,8 @@
                 label="Office Address"
                 type="text"
                 v-model="office_address"
+                counter
+                maxlength="50"
                 v-validate="'required'"
                 :error-messages="errors.collect('office_address')"
                 data-vv-name="office_address"
@@ -60,6 +68,8 @@
                 label="Post Office"
                 type="text"
                 v-model="post_office"
+                counter
+                maxlength="50"
                 v-validate="'required'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
@@ -72,6 +82,8 @@
                 label="Pincode"
                 type="text"
                 v-model="pin"
+                counter
+                maxlength="6"
                 v-validate="'required|digits:6'"
                 :error-messages="errors.collect('pin')"
                 data-vv-name="pin"
@@ -132,6 +144,8 @@
                 label="Email"
                 type="text"
                 v-model="email"
+                counter
+                maxlength="50"
                 v-validate="'required|email'"
                 :error-messages="errors.collect('email')"
                 data-vv-name="email"
@@ -143,7 +157,9 @@
                 label="Phone No"
                 type="text"
                 v-model="phone"
-                v-validate="'digits'"
+                counter
+                maxlength="10"
+                v-validate="'numeric|digits:10'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -154,6 +170,8 @@
                 label="Mobile of Head of Office"
                 type="text"
                 v-model="mobile"
+                counter
+                maxlength="10"
                 v-validate="'required|digits:10'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
@@ -165,6 +183,8 @@
                 label="Fax"
                 type="text"
                 v-model="fax"
+                counter
+                maxlength="10"
                 v-validate="'numeric'"
                 :error-messages="errors.collect('fax')"
                 data-vv-name="fax"
