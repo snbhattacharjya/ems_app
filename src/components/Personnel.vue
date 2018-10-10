@@ -31,6 +31,8 @@
                   label="Officer Name"
                   type="text"
                   v-model="officer_name"
+                  counter
+                  maxlength="50"
                   v-validate="'required'"
                   :error-messages="errors.collect('officer_name')"
                   data-vv-name="officer_name"
@@ -42,6 +44,8 @@
                   label="Officer Designation"
                   type="text"
                   v-model="designation"
+                  counter
+                  maxlength="50"
                   v-validate="'required'"
                   :error-messages="errors.collect('designation')"
                   data-vv-name="designation"
@@ -208,6 +212,8 @@
                     label="Present Address"
                     type="text"
                     v-model="present_address"
+                    counter
+                    maxlength="100"
                     v-validate="'required'"
                     :error-messages="errors.collect('present_address')"
                     data-vv-name="present_address"
@@ -219,6 +225,8 @@
                     label="permanent Address"
                     type="text"
                     v-model="permanent_address"
+                    counter
+                    maxlength="100"
                     v-validate="'required'"
                     :error-messages="errors.collect('permanent_address')"
                     data-vv-name="permanent_address"
@@ -230,7 +238,9 @@
                     label="Email"
                     type="text"
                     v-model="email"
-                    v-validate=""
+                    counter
+                    maxlength="50"
+                    v-validate="'email'"
                     :error-messages="errors.collect('email')"
                     data-vv-name="email"
                   ></v-text-field>
@@ -308,7 +318,7 @@
                     label="Part no"
                     type="text"
                     v-model="part_no"
-                    v-validate=""
+                    v-validate="'numeric'"
                     :error-messages="errors.collect('part_no')"
                     data-vv-name="part_no"
                   ></v-text-field>
@@ -319,7 +329,7 @@
                     label="Serial No"
                     type="text"
                     v-model="sl_no"
-                    v-validate=""
+                    v-validate="'numeric'"
                     :error-messages="errors.collect('sl_no')"
                     data-vv-name="sl_no"
                   ></v-text-field>
@@ -330,6 +340,7 @@
                     v-validate="'required'"
                     data-vv-name="assembly_temp_id"
                     :error="errors.collect('assembly_temp_id')"
+                    :mode="assembly_modes[0]"
                   ></assembly-list>
 
                   <assembly-list
@@ -338,6 +349,7 @@
                     v-validate="'required'"
                     data-vv-name="assembly_perm_id"
                     :error="errors.collect('assembly_perm_id')"
+                    :mode="assembly_modes[0]"
                   ></assembly-list>
 
                   <assembly-list
@@ -346,6 +358,7 @@
                     v-validate="'required'"
                     data-vv-name="assembly_off_id"
                     :error="errors.collect('assembly_off_id')"
+                    :mode="assembly_modes[1]"
                   ></assembly-list>
                   <v-btn color="primary" @click="personnel_form = 5">Continue</v-btn>
 
@@ -520,6 +533,10 @@ import RemarkList from '@/components/RemarkList'
           'Permanent Assembly Constituency',
           'Office Assembly Constituency',
         ],
+        assembly_modes: [
+          'all',
+          'default'
+        ],
         assembly_temp_id: '',
         assembly_perm_id: '',
         assembly_off_id: '',
@@ -535,73 +552,114 @@ import RemarkList from '@/components/RemarkList'
         agree:false,
         personnel_form: 1,
         remark_selected:'',
+        step1_error:'',
+        step2_error:'',
+        step3_error:'',
+        step4_error:'',
+        step5_error:'',
         dictionary: {
-        custom: {
-          office_name: {
-            required: "Office Name can not be empty"
-          },
-          identification_code: {
-            required: "Identification Code is required"
-          },
-          block_muni_id: {
-            required: "Block/Municipality is required"
-          },
-          post_office: {
-            required: "Post Office is required"
-          },
-          pin: {
-            required: "Pin Code is required"
-          },
-          post_office: {
-            required: "Post Office is required"
-          },
-          police_station_id: {
-            required: "Police Station is required"
-          },
-          ac_id: {
-            required: "Assembly Constituency is required"
-          },
-          pc_id: {
-            required: "Parliament Constituency is required"
-          },
-          category_id: {
-            required: "Office Category is required"
-          },
-          institute_id: {
-            required: "Institute is required"
-          },
-          email: {
-            required: "Email is required",
-            email: "Email is not valid"
-          },
-          phone: {
-            numeric: "Phone must be numeric",
-            digits: "Phone exactly contain 10 digits"
-          },
-          mobile: {
-            numeric: "Phone must be numeric",
-            digits: "Phone exactly contain 10 digits"
-          },
-          fax: {
-            numeric: "Phone must be numeric",
-            digits: "Phone exactly contain 10 digits"
-          },
-          male_staff: {
-            required: "Please provide total number of male staff"
-          },
-          female_staff: {
-            required: "Please provide total number of female staff"
-          },
-          agree: {
-            required: "You must give the declartion on the above information"
+          custom: {
+            office_id:{
+              required: "Please select One office"
+            },
+            officer_name: {
+              required: "Officer Name can not be empty"
+            },
+            designation: {
+              required: "Designation is required"
+            },
+            dob: {
+              required: "Date of Birth is required"
+            },
+            gender: {
+              required: "Please select gender"
+            },
+            qualification_id: {
+              required: "Please select Qualification"
+            },
+            language_id: {
+              required: "Please selct one Language"
+            },
+            remark_id: {
+              required: "Please select one Remark"
+            },
+            scale: {
+              required: "Pay Scale is required"
+            },
+            grade_pay: {
+              required: "Grade Pay is required"
+            },
+            basic_pay: {
+              required: "Basic Pay is required"
+            },
+            pay_level: {
+              required: "Pay Level is required"
+            },
+            emp_group: {
+              required: "Please select one group"
+            },
+            working_status: {
+              required: "Please select working status"
+            },
+            present_address: {
+              required: "Present address is required"
+            },
+            permanent_address: {
+              required: "Permanent address is required"
+            },
+            phone:{
+              numeric:"Only Number are allowed"
+            },
+            mobile: {
+              required: "Please provide Mobile number",
+              numeric: "Only Number are allowed",
+              digits: "Mobile number must be of 10 digits"
+            },
+            email:{
+              email: "Email is invalid"
+            },
+            epic: {
+              required: "Please provide EPIC number"
+            },
+            part_no:{
+              numeric: "Only Number are allowed"
+            },
+            sl_no:{
+              numeric: "Only Number are allowed"
+            },
+            assembly_temp_id: {
+              required: "Please select Present Assembly Constituency"
+            },
+            assembly_perm_id: {
+              required: "Please select Permanent Assembly Constituency"
+            },
+            assembly_off_id: {
+              required: "Please select Office Assembly Constituency"
+            },
+            branch_ifsc: {
+              required: "Please provide IFSC number",
+              alpha_num: "No Special character allowed"
+            },
+            bank_account_no: {
+              required: "Please provide Bank Account number",
+              numeric: "Please provide number only"
+            },
+            confirm_bank_account_no: {
+              required: "Please type Bank Accout number again",
+              numeric: "Please provide number only",
+              confirmed: "Bank Account number does not match"
+            }
           }
         }
-      }
+
       }
     },
    created(){
       console.log('User data in PP2 '+this.getuser.name)
    },
+    mounted() {
+    this.$validator.localize("en", this.dictionary)
+  },
    computed: {
       getuser(){
           return this.$store.getters.getUser

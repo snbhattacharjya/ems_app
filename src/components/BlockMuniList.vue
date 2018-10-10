@@ -51,8 +51,9 @@ export default {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.block_munis.push(item)
-          this.block_munis.push({name:"OTHER",id:"999901"})
-        });
+
+        })
+        this.block_munis.push({name:"OTHER",id:"999901"})
       })
       .catch(error => {
         console.log(error)

@@ -31,6 +31,8 @@
                   name="officer_name"
                   label="Officer Name"
                   type="text"
+                  counter
+                  maxlength="50"
                   v-model="officer_name"
                   v-validate="'required'"
                   :error-messages="errors.collect('officer_name')"
@@ -43,6 +45,8 @@
                   label="Officer Designation"
                   type="text"
                   v-model="designation"
+                  counter
+                  maxlength="50"
                   v-validate="'required'"
                   :error-messages="errors.collect('designation')"
                   data-vv-name="designation"
@@ -141,6 +145,7 @@
                     label="Pay Scale"
                     type="text"
                     v-model="scale"
+
                     v-validate="'required'"
                     :error-messages="errors.collect('scale')"
                     data-vv-name="scale"
@@ -152,6 +157,7 @@
                     label="Basic Pay"
                     type="text"
                     v-model="basic_pay"
+
                     v-validate="'required'"
                     :error-messages="errors.collect('basic_pay')"
                     data-vv-name="basic_pay"
@@ -162,6 +168,7 @@
                     name="grade_pay"
                     label="Grade Pay"
                     type="text"
+
                     v-model="grade_pay"
                     v-validate="'required'"
                     :error-messages="errors.collect('grade_pay')"
@@ -214,6 +221,8 @@
                     label="Present Address"
                     type="text"
                     v-model="present_address"
+                    counter
+                    maxlength="100"
                     v-validate="'required'"
                     :error-messages="errors.collect('present_address')"
                     data-vv-name="present_address"
@@ -225,6 +234,8 @@
                     label="permanent Address"
                     type="text"
                     v-model="permanent_address"
+                    counter
+                    maxlength="100"
                     v-validate="'required'"
                     :error-messages="errors.collect('permanent_address')"
                     data-vv-name="permanent_address"
@@ -236,7 +247,9 @@
                     label="Email"
                     type="text"
                     v-model="email"
-                    v-validate=""
+                    counter
+                    maxlength="50"
+                    v-validate="'email'"
                     :error-messages="errors.collect('email')"
                     data-vv-name="email"
                   ></v-text-field>
@@ -247,7 +260,9 @@
                     label="Phone"
                     type="text"
                     v-model="phone"
-                    v-validate=""
+                    counter
+                    maxlength="10"
+                    v-validate="'numeric|digits:10'"
                     :error-messages="errors.collect('phone')"
                     data-vv-name="phone"
                   ></v-text-field>
@@ -258,7 +273,9 @@
                     label="Mobile"
                     type="text"
                     v-model="mobile"
-                    v-validate="'required'"
+                    counter
+                    maxlength="10"
+                    v-validate="'required|numeric|digits:10'"
                     :error-messages="errors.collect('mobile')"
                     data-vv-name="mobile"
                   ></v-text-field>
@@ -312,7 +329,7 @@
                     label="Part no"
                     type="text"
                     v-model="part_no"
-                    v-validate="'required'"
+                    v-validate="'numeric'"
                     :error-messages="errors.collect('part_no')"
                     data-vv-name="part_no"
                   ></v-text-field>
@@ -323,7 +340,7 @@
                     label="Serial No"
                     type="text"
                     v-model="sl_no"
-                    v-validate="'required'"
+                    v-validate="'numeric'"
                     :error-messages="errors.collect('sl_no')"
                     data-vv-name="sl_no"
                   ></v-text-field>
@@ -365,7 +382,7 @@
                     label="IFSC No"
                     type="text"
                     v-model="branch_ifsc"
-                    v-validate="'required'"
+                    v-validate="'required|alpha_num'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
                     @blur="ifsc"
@@ -379,7 +396,9 @@
                     label="Bank Account no"
                     type="text"
                     v-model="bank_account_no"
-                    v-validate="'required'"
+                    counter
+                    maxlength="16"
+                    v-validate="'required|numeric'"
                     :error-messages="errors.collect('bank_account_no')"
                     data-vv-name="bank_account_no"
                   ></v-text-field>
@@ -390,7 +409,9 @@
                     label="Confirm Bank Account No"
                     type="password"
                     v-model="confirm_bank_account_no"
-                    v-validate="'confirmed:bank_account_no'"
+                    counter
+                    maxlength="16"
+                    v-validate="'required|numeric|confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
 
@@ -532,7 +553,101 @@ import RemarkList from '@/components/RemarkList'
         message_text: "",
         disable_save: false,
         personnel_form: 1,
-      }
+       dictionary: {
+          custom: {
+            office_id:{
+              required: "Please select One office"
+            },
+            officer_name: {
+              required: "Officer Name can not be empty"
+            },
+            designation: {
+              required: "Designation is required"
+            },
+            dob: {
+              required: "Date of Birth is required"
+            },
+            gender: {
+              required: "Please select gender"
+            },
+            qualification_id: {
+              required: "Please select Qualification"
+            },
+            language_id: {
+              required: "Please selct one Language"
+            },
+            remark_id: {
+              required: "Please select one Remark"
+            },
+            scale: {
+              required: "Pay Scale is required"
+            },
+            grade_pay: {
+              required: "Grade Pay is required"
+            },
+            basic_pay: {
+              required: "Basic Pay is required"
+            },
+            pay_level: {
+              required: "Pay Level is required"
+            },
+            emp_group: {
+              required: "Please select one group"
+            },
+            working_status: {
+              required: "Please select working status"
+            },
+            present_address: {
+              required: "Present address is required"
+            },
+            permanent_address: {
+              required: "Permanent address is required"
+            },
+            phone:{
+              numeric:"Only Number are allowed"
+            },
+            mobile: {
+              required: "Please provide Mobile number",
+              numeric: "Only Number are allowed",
+              digits: "Mobile number must be of 10 digits"
+            },
+            email:{
+              email: "Email is invalid"
+            },
+            epic: {
+              required: "Please provide EPIC number"
+            },
+            part_no:{
+              numeric: "Only Number are allowed"
+            },
+            sl_no:{
+              numeric: "Only Number are allowed"
+            },
+            assembly_temp_id: {
+              required: "Please select Present Assembly Constituency"
+            },
+            assembly_perm_id: {
+              required: "Please select Permanent Assembly Constituency"
+            },
+            assembly_off_id: {
+              required: "Please select Office Assembly Constituency"
+            },
+            branch_ifsc: {
+              required: "Please provide IFSC number",
+              alpha_num: "No Special character allowed"
+            },
+            bank_account_no: {
+              required: "Please provide Bank Account number",
+              numeric: "Please provide number only"
+            },
+            confirm_bank_account_no: {
+              required: "Please type Bank Accout number again",
+              numeric: "Please provide number only",
+              confirmed: "Bank Account number does not match"
+            }
+          }
+        }
+       }
     },
     created(){
       this.personnel_id=this.$route.params.id
@@ -544,6 +659,10 @@ import RemarkList from '@/components/RemarkList'
           return this.$store.getters.getUser
        }
     },
+
+    mounted() {
+    this.$validator.localize("en", this.dictionary)
+  },
     methods: {
       ifsc:function(){
         if(this.branch_ifsc != ''){ this.ifsc_hint=''

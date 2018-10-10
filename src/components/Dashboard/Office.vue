@@ -10,7 +10,7 @@
 
                         <h1 class="pb-4">Total Office : {{getdashboard.totalOffice}}</h1>
 
-                        <h1 class="pb-4">Office Registered : {{getdashboard.regOffice}}</h1>
+                        <h1 class="pb-4">Office Registered : {{getdashboard.distinct_office}}</h1>
                       </v-card-title>
 
                     </v-card>

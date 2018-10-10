@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'AssemblyList',
+  name: 'AssemblylistAll',
   props: {
     selected: {
       type: String,
@@ -29,16 +29,12 @@ export default {
     error: {
       type: Array,
       required: false
-    },
-    mode: {
-      type: String,
-      required: false
     }
   },
   data(){
     return {
       assemblies: [],
-      searchInput: ''
+      searchInput: '',
     }
   },
 
@@ -46,20 +42,20 @@ export default {
 
   },
 
-  created(){ console.log('Mode -'+this.mode)
-    let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
-    axios.get(url)
+  created(){
+     axios.get('/allassemblies')
       .then((response, data) => {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.assemblies.push(item)
 
         })
-        this.block_munis.push({name:"OTHER",id:"999901"})
+        this.assemblies.push({name:"OTHER",id:"999901"})
       })
       .catch(error => {
         console.log(error)
       })
+
   }
 }
 </script>
