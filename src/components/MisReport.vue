@@ -38,9 +38,9 @@
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
                   <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
-                  <td>{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M) }}</td>
+                  <td>{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
                   </tr>
-                  <tr><td>Total</td><td>Total</td><td>Total</td><td>Total -  </td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td></tr>
+                  <tr><td></td><td></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
                 </tbody>
               </table>
             </v-layout>
@@ -79,9 +79,9 @@
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
                   <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad" >{{ report.MO_F }}</td>
-                  <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F) }}</td>
+                  <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F) }}</td>
                   </tr>
-                  <tr><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td><td>Total</td></tr>
+                  <tr><td></td><td></td><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
 
                 </tbody>
               </table>
@@ -110,8 +110,18 @@ export default {
       search: '',
       tableloading:false,
       item_class:'',
-
-
+      male_party_count:0,
+      female_party_count:0,
+      PR_M_COUNT:0,
+      P1_M_COUNT:0,
+      P2_M_COUNT:0,
+      P3_M_COUNT:0,
+      PR_F_COUNT:0,
+      P1_F_COUNT:0,
+      P2_F_COUNT:0,
+      P3_F_COUNT:0,
+      MO_M_COUNT:0,
+      MO_F_COUNT:0,
     }
   },
   computed:{
@@ -120,18 +130,20 @@ export default {
      }
   },
   methods:{
-    createclass:function(item,compare){
-      if(compare > item){this.item_class='red--text'}
-      else if(compare <= item){this.item_class='green--text'}
-      else{ this.item_class='green--text' }
+    createclass:function(available,requirement){
 
+      if(parseInt(requirement) > parseInt(available)){this.available_class='red--text'}
+      else if(parseInt(requirement) <= parseInt(available)){this.available_class='green--text'}
+      else{ this.available_class='green--text' }
+      requirement=0
+      available=0
       return this.item_class
     },
     initialize:function(){
       this.tableloading=true
         axios.get('/report')
-          .then((response, data) => {this.$store.dispatch('storeMISreport', response.data)
-          item.PR_M_COUNT=0
+          .then((response, data) => {
+           this.$store.dispatch('storeMISreport', response.data)
           response.data.forEach(item => { //console.log(item)
               item.PR_M_class=this.createclass(item.PR_M,item.male_party)
               item.P1_M_class=this.createclass(item.P1_M,item.male_party)
@@ -141,10 +153,23 @@ export default {
               item.P1_F_class=this.createclass(item.P1_F,item.female_party)
               item.P2_F_class=this.createclass(item.P2_F,item.female_party)
               item.P3_F_class=this.createclass(item.P3_F,item.female_party)
-              item.PR_M_COUNT+=parseInt(PR_M)
+              this.PR_M_COUNT+=parseInt(item.PR_M)
+              this.P1_M_COUNT+=parseInt(item.P1_M)
+              this.P2_M_COUNT+=parseInt(item.P2_M)
+              this.P3_M_COUNT+=parseInt(item.P3_M)
+              this.PR_F_COUNT+=parseInt(item.PR_F)
+              this.P1_F_COUNT+=parseInt(item.P1_F)
+              this.P2_F_COUNT+=parseInt(item.P2_F)
+              this.P3_F_COUNT+=parseInt(item.P3_F)
+              this.male_party_count+=parseInt(item.male_party)
+              this.female_party_count+=parseInt(item.female_party)
+              this.MO_M_COUNT+=parseInt(item.MO_M)
+              this.MO_F_COUNT+=parseInt(item.MO_F)
               this.reports.push(item)
+
             });
-            console.log('Count - '+reports)
+
+
             this.tableloading=false
 
           })
@@ -157,7 +182,30 @@ export default {
 
   created(){
       if(this.getmisdata != ''){
-     this.reports=this.getmisdata
+      this.getmisdata.forEach(item => { //console.log(item)
+              item.PR_M_class=this.createclass(item.PR_M,item.male_party)
+              item.P1_M_class=this.createclass(item.P1_M,item.male_party)
+              item.P2_M_class=this.createclass(item.P2_M,item.male_party)
+              item.P3_M_class=this.createclass(item.P3_M,item.male_party)
+              item.PR_F_class=this.createclass(item.PR_F,item.female_party)
+              item.P1_F_class=this.createclass(item.P1_F,item.female_party)
+              item.P2_F_class=this.createclass(item.P2_F,item.female_party)
+              item.P3_F_class=this.createclass(item.P3_F,item.female_party)
+              this.PR_M_COUNT+=parseInt(item.PR_M)
+              this.P1_M_COUNT+=parseInt(item.P1_M)
+              this.P2_M_COUNT+=parseInt(item.P2_M)
+              this.P3_M_COUNT+=parseInt(item.P3_M)
+              this.PR_F_COUNT+=parseInt(item.PR_F)
+              this.P1_F_COUNT+=parseInt(item.P1_F)
+              this.P2_F_COUNT+=parseInt(item.P2_F)
+              this.P3_F_COUNT+=parseInt(item.P3_F)
+              this.male_party_count+=parseInt(item.male_party)
+              this.female_party_count+=parseInt(item.female_party)
+              this.MO_M_COUNT+=parseInt(item.MO_M)
+              this.MO_F_COUNT+=parseInt(item.MO_F)
+              this.reports.push(item)
+            });
+
     }
     else{
         this.initialize()

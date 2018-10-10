@@ -72,7 +72,22 @@ export default [
           '@/components/Signin.vue'
         )
       },
+      {
+        path: '/signout',
+        meta: {
+          public: true,
+          title:'Logout | Welcome to PPMS'
+        },
+        name: 'Signout',
+        beforeEnter: (to, from, next) => {
+          //console.log('from -'+this.$route.redirectedFrom)
+          next()
+        },
+        component: () => import(
 
+          '@/components/Signin.vue'
+        )
+      },
     {
       path: '/signup',
       meta: {

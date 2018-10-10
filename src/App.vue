@@ -56,5 +56,8 @@ export default {
     // AppDrawer,
     AppToolbar
   },
+  methods:{
+
+  }
 }
 </script>

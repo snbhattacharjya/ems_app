@@ -110,6 +110,7 @@
                   v-validate="'required'"
                   data-vv-name="qualification_id"
                   :error="errors.collect('qualification_id')"
+
                 ></qualification-list>
 
                 <language-list
@@ -466,7 +467,7 @@ import RemarkList from '@/components/RemarkList'
         ifsc_hint:'',
         scale: '',
         basic_pay: 0,
-        grade_pay: 0,
+        grade_pay: '',
         type_text:'text',
         emp_groups: [
           'A',
@@ -665,6 +666,12 @@ import RemarkList from '@/components/RemarkList'
           return this.$store.getters.getUser
        }
     },
+    watch:{
+      qualification_id:function (val) {
+        if(val === '01'){this.emp_groups=['C','D']}
+        else{this.emp_groups=['A','B','C','D']}
+      },
+    },
     methods: {
       changetype:function(){
         if(this.bank_account_no != '' && this.type_text === 'text'){this.type_text = 'password'}
@@ -753,7 +760,8 @@ import RemarkList from '@/components/RemarkList'
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
-      }
+      },
+
     }
 
 

@@ -15,7 +15,7 @@
       <v-btn flat to='/#features' v-scroll-to="'#feature'">Features</v-btn>
       <v-btn flat to='/#services' v-scroll-to="'#services'">Services</v-btn>
       <v-btn v-if="!this.$store.getters.getAccessToken" flat to='/signin'>Sign In</v-btn>
-      <v-btn v-else flat to='/logout'>Sign Out</v-btn>
+      <v-btn v-else flat to="#" @click="logout">Sign Out</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -26,6 +26,12 @@
       return {
 
       }
+    },
+    methods:{
+      logout(){
+        this.$store.dispatch('destroyToken')
+        this.$router.replace("/")
+      },
     }
   }
 </script>

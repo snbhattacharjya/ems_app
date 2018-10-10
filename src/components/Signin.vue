@@ -101,7 +101,7 @@ import myCaptcha from 'vue-captcha'
                 setTimeout(() => {
                   this.$router.replace("/dashboard")
                   this.loading = false
-                },8000)
+                },2000)
 
               })
               .catch(error => {

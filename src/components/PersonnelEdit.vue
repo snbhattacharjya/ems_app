@@ -476,7 +476,7 @@ import RemarkList from '@/components/RemarkList'
         remark_reason:'',
         scale: '',
         basic_pay: 0,
-        grade_pay: 0,
+        grade_pay: '',
         emp_groups: [
           'A',
           'B',
