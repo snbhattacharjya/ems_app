@@ -1,7 +1,6 @@
 <template>
-<!-- <VuePerfectScrollbar class="scroll-area" v-once :settings="settings" @ps-scroll-y="scrollHanle"> -->
-  <v-navigation-drawer class="grey lighten-3" :clipped="true" app v-model="drawer" :width="300">
-  <v-divider></v-divider>
+ <v-navigation-drawer class="grey lighten-3"  :clipped="true" app v-model="drawer" :width="300">
+    <v-divider></v-divider>
 
     <v-list dense class="pt-1">
       <template v-for="item in menus">
@@ -30,7 +29,6 @@
     </v-list>
 
   </v-navigation-drawer>
-<!-- </VuePerfectScrollbar> -->
 </template>
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
@@ -41,8 +39,9 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
     data () {
       return {
         menus:[],
+        mode:null,
         props:{
-          drawer: {
+          mode: {
             type: Boolean,
             required: false
           }
@@ -61,12 +60,7 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
     },
     computed: {
       loadmenu:function(){
-
-        //console.log('User level - '+this.getuser.level)
-
-        //console.log(this.getmenu.length)
         this.getmenu.forEach(item => {
-
            this.menus.push(item)
           })
       },
@@ -80,7 +74,8 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
     methods:{
       scrollHanle(evt) {
       console.log(evt)
-    }
+    },
+
     }
   }
 </script>

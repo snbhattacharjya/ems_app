@@ -10,7 +10,7 @@
     <v-toolbar :clipped-left="true" app >
       <v-toolbar-side-icon
         v-if="primaryDrawer.type !== 'permanent'"
-        @click.stop="primaryDrawer.model = !primaryDrawer.model"
+        @click.stop="drawer = !drawer"
       ></v-toolbar-side-icon>
       <v-toolbar-title>Vuetify</v-toolbar-title>
     </v-toolbar>

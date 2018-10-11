@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard">
     <v-toolbar :clipped-left="true" color="primary" app dark>
-      <v-toolbar-side-icon @click="viw" ></v-toolbar-side-icon>
+      <v-toolbar-side-icon  id="menu" @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
       <v-toolbar-title>
         <v-avatar color="primary"><img src="/static/Election_Commission_of_India_Logo.png" alt="avatar"></v-avatar>
         <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">PPMS</router-link>
@@ -39,7 +39,7 @@
           <v-icon @click="logout">exit_to_app</v-icon>
 
     </v-toolbar>
-    <app-drawer v-if="show"></app-drawer>
+    <app-drawer :mode="drawer"></app-drawer>
     <!-- <v-navigation-drawer class="grey lighten-3" :clipped="true" app v-model="drawer">
   <v-divider></v-divider>
   <v-list dense class="pt-1">
@@ -56,7 +56,8 @@ import AppDrawer from '@/components/layouts/AppDrawer'
     data () {
       return {
         username: '',
-        show:true,
+        drawer:null,
+        show:null,
         datetime:'',
         items: [
           {title: 'Profile', path: '/#'},
@@ -86,12 +87,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         this.$store.dispatch('destroyToken')
         this.$router.replace("/")
       },
-      viw(){
-        //alert(123)
-        console.log('Show before -'+ this.show)
-        this.show =!this.show
-        console.log('Show after -'+ this.show)
-      }
+
     },
     computed: {
       getUser:function(){

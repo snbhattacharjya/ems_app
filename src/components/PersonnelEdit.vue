@@ -354,6 +354,7 @@
                     data-vv-name="assembly_temp_id"
                     :error="errors.collect('assembly_temp_id')"
                     :selected="assembly_temp_id"
+                    :mode="assembly_modes[0]"
                   ></assembly-list>
 
                   <assembly-list
@@ -363,6 +364,7 @@
                     data-vv-name="assembly_perm_id"
                     :error="errors.collect('assembly_perm_id')"
                     :selected="assembly_perm_id"
+                    :mode="assembly_modes[0]"
                   ></assembly-list>
 
                   <assembly-list
@@ -372,6 +374,7 @@
                     data-vv-name="assembly_off_id"
                     :error="errors.collect('assembly_off_id')"
                     :selected="assembly_off_id"
+                    :mode="assembly_modes[1]"
                   ></assembly-list>
                   <v-btn color="primary" @click="personnel_form = 5">Continue</v-btn>
                 </v-stepper-content>
@@ -543,6 +546,10 @@ import RemarkList from '@/components/RemarkList'
           'Present Assembly Constituency',
           'Permanent Assembly Constituency',
           'Office Assembly Constituency',
+        ],
+        assembly_modes: [
+          'all',
+          'default'
         ],
         assembly_temp_id: '',
         assembly_perm_id: '',
