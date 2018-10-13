@@ -4,7 +4,7 @@
             <v-container grid-list-md align-center>
               <v-layout row wrap fill-height>
 
-                  <v-flex xs12 sm6 md3 >
+                  <v-flex v-if="getuser.level !='10'" xs12 sm6 md3 >
                     <v-card color="green" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
 
@@ -82,6 +82,9 @@ export default {
     },
     calculateTotalEmployee:function(){
       return this.getdashboard.totalMale + this.getDashboard.totalfemale
+    },
+    getuser:function(){
+      return this.$store.getters.getUser
     }
   },
   methods:{
