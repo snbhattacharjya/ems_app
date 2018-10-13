@@ -9,11 +9,9 @@
 
                     <v-card class="elevation-6">
           <v-toolbar dark color="blue-grey darken-3">
-            <v-toolbar-title>Downloads</v-toolbar-title>
+            <v-toolbar-title>Exports</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <!-- <a target="_blank" href="/static/docs/pdf/PP1 FORMAT AS PER ASSEMBLY ELECTION 2016.pdf" tag="span" style="cursor: pointer">PP1 Format</a><br>
-            <a target="_blank" href="/static/docs/pdf/PP2-FORMAT-AS PER ELECTION 2016 ASSEMBLY.pdf" tag="span" style="cursor: pointer">PP2 Format</a><br> -->
             <a :href="url" tag="span" style="cursor: pointer">Export Office user details</a><br>
           </v-card-text>
           <v-card-actions>
@@ -36,7 +34,7 @@
 <script>
 
 export default {
-  name: 'Downloads',
+  name: 'Exports',
   data () {
     return {
 

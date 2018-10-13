@@ -129,6 +129,15 @@ export default [
       )
     },
     {
+      path: '/exports',
+      meta: { breadcrumb: true,title:'Exports | Welcome to PPMS' },
+      name: 'Exports',
+      component: () => import(
+
+       '@/components/Exports'
+      )
+    },
+    {
       path: '/dashboard/help',
       meta: { breadcrumb: true,title:'Help | Welcome to PPMS' },
       name: 'Help',
