@@ -425,7 +425,7 @@
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
-          <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          <v-snackbar v-model="snackbar" :multi-line=multiline :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
         </v-card>
       </v-flex>
@@ -551,6 +551,7 @@ import RemarkList from '@/components/RemarkList'
         message_type: "",
         message_icon: "",
         message_text: "",
+        multiline: "",
         disable_save: false,
         agrrelable: "Certified that the detail information furnished earlier in PP-1 format and also PP-2 format are verified with office record and genuine.Names of all officials have been included in the PP-2 format and no information has been concealed.",
         agree:false,
@@ -667,7 +668,10 @@ import RemarkList from '@/components/RemarkList'
    computed: {
       getuser(){
           return this.$store.getters.getUser
-       }
+       },
+      getAccessToken:function(){
+      return this.$store.getters.getAccessToken
+      }
     },
     watch:{
       qualification_id:function (val) {
@@ -749,17 +753,25 @@ import RemarkList from '@/components/RemarkList'
           bank_account_no: this.bank_account_no,
         })
         .then(response => {
-          //this.$refs.form.reset()
-          this.show_message = true
-          this.message_type = 'success'
-          this.message_icon = 'check_circle'
-          this.message_text = 'Personnel Added Successfully with code - '+response.data
-          this.snackbar =true
+
+            this.$store.dispatch('storeAccessToken', this.getAccessToken)
+            this.show_message = true
+            this.message_type = 'success'
+            this.message_icon = 'check_circle'
+            this.multiline =false
+            this.message_text = 'Personnel Added Successfully with code - '+response.data
+
+            this.snackbar =true
         })
-        .catch(error => {
+        .catch(error => { console.log(error.response.data)
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
+          if(error.response.data === "Total Number Exceeded"){
+          this.multiline =true
+          this.message_text = 'Total number of personnel exceeded. Please update office before adding more personnel.'
+          }
+          this.multiline =false
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })

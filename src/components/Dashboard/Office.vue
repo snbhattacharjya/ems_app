@@ -2,15 +2,30 @@
   <div id="pageDashboard">
       <section>
             <v-container grid-list-md align-center>
+              <v-layout row wrap>
+              <v-flex xs12 class="blue--text">
+                <v-layout row wrap>
+                  <v-flex xs2><h2>WELCOME TO : </h2></v-flex>
+                  <v-flex xs10 mt-1><h3>{{ getUser.name }}</h3></v-flex>
+
+                </v-layout>
+                <v-divider class="my-3 xs12"></v-divider>
+                </v-flex>
+              </v-layout>
               <v-layout row wrap fill-height>
-
-                  <v-flex v-if="getuser.level !='10'" xs12 sm6 md3 >
+                  <v-flex  xs12 sm6 md3 >
                     <v-card color="green" class="white--text" fill-height elevation-6>
-                      <v-card-title primary-title>
+                      <v-card-title v-if="getUser.level === 10" primary-title>
 
-                        <h1 class="pb-4">Total Office : {{getdashboard.totalOffice}}</h1>
+                        <h3 class="pb-4">Total EMP as per office : {{getdashboard.officeStuff}}</h3>
 
-                        <h1 class="pb-4">Office Registered : {{getdashboard.distinct_office}}</h1>
+                        <h3 class="">Total EMP Registered : {{getdashboard.totalemployee}}</h3>
+                      </v-card-title>
+                      <v-card-title v-else  primary-title>
+
+                        <h3 class="pb-4">Total Office : {{getdashboard.totalOffice}}</h3>
+
+                        <h3 class="">Office Registered : {{getdashboard.distinct_office}}</h3>
                       </v-card-title>
 
                     </v-card>
@@ -20,7 +35,7 @@
                     <v-card color="cyan darken-2" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">perm_identity</i>
-                        <h1 class="pb-4">Total Male Registerd</h1>
+                        <h3 >Total Male Registerd</h3>
                       </v-card-title>
                       <v-divider></v-divider>
 
@@ -32,7 +47,7 @@
                     <v-card color="blue" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">face</i>
-                        <h1>Total Female Registerd</h1>
+                        <h3>Total Female Registerd</h3>
                       </v-card-title>
                       <v-divider></v-divider>
 
@@ -44,7 +59,7 @@
                     <v-card color="blue-grey" class="white--text" fill-height elevation-6>
                       <v-card-title primary-title>
                         <i class="material-icons">people_outline</i>
-                        <h1>Total Employee Registerd</h1>
+                        <h3>Total Employee Registerd</h3>
                       </v-card-title>
                       <v-divider></v-divider>
 
@@ -83,7 +98,7 @@ export default {
     calculateTotalEmployee:function(){
       return this.getdashboard.totalMale + this.getDashboard.totalfemale
     },
-    getuser:function(){
+    getUser:function(){
       return this.$store.getters.getUser
     }
   },

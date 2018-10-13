@@ -445,7 +445,7 @@ export default {
           agree: this.agree
         })
         .then(response => {
-          //this.$refs.form.reset()
+          this.$store.dispatch('storeAccessToken', this.getAccessToken)
           this.show_message = true
           this.message_type = "success"
           this.message_icon = "check_circle"
@@ -469,6 +469,9 @@ export default {
     },
     getofficeid() {
       return this.$store.getters.getUser
+    },
+    getAccessToken:function(){
+      return this.$store.getters.getAccessToken
     }
   }
 }

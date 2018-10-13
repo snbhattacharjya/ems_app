@@ -15,7 +15,7 @@
       <v-toolbar-title class="ml-5 mr-5">
         {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}}
       </v-toolbar-title>
-        Welcome : {{ getUser.name }}<br> Code: {{getUser.user_id}} <br>District : {{getUser.district[0]}}
+        Code: {{getUser.user_id}} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
 
             <v-btn
