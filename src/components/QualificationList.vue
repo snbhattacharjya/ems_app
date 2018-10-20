@@ -5,7 +5,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Qualification"
+      label="Qualification(*)"
       :error-messages="error"
       @input="$emit('input',$event)"
       autocomplete

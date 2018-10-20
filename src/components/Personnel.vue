@@ -21,14 +21,14 @@
               <v-stepper v-model="personnel_form" vertical>
                 <v-stepper-step :complete="personnel_form > 1" step="1" editable>
                   Personal Details
-                  <!-- <small>Summarize if needed</small> -->
+                  <small class="red--text">(*) Fields are mandatory</small>
                 </v-stepper-step>
 
                 <v-stepper-content step="1">
                  <v-text-field
                   prepend-icon="person"
                   name="officer_name"
-                  label="Officer Name"
+                  label="Officer Name(*)"
                   type="text"
                   v-model="officer_name"
                   counter
@@ -41,7 +41,7 @@
                 <v-text-field
                   prepend-icon="account_box"
                   name="designation"
-                  label="Officer Designation"
+                  label="Officer Designation(*)"
                   type="text"
                   v-model="designation"
                   counter
@@ -78,7 +78,7 @@
                     readonly
                     prepend-icon="event"
                     name="dob"
-                    label="Date of Birth"
+                    label="Date of Birth(*)"
                     type="text"
                     v-model="dob"
                     v-validate="'required'"
@@ -97,7 +97,7 @@
                   item-text= "name"
                   item-value= "id"
                   prepend-icon="list"
-                  label="Gender"
+                  label="Gender(*)"
                   v-model="gender"
                   v-validate="'required'"
                   data-vv-name="gender"
@@ -132,13 +132,15 @@
 
                 </v-stepper-content>
 
-                <v-stepper-step :complete="personnel_form > 2" step="2" editable >Salary Details</v-stepper-step>
+                <v-stepper-step :complete="personnel_form > 2" step="2" editable >Salary Details
+                  <small class="red--text">(*) Fields are mandatory</small>
+                </v-stepper-step>
 
                 <v-stepper-content step="2">
                   <v-text-field
                     prepend-icon="grade"
                     name="scale"
-                    label="Pay Scale"
+                    label="Pay Scale(*)"
                     type="text"
                     v-model="scale"
                     v-validate="'required'"
@@ -149,7 +151,7 @@
                   <v-text-field
                     prepend-icon="stars"
                     name="basic_pay"
-                    label="Basic Pay"
+                    label="Basic Pay(*)"
                     type="text"
                     v-model="basic_pay"
                     v-validate="'required'"
@@ -160,7 +162,7 @@
                   <v-text-field v-if="this.getuser.officelevel != '01'"
                     prepend-icon="how_to_reg"
                     name="grade_pay"
-                    label="Grade Pay"
+                    label="Grade Pay(*)"
                     type="text"
                     v-model="grade_pay"
                     maxlength="5"
@@ -171,7 +173,7 @@
                   <v-select v-if="this.getuser.officelevel === '01'"
                     :items="pay_levels"
                     prepend-icon="list"
-                    label="Pay Level"
+                    label="Pay Level(*)"
                     v-model="pay_level"
                     v-validate="'required'"
                     data-vv-name="pay_level"
@@ -182,7 +184,7 @@
                   <v-select
                     :items="emp_groups"
                     prepend-icon="list"
-                    label="Employee Group"
+                    label="Employee Group(*)"
                     v-model="emp_group"
                     v-validate="'required'"
                     data-vv-name="emp_group"
@@ -193,7 +195,7 @@
                   <v-select
                     :items="working_statuses"
                     prepend-icon="list"
-                    label="Working Status"
+                    label="Working Status(*)"
                     v-model="working_status"
                     v-validate="'required'"
                     data-vv-name="working_status"
@@ -205,13 +207,15 @@
 
                 </v-stepper-content>
 
-                <v-stepper-step :complete="personnel_form > 3" step="3" editable>Address Details</v-stepper-step>
+                <v-stepper-step :complete="personnel_form > 3" step="3" editable>Address Details
+                  <small class="red--text">(*) Fields are mandatory</small>
+                </v-stepper-step>
 
                 <v-stepper-content step="3">
                   <v-textarea
                     prepend-icon="location_on"
                     name="present_address"
-                    label="Present Address"
+                    label="Present Address(*)"
                     type="text"
                     v-model="present_address"
                     counter
@@ -224,7 +228,7 @@
                   <v-textarea
                     prepend-icon="account_balance"
                     name="permanent_address"
-                    label="permanent Address"
+                    label="Permanent Address(*)"
                     type="text"
                     v-model="permanent_address"
                     counter
@@ -263,7 +267,7 @@
                   <v-text-field
                     prepend-icon="smartphone"
                     name="mobile"
-                    label="Mobile"
+                    label="Mobile(*)"
                     type="text"
                     v-model="mobile"
                     counter
@@ -301,12 +305,14 @@
 
                 </v-stepper-content>
 
-                <v-stepper-step step="4" :complete="personnel_form > 4" editable>Electoral Details</v-stepper-step>
+                <v-stepper-step step="4" :complete="personnel_form > 4" editable>Electoral Details
+                  <small class="red--text">(*) Fields are mandatory</small>
+                </v-stepper-step>
                 <v-stepper-content step="4">
                   <v-text-field
                     prepend-icon="perm_identity"
                     name="epic"
-                    label="EPIC No"
+                    label="EPIC No(*)"
                     type="text"
                     v-model="epic"
                     v-validate="'required'"
@@ -369,12 +375,14 @@
 
                 </v-stepper-content>
 
-                <v-stepper-step step="5" editable>Bank Details</v-stepper-step>
+                <v-stepper-step step="5" editable>Bank Details
+                  <small class="red--text">(*) Fields are mandatory</small>
+                </v-stepper-step>
                 <v-stepper-content step="5">
                   <v-text-field
                     prepend-icon="account_balance_wallet"
                     name="branch_ifsc"
-                    label="IFSC No"
+                    label="IFSC No(*)"
                     type="text"
                     v-model="branch_ifsc"
                     v-validate="'required|alpha_num'"
@@ -388,7 +396,7 @@
                     prepend-icon="account_balance"
                     name="bank_account_no"
                     ref="bank_account_no"
-                    label="Bank Account no"
+                    label="Bank Account no(*)"
                     :type="type_text"
                     v-model="bank_account_no"
                     counter
@@ -403,7 +411,7 @@
                   <v-text-field
                     prepend-icon="account_balance"
                     name="confirm_bank_account_no"
-                    label="Confirm Bank Account No"
+                    label="Confirm Bank Account No(*)"
                     type="password"
                     counter
                     maxlength="16"
@@ -533,9 +541,9 @@ import RemarkList from '@/components/RemarkList'
         part_no: '',
         sl_no: '',
         assembly_labels: [
-          'Present Assembly Constituency',
-          'Permanent Assembly Constituency',
-          'Office Assembly Constituency',
+          'Present Assembly Constituency(*)',
+          'Permanent Assembly Constituency(*)',
+          'Office Assembly Constituency(*)',
         ],
         assembly_modes: [
           'all',
@@ -763,16 +771,18 @@ import RemarkList from '@/components/RemarkList'
 
             this.snackbar =true
         })
-        .catch(error => { console.log(error.response.data)
+        .catch(error => {
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
           if(error.response.data === "Total Number Exceeded"){
           this.multiline =true
           this.message_text = 'Total number of personnel exceeded. Please update office before adding more personnel.'
-          }
+          }else{
           this.multiline =false
           this.message_text = 'Error Occurred!!! '+error
+          }
+
           this.snackbar =true
         })
       },

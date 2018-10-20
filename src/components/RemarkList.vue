@@ -6,7 +6,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Remarks"
+      label="Remarks(*)"
       :error-messages="error"
       @change="showcomment"
       @input="$emit('input',$event)"

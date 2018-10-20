@@ -5,7 +5,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      label="Language known other than English"
+      label="Language known other than English(*)"
       :error-messages="error"
       @input="$emit('input',$event)"
       autocomplete

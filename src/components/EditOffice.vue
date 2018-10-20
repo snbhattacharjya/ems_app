@@ -67,7 +67,7 @@
               <v-text-field
                 prepend-icon="fiber_pin"
                 name="pin"
-                label="Pincode"
+                label="Pincode(*)"
                 type="text"
                 v-model="pin"
                 counter
