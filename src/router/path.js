@@ -183,7 +183,7 @@ export default [
       )
     },
     {
-      path: `/report/pp1`,
+      path: `/misreport/pp1`,
       meta: {title:'Print PP1 Data | Welcome to PPMS'},
       name: 'PrintPP1Data',
       component: () => import(
@@ -192,7 +192,7 @@ export default [
       )
     },
     {
-      path: `/report/pp2`,
+      path: `/misreport/pp2`,
       meta: {title:'Print PP2 Data | Welcome to PPMS'},
       name: 'PrintPP2Data',
       component: () => import(
@@ -288,6 +288,15 @@ export default [
       component: () => import(
 
         '@/components/ChangePassword'
+      )
+    },
+    {
+      path: `/pppoststat`,
+      meta: {title:'Set rules for PP post Status | Welcome to PPMS'},
+      name: 'PPpostStatus',
+      component: () => import(
+
+        '@/components/Pppoststat'
       )
     },
   ];
