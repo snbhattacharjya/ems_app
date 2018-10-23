@@ -6,12 +6,12 @@
                   <v-flex xs12>
                 <v-card class="elevation-6">
                   <v-toolbar dark color="blue-grey darken-3">
-                    <v-toolbar-title>Set new rule for personnel Categorization</v-toolbar-title>
+                    <v-toolbar-title>Set new rule for Personnel Categorization</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form autocomplete="off">
                        <v-layout row wrap>
-                         <v-flex xs6>
+                         <v-flex xs5>
                           <v-select
                             v-model="subdivision_id"
                             :items="subdivisions"
@@ -19,11 +19,12 @@
                             item-value= "id"
                             prepend-icon="list"
                             label="Select Subdivision"
-                            multiple
-
+                            v-validate="'required'"
+                            :error-messages="errors.collect('subdivision_id')"
+                            data-vv-name="subdivision_id"
                           ></v-select>
                          </v-flex>
-                         <v-flex xs6>
+                         <v-flex xs7>
                           <v-select
                             v-model="category_id"
                             :items="officecategories"
@@ -32,7 +33,25 @@
                             prepend-icon="list"
                             label="Select Office Category"
                             multiple
+                            v-validate="'required'"
+                            :error-messages="errors.collect('category_id')"
+                            data-vv-name="category_id"
+                          ></v-select>
+                          <v-btn color="primary" @click="loadoffices" :loading="loading">Load Office</v-btn>
+                         </v-flex>
 
+                         <v-flex xs12>
+                          <v-select
+                            v-model="office_id"
+                            :items="offices"
+                            item-text= "officename"
+                            item-value= "officecode"
+                            prepend-icon="list"
+                            label="Select Office"
+                            multiple
+                            v-validate="'required'"
+                            :error-messages="errors.collect('office_id')"
+                            data-vv-name="office_id"
                           ></v-select>
                          </v-flex>
                        </v-layout>
@@ -48,7 +67,10 @@
                             :step="10"
                             :thumb-size="50"
                             thumb-label="always"
-
+                            :disabled="payment_show"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('basic_pay')"
+                            data-vv-name="basic_pay"
                           ></v-range-slider>
                         </v-flex>
                         <v-flex xs2></v-flex>
@@ -63,7 +85,7 @@
                             :step="10"
                             :thumb-size="50"
                             thumb-label="always"
-
+                            :disabled="payment_show"
                           ></v-range-slider>
                         </v-flex>
                         <v-flex v-show="visible_level"  xs5>
@@ -74,39 +96,45 @@
                             v-model="pay_level"
                             :max="14"
                             :min="1"
-                            :step="14"
+                            :step="1"
                             thumb-label="always"
-
+                            :disabled="payment_show"
                           ></v-range-slider>
                         </v-flex>
 
                        </v-layout>
                        <v-layout row wrap>
                          <v-flex xs12>
+                           <v-layout>
+                             <v-checkbox label="!" v-model="exclude_qualification" hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="qualification_id"
                             :items="qualifications"
                             item-text= "name"
                             item-value= "id"
-                            prepend-icon="list"
-                            label="Select Qualifications to Exclude"
+                            prepend-icon="verified_user"
+                            label="Select Qualification(s)"
                             multiple
 
                           ></v-select>
+                           </v-layout>
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
                          <v-flex xs12>
+                           <v-layout>
+                          <v-checkbox label="!" v-model="exclude_designation" hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="designation"
                             :items="designations"
                             item-text= "name"
                             item-value= "id"
-                            prepend-icon="list"
-                            label="Select Designation to Exclude"
+                            prepend-icon="account_box"
+                            label="Select Designation(s)"
                             multiple
 
                           ></v-select>
+                           </v-layout>
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
@@ -116,11 +144,73 @@
                             :items="genders"
                             item-text= "name"
                             item-value= "val"
-                            prepend-icon="list"
+                            prepend-icon="perm_identity"
                             label="Select Gender"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('gender')"
+                            data-vv-name="gender"
+                          ></v-select>
+                         </v-flex>
+                         <v-flex xs6>
+                          <v-select
+                            v-model="age"
+                            :items="ages"
+                            item-text= "name"
+                            item-value= "val"
+                            prepend-icon="recent_actors"
+                            label="Select Age"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('age')"
+                            data-vv-name="age"
                           ></v-select>
                          </v-flex>
                        </v-layout>
+                       <v-layout row wrap>
+                         <v-flex xs12>
+                           <v-layout>
+                          <v-checkbox label="!" v-model="exclude_remark" hide-details class="shrink mr-2"></v-checkbox>
+                          <v-select
+                            v-model="remark_id"
+                            :items="remarks"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon="announcement"
+                            label="Select Remark(s)"
+                            multiple
+
+                          ></v-select>
+                           </v-layout>
+                         </v-flex>
+                       </v-layout>
+                       <v-layout row wrap>
+                         <v-flex xs6>
+                          <v-select
+                            v-model="poststat_from"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "val"
+                            prepend-icon="call_received"
+                            label="Post Status (From)"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('poststat_from')"
+                            data-vv-name="poststat_from"
+                          ></v-select>
+                         </v-flex>
+                         <v-flex xs6>
+                          <v-select
+                           v-model="poststat_to"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "val"
+                            prepend-icon="call_made"
+                            label="Post Status (To)"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('poststat_to')"
+                            data-vv-name="poststat_to"
+                          ></v-select>
+                         </v-flex>
+                       </v-layout>
+                       <v-btn color="primary" @click="setrule" :loading="loading">Set Rule</v-btn>
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
@@ -147,25 +237,77 @@ export default {
     },
   data () {
     return {
+      loading: false,
       subdivision_id:'',
       category_id:'',
+      office_id:'',
       qualification_id:'',
       designation:'',
+      gender:'',
+      age:'',
+      remark_id:'',
+      exclude_qualification:'',
+      exclude_designation:'',
+      exclude_remark:'',
+      poststat_from:'',
+      poststat_to: '',
       visible_grade: true,
       visible_level:false,
       subdivisions: [],
       officecategories:[],
+      offices:[],
       qualifications:[],
       designations:[],
+      remarks:[],
       genders:[
         { name:'ALL',val: 'ALL'},
         { name:'MALE',val: 'M'},
         { name:'FEMALE',val: 'F'},
       ],
+      ages:[
+        { name:'LESS THAN 60',val: '<60'},
+        { name:'LESS THAN 59',val: '<59'}
+      ],
+      poststats:[
+        {name: 'PR', val:'PR'},
+        {name: 'P1', val:'P1'},
+        {name: 'P1', val:'P1'},
+        {name: 'P3', val:'P3'},
+        {name: 'MO', val:'MO'},
+      ],
       basic_pay: [2100, 40400],
       grade_pay:[2100, 40400],
-      pay_level:1,
+      pay_level:[10, 15],
+      payment_show: false,
+      dictionary: {
+
+          custom: {
+            subdivision_id: {
+              required: 'Subdivision is required'
+            },
+            category_id: {
+              required: 'Please select Category'
+            },
+            basic_pay: {
+              required: 'Basic Pay is required'
+            },
+            gender: {
+              required: 'Please select Gender'
+            },
+            age:{
+              required: 'Please select Age'
+            },
+            poststat_from:{
+              required:'Please select Post Status from which users will be selected'
+            },
+            poststat_to:{
+              required: 'Please select Post Status which will be applied upon selected users'
+            }
+          }
+        }
+
     }
+
   },
   $_veeValidate: {
       validator: 'new'
@@ -176,8 +318,7 @@ export default {
   created(){
    this.loadsubdivision()
    this.loadofficecategory()
-   this.loadqualifications()
-   this.loaddesignations()
+
   },
   computed: {
 
@@ -211,10 +352,28 @@ export default {
         console.log(error)
       })
     },
+    loadoffices:function(){
+       axios.post('/officebysubdivision',{
+         subdivision_id:this.subdivision_id,
+         category_id: this.category_id
+       })
+      .then((response, data) => {
+        console.log('Off - '+response.data['office'])
+      this.offices.push({officename:"ALL",officecode:"ALL"})
+       response.data['office'].forEach(item => {
+         console.log('Off - '+item)
+         item.officename=item.officename.toUpperCase()
+          this.offices.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
     loadqualifications:function(){
        axios.get('/qualifications')
       .then((response, data) => {
-      // this.qualifications.push({name:"ALL",id:"ALL"})
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.qualifications.push(item)
@@ -226,9 +385,10 @@ export default {
       })
     },
     loaddesignations:function(){
-       axios.post('/fetch_designation_of_pp')
+       axios.post('/fetch_designation_of_pp',{
+
+       })
       .then((response, data) => {
-      // this.qualifications.push({name:"ALL",id:"ALL"})
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.designations.push(item)
@@ -238,10 +398,54 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    },
+    loadremarks:function(){
+       axios.post('/fetch_remarks_by_condition',{
+
+       })
+      .then((response, data) => {
+       response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
+          this.remarks.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    setrule:function(){
+      this.$validator.validate()
+        .then(result =>{
+          if(result){
+                axios.post('/setrule',{
+                subdivision_id: this.subdivision_id,
+                category_id: this.category_id,
+                basic_pay: this.basic_pay,
+                grade_pay:this.grade_pay,
+                pay_level:this.pay_level,
+                qualification_id:this.qualification_id,
+                designation: this.designation,
+                gender:this.gender,
+                age:this.age,
+                remark_id:this.remark_id,
+                poststat_from:this.poststat_from,
+                poststat_to:this.poststat_to
+            })
+            .then((response, data) => {
+
+
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          }
+        })
+
     }
   },
   watch:{
-    subdivision_id:function(val){ alert(val)
+    subdivision_id:function(val){
 
     },
     category_id:function(val){
