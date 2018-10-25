@@ -299,4 +299,13 @@ export default [
         '@/components/Pppoststat'
       )
     },
+    {
+      path: `/pppoststatlist`,
+      meta: {title:'View rules for PP post Status | Welcome to PPMS'},
+      name: 'PPpostStatusList',
+      component: () => import(
+
+        '@/components/PppoststatList'
+      )
+    },
   ];

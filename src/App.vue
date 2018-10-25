@@ -58,6 +58,17 @@ export default {
   },
   methods:{
 
-  }
+  },
+  beforeUpdate(){ console.log('user : '+this.getUser.user_id)
+      if(this.getUser.user_id === '' || this.getUser.user_id === 'undefined'){
+        this.$router.replace("/")
+        }
+
+    },
+  computed: {
+      getUser:function(){
+        return this.$store.getters.getUser
+      }
+    }
 }
 </script>

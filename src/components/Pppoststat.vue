@@ -6,13 +6,13 @@
                   <v-flex xs12>
                 <v-card class="elevation-6">
                   <v-toolbar dark color="blue-grey darken-3">
-                    <v-toolbar-title>Set new rule for Personnel Categorization</v-toolbar-title>
+                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn flat :to="'/pppoststatlist'">View Rules</v-btn></v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form autocomplete="off">
                        <v-layout row wrap>
-                         <v-flex xs5>
-                          <v-select
+                         <!--<v-flex xs5>
+                           <v-select
                             v-model="subdivision_id"
                             :items="subdivisions"
                             item-text= "name"
@@ -23,8 +23,8 @@
                             :error-messages="errors.collect('subdivision_id')"
                             data-vv-name="subdivision_id"
                           ></v-select>
-                         </v-flex>
-                         <v-flex xs7>
+                         </v-flex>-->
+                         <v-flex xs12>
                           <v-select
                             v-model="category_id"
                             :items="officecategories"
@@ -36,8 +36,11 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('category_id')"
                             data-vv-name="category_id"
-                          ></v-select>
-                          <v-btn color="primary" @click="loadoffices" :loading="loading">Load Office</v-btn>
+                            :disabled="disable_offcat"
+                          >
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_offcat" @click="loadoffices" :loading="loading">Load Office</v-btn></v-slide-x-reverse-transition>
+                          </v-select>
+
                          </v-flex>
 
                          <v-flex xs12>
@@ -52,7 +55,11 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('office_id')"
                             data-vv-name="office_id"
-                          ></v-select>
+                            :disabled="disable_off"
+                          >
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_off" @click="loadqualifications" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          </v-select>
+
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
@@ -62,8 +69,8 @@
                           </v-flex>
                           <v-range-slider
                             v-model="basic_pay"
-                            :max="60000"
-                            :min="2000"
+                            :max="50000"
+                            :min="0"
                             :step="10"
                             :thumb-size="50"
                             thumb-label="always"
@@ -80,8 +87,8 @@
                           </v-flex>
                           <v-range-slider
                             v-model="grade_pay"
-                            :max="60000"
-                            :min="2000"
+                            :max="6000"
+                            :min="1500"
                             :step="10"
                             :thumb-size="50"
                             thumb-label="always"
@@ -106,33 +113,41 @@
                        <v-layout row wrap>
                          <v-flex xs12>
                            <v-layout>
-                             <v-checkbox label="!" v-model="exclude_qualification" hide-details class="shrink mr-2"></v-checkbox>
+                             <v-checkbox label="!" v-model="exclude_qualification" :disabled="disble_qual" hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="qualification_id"
                             :items="qualifications"
-                            item-text= "name"
-                            item-value= "id"
+                            item-text= "QualificationName"
+                            item-value= "QualificationCode"
                             prepend-icon="verified_user"
                             label="Select Qualification(s)"
                             multiple
-
-                          ></v-select>
+                            :disabled="disble_qual"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('qualification_id')"
+                            data-vv-name="qualification_id"
+                          >
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disble_qual" @click="loaddesignations" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          </v-select>
                            </v-layout>
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
                          <v-flex xs12>
                            <v-layout>
-                          <v-checkbox label="!" v-model="exclude_designation" hide-details class="shrink mr-2"></v-checkbox>
+                          <v-checkbox label="!" v-model="exclude_designation" hide-details :disabled="disable_desig" class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="designation"
                             :items="designations"
-                            item-text= "name"
-                            item-value= "id"
+                            item-text= "Designation"
+                            item-value= "Designation"
                             prepend-icon="account_box"
                             label="Select Designation(s)"
                             multiple
-
+                            :disabled="disable_desig"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('designation')"
+                            data-vv-name="designation"
                           ></v-select>
                            </v-layout>
                          </v-flex>
@@ -149,6 +164,7 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('gender')"
                             data-vv-name="gender"
+                            :disabled="disable_agegrp"
                           ></v-select>
                          </v-flex>
                          <v-flex xs6>
@@ -162,18 +178,21 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('age')"
                             data-vv-name="age"
-                          ></v-select>
+                            :disabled="disable_agegrp"
+                          >
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_agegrp" @click="loadremarks" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          </v-select>
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
                          <v-flex xs12>
                            <v-layout>
-                          <v-checkbox label="!" v-model="exclude_remark" hide-details class="shrink mr-2"></v-checkbox>
+                          <v-checkbox label="!" v-model="exclude_remark"  hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="remark_id"
                             :items="remarks"
-                            item-text= "name"
-                            item-value= "id"
+                            item-text= "RemarksName"
+                            item-value= "RemarksCode"
                             prepend-icon="announcement"
                             label="Select Remark(s)"
                             multiple
@@ -238,17 +257,22 @@ export default {
   data () {
     return {
       loading: false,
-      subdivision_id:'',
+      subdivision_id:'ALL',
       category_id:'',
+      disable_offcat: false,
       office_id:'',
+      disable_off:false,
       qualification_id:'',
+      disble_qual:false,
       designation:'',
+      disable_desig:false,
       gender:'',
       age:'',
+      disable_agegrp:false,
       remark_id:'',
-      exclude_qualification:'',
-      exclude_designation:'',
-      exclude_remark:'',
+      exclude_qualification:0,
+      exclude_designation:0,
+      exclude_remark:0,
       poststat_from:'',
       poststat_to: '',
       visible_grade: true,
@@ -269,6 +293,7 @@ export default {
         { name:'LESS THAN 59',val: '<59'}
       ],
       poststats:[
+        {name: 'N/A', val:'null'},
         {name: 'PR', val:'PR'},
         {name: 'P1', val:'P1'},
         {name: 'P1', val:'P1'},
@@ -280,7 +305,6 @@ export default {
       pay_level:[10, 15],
       payment_show: false,
       dictionary: {
-
           custom: {
             subdivision_id: {
               required: 'Subdivision is required'
@@ -327,7 +351,7 @@ export default {
     loadsubdivision:function(){
        axios.get('/subdivisions')
       .then((response, data) => {
-      this.subdivisions.push({name:"ALL",id:"ALL"})
+       if(response.data.length >=1 ) {this.subdivisions.push({name:"ALL",id:"ALL"})}
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.subdivisions.push(item)
@@ -341,7 +365,7 @@ export default {
     loadofficecategory:function(){
        axios.get('/categories')
       .then((response, data) => {
-      this.officecategories.push({name:"ALL",id:"ALL"})
+      if(response.data.length >=1 ) {this.officecategories.push({name:"ALL",id:"ALL"})}
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.officecategories.push(item)
@@ -352,14 +376,18 @@ export default {
         console.log(error)
       })
     },
-    loadoffices:function(){
-       axios.post('/officebysubdivision',{
+    loadoffices:function(event){
+      if(this.disable_offcat === false){
+        axios.post('/officebysubdivision',{
          subdivision_id:this.subdivision_id,
          category_id: this.category_id
        })
       .then((response, data) => {
-        console.log('Off - '+response.data['office'])
-      this.offices.push({officename:"ALL",officecode:"ALL"})
+        this.offices=[]
+      if(response.data['office'].length >=1 ) {
+        this.offices.push({officename:"ALL",officecode:"ALL"})
+        this.disable_offcat=true
+      }
        response.data['office'].forEach(item => {
          console.log('Off - '+item)
          item.officename=item.officename.toUpperCase()
@@ -370,12 +398,23 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
     },
     loadqualifications:function(){
-       axios.get('/qualifications')
+      if(this.disable_off === false){
+         axios.post('/fetch_qualification_by_oficecode',{
+         subdivision_id:this.subdivision_id,
+         category_id: this.category_id,
+         office_id: this.office_id
+       })
       .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
+        this.qualifications=[]
+     if(response.data['qualification'].length >=1 ) {
+       this.qualifications.push({QualificationName:"ALL",QualificationCode:"ALL"})
+       this.disable_off=true
+     }
+       response.data['qualification'].forEach(item => {
+         item.QualificationName=item.QualificationName.toUpperCase()
           this.qualifications.push(item)
         });
 
@@ -383,14 +422,27 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
     },
     loaddesignations:function(){
+      if(this.disble_qual === false){
        axios.post('/fetch_designation_of_pp',{
-
+          subdivision_id:this.subdivision_id,
+          category_id:this.category_id,
+          office_id:this.office_id,
+          qualification_id:this.qualification_id,
+          basic_pay:this.basic_pay,
+          grade_pay:this.grade_pay,
+          pay_level:this.pay_level
        })
       .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
+        this.designations=[]
+        if(response.data['designation'].length >=1 ) {
+         this.designations.push({Designation:"ALL"})
+         this.disble_qual=true
+        }
+       response.data['designation'].forEach(item => {
+         item.Designation=item.Designation.toUpperCase()
           this.designations.push(item)
         });
 
@@ -398,14 +450,33 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
     },
     loadremarks:function(){
+      if(this.disable_desig === false){
        axios.post('/fetch_remarks_by_condition',{
-
+         subdivision_id: this.subdivision_id,
+                category_id: this.category_id,
+                office_id:this.office_id,
+                basic_pay: this.basic_pay,
+                grade_pay:this.grade_pay,
+                pay_level:this.pay_level,
+                not_qualification: this.exclude_qualification ? 1 : 0,
+                not_designation:this.exclude_designation ? 1 : 0,
+                not_remarks:this.exclude_remark ? 1 : 0,
+                qualification_id:this.qualification_id,
+                designation: this.designation,
+                gender:this.gender,
+                age:this.age,
        })
       .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
+       if(response.data['remarks'].length >=1 ) {
+         this.remarks.push({RemarksName: 'ALL', RemarksCode: 'ALL'})
+         this.disable_desig=true
+         this.disable_agegrp=true
+       }
+       response.data['remarks'].forEach(item => {
+         item.RemarksName=item.RemarksName.toUpperCase()
           this.remarks.push(item)
         });
 
@@ -413,24 +484,30 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
     },
     setrule:function(){
       this.$validator.validate()
         .then(result =>{
           if(result){
+
                 axios.post('/setrule',{
                 subdivision_id: this.subdivision_id,
                 category_id: this.category_id,
+                office_id:this.office_id,
                 basic_pay: this.basic_pay,
                 grade_pay:this.grade_pay,
                 pay_level:this.pay_level,
+                not_qualification: this.exclude_qualification ? 1 : 0,
+                not_designation:this.exclude_designation ? 1 : 0,
+                not_remarks:this.exclude_remark ? 1 : 0,
                 qualification_id:this.qualification_id,
                 designation: this.designation,
                 gender:this.gender,
                 age:this.age,
                 remark_id:this.remark_id,
-                poststat_from:this.poststat_from,
-                poststat_to:this.poststat_to
+                post_stat_from:this.poststat_from,
+                post_stat_to:this.poststat_to
             })
             .then((response, data) => {
 
