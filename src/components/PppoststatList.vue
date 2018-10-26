@@ -3,7 +3,7 @@
     <v-container fluid>
       <section>
       <v-layout row wrap  class="my-5">
-
+        <v-btn color="primary" :to="'/pppoststat'">Add New Rule</v-btn>
       <v-flex xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>Rule Lists</v-toolbar-title>
@@ -20,7 +20,7 @@
                 <strong>Office Category :</strong> {{ props.item.OfficeCategory }}<br>
                 <strong>Office :</strong> {{ props.item.Office }}<br>
                 <strong>Basic Pay :</strong> {{ props.item.BasicPay }}<br>
-                <strong>Garde Pay/Pay Level :</strong> {{ props.item.GardePay }}<br>
+                <strong>Garde Pay/Pay Level :</strong> {{ props.item.GradePay }}<br>
                 <strong>Qualification :</strong>{{ props.item.Qualification }}<br>
                 <strong>Designation :</strong> {{ props.item.Designation }}<br>
                 <strong>Remarks :</strong> {{ props.item.Remarks }}<br>
@@ -30,13 +30,14 @@
               <td class="justify-center">
                 <v-btn :loading="applying_rule" color="success" flat v-bind:id="props.item.RuleID" @click="applyrule(props.item.RuleID,$event)"><v-icon small class="mr-2">check</v-icon> Apply</v-btn>
                 <v-btn :loading="revoking_rule" color="error" flat v-bind:id="props.item.RuleID" @click="revokerule(props.item.RuleID,$event)"><v-icon small class="mr-2">undo</v-icon> Revoke</v-btn>
-                <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn>
-                <v-btn color="warning" flat v-bind:id="props.item.RuleID" @click="shortlistrule(props.item.RuleID,$event)"><v-icon small class="mr-2">star</v-icon> Sortlist</v-btn>
+                <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn><br>
+
+                <!-- <v-btn color="warning" flat v-bind:id="props.item.RuleID" @click="shortlistrule(props.item.RuleID,$event)"><v-icon small class="mr-2">star</v-icon> Sortlist</v-btn> -->
               </td>
               <td>
-                <strong>Last Applied Date : </strong> <span class="" id="lastApplieddate">{{formatdate(props.item.AppliedDate)}}</span><br>
+                <strong>Last Applied Date : </strong> <span class="" id="lastApplieddate">{{formatdate(props.item.AppliedDate)=='Invalid date' ? 'Not Applied yet' : formatdate(props.item.AppliedDate)}}</span><br>
                 <strong>Records Affected : </strong> <span class=""  id="lastappliedrecords">{{props.item.RecordsAffected}}</span><br>
-                <strong>Last Revoke Date : </strong> <span class=""  id="lastRevokedate">{{formatdate(props.item.RevokedDate)}}</span><br>
+                <strong>Last Revoke Date : </strong> <span class=""  id="lastRevokedate">{{formatdate(props.item.RevokedDate)=='Invalid date' ? 'Not Applied yet' : formatdate(props.item.RevokedDate)}}</span><br>
                 <strong>Records Affected : </strong> <span class=""  id="lastRevokerecords">{{props.item.RecordsRevoked}}</span>
               </td>
             </template>
@@ -44,6 +45,7 @@
               Your search for "{{ search }}" found no results.
             </v-alert>
           </v-data-table>
+          <v-alert v-if="this.willaffect != ''" :value="affect" color="success" icon="new_releases">Rule ID :{{this.rule}} will affect {{this.willaffect}} rows.</v-alert>
       </v-flex>
       </v-layout>
       </section>
@@ -77,8 +79,9 @@ import moment from 'moment'
       lastappliedrecords:'',
       lastRevokedate:'',
       lastRevokerecords:'',
-
-
+      willaffect:'',
+      affect:false,
+      rule:'',
     }),
     components: {
 
@@ -105,6 +108,8 @@ import moment from 'moment'
 
     methods: {
       initialize_ruels () {
+        this.willaffect=''
+         this.affect=false
         this.tableloading=true
         axios.get('/rules')
         .then((response, data) => {
@@ -113,10 +118,7 @@ import moment from 'moment'
            this.rules=[]
             response.data['rules'].forEach(item => {
                 this.rules.push(item)
-                // this.lastApplieddate=item.AppliedDate
-                // this.lastappliedrecords=item.RecordsAffected
-                // this.lastRevokedate=item.RevokedDate
-                // this.lastRevokerecords=item.RecordsRevoked
+
               })
               this.tableloading=false
          }
@@ -127,8 +129,8 @@ import moment from 'moment'
         })
       },
       applyrule:function(id,$event){
-        if(this.applying_rule === false){
-
+        this.willaffect=''
+         this.affect=false
            axios.get('/grantrules/'+id)
         .then((response, data) => {
           if(response.data.length === 0){
@@ -144,11 +146,11 @@ import moment from 'moment'
           console.log(error)
 
         })
-        }
+
       },
        revokerule:function(id,$event){
-        if(this.revoking_rule === false){
-
+         this.willaffect=''
+         this.affect=false
            axios.get('/revokerule/'+id)
         .then((response, data) => {
           if(response.data.length === 0){
@@ -163,7 +165,26 @@ import moment from 'moment'
           console.log(error)
 
         })
-        }
+
+      },
+       queryrule:function(id,$event){
+         this.willaffect=''
+         this.affect=false
+        axios.get('/queryrule/'+id)
+        .then((response, data) => {
+          if(response.data.length === 0){
+            }
+         else{
+         this.rule=id
+         this.willaffect=response.data['query']['queryval']
+         this.affect=true
+         }
+            })
+        .catch(error => {
+          console.log(error)
+
+        })
+
       },
       formatdate:function(date){
         return moment(date).format('DD/MM/YYYY h:mm a')

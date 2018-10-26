@@ -6,7 +6,7 @@
                   <v-flex xs12>
                 <v-card class="elevation-6">
                   <v-toolbar dark color="blue-grey darken-3">
-                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn flat :to="'/pppoststatlist'">View Rules</v-btn></v-toolbar-title>
+                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn color="primary" :to="'/pppoststatlist'">View Rules</v-btn></v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form autocomplete="off">
@@ -196,9 +196,7 @@
                             prepend-icon="announcement"
                             label="Select Remark(s)"
                             multiple
-                            v-validate="'required'"
-                            :error-messages="errors.collect('remark_id')"
-                            data-vv-name="remark_id"
+
                           ></v-select>
                            </v-layout>
                          </v-flex>
@@ -295,10 +293,10 @@ export default {
         { name:'LESS THAN 59',val: '<59'}
       ],
       poststats:[
-        {name: 'N/A', val:'null'},
+        {name: 'N/A', val:'NA'},
         {name: 'PR', val:'PR'},
         {name: 'P1', val:'P1'},
-        {name: 'P1', val:'P1'},
+        {name: 'P2', val:'P2'},
         {name: 'P3', val:'P3'},
         {name: 'MO', val:'MO'},
       ],
@@ -507,12 +505,12 @@ export default {
                 designation: this.designation,
                 gender:this.gender,
                 age:this.age,
-                remark_id:this.remark_id,
+                remarks:this.remark_id ? '': 'ALL',
                 post_stat_from:this.poststat_from,
                 post_stat_to:this.poststat_to
             })
             .then((response, data) => {
-
+              this.$router.replace("/pppoststatlist")
 
             })
             .catch(error => {
