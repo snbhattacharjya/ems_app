@@ -513,7 +513,7 @@ export default {
                 designation: this.designation,
                 gender:this.gender,
                 age:this.age,
-                remarks:this.remark_id ? '': 'ALL',
+                remarks:this.remark_id ? this.remark_id: 'ALL',
                 post_stat_from:this.poststat_from,
                 post_stat_to:this.poststat_to
             })
