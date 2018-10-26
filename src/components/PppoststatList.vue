@@ -28,10 +28,17 @@
                 <strong>Age :</strong> {{ props.item.Age }}<br>
               </td>
               <td class="justify-center">
-                <v-btn flat :to="'/pprules/'+props.item.RuleID+ '/apply'">Apply</v-btn>
-                <v-btn flat :to="'/pprules/'+props.item.RuleID+ '/revoke'">Revoke</v-btn>
+                <v-btn :loading="applying_rule" color="success" flat v-bind:id="props.item.RuleID" @click="applyrule(props.item.RuleID,$event)"><v-icon small class="mr-2">check</v-icon> Apply</v-btn>
+                <v-btn :loading="revoking_rule" color="error" flat v-bind:id="props.item.RuleID" @click="revokerule(props.item.RuleID,$event)"><v-icon small class="mr-2">undo</v-icon> Revoke</v-btn>
+                <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn>
+                <v-btn color="warning" flat v-bind:id="props.item.RuleID" @click="shortlistrule(props.item.RuleID,$event)"><v-icon small class="mr-2">star</v-icon> Sortlist</v-btn>
               </td>
-              <td></td>
+              <td>
+                <strong>Last Applied Date : </strong> <span class="" id="lastApplieddate">{{formatdate(props.item.AppliedDate)}}</span><br>
+                <strong>Records Affected : </strong> <span class=""  id="lastappliedrecords">{{props.item.RecordsAffected}}</span><br>
+                <strong>Last Revoke Date : </strong> <span class=""  id="lastRevokedate">{{formatdate(props.item.RevokedDate)}}</span><br>
+                <strong>Records Affected : </strong> <span class=""  id="lastRevokerecords">{{props.item.RecordsRevoked}}</span>
+              </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
               Your search for "{{ search }}" found no results.
@@ -45,7 +52,7 @@
 </template>
 
 <script>
-
+import moment from 'moment'
   export default {
     name: 'PppoststatusList',
     data: () => ({
@@ -55,15 +62,22 @@
       isdisabled:true,
       disable_save: false,
       headers: [
-        { text: 'Rule ID', value: 'RuleID',align: 'left', },
-        { text: 'From Post Status', value: 'PostStatFrom',align: 'left', },
-        { text: 'To Post Status',align: 'left',value: 'PostStatTo'},
-        { text: 'Rule Defination', value: '',sortable: false ,align: 'left', },
-        { text: 'Actions', value: '',align: 'left', sortable: false},
-        { text: 'Rule Details', value: '',align: 'left', sortable: false},
+        { text: 'Rule ID', value: 'RuleID',align: 'left',width: '50px'},
+        { text: 'From Post Status', value: 'PostStatFrom',align: 'left',width: '50px' },
+        { text: 'To Post Status',align: 'left',value: 'PostStatTo',width: '50px'},
+        { text: 'Rule Defination', value: '',sortable: false ,align: 'left',width: '200px' },
+        { text: 'Actions', value: '',align: 'left', sortable: false,width: '100px'},
+        { text: 'Rule Details', value: '',align: 'left', sortable: false,width: '200px'},
 
       ],
       rules: [],
+      applying_rule: false,
+      revoking_rule:false,
+      lastApplieddate:'',
+      lastappliedrecords:'',
+      lastRevokedate:'',
+      lastRevokerecords:'',
+
 
     }),
     components: {
@@ -90,19 +104,19 @@
     },
 
     methods: {
-
-
-
       initialize_ruels () {
         this.tableloading=true
-        axios.post('/rules')
+        axios.get('/rules')
         .then((response, data) => {
           if(response.data.length === 0){this.tableloading=false}
          else{
            this.rules=[]
             response.data['rules'].forEach(item => {
                 this.rules.push(item)
-
+                // this.lastApplieddate=item.AppliedDate
+                // this.lastappliedrecords=item.RecordsAffected
+                // this.lastRevokedate=item.RevokedDate
+                // this.lastRevokerecords=item.RecordsRevoked
               })
               this.tableloading=false
          }
@@ -112,7 +126,48 @@
           this.tableloading=false
         })
       },
+      applyrule:function(id,$event){
+        if(this.applying_rule === false){
 
+           axios.get('/grantrules/'+id)
+        .then((response, data) => {
+          if(response.data.length === 0){
+
+
+          }
+         else{
+           this.initialize_ruels()
+
+         }
+            })
+        .catch(error => {
+          console.log(error)
+
+        })
+        }
+      },
+       revokerule:function(id,$event){
+        if(this.revoking_rule === false){
+
+           axios.get('/revokerule/'+id)
+        .then((response, data) => {
+          if(response.data.length === 0){
+
+            }
+         else{
+              this.initialize_ruels()
+
+         }
+            })
+        .catch(error => {
+          console.log(error)
+
+        })
+        }
+      },
+      formatdate:function(date){
+        return moment(date).format('DD/MM/YYYY h:mm a')
+      }
 
 
     }

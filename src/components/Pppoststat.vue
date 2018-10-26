@@ -196,7 +196,9 @@
                             prepend-icon="announcement"
                             label="Select Remark(s)"
                             multiple
-
+                            v-validate="'required'"
+                            :error-messages="errors.collect('remark_id')"
+                            data-vv-name="remark_id"
                           ></v-select>
                            </v-layout>
                          </v-flex>

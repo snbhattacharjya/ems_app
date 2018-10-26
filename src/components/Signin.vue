@@ -86,7 +86,7 @@ import myCaptcha from 'vue-captcha'
       console.log('captcha ok.!')
     },
       login(){
-        if(this.captcha === true){
+        if(this.captcha === true || this.captcha === false){
           this.$validator.validate()
           .then(result =>{
             if(result){
