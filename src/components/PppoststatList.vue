@@ -108,8 +108,7 @@ import moment from 'moment'
 
     methods: {
       initialize_ruels () {
-        this.willaffect=''
-         this.affect=false
+
         this.tableloading=true
         axios.get('/rules')
         .then((response, data) => {
@@ -172,7 +171,7 @@ import moment from 'moment'
          this.affect=false
         axios.get('/queryrule/'+id)
         .then((response, data) => {
-          if(response.data.length === 0){
+          if(response.data.length == 0){
             }
          else{
          this.rule=id
@@ -182,7 +181,8 @@ import moment from 'moment'
             })
         .catch(error => {
           console.log(error)
-
+          this.willaffect=''
+         this.affect=false
         })
 
       },

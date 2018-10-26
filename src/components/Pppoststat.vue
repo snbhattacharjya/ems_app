@@ -230,6 +230,7 @@
                          </v-flex>
                        </v-layout>
                        <v-btn color="primary" @click="setrule" :loading="loading">Set Rule</v-btn>
+                       <v-btn color="primary" v-if="this.disable_agegrp === true" @click="resetrule">Reset</v-btn>
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
@@ -348,6 +349,13 @@ export default {
 
   },
   methods:{
+    resetrule:function(){
+      this.disable_offcat=false
+      this.disable_off=false
+      this.disble_qual=false
+      this.disable_desig=false
+      this.disable_agegrp=false
+    },
     loadsubdivision:function(){
        axios.get('/subdivisions')
       .then((response, data) => {
