@@ -32,9 +32,31 @@
                   :error-messages="errors.collect('password')"
                 ></v-text-field>
                 <v-layout row wrap class="my-2">
-                <v-flex xs6></v-flex>
                 <v-flex xs6>
-                <my-captcha :callSuccess="captchaOk" color="black"  resolve="digit"></my-captcha>
+                  <v-text-field
+                  id="captcha_real"
+                  class="captcha"
+                  prepend-icon="donut_small"
+                  name="captcha_real"
+                  label="Captcha"
+                  type="text"
+                  v-model="captcha_real"
+                  :readonly="true"
+                ><v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-icon style="cursor:pointer" @click="reload_captcha">autorenew</v-icon></v-slide-x-reverse-transition>
+                </v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                <v-text-field
+                  id="captcha"
+                  prepend-icon="input"
+                  name="captcha"
+                  label="Input Captcha"
+                  type="password"
+                  v-model="captcha"
+                  v-validate="'required'"
+                  data-vv-name="captcha"
+                  :error-messages="errors.collect('captcha')"
+                ></v-text-field>
                 </v-flex>
                 </v-layout>
               </v-form>
@@ -53,8 +75,6 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
-import myCaptcha from 'vue-captcha'
   export default {
     name: 'Signin',
     data(){
@@ -63,30 +83,47 @@ import myCaptcha from 'vue-captcha'
         password: '',
         loading: false,
         isHidden:true,
-        captcha:false,
+        captcha_real:'',
+        captcha:'',
+        captcha_pass:false,
         snackbar: false,
         show_message: false,
         message_type: "",
         message_icon: "",
         message_text: "",
+         dictionary: {
+          custom: {
+            username:{
+              required: "Please type Username"
+            },
+            password:{
+              required: "Please type Password"
+            },
+            captcha:{
+              required: "Please type Captcha"
+
+            }
+
+          }
+        }
       }
     },
    components: {
-     VueRecaptcha,
-     'my-captcha': myCaptcha
+
     },
     $_veeValidate: {
       validator: 'new'
     },
-    beforeUpdate(){
+    created(){
+      this.captcha_real=this.random()
     },
+    mounted() {
+    this.$validator.localize("en", this.dictionary)
+  },
     methods: {
-      captchaOk () {
-          this.captcha= true
-      console.log('captcha ok.!')
-    },
+
       login(){
-        if(this.captcha === true || this.captcha === false){
+        if(this.captcha_pass === true ){
           this.$validator.validate()
           .then(result =>{
             if(result){
@@ -105,11 +142,17 @@ import myCaptcha from 'vue-captcha'
 
               })
               .catch(error => {
+                this.captcha=''
+                this.reload_captcha()
                 this.password = ''
                 this.errors.add(
                   {
                     field: 'username',
                     msg: 'Invalid Username or Password'
+                  },
+                  {
+                    field: 'captcha',
+                    msg: 'Invalid Captcha'
                   }
                 )
                 this.loading = false
@@ -118,7 +161,15 @@ import myCaptcha from 'vue-captcha'
           })
         }
         else{
-          //alert('Captcha is invalid')
+                this.captcha=''
+                this.reload_captcha()
+                this.password = ''
+                this.errors.add(
+                  {
+                    field: 'captcha',
+                    msg: 'Invalid Captcha'
+                  }
+                )
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
@@ -127,6 +178,16 @@ import myCaptcha from 'vue-captcha'
         }
 
 
+      },
+      random(l=5) {
+        var text = ""
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        for (var i = 0; i <= l; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length))
+        return text
+      },
+      reload_captcha(){
+        this.captcha_real=this.random()
       }
 
     },
@@ -138,5 +199,25 @@ import myCaptcha from 'vue-captcha'
          this.username=this.username.toUpperCase()
        }
     },
+    watch:{
+      captcha:function(val){
+        if(this.captcha === this.captcha_real){
+          this.captcha_pass=true
+        }
+        else{
+          this.captcha_pass=false
+        }
+      }
+    }
   }
 </script>
+<style scoped>
+.captcha{
+  -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+</style>
+

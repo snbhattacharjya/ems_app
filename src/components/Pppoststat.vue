@@ -345,6 +345,9 @@ export default {
    this.loadofficecategory()
 
   },
+  mounted() {
+    this.$validator.localize("en", this.dictionary)
+  },
   computed: {
 
   },
