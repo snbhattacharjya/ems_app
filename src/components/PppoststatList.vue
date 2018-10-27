@@ -45,7 +45,9 @@
               Your search for "{{ search }}" found no results.
             </v-alert>
           </v-data-table>
-          <v-alert v-if="this.willaffect != ''" :value="affect" color="success" icon="new_releases">Rule ID :{{this.rule}} will affect {{this.willaffect}} rows.</v-alert>
+          <v-snackbar v-if="this.willaffect != ''" v-model="affect" :multi-line="false" :timeout=0 :value=show_message color="success" :bottom=true>{{ this.willaffect }}<v-btn dark flat @click="affect = false">Close</v-btn>
+          </v-snackbar>
+
       </v-flex>
       </v-layout>
       </section>
@@ -128,15 +130,19 @@ import moment from 'moment'
         })
       },
       applyrule:function(id,$event){
-        this.willaffect=''
+         this.willaffect=''
          this.affect=false
+         this.affect=true
+         this.willaffect='Applying Rule ID : '+id+'.......'
            axios.get('/grantrules/'+id)
         .then((response, data) => {
           if(response.data.length === 0){
-
+           this.willaffect='No records to apply'
 
           }
          else{
+           this.willaffect='Rule ID : '+id+' Applied successfully'
+
            this.initialize_ruels()
 
          }
@@ -150,12 +156,16 @@ import moment from 'moment'
        revokerule:function(id,$event){
          this.willaffect=''
          this.affect=false
+         this.affect=true
+         this.willaffect='Revoking Rule ID : '+id+'.......'
            axios.get('/revokerule/'+id)
         .then((response, data) => {
-          if(response.data.length === 0){
-
+          if(response.data['RecordsRevoked'] === 0){
+              this.willaffect='No records to revoke'
             }
          else{
+           this.willaffect='Rule ID : '+id+' Revoked successfully'
+
               this.initialize_ruels()
 
          }
@@ -171,13 +181,18 @@ import moment from 'moment'
          this.affect=false
         axios.get('/queryrule/'+id)
         .then((response, data) => {
-          if(response.data.length == 0){
-            }
-         else{
+
          this.rule=id
-         this.willaffect=response.data['query']['queryval']
-         this.affect=true
+         if(response.data['query']['queryval'] != 0){
+         this.willaffect="Rule ID:"+id+" will affect "+response.data['query']['queryval']+" rows"
          }
+         else if(response.data['query']['queryval'] === 0){
+           this.willaffect="Rule ID:"+id+" will not affect any rows"
+         }else{
+           this.willaffect="Rule ID:"+id+" is having some problem"
+         }
+         this.affect=true
+
             })
         .catch(error => {
           console.log(error)

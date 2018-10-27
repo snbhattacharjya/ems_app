@@ -11,6 +11,34 @@
                   <v-card-text>
                     <v-form autocomplete="off">
                        <v-layout row wrap>
+                         <v-flex xs6>
+                          <v-select
+                            v-model="poststat_from"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "val"
+                            prepend-icon="call_received"
+                            label="Post Status (From)"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('poststat_from')"
+                            data-vv-name="poststat_from"
+                          ></v-select>
+                         </v-flex>
+                         <v-flex xs6>
+                          <v-select
+                           v-model="poststat_to"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "val"
+                            prepend-icon="call_made"
+                            label="Post Status (To)"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('poststat_to')"
+                            data-vv-name="poststat_to"
+                          ></v-select>
+                         </v-flex>
+                       </v-layout>
+                       <v-layout row wrap>
                          <!--<v-flex xs5>
                            <v-select
                             v-model="subdivision_id"
@@ -67,33 +95,86 @@
                           <v-flex xs12 mb-5>
                           <v-subheader class="pl-0"><v-icon>payment</v-icon> Select Basic Pay range</v-subheader>
                           </v-flex>
-                          <v-range-slider
-                            v-model="basic_pay"
-                            :max="50000"
-                            :min="0"
-                            :step="10"
-                            :thumb-size="50"
-                            thumb-label="always"
-                            :disabled="payment_show"
-                            v-validate="'required'"
-                            :error-messages="errors.collect('basic_pay')"
-                            data-vv-name="basic_pay"
-                          ></v-range-slider>
+                          <v-layout row wrap>
+
+                            <v-flex xs2 shrink>
+                              <v-text-field
+                              v-model="basic_pay[0]"
+                              class="mt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs8>
+                                <v-range-slider
+                                  v-model="basic_pay"
+                                  :max="50000"
+                                  :min="0"
+                                  :step="10"
+                                  :thumb-size="50"
+                                  thumb-label="always"
+                                  :disabled="payment_show"
+                                  v-validate="'required'"
+                                  :error-messages="errors.collect('basic_pay')"
+                                  data-vv-name="basic_pay"
+                                ></v-range-slider>
+                            </v-flex>
+                            <v-flex xs2 shrink>
+                              <v-text-field
+                              v-model="basic_pay[1]"
+                              class="mt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              ></v-text-field>
+                            </v-flex>
+
+                          </v-layout>
                         </v-flex>
-                        <v-flex xs2></v-flex>
+                          <v-flex xs2>
+                            <v-divider
+                            class="mx-3"
+                            inset
+                            vertical
+                          ></v-divider>
+                          </v-flex>
                         <v-flex v-show="visible_grade" xs5>
                           <v-flex xs12 mb-5>
                           <v-subheader class="pl-0"><v-icon>payment</v-icon> Select Garde Pay range</v-subheader>
                           </v-flex>
-                          <v-range-slider
-                            v-model="grade_pay"
-                            :max="6000"
-                            :min="1500"
-                            :step="10"
-                            :thumb-size="50"
-                            thumb-label="always"
-                            :disabled="payment_show"
-                          ></v-range-slider>
+                          <v-layout>
+                            <v-flex xs2 shrink>
+                              <v-text-field
+                              v-model="grade_pay[0]"
+                              class="mt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs8>
+                              <v-range-slider
+                                v-model="grade_pay"
+                                :max="6000"
+                                :min="1500"
+                                :step="10"
+                                :thumb-size="50"
+                                thumb-label="always"
+                                :disabled="payment_show"
+                              ></v-range-slider>
+                            </v-flex>
+                            <v-flex xs2 shrink>
+                              <v-text-field
+                              v-model="grade_pay[1]"
+                              class="mt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              ></v-text-field>
+                            </v-flex>
+                          </v-layout>
+
                         </v-flex>
                         <v-flex v-show="visible_level"  xs5>
                           <v-flex xs12 mb-5>
@@ -201,34 +282,7 @@
                            </v-layout>
                          </v-flex>
                        </v-layout>
-                       <v-layout row wrap>
-                         <v-flex xs6>
-                          <v-select
-                            v-model="poststat_from"
-                            :items="poststats"
-                            item-text= "name"
-                            item-value= "val"
-                            prepend-icon="call_received"
-                            label="Post Status (From)"
-                            v-validate="'required'"
-                            :error-messages="errors.collect('poststat_from')"
-                            data-vv-name="poststat_from"
-                          ></v-select>
-                         </v-flex>
-                         <v-flex xs6>
-                          <v-select
-                           v-model="poststat_to"
-                            :items="poststats"
-                            item-text= "name"
-                            item-value= "val"
-                            prepend-icon="call_made"
-                            label="Post Status (To)"
-                            v-validate="'required'"
-                            :error-messages="errors.collect('poststat_to')"
-                            data-vv-name="poststat_to"
-                          ></v-select>
-                         </v-flex>
-                       </v-layout>
+
                        <v-btn color="primary" @click="setrule" :loading="loading">Set Rule</v-btn>
                        <v-btn color="primary" v-if="this.disable_agegrp === true" @click="resetrule">Reset</v-btn>
                     </v-form>
