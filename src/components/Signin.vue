@@ -33,6 +33,8 @@
                 ></v-text-field>
                 <v-layout row wrap class="my-2">
                 <v-flex xs6>
+                  <v-layout row wrap>
+                    <v-flex xs10>
                   <v-text-field
                   id="captcha_real"
                   class="captcha"
@@ -41,9 +43,13 @@
                   label="Captcha"
                   type="text"
                   v-model="captcha_real"
-                  :readonly="true"
-                ><v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-icon style="cursor:pointer" @click="reload_captcha">autorenew</v-icon></v-slide-x-reverse-transition>
-                </v-text-field>
+                  :disabled="true"
+                >
+                </v-text-field></v-flex>
+                <v-flex xs2 class="mt-4">
+                                  <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-icon style="cursor:pointer" @click="reload_captcha">autorenew</v-icon></v-slide-x-reverse-transition>
+                </v-flex>
+                  </v-layout>
                 </v-flex>
                 <v-flex xs6>
                 <v-text-field

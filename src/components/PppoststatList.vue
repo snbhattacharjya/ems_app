@@ -3,11 +3,12 @@
     <v-container fluid>
       <section>
       <v-layout row wrap  class="my-5">
-        <v-btn color="primary" :to="'/pppoststat'">Add New Rule</v-btn>
+
       <v-flex xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>Rule Lists</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>
+          <v-btn color="primary" :to="'/pppoststat'">Add New Rule</v-btn>
             <v-spacer></v-spacer>
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
@@ -28,9 +29,10 @@
                 <strong>Age :</strong> {{ props.item.Age }}<br>
               </td>
               <td class="justify-center">
+                <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn><br>
                 <v-btn :loading="applying_rule" color="success" flat v-bind:id="props.item.RuleID" @click="applyrule(props.item.RuleID,$event)"><v-icon small class="mr-2">check</v-icon> Apply</v-btn>
                 <v-btn :loading="revoking_rule" color="error" flat v-bind:id="props.item.RuleID" @click="revokerule(props.item.RuleID,$event)"><v-icon small class="mr-2">undo</v-icon> Revoke</v-btn>
-                <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn><br>
+
 
                 <!-- <v-btn color="warning" flat v-bind:id="props.item.RuleID" @click="shortlistrule(props.item.RuleID,$event)"><v-icon small class="mr-2">star</v-icon> Sortlist</v-btn> -->
               </td>

@@ -111,7 +111,7 @@
                                   v-model="basic_pay"
                                   :max="50000"
                                   :min="0"
-                                  :step="10"
+                                  :step="100"
                                   :thumb-size="50"
                                   thumb-label="always"
                                   :disabled="payment_show"
@@ -158,7 +158,7 @@
                                 v-model="grade_pay"
                                 :max="6000"
                                 :min="1500"
-                                :step="10"
+                                :step="100"
                                 :thumb-size="50"
                                 thumb-label="always"
                                 :disabled="payment_show"
@@ -361,6 +361,12 @@ export default {
       payment_show: false,
       dictionary: {
           custom: {
+            office_id: {
+              required: 'Office is required'
+            },
+            qualification_id: {
+              required: 'Qualification is required'
+            },
             subdivision_id: {
               required: 'Subdivision is required'
             },
@@ -447,7 +453,7 @@ export default {
       })
     },
     loadoffices:function(event){
-      if(this.disable_offcat === false){
+      if(this.disable_offcat === false && this.category_id != ''){
         axios.post('/officebysubdivision',{
          subdivision_id:this.subdivision_id,
          category_id: this.category_id
@@ -468,6 +474,15 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
+      else{
+             this.errors.add(
+                  {
+                    field: 'category_id',
+                    msg: 'Office Category is required'
+                  }
+             )
+
       }
     },
     loadqualifications:function(){
@@ -495,12 +510,13 @@ export default {
       }
     },
     loaddesignations:function(){
-      if(this.disble_qual === false){
+      if(this.disble_qual == false){
        axios.post('/fetch_designation_of_pp',{
           subdivision_id:this.subdivision_id,
           category_id:this.category_id,
           office_id:this.office_id,
           qualification_id:this.qualification_id,
+          not_qualification:this.exclude_qualification ? 1 : 0,
           basic_pay:this.basic_pay,
           grade_pay:this.grade_pay,
           pay_level:this.pay_level
