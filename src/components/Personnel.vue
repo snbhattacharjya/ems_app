@@ -768,7 +768,7 @@ import RemarkList from '@/components/RemarkList'
             this.message_icon = 'check_circle'
             this.multiline =false
             this.message_text = 'Personnel Added Successfully with code - '+response.data
-
+            this.$validator.reset()
             this.snackbar =true
         })
         .catch(error => {

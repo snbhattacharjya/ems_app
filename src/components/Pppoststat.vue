@@ -412,6 +412,11 @@ export default {
       this.disble_qual=false
       this.disable_desig=false
       this.disable_agegrp=false
+      this.category_id=null
+      this.office_id=null
+      this.qualification_id=null
+      this.designation=null
+      this.$validator.reset()
     },
     loadsubdivision:function(){
        axios.get('/subdivisions')
