@@ -518,8 +518,8 @@ export default {
           qualification_id:this.qualification_id,
           not_qualification:this.exclude_qualification ? 1 : 0,
           basic_pay:this.basic_pay,
-          grade_pay:this.grade_pay,
-          pay_level:this.pay_level
+          grade_pay:this.visible_grade ? this.grade_pay : 0,
+          pay_level:this.visible_level ? this.pay_level : 0,
        })
       .then((response, data) => {
         this.designations=[]
@@ -545,8 +545,8 @@ export default {
                 category_id: this.category_id,
                 office_id:this.office_id,
                 basic_pay: this.basic_pay,
-                grade_pay:this.grade_pay,
-                pay_level:this.pay_level,
+                grade_pay:this.visible_grade ? this.grade_pay : 0,
+                pay_level:this.visible_level ? this.pay_level : 0,
                 not_qualification: this.exclude_qualification ? 1 : 0,
                 not_designation:this.exclude_designation ? 1 : 0,
                 not_remarks:this.exclude_remark ? 1 : 0,
@@ -576,14 +576,13 @@ export default {
       this.$validator.validate()
         .then(result =>{
           if(result){
-
                 axios.post('/setrule',{
                 subdivision_id: this.subdivision_id,
                 category_id: this.category_id,
                 office_id:this.office_id,
                 basic_pay: this.basic_pay,
-                grade_pay:this.grade_pay,
-                pay_level:this.pay_level,
+                grade_pay:this.visible_grade ? this.grade_pay : 0,
+                pay_level:this.visible_level ? this.pay_level : 0,
                 not_qualification: this.exclude_qualification ? 1 : 0,
                 not_designation:this.exclude_designation ? 1 : 0,
                 not_remarks:this.exclude_remark ? 1 : 0,
