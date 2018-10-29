@@ -486,7 +486,7 @@ export default {
       }
     },
     loadqualifications:function(){
-      if(this.disable_off === false){
+      if(this.disable_off === false && this.category_id != '' && this.office_id != ''){
          axios.post('/fetch_qualification_by_oficecode',{
          subdivision_id:this.subdivision_id,
          category_id: this.category_id,
@@ -507,6 +507,19 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }
+      else{
+             this.errors.add(
+                  {
+                    field: 'category_id',
+                    msg: 'Office Category is required'
+                  },
+                  {
+                    field: 'office_id',
+                    msg: 'Please select Office'
+                  }
+             )
+
       }
     },
     loaddesignations:function(){

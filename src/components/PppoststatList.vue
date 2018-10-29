@@ -21,7 +21,7 @@
                 <strong>Office Category :</strong> {{ props.item.OfficeCategory }}<br>
                 <strong>Office :</strong> {{ props.item.Office }}<br>
                 <strong>Basic Pay :</strong> {{ props.item.BasicPay }}<br>
-                <strong>Garde Pay/Pay Level :</strong> {{ props.item.GradePay }}<br>
+                <strong>Garde Pay/Pay Level :</strong> {{ props.item.GradePay }} / {{ props.item.PayLevel }}<br>
                 <strong>Qualification :</strong>{{ props.item.Qualification }}<br>
                 <strong>Designation :</strong> {{ props.item.Designation }}<br>
                 <strong>Remarks :</strong> {{ props.item.Remarks }}<br>
@@ -181,6 +181,9 @@ import moment from 'moment'
        queryrule:function(id,$event){
          this.willaffect=''
          this.affect=false
+         this.rule=id
+         this.willaffect="Getting value for Rule ID : "+id+" ..........."
+         this.affect=true
         axios.get('/queryrule/'+id)
         .then((response, data) => {
 

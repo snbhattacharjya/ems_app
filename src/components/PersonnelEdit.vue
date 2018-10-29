@@ -770,7 +770,7 @@ import RemarkList from '@/components/RemarkList'
           scale: this.scale,
           basic_pay: this.basic_pay,
           grade_pay: this.grade_pay ? this.grade_pay : '0',
-          pay_level: this.pay_level? this.pay_level :'null',
+          pay_level: this.pay_level? this.pay_level : '0',
           emp_group: this.emp_group,
           working_status: this.working_status,
           gender: this.gender,
