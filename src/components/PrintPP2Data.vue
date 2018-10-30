@@ -11,7 +11,7 @@
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
               <tbody>
-                <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
               <tr v-for="report in reports" :prop="report" :key="report.office_id">
               <td>
                 <v-layout row wrap class="my-2">
@@ -55,6 +55,7 @@ export default {
     return {
       reports:[],
       search: '',
+      loadingTXT:'Loading....',
       tableloading:false,
 
 
@@ -72,16 +73,20 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-        var i=1;
-        response.data.forEach(item => {
-            item['sl']=i
-            this.reports.push(item)
-            i++
-        })
-          
-          console.log('PP2 data from response '+this.reports)
-          this.$store.dispatch('storePP2report', this.reports)
-          this.tableloading=false
+          if(response.data.length !=0){
+            var i=1;
+            response.data.forEach(item => {
+                item['sl']=i
+                this.reports.push(item)
+                i++
+            })
+              this.$store.dispatch('storePP2report', this.reports)
+              this.tableloading=false
+          }
+          else{
+            this.loadingTXT='No data found'
+          }
+        
         })
         .catch(error => {
           console.log(error)

@@ -5,7 +5,7 @@
               <v-layout row wrap>
               <v-flex xs12 class="blue--text">
                 <v-layout row wrap>
-                  <v-flex xs2><h2>WELCOME TO : </h2></v-flex>
+                  <v-flex xs2><h2>WELCOME : </h2></v-flex>
                   <v-flex xs10 mt-1><h3>{{ getUser.name }}</h3></v-flex>
 
                 </v-layout>
@@ -39,7 +39,7 @@
                       </v-card-title>
                       <v-divider></v-divider>
 
-                      <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalMale}}</h1></v-card-actions>
+                      <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalMale==null ? 0 : getdashboard.totalMale}}</h1></v-card-actions>
                     </v-card>
                   </v-flex>
 
@@ -51,7 +51,7 @@
                       </v-card-title>
                       <v-divider></v-divider>
 
-                      <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalfemale}}</h1></v-card-actions>
+                      <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalfemale==null ? 0 : getdashboard.totalfemale}}</h1></v-card-actions>
                     </v-card>
                   </v-flex>
 

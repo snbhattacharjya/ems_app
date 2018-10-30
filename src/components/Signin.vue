@@ -13,12 +13,13 @@
                   name="login"
                   label="Username"
                   type="text"
-                  autofocus="true"
+                  autofocus=true
                   v-model="username"
                   v-validate="'required'"
                   data-vv-name="username"
                   :error-messages="errors.collect('username')"
                   @input="uppercase"
+                  @keydown.enter="login"
                 ></v-text-field>
                 <v-text-field
                   id="password"
@@ -30,6 +31,7 @@
                   v-validate="'required'"
                   data-vv-name="password"
                   :error-messages="errors.collect('password')"
+                  @keydown.enter="login"
                 ></v-text-field>
                 <v-layout row wrap class="my-2">
                 <v-flex xs6>
@@ -62,6 +64,7 @@
                   v-validate="'required'"
                   data-vv-name="captcha"
                   :error-messages="errors.collect('captcha')"
+                  @keydown.enter="login"
                 ></v-text-field>
                 </v-flex>
                 </v-layout>

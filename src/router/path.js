@@ -308,4 +308,13 @@ export default [
         '@/components/PppoststatList'
       )
     },
+    {
+      path: `/resetpassword`,
+      meta: {title:'Reset Password for Personnel | Welcome to PPMS'},
+      name: 'ResetPassword',
+      component: () => import(
+
+        '@/components/ResetPassword'
+      )
+    },
   ];

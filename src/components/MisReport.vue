@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.district_id">
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}">{{ report.name }}</router-link></td>
@@ -38,9 +38,9 @@
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
                   <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
-                  <td>{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
+                  <td >{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
                   </tr>
-                  <tr><td></td><td></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
                 </tbody>
               </table>
             </v-layout>
@@ -68,7 +68,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">Loading...</v-card-text></td></tr>
+                  <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.district_id">
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}">{{ report.name }}</router-link></td>
@@ -81,7 +81,7 @@
                   <td class="nopad" >{{ report.MO_F }}</td>
                   <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F) }}</td>
                   </tr>
-                  <tr><td></td><td></td><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td></td><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
 
                 </tbody>
               </table>
@@ -108,6 +108,7 @@ export default {
     return {
       reports:[],
       search: '',
+      loadingTXT: 'Loading...',
       tableloading:false,
       item_class:'',
       male_party_count:0,
@@ -143,8 +144,9 @@ export default {
       this.tableloading=true
         axios.get('/report')
           .then((response, data) => {
-           this.$store.dispatch('storeMISreport', response.data)
-          response.data.forEach(item => { //console.log(item)
+            if(response.data.length != 0 || response.data!=''){
+               this.$store.dispatch('storeMISreport', response.data)
+            response.data.forEach(item => { //console.log(item)
               // item.PR_M_class=this.createclass(item.PR_M,item.male_party)
               // item.P1_M_class=this.createclass(item.P1_M,item.male_party)
               // item.P2_M_class=this.createclass(item.P2_M,item.male_party)
@@ -167,10 +169,13 @@ export default {
               this.MO_F_COUNT+=parseInt(item.MO_F)
               this.reports.push(item)
 
-            });
-
-
+            })
             this.tableloading=false
+            }
+            else{
+              this.loadingTXT='No data found'
+            }
+            
 
           })
           .catch(error => {

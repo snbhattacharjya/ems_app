@@ -27,6 +27,8 @@
         prepend-icon="list"
         label="Select Office"
         :disabled="isdisabled"
+        autocomplete
+        :search-input.sync="searchInput"
         >
         </v-select>
       </v-flex>
@@ -92,21 +94,7 @@
         { text: 'Updated at', value: 'updated_at', sortable: false }
       ],
       personnels: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        id: 0,
-        address: 0,
-        mobile: 0,
-        pin: 0
-      },
-      defaultItem: {
-        name: '',
-        id: 0,
-        address: 0,
-        mobile: 0,
-        pin: 0
-      }
+      searchInput: ''
     }),
     components: {
         //  'subdivision-list': SubdivisionList,
@@ -216,6 +204,7 @@
             this.isdisabled=false
             this.offices=[]
           response.data.forEach(item => {
+            item.name=item.id+' - '+item.name
               this.offices.push(item)
             });
 
