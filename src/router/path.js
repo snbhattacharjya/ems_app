@@ -317,4 +317,13 @@ export default [
         '@/components/ResetPassword'
       )
     },
+    {
+      path: `/poststatus_bulk_update`,
+      meta: {title:'Bulk update post status for Personnel | Welcome to PPMS'},
+      name: 'PoststatusbulkUpdate',
+      component: () => import(
+
+        '@/components/PoststatusbulkUpdate'
+      )
+    },
   ];

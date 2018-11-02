@@ -6,7 +6,7 @@
                   <v-flex xs12>
                 <v-card class="elevation-6">
                   <v-toolbar dark color="blue-grey darken-3">
-                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn color="primary" :to="'/pppoststatlist'">View Rules</v-btn></v-toolbar-title>
+                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn color="primary" :to="'/pppoststatlist'">View Rules</v-btn>   </v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form autocomplete="off">

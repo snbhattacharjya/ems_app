@@ -89,12 +89,23 @@
                 data-vv-name="pin"
               ></v-text-field>
 
-             <subdivision-list
+             <!-- <subdivision-list
                 v-model="subdivision_id"
                 v-validate="'required'"
                 data-vv-name="subdivision_id"
                 :error="errors.collect('subdivision_id')"
-              ></subdivision-list>
+              ></subdivision-list> -->
+              <v-select
+                :items="subdivisions"
+                v-model="subdivision_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Sub Division"
+
+                @change="getpolicestation(subdivision_id)"
+                >
+              </v-select>
 
               <block-muni-list
                 v-model="block_muni_id"
@@ -103,12 +114,23 @@
                 :error="errors.collect('block_muni_id')"
               ></block-muni-list>
 
-              <police-station-list
+              <!-- <police-station-list
                 v-model="police_station_id"
                 v-validate="'required'"
                 data-vv-name="police_station_id"
                 :error="errors.collect('police_station_id')"
-              ></police-station-list>
+              ></police-station-list> -->
+              <v-select
+                :items="policestations"
+                v-model="police_station_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Police Station"
+                :disabled="makedisable"
+
+                >
+              </v-select>
 
               <assembly-list
                 v-model="ac_id"
@@ -273,13 +295,15 @@
         snackbar: false,
         office_name: '',
         identification_code: '',
-        subdivision_id: '',
+        subdivisions:[],
+        subdivision_id: null,
         block_muni_id: '',
         office_address: '',
         officer_designation: '',
         post_office: '',
         pin: '',
-        police_station_id: '',
+        policestations:[],
+        police_station_id: null,
         ac_id: '',
         pc_id: '',
         category_id: '',
@@ -296,6 +320,7 @@
         message_icon: "",
         message_text: "",
         disable_save: false,
+        makedisable:true,
         agree:'',
         agree_text:'Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.',
 
@@ -394,27 +419,27 @@
           agree: this.agree,
         })
         .then(response => {
-        this.office_name= ''
-        this.identification_code= ''
-        this.subdivision_id= ''
-        this.block_muni_id= ''
-        this.office_address= ''
-        this.officer_designation= ''
-        this.post_office= ''
-        this.pin= ''
-        this.police_station_id= ''
-        this.ac_id= ''
-        this.pc_id= ''
-        this.category_id= ''
-        this.institute_id= ''
-        this.email= ''
-        this.phone= ''
-        this.mobile= ''
-        this.fax= ''
+        this.office_name= null
+        this.identification_code= null
+        this.subdivision_id= null
+        this.block_muni_id= null
+        this.office_address= null
+        this.officer_designation= null
+        this.post_office= null
+        this.pin= null
+        this.police_station_id= null
+        this.ac_id= null
+        this.pc_id= null
+        this.category_id= null
+        this.institute_id= null
+        this.email= null
+        this.phone= null
+        this.mobile= null
+        this.fax= null
         this.male_staff= 0
         this.female_staff= 0
         this.total_staff= 0
-        this.agree=''
+        this.agree=null
 
           this.show_message = true
           this.message_type = 'success'
@@ -429,7 +454,28 @@
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
-      }
+      },
+      getpolicestation(subdivision_id){
+        if(subdivision_id != null){
+          axios.get('/policestations/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+            this.subdivision_id=subdivision_id
+            this.policestations=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
     },
     computed: {
       calculateTotalStaff(){
@@ -442,7 +488,20 @@
         this.office_address=this.office_address.toUpperCase()
         this.post_office=this.post_office.toUpperCase()
       }
-    }
+    },
+    created(){
+    axios.get('/subdivisions')
+      .then((response, data) => {
+       response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
+          this.subdivisions.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   }
 </script>

@@ -39,7 +39,7 @@ export default {
   },
 
   created(){
-    axios.get('/policestations')
+    axios.get('/policestations/')
       .then((response, data) => {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()

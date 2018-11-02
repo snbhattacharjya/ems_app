@@ -77,13 +77,24 @@
                 data-vv-name="pin"
               ></v-text-field>
 
-              <subdivision-list
+              <!-- <subdivision-list
                 v-model="subdivision_id"
                 v-validate="'required'"
                 data-vv-name="subdivision_id"
                 :error="errors.collect('subdivision_id')"
                 :selected="subdivision_id"
-              ></subdivision-list>
+              ></subdivision-list> -->
+              <v-select
+                :items="subdivisions"
+                v-model="subdivision_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Sub Division"
+
+                disabled=true
+                >
+              </v-select>
               <block-muni-list
                 v-model="block_muni_id"
                 v-validate="'required'"
@@ -92,13 +103,24 @@
                 :selected="block_muni_id"
               ></block-muni-list>
 
-              <police-station-list
+              <!-- <police-station-list
                 v-model="police_station_id"
                 v-validate="'required'"
                 data-vv-name="police_station_id"
                 :error="errors.collect('police_station_id')"
                 :selected="police_station_id"
-              ></police-station-list>
+              ></police-station-list> -->
+              <v-select
+                :items="policestations"
+                v-model="police_station_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Police Station"
+                disabled=true
+
+                >
+              </v-select>
 
               <assembly-list
                 v-model="ac_id"
@@ -151,7 +173,7 @@
                 v-model="phone"
                 counter
                 maxlength="10"
-                v-validate="'numeric|digits:10'"
+                v-validate="'numeric'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -266,13 +288,15 @@ export default {
       office_id: "",
       office_name: "",
       identification_code: "",
-      subdivision_id: "",
+      subdivisions:[],
+      subdivision_id: null,
       block_muni_id: "",
       office_address: "",
       officer_designation: "",
       post_office: "",
       pin: "",
-      police_station_id: "",
+      policestations:[],
+      police_station_id: null,
       ac_id: "",
       pc_id: "",
       category_id: "",
@@ -289,6 +313,7 @@ export default {
       message_icon: "",
       message_text: "",
       disable_save: false,
+      makedisable:false,
       agree: "",
       agree_text:
         "Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.",
@@ -359,6 +384,8 @@ export default {
   created() {
     this.office_id = this.$route.params.id;
     this.initialize();
+    this.loadsubdivision()
+
   },
   mounted() {
     this.$validator.localize("en", this.dictionary);
@@ -390,7 +417,8 @@ export default {
               (this.fax = item.fax),
               (this.male_staff = item.male_staff),
               (this.female_staff = item.female_staff),
-              (this.total_staff = item.total_staff);
+              (this.total_staff = item.total_staff)
+              this.loadpolicestation(this.subdivision_id)
           });
         })
         .catch(error => {
@@ -454,7 +482,62 @@ export default {
             "Error Occurred!!! " + error.response.data.message;
           this.snackbar = true;
         });
-    }
+    },
+    getpolicestation(subdivision_id){
+        if(subdivision_id != null){
+          axios.get('/policestations/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+
+            this.policestations=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
+      loadpolicestation(subdivision_id){
+        if(subdivision_id != null){
+          axios.get('/policestations/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+
+            this.policestations=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
+      loadsubdivision(){
+        axios.get('/subdivisions')
+      .then((response, data) => {
+       response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
+          this.subdivisions.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      }
   },
   computed: {
     calculateTotalStaff() {
@@ -467,6 +550,7 @@ export default {
       this.office_address = this.office_address.toUpperCase();
       this.post_office = this.post_office.toUpperCase();
     }
-  }
+  },
+
 };
 </script>
