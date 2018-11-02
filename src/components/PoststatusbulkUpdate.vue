@@ -52,27 +52,18 @@
               <td >{{ props.item.basic_pay }}</td>
               <td >{{ props.item.grade_pay !=0 ? props.item.grade_pay : props.item.pay_level!=''? 'LEVEL '+props.item.pay_level : '' }}</td>
               <td >
-                <!-- <v-text-field
 
-                ref="post_stat"
-
-                type="text"
-                :value="props.item.post_stat"
-
-
-              ></v-text-field> -->
                   <v-select
                     :items="poststats"
-                    :v-model="props.item.post_stat"
+                    v-model="props.item.post_stat"
                     item-text= "name"
                     item-value= "val"
                     prepend-icon=""
-
                     >
                     </v-select>
               </td>
               <td class="justify-center layout px-0">
-                <v-btn flat @click="update_post_staatus(props.item.post_stat)">Update</v-btn>
+                <v-btn flat @click="update_post_staatus(props.item.id,props.item.office_id,props.item.post_stat)">Update</v-btn>
 
               </td>
             </template>
@@ -81,6 +72,8 @@
             </v-alert>
           </v-data-table>
       </v-flex>
+      <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          </v-snackbar>
       </v-layout>
       </section>
     </v-container>
@@ -94,6 +87,8 @@
     data: () => ({
       dialog: false,
       search: '',
+      post_stat:'',
+      snackbar: false,
       tableloading:false,
       subdivision_id: '',
       office_id:'',
@@ -101,6 +96,10 @@
       offices:[],
       isdisabled:true,
       disable_save: false,
+      show_message: false,
+        message_type: "",
+        message_icon: "",
+        message_text: "",
 
       poststats:[
         {name: 'N/A', val:'NA'},
@@ -147,6 +146,9 @@
     },
 
     methods: {
+      pp($event){
+        alert(this.post_state)
+      },
       getsubdivision(){
           axios.get('/subdivisions')
           .then((response, data) => {
@@ -238,7 +240,7 @@
             console.log(error)
           })
       },
-      update_post_staatus(val){
+      update_post_staatus(personnel_id,office_id,post_stat){
         axios.post('/savepoststatmanual',{
           office_id:office_id,
           personnel_id:personnel_id,
@@ -246,7 +248,11 @@
         })
           .then((response, data) => {
             if(response.data='Successfully Updated'){
-
+              this.show_message = true
+              this.message_type = 'success'
+              this.message_icon = 'check_circle'
+              this.message_text = 'Post Status for  - '+personnel_id+' updated Successfully to -'+post_stat
+              this.snackbar =true
             }
           })
           .catch(error => {
