@@ -446,12 +446,13 @@
         this.female_staff= 0
         this.total_staff= 0
         this.agree=''
-        this.$validator.reset()
+
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
           this.message_text = 'Office Added Successfully with Office code - '+response.data
           this.snackbar =true
+          //this.$validator.reset()
         })
         .catch(error => {
           this.show_message = true
