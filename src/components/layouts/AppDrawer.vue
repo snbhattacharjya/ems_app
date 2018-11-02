@@ -13,7 +13,7 @@
             <v-list-tile-title v-text="subItem.menu_name"></v-list-tile-title>
           </v-list-tile>
         </v-list-group>
-        <v-list-tile v-else-if="item.menu_target !='external'" :to="item.menu_link"  ripple="ripple"  rel="noopener" :key="item.parent_menu" target="_blank">
+        <v-list-tile v-else-if="item.menu_target !='external'" :to="item.menu_link"  ripple="ripple"  rel="noopener" :key="item.parent_menu">
         <v-list-tile-action>
           <v-icon>{{ item.menu_icon_name }}</v-icon>
         </v-list-tile-action>

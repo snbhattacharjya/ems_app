@@ -77,9 +77,25 @@
                 data-vv-name="pin"
               ></v-text-field>
 
+<!-- <subdivision-list
+                v-model="subdivision_id"
+                v-validate="'required'"
+                data-vv-name="subdivision_id"
+                :error="errors.collect('subdivision_id')"
+                :selected="subdivision_id"
+              ></subdivision-list>
+              <v-select
+                :items="subdivisions"
+                v-model="subdivision_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Sub Division(*)"
 
+                disabled=true
+                >
+              </v-select> -->
               <block-muni-list
-                :label="bmlbl"
                 v-model="block_muni_id"
                 v-validate="'required'"
                 data-vv-name="block_muni_id"
@@ -87,32 +103,25 @@
                 :selected="block_muni_id"
               ></block-muni-list>
 
-              <police-station-list
-                :label="pslbl"
+              <!-- <police-station-list
                 v-model="police_station_id"
                 v-validate="'required'"
                 data-vv-name="police_station_id"
                 :error="errors.collect('police_station_id')"
                 :selected="police_station_id"
-              ></police-station-list>
+              ></police-station-list> -->
+              <v-select
+                :items="policestations"
+                v-model="police_station_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Police Station(*)"
+                disabled=true
 
-              <assembly-list
-                :label="aclbl"
-                v-model="ac_id"
-                v-validate="'required'"
-                data-vv-name="ac_id"
-                :error="errors.collect('ac_id')"
-                :selected="ac_id"
-              ></assembly-list>
+                >
+              </v-select>
 
-              <pc-list
-                :label="pclbl"
-                v-model="pc_id"
-                v-validate="'required'"
-                data-vv-name="pc_id"
-                :error="errors.collect('pc_id')"
-                :selected="pc_id"
-              ></pc-list>
 
               <category-list
                 :label="ctlbl"
@@ -278,7 +287,10 @@ export default {
       officer_designation: "",
       post_office: "",
       pin: "",
-      police_station_id: "",
+      subdivisions:[],
+      subdivision_id: null,
+      policestations:[],
+      police_station_id: null,
       ac_id: "",
       pc_id: "",
       category_id: "",
@@ -385,6 +397,7 @@ export default {
               this.officer_designation= item.officer_designation,
               this.post_office= item.post_office,
               this.pin= item.pin,
+              this.subdivision_id = item.subdivision_id
               this.police_station_id= item.police_station_id,
               this.ac_id= item.ac_id,
               this.pc_id= item.pc_id,
@@ -398,6 +411,7 @@ export default {
               this.female_staff= item.female_staff,
               this.total_staff= item.total_staff
               this.$store.dispatch('storeofficecategory', item.category_id)
+              this.loadpolicestation(this.subdivision_id)
           })
         })
         .catch(error => {
@@ -445,6 +459,7 @@ export default {
           agree: this.agree
         })
         .then(response => {
+          this.agree=false
           this.$store.dispatch('storeAccessToken', this.getAccessToken)
           this.show_message = true
           this.message_type = "success"
@@ -460,7 +475,62 @@ export default {
             "Error Occurred!!! " + error.response.data.message
           this.snackbar = true
         })
-    }
+    },
+    getpolicestation(subdivision_id){
+        if(subdivision_id != null){
+          axios.get('/policestations/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+
+            this.policestations=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
+      loadpolicestation(subdivision_id){
+        if(subdivision_id != null){
+          axios.get('/policestations/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+
+            this.policestations=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      },
+      loadsubdivision(){
+        axios.get('/subdivisions')
+      .then((response, data) => {
+       response.data.forEach(item => {
+         item.name=item.name.toUpperCase()
+          this.subdivisions.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      }
   },
   computed: {
     //initialize(){this.initialize()},

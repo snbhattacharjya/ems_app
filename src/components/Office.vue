@@ -366,6 +366,12 @@
             institute_id: {
               required: 'Office Institute is required'
             },
+            male_staff: {
+              required: "Please provide total number of male staff"
+            },
+            female_staff: {
+              required: "Please provide total number of female staff"
+            },
             agree: {
               required: 'You must give the declartion on the above information'
             }
@@ -419,28 +425,28 @@
           agree: this.agree,
         })
         .then(response => {
-        this.office_name= null
-        this.identification_code= null
-        this.subdivision_id= null
-        this.block_muni_id= null
-        this.office_address= null
-        this.officer_designation= null
-        this.post_office= null
-        this.pin= null
-        this.police_station_id= null
-        this.ac_id= null
-        this.pc_id= null
-        this.category_id= null
-        this.institute_id= null
-        this.email= null
-        this.phone= null
-        this.mobile= null
-        this.fax= null
+        this.office_name= ''
+        this.identification_code= ''
+        this.subdivision_id= ''
+        this.block_muni_id= ''
+        this.office_address= ''
+        this.officer_designation= ''
+        this.post_office= ''
+        this.pin= ''
+        this.police_station_id= ''
+        this.ac_id= ''
+        this.pc_id= ''
+        this.category_id= ''
+        this.institute_id= ''
+        this.email= ''
+        this.phone= ''
+        this.mobile= ''
+        this.fax= ''
         this.male_staff= 0
         this.female_staff= 0
         this.total_staff= 0
-        this.agree=null
-
+        this.agree=''
+        this.$validator.reset()
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'

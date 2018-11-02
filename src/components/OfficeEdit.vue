@@ -12,7 +12,7 @@
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
-                label="Office Name"
+                label="Office Name(*)"
                 type="text"
                 v-model="office_name"
                 v-validate="'required'"
@@ -23,10 +23,10 @@
               <v-text-field
                 prepend-icon="credit_card"
                 name="identification_code"
-                label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
+                label="Identification Code eg. DDO Code/IFSC/DISE Code alike(*)"
                 type="text"
                 v-model="identification_code"
-                v-validate="'required|alpha_num'"
+                v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
               ></v-text-field>
@@ -34,10 +34,10 @@
               <v-text-field
                 prepend-icon="account_box"
                 name="officer_designation"
-                label="Designation of Head of Office"
+                label="Designation of Head of Office(*)"
                 type="text"
                 v-model="officer_designation"
-                v-validate="'required|alpha_spaces'"
+                v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
               ></v-text-field>
@@ -45,7 +45,7 @@
               <v-text-field
                 prepend-icon="account_balance"
                 name="office_address"
-                label="Office Address"
+                label="Office Address(*)"
                 type="text"
                 v-model="office_address"
                 v-validate="'required'"
@@ -56,10 +56,10 @@
               <v-text-field
                 prepend-icon="local_post_office"
                 name="post_office"
-                label="Post Office"
+                label="Post Office(*)"
                 type="text"
                 v-model="post_office"
-                v-validate="'required|alpha_spaces'"
+                v-validate="'required'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
               ></v-text-field>
@@ -67,7 +67,7 @@
               <v-text-field
                 prepend-icon="fiber_pin"
                 name="pin"
-                label="Pincode"
+                label="Pincode(*)"
                 type="text"
                 v-model="pin"
                 counter
@@ -90,7 +90,7 @@
                 item-text= "name"
                 item-value= "id"
                 prepend-icon="list"
-                label="Select Sub Division"
+                label="Select Sub Division(*)"
 
                 disabled=true
                 >
@@ -116,7 +116,7 @@
                 item-text= "name"
                 item-value= "id"
                 prepend-icon="list"
-                label="Select Police Station"
+                label="Select Police Station(*)"
                 disabled=true
 
                 >
@@ -157,7 +157,7 @@
               <v-text-field
                 prepend-icon="email"
                 name="email"
-                label="Email"
+                label="Email(*)"
                 type="text"
                 v-model="email"
                 v-validate="'required|email'"
@@ -181,7 +181,7 @@
               <v-text-field
                 prepend-icon="phone_android"
                 name="mobile"
-                label="Mobile of Head of Office"
+                label="Mobile of Head of Office(*)"
                 type="text"
                 v-model="mobile"
                 counter
@@ -207,7 +207,7 @@
               <v-text-field
                 prepend-icon="account_circle"
                 name="male_staff"
-                label="Male Staff (in count)"
+                label="Male Staff (in count)(*)"
                 type="text"
                 v-model.number="male_staff"
                 v-validate="'required|numeric'"
@@ -219,7 +219,7 @@
               <v-text-field
                 prepend-icon="face"
                 name="female_staff"
-                label="Female Staff (in count)"
+                label="Female Staff (in count)(*)"
                 type="text"
                 v-model.number="female_staff"
                 v-validate="'required|numeric'"
@@ -237,6 +237,7 @@
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
+              <label class="red--text">(*) Fields are mandatory</label>
               <label><h3>DECLARATION</h3></label>
               <v-checkbox :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
                 :error-messages="errors.collect('agree')"
