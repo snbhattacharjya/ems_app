@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Reserved Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
           <v-flex xs12 class="my-5" id="exclude">
@@ -21,7 +21,7 @@
               </v-flex>
               <v-flex xs3>
                 <v-btn color="primary" @click="show" :disabled="disable_save">Show</v-btn>
-                <v-btn color="primary" :to="'/assemblywisereserved'">Reserve report</v-btn>
+
               </v-flex>
             </v-layout>
           </v-flex>
@@ -31,24 +31,38 @@
               <table  class="v-datatable v-table dark my-5" id=""  border=1>
                 <thead>
                 <tr>
-                <th width="10%" ><strong>Serial No</strong></th>
-                <th width="10%"><strong>Assembly ID</strong></th>
-                <th width="40%" ><strong>Assembly Name</strong></th>
-                <th width="20%" ><strong>No of Polling Booth(Male)</strong></th>
-                <th width="20%"><strong>No of Polling Booth(Female)</strong></th>
+                <th width="5%" ><strong>Serial<br> No</strong></th>
+                <th width="20%"><strong>Assembly</strong></th>
+                <th width="15%" ><strong>No of Polling Booth<br>(Required)</strong></th>
+                <th width="15%" ><strong>110% Reserved</strong></th>
+                <th width="15%" ><strong>115% Reserved</strong></th>
+                <th width="15%"><strong>120% Reserved</strong></th>
+                <th width="15%"><strong>125% Reserved</strong></th>
                 </tr>
+
 
                 </thead>
                 <tbody>
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingtxt}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
-                  <td class="nopad">{{ report.id }}</td>
-                  <td class="nopad">{{ report.name }}</td>
-                  <td class="nopad">{{ report.male_party_count }}</td>
-                  <td class="nopad">{{ report.female_party_count }}</td>
-
+                  <td class="nopad">({{ report.id }}) {{ report.name }}</td>
+                  <td class="nopad">{{ report.total }}</td>
+                  <td class="nopad">{{ calculatepercentage(report.total,'10')}}<br></td>
+                  <td class="nopad">{{ calculatepercentage(report.total,'15')}}<br></td>
+                  <td class="nopad">{{ calculatepercentage(report.total,'20')}}<br></td>
+                  <td class="nopad">{{ calculatepercentage(report.total,'25')}}<br></td>
                   </tr>
+                  <tr>
+                    <td colspan="2" class="nopad">Total</td>
+
+                    <td class="nopad">{{this.dist_total_req}}</td>
+                    <td class="nopad">{{this.dist_total_req_10}}</td>
+                    <td class="nopad">{{this.dist_total_req_15}}</td>
+                    <td class="nopad">{{this.dist_total_req_20}}</td>
+                    <td class="nopad">{{this.dist_total_req_25}}</td>
+                  </tr>
+
                 </tbody>
               </table>
             </v-layout>
@@ -66,7 +80,7 @@
 
 <script>
 export default {
-  name: 'MisReportAssembly',
+  name: 'AssemblywiseReserved',
   props: {
 
   },
@@ -81,7 +95,12 @@ export default {
       tableloading:false,
       disable_save:false,
       loadingtxt:'Loading...',
-      dist_old:''
+      dist_old:'',
+      dist_total_req:0,
+      dist_total_req_10:0,
+      dist_total_req_15:0,
+      dist_total_req_20:0,
+      dist_total_req_25:0,
     }
   },
 
@@ -110,7 +129,9 @@ export default {
 
                   response.data['available'].forEach(item => { //console.log(item)
                       item['sl']=this.count
+                      item['total']=parseInt(item.male_party_count)+parseInt(item.female_party_count)
                       this.reports.push(item)
+                      this.dist_total_req += parseInt(item['total'])
                       this.count++
                     });
                     this.district=response.data['district']
@@ -123,6 +144,19 @@ export default {
               })
        }
 
+     },
+     calculatepercentage(val,percent){
+       val=parseInt(val*4)
+       var p=percent/100
+       var v=parseInt((val*p))+parseInt(val)
+
+         if(percent === '10'){this.dist_total_req_10+=parseInt(v)}
+         else if(percent === '15'){this.dist_total_req_15+=parseInt(v)}
+         else if(percent=== '20'){this.dist_total_req_20+=parseInt(v)}
+         else if(percent=== '25'){this.dist_total_req_25+=parseInt(v)}
+         else{}
+
+       return Math.round(parseInt(v))
      }
 
   },

@@ -5,13 +5,12 @@
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>All Offices</v-toolbar-title>
+      <v-toolbar-title>Office List(Personnel not enlisted)</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
         vertical
       ></v-divider>
-      <v-btn color="primary" :to="'/officestatus'">Office Status</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -31,15 +30,11 @@
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.id }}</td>
-        <td >{{ props.item.name }}</td>
+        <td >{{ props.item.name }}({{ props.item.identification_code }})</td>
         <td >{{ props.item.address }}</td>
         <td >{{ props.item.mobile }}</td>
-        <td >{{ props.item.pin }}</td>
-        <td class="justify-center layout px-0">
-          <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
-        </td>
-        <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
+        <td >{{props.item.post_office}}</td>
+        <td>{{ props.item.pin }}</td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
         Your search for "{{ search }}" found no results.
@@ -54,6 +49,7 @@
 
 <script>
   export default {
+    name:'OfficeStaus',
     data: () => ({
       dialog: false,
       search: '',
@@ -63,9 +59,8 @@
         { text: 'Office Name', align: 'left', sortable: false, value: 'name'},
         { text: 'Address', value: 'adress',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Pin', value: 'pin',align: 'left', },
-        { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at', sortable: false }
+        { text: 'Post Office', value: 'post_office', sortable: false },
+        { text: 'Pin', value: 'pin',align: 'left', }
       ],
       offices: [],
 
@@ -87,7 +82,7 @@
     methods: {
       initialize () {
         this.tableloading=true
-        axios.get('/offices')
+        axios.get('/officeentrystatus')
         .then((response, data) => {
           if(response.data.length === 0){this.tableloading=false}
          else{

@@ -326,4 +326,22 @@ export default [
         '@/components/PoststatusbulkUpdate'
       )
     },
+    {
+      path: `/officestatus`,
+      meta: {title:'Office Status | Welcome to PPMS'},
+      name: 'OfficeSttatus',
+      component: () => import(
+
+        '@/components/OfficeStatus'
+      )
+    },
+    {
+      path: `/assemblywisereserved`,
+      meta: {title:'Office Status | Welcome to PPMS'},
+      name: 'AssemblywiseReserved',
+      component: () => import(
+
+        '@/components/AssemblyReserved'
+      )
+    },
   ];
