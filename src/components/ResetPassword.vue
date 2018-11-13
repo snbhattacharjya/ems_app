@@ -13,15 +13,15 @@
           item-value= "id"
           prepend-icon="list"
           label="Select Subdivision"
-          
+
           >
           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" @click="getOfficelist" >Show</v-btn></v-slide-x-reverse-transition>
 
         </v-select>
       </v-flex>
-      
+
       <v-flex xs1>
-        
+
       </v-flex>
       </v-layout>
       </v-flex>
@@ -35,10 +35,10 @@
           <v-data-table :headers="headers" :items="offices" :search="search" class="elevation-1" :loading="tableloading">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.id }}</td>
-              <td >{{ props.item.name }}</td>
+              <td >{{ props.item.name }} ({{ props.item.identification_code }})</td>
               <td >{{ props.item.mobile }}</td>
               <td class="justify-center layout px-0">
-                <v-btn flat @click="resetpass(props.item.id)"><v-icon small class="mr-2">restore</v-icon>Reset Password</v-btn>    
+                <v-btn flat @click="resetpass(props.item.id)"><v-icon small class="mr-2">restore</v-icon>Reset Password</v-btn>
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -69,7 +69,7 @@
             Close
           </v-btn>
 
-          
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -94,7 +94,7 @@
       isdisabled:true,
       disable_save: false,
       headers: [
-        
+
         { text: 'Office ID', value: 'id',align: 'left', },
         { text: 'Office Name',align: 'left',sortable: false,value: 'name'},
         { text: 'Mobile', value: 'mobile',align: 'left', },
@@ -103,10 +103,10 @@
       offices: [],
       searchInput: '',
       newpassword:'',
-      
+
     }),
     components: {
-       
+
     },
     $_veeValidate: {
       validator: 'new'
@@ -142,7 +142,7 @@
             console.log(error)
           })
       },
-      
+
       showError(){
         this.show_message = true
         this.message_type = 'error'
@@ -150,7 +150,7 @@
         this.message_text = 'Error Occurred!!!'
         this.snackbar =true
       },
-      
+
       getOfficelist(){
         //console.log('SUB - '+this.subdivision_id)
         axios.get('/offices/'+this.subdivision_id)
@@ -158,7 +158,7 @@
             this.isdisabled=false
             this.offices=[]
           response.data.forEach(item => {
-              
+
               this.offices.push(item)
             });
 
@@ -179,7 +179,7 @@
             console.log(error)
           })
       },
-      
+
 
 
     }

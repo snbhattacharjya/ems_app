@@ -146,17 +146,19 @@ export default {
 
      },
      calculatepercentage(val,percent){
+       var v=0
        val=parseInt(val*4)
        var p=percent/100
-       var v=parseInt((val*p))+parseInt(val)
+       v=parseFloat((val*p))+parseInt(val)
 
-         if(percent === '10'){this.dist_total_req_10+=parseInt(v)}
-         else if(percent === '15'){this.dist_total_req_15+=parseInt(v)}
-         else if(percent=== '20'){this.dist_total_req_20+=parseInt(v)}
-         else if(percent=== '25'){this.dist_total_req_25+=parseInt(v)}
+         if(percent == '10'){ this.dist_total_req_10+=Math.round(v,0)}
+         else if(percent == '15'){this.dist_total_req_15+=Math.round(v,0)}
+         else if(percent== '20'){this.dist_total_req_20+=Math.round(v,0)}
+         else if(percent== '25'){this.dist_total_req_25+=Math.round(v,0)}
          else{}
 
-       return Math.round(parseInt(v))
+       return Math.round(v,0)
+
      }
 
   },

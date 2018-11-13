@@ -251,7 +251,16 @@ export default [
       name: 'UserEdit',
       component: () => import(
 
-        '@/components/PersonnelEdit'
+        '@/components/UserEdit'
+      )
+    },
+    {
+      path: `/profile`,
+      meta: {title:'Profile | Welcome to PPMS'},
+      name: 'Profile',
+      component: () => import(
+
+        '@/components/UserEdit'
       )
     },
     {
@@ -336,12 +345,21 @@ export default [
       )
     },
     {
-      path: `/assemblywisereserved`,
+      path: `/assembly_wise_reserved`,
       meta: {title:'Office Status | Welcome to PPMS'},
       name: 'AssemblywiseReserved',
       component: () => import(
 
         '@/components/AssemblyReserved'
+      )
+    },
+    {
+      path: `/assembly_groupby_subdivision`,
+      meta: {title:'Subdivision wise Assembly Report | Welcome to PPMS'},
+      name: 'AssemblybySubdivision',
+      component: () => import(
+
+        '@/components/AssemblybySubdivision'
       )
     },
   ];

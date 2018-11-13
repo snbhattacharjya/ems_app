@@ -92,12 +92,12 @@
                        </v-layout>
                        <v-layout row wrap>
                         <v-flex xs5>
-                          <v-flex xs12 mb-5>
+                          <v-flex xs12 mb-0>
                           <v-subheader class="pl-0"><v-icon>payment</v-icon> Select Basic Pay range</v-subheader>
                           </v-flex>
                           <v-layout row wrap>
 
-                            <v-flex xs2 shrink>
+                            <v-flex xs5>
                               <v-text-field
                               v-model="basic_pay[0]"
                               class="mt-0"
@@ -106,8 +106,8 @@
                               type="number"
                               ></v-text-field>
                             </v-flex>
-                            <v-flex xs8>
-                                <v-range-slider
+                            <v-flex xs2>
+                                <!-- <v-range-slider
                                   v-model="basic_pay"
                                   :max="50000"
                                   :min="0"
@@ -118,9 +118,10 @@
                                   v-validate="'required'"
                                   :error-messages="errors.collect('basic_pay')"
                                   data-vv-name="basic_pay"
-                                ></v-range-slider>
+                                ></v-range-slider> -->
+                                TO
                             </v-flex>
-                            <v-flex xs2 shrink>
+                            <v-flex xs5>
                               <v-text-field
                               v-model="basic_pay[1]"
                               class="mt-0"
@@ -140,11 +141,11 @@
                           ></v-divider>
                           </v-flex>
                         <v-flex v-show="visible_grade" xs5>
-                          <v-flex xs12 mb-5>
+                          <v-flex xs12 mb-0>
                           <v-subheader class="pl-0"><v-icon>payment</v-icon> Select Garde Pay range</v-subheader>
                           </v-flex>
                           <v-layout>
-                            <v-flex xs2 shrink>
+                            <v-flex xs5 >
                               <v-text-field
                               v-model="grade_pay[0]"
                               class="mt-0"
@@ -153,8 +154,8 @@
                               type="number"
                               ></v-text-field>
                             </v-flex>
-                            <v-flex xs8>
-                              <v-range-slider
+                            <v-flex xs2>
+                              <!-- <v-range-slider
                                 v-model="grade_pay"
                                 :max="6000"
                                 :min="1500"
@@ -162,9 +163,10 @@
                                 :thumb-size="50"
                                 thumb-label="always"
                                 :disabled="payment_show"
-                              ></v-range-slider>
+                              ></v-range-slider> -->
+                              TO
                             </v-flex>
-                            <v-flex xs2 shrink>
+                            <v-flex xs5 >
                               <v-text-field
                               v-model="grade_pay[1]"
                               class="mt-0"

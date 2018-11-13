@@ -59,7 +59,7 @@
                   prepend-icon="input"
                   name="captcha"
                   label="Input Captcha"
-                  type="password"
+                  type="text"
                   v-model="captcha"
                   v-validate="'required'"
                   data-vv-name="captcha"

@@ -60,7 +60,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         show:null,
         datetime:'',
         items: [
-          {title: 'Profile', path: '/#'},
+          {title: 'Profile', path: '/profile'},
           {title: 'Settings', path: '/#'}
         ]
 

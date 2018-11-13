@@ -2,9 +2,7 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section id="report">
-        <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
-        </v-layout>
+
         <v-layout row wrap >
           <v-flex xs12 class="my-5" id="exclude">
             <v-layout row wrap >
@@ -22,10 +20,7 @@
               <v-flex xs3>
                 <v-btn color="primary" @click="show" :disabled="disable_save">Show</v-btn>
 
-
               </v-flex>
-              <v-btn color="primary" :to="'/assembly_wise_reserved'">Reserve Report</v-btn>
-              <v-btn color="primary" :to="'/assembly_groupby_subdivision'">Subdivision wise Assembly Report</v-btn>
             </v-layout>
           </v-flex>
           <v-flex xs12 >
@@ -35,10 +30,10 @@
                 <thead>
                 <tr>
                 <th width="10%" ><strong>Serial No</strong></th>
-                <th width="10%"><strong>Assembly ID</strong></th>
-                <th width="40%" ><strong>Assembly Name</strong></th>
-                <th width="20%" ><strong>No of Polling Booth(Male)</strong></th>
-                <th width="20%"><strong>No of Polling Booth(Female)</strong></th>
+                <th width="20%"><strong>Assembly Details</strong></th>
+                <th width="10%" ><strong>No of Polling<br> Booth(Male)</strong></th>
+                <th width="10%"><strong>No of Polling<br> Booth(Female)</strong></th>
+                <!-- <th width="40%" id="exclude" ><strong>Update Requirement</strong></th> -->
                 </tr>
 
                 </thead>
@@ -46,13 +41,11 @@
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingtxt}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
-                  <td class="nopad">{{ report.id }}</td>
-                  <td class="nopad">{{ report.name }}</td>
-                 <td v-if="getUser.level == 12" class="text--center">
+                  <td class="nopad">({{ report.id }}) {{ report.name }}</td>
+                  <td class="nopad">
                     <v-edit-dialog
                       :return-value.sync="report.male_party_count"
                       lazy
-                      large
                       @save="updaterequirement(report.id,report.male_party_count,report.female_party_count)"
                       @cancel="cancel"
                       @open="open"
@@ -69,12 +62,10 @@
                     </v-edit-dialog>
 
                     </td>
-                    <td v-else class="nopad">{{ report.male_party_count }}</td>
-                  <td v-if="getUser.level == 12" class="text--center">
+                  <td class="nopad">
                     <v-edit-dialog
                       :return-value.sync="report.female_party_count"
                       lazy
-                      large
                       @save="updaterequirement(report.id,report.male_party_count,report.female_party_count)"
                       @cancel="cancel"
                       @open="open"
@@ -90,13 +81,21 @@
                       ></v-text-field>
                     </v-edit-dialog>
                    </td>
-                   <td v-else class="nopad">{{ report.female_party_count }}</td>
+                  <!-- <td class="nopad" id="exclude">
+                    <v-layout row wrap>
+                      <v-flex xs1></v-flex>
+                      <v-flex xs3><v-text-field label="Male" prepend-icon=""  v-model="report.male_party_count" ></v-text-field></v-flex>
+                      <v-flex xs1></v-flex>
+                      <v-flex xs3><v-text-field label="Female" prepend-icon="" v-model="report.female_party_count" ></v-text-field></v-flex>
+                      <v-flex xs4><v-btn color="primary" @click="updaterequirement(report.id,report.male_party_count,report.female_party_count)" :disabled="disable_save">Update</v-btn></v-flex>
+                    </v-layout>
+                  </td> -->
                   </tr>
                 </tbody>
               </table>
             </v-layout>
           </v-flex>
-           <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+          <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
         </v-layout>
       </section>
@@ -111,7 +110,7 @@
 
 <script>
 export default {
-  name: 'MisReportAssembly',
+  name: 'AssemblywiserequirementUpdate',
   props: {
 
   },
@@ -182,11 +181,6 @@ export default {
         district_id: this.district_id
         })
       .then((response, data) => {
-        this.show_message = false
-          this.message_type = ''
-          this.message_icon = ''
-          this.message_text = ''
-          this.snackbar =false
        this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
@@ -194,45 +188,16 @@ export default {
           this.snackbar =true
       })
       .catch(error => {
-        this.show_message = false
-          this.message_type = ''
-          this.message_icon = ''
-          this.message_text = ''
-          this.snackbar =false
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
       })
-     },
-     cancel () {
-          // this.show_message = false
-          // this.message_type = ''
-          // this.message_icon = ''
-          // this.message_text = ''
-          // this.snackbar =false
-          // this.show_message = true
-          // this.message_type = 'error'
-          // this.message_icon = 'warning'
-          // this.message_text = 'Operation Canceled'
-          // this.snackbar =true
-      },
-      open () {
-        this.show_message = false
-          this.message_type = ''
-          this.message_icon = ''
-          this.message_text = ''
-          this.snackbar =false
-      },
-
+     }
 
   },
-  computed: {
-      getUser:function(){
-        return this.$store.getters.getUser
-      }
-    },
+
   created(){
 
     axios.get('/getdistrict')
