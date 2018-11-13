@@ -118,7 +118,7 @@ export default {
           this.count=1
           this.loadingtxt='Loading...'
             axios.get('/assemblyreport/'+this.district_id)
-              .then((response, data) => { console.log(response.data['available'].length)
+              .then((response, data) => {
                 if(response.data['available'].length === 0){
 
                   this.loadingtxt='No data found'
@@ -132,8 +132,13 @@ export default {
                       item['total']=parseInt(item.male_party_count)+parseInt(item.female_party_count)
                       this.reports.push(item)
                       this.dist_total_req += parseInt(item['total'])
+
                       this.count++
-                    });
+                    })
+                      this.dist_total_req_10 =Math.round(this.dist_total_req*1.1,0)
+                      this.dist_total_req_15 =Math.round(this.dist_total_req*1.15,0)
+                      this.dist_total_req_20 =Math.round(this.dist_total_req*1.2,0)
+                      this.dist_total_req_25 =Math.round(this.dist_total_req*1.25,0)
                     this.district=response.data['district']
                     this.tableloading=false
                     this.disable_save=false
@@ -150,13 +155,6 @@ export default {
        val=parseInt(val*4)
        var p=percent/100
        v=parseFloat((val*p))+parseInt(val)
-
-         if(percent == '10'){ this.dist_total_req_10+=Math.round(v,0)}
-         else if(percent == '15'){this.dist_total_req_15+=Math.round(v,0)}
-         else if(percent== '20'){this.dist_total_req_20+=Math.round(v,0)}
-         else if(percent== '25'){this.dist_total_req_25+=Math.round(v,0)}
-         else{}
-
        return Math.round(v,0)
 
      }

@@ -33,6 +33,14 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
+                  <tr>
+                    <td class="nopad">Total</td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad">{{reports['subdivisionWiseAssemblyReport']['total']}}</td>
+                    <td class="nopad">{{Math.round((reports['subdivisionWiseAssemblyReport']['total']*0.2),0)}}</td>
+                    <td class="nopad">{{Math.round((reports['subdivisionWiseAssemblyReport']['total']*1.2),0)}}</td>
+                  </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -64,6 +72,14 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
+                  <tr>
+                    <td class="nopad">Total</td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                  </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -94,6 +110,14 @@
                   <td class="nopad">{{ report.male_party_count }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
+                  </tr>
+                  <tr>
+                    <td class="nopad">Total</td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
+                    <td class="nopad"></td>
                   </tr>
                 </tbody>
               </table>
@@ -133,6 +157,7 @@ export default {
       message_type: "",
       message_icon: "",
       message_text: "",
+      total:0
     }
   },
 
@@ -152,7 +177,30 @@ export default {
 
                 }
                 else{
+
                   this.reports= response.data
+
+                  response.data['subdivisionWiseAssemblyReport'].forEach(item => { //console.log(item)
+                     this.total += parseInt(item.male_party_count)
+                      this.reports['subdivisionWiseAssemblyReport']['total']=this.total
+                  })
+                  // response.data['subdivisionwise'].forEach(item, index => { console.log(response.data['subdivisionwise'][index])
+                  //   //  this.total += parseInt(item.male_party_count)
+                  //   //   this.reports['subdivisionWiseAssemblyReport']['total']=this.total
+                  // })
+                  Object.keys(response.data['subdivisionwise']).forEach(function(key) {
+
+                    console.log('Key -'+key, 'Item -'+response.data['subdivisionwise'][key])
+                    response.data['subdivisionwise'][key].forEach(item => {
+                      console.log(item)
+                    //this.total=0
+                    //this.total += parseInt(item.male_party_count)
+
+                    })
+                    console.log('Key after -'+key)
+                    //this.reports['subdivisionwise'][key]['total']=this.total
+                  })
+                  //console.log(this.reports['subdivisionwise'])
                   this.tableloading=false
                   this.disable_save=false
                 }
@@ -184,4 +232,3 @@ table th tr, .application .theme--light.v-table tbody tr:not(:last-child), .them
 .application .theme--light.v-table thead th, .theme--light .v-table thead th{ color: rgba(0,0,0,1); padding: 0 10px !important;    border-bottom: 1px solid;}
 table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child){ padding: 0 24px;}
 </style>
-
