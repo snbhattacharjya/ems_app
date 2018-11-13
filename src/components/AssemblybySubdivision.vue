@@ -33,14 +33,6 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
-                  <tr>
-                    <td class="nopad">Total</td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                  </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -72,14 +64,6 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
-                  <tr>
-                    <td class="nopad">Total</td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                  </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -110,14 +94,6 @@
                   <td class="nopad">{{ report.male_party_count }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
-                  </tr>
-                  <tr>
-                    <td class="nopad">Total</td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
-                    <td class="nopad"></td>
                   </tr>
                 </tbody>
               </table>
