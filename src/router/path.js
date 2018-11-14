@@ -362,4 +362,22 @@ export default [
         '@/components/AssemblybySubdivision'
       )
     },
+    {
+      path: `/pollingpersonnel_progress_report`,
+      meta: {title:'Polling Personnel Progress Report | Welcome to PPMS'},
+      name: 'ProgessReport',
+      component: () => import(
+
+        '@/components/ProgressReport'
+      )
+    },
+    {
+      path: `/office_partials`,
+      meta: {title:'Office list partially updated | Welcome to PPMS'},
+      name: 'OfficePartial',
+      component: () => import(
+
+        '@/components/OfficePartial'
+      )
+    },
   ];

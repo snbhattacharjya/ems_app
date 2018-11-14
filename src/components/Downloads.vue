@@ -12,9 +12,8 @@
             <v-toolbar-title>Downloads</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <!-- <a target="_blank" href="/static/docs/pdf/PP1 FORMAT AS PER ASSEMBLY ELECTION 2016.pdf" tag="span" style="cursor: pointer">PP1 Format</a><br>
-            <a target="_blank" href="/static/docs/pdf/PP2-FORMAT-AS PER ELECTION 2016 ASSEMBLY.pdf" tag="span" style="cursor: pointer">PP2 Format</a><br> -->
-            <a :href="url" tag="span" style="cursor: pointer">Export Office user details</a><br>
+            <a target="_blank" href="/static/docs/pdf/PP1 FORMAT AS PER ASSEMBLY ELECTION 2016.pdf" tag="span" style="cursor: pointer">PP1 Format</a><br>
+            <a target="_blank" href="/static/docs/pdf/PP2-FORMAT-AS PER ELECTION 2016 ASSEMBLY.pdf" tag="span" style="cursor: pointer">PP2 Format</a><br>
           </v-card-text>
           <v-card-actions>
 
@@ -37,23 +36,6 @@
 
 export default {
   name: 'Downloads',
-  data () {
-    return {
-
-      url: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken
-    }
-  },
-  beforeUpdate() { console.log('Token '+this.$store.getters.getAccessToken)
-   this.url+=this.$store.getters.getAccessToken
-  },
-  computed: {
-    getToken:function(){
-          return this.$store.getters.getAccessToken
-       },
-  },
-  methods:{
-
-  }
 
 }
 

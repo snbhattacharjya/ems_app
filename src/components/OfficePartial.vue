@@ -5,14 +5,12 @@
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>All Offices</v-toolbar-title>
+      <v-toolbar-title>Office List(Partial updated)</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
         vertical
       ></v-divider>
-      <v-btn color="primary" :to="'/officestatus'">Office Status</v-btn>
-      <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -31,16 +29,13 @@
       :loading="tableloading"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.id }}</td>
-        <td >{{ props.item.name }}</td>
-        <td >{{ props.item.address }}</td>
+        <td>{{ props.item.officeId }}</td>
+        <td >{{ props.item.officeName }}</td>
         <td >{{ props.item.mobile }}</td>
-        <td >{{ props.item.pin }}</td>
-        <td class="justify-center layout px-0">
-          <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
-        </td>
-        <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
+        <td >{{ props.item.totalStuff }}</td>
+        <td >{{ props.item.personelenty }}</td>
+        <td >{{Math.round((parseInt(props.item.personelenty)/parseInt(props.item.totalStuff))*100,0)}}%</td>
+
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
         Your search for "{{ search }}" found no results.
@@ -55,18 +50,19 @@
 
 <script>
   export default {
+    name:'OfficePartial',
     data: () => ({
       dialog: false,
       search: '',
       tableloading:false,
       headers: [
-        { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Office Name', align: 'left', sortable: false, value: 'name'},
-        { text: 'Address', value: 'adress',align: 'left', },
+        { text: 'ID', value: 'officeId',align: 'left', },
+        { text: 'Office Name', align: 'left',  value: 'officeName'},
         { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Pin', value: 'pin',align: 'left', },
-        { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at', sortable: false }
+        { text: 'Total Staff', value: 'totalStuff',align: 'left', },
+        { text: 'Personnel Entared', value: 'personelenty',align: 'left', },
+        { text: 'Progress', value: '', sortable: false },
+
       ],
       offices: [],
 
@@ -88,11 +84,11 @@
     methods: {
       initialize () {
         this.tableloading=true
-        axios.get('/offices')
+        axios.get('/officepartialentrystatus')
         .then((response, data) => {
           if(response.data.length === 0){this.tableloading=false}
          else{
-            response.data.forEach(item => {
+            response.data['officelist'].forEach(item => {
                 this.offices.push(item)
               })
               this.tableloading=false
