@@ -44,6 +44,7 @@ export default {
     axios.get('/offices')
       .then((response, data) => {
        response.data.forEach(item => {
+         item['name']= item['id']+'-'+item['name']
           this.offices.push(item)
         });
       })

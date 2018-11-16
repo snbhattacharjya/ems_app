@@ -13,7 +13,9 @@
           item-value= "id"
           prepend-icon="list"
           label="Select Subdivision"
-
+          v-validate="'required'"
+          :error-messages="errors.collect('subdivision_id')"
+          data-vv-name="subdivision_id"
           @change="getOfficelist"
           >
         </v-select>
@@ -26,6 +28,9 @@
         item-value= "id"
         prepend-icon="list"
         label="Select Office"
+        v-validate="'required'"
+        :error-messages="errors.collect('office_id')"
+        data-vv-name="office_id"
         :disabled="isdisabled"
         autocomplete
         :search-input.sync="searchInput"
@@ -37,7 +42,7 @@
       </v-flex>
       </v-layout>
       </v-flex>
-      <v-flex xs12>
+      <v-flex v-if="this.subdivision_id != '' && this.office_id != ''" xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>All Personnel</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>

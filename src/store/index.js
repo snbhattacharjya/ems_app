@@ -4,6 +4,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  data: () => ({
+
+  }),
   modules: {
 
   },
@@ -54,6 +57,7 @@ export default new Vuex.Store({
         context.commit('storePrevillegeDetails',response.data.previllege)
         context.commit('storeDashboard',response.data.dashboard)
         context.commit('storeElection',response.data.election)
+        sessionStorage.setItem('is_authenticated', true)
         //console.log(response.data)
       })
       .catch(error => {
@@ -80,7 +84,8 @@ export default new Vuex.Store({
     },
     storePP2report(context,pp2data){
       context.commit('storePP2report', pp2data)
-    }
+    },
+
 
   },
   mutations: {

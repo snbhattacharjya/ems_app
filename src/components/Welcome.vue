@@ -1,7 +1,7 @@
 <template>
   <v-content>
       <section id="home">
-        <v-parallax src="http://russiancouncil.ru/common/upload/indel0.jpg" height="600">
+        <v-parallax src="/static/voter2.jpg" height="600">
           <v-layout
             column
             align-center
@@ -59,7 +59,7 @@
       </section>
 
       <section>
-        <v-parallax src="http://russiancouncil.ru/common/upload/indel0.jpg" height="380">
+        <v-parallax src="/static/voter2.jpg" height="380">
           <v-layout column align-center justify-center>
             <div class="headline white--text mb-3 text-xs-center">Memorandum of Understanding</div>
             <em>Election Visitors' Programme</em>

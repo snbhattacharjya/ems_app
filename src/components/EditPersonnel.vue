@@ -585,6 +585,9 @@ import AssemblyList from '@/components/AssemblyList'
           this.message_icon = 'check_circle'
           this.message_text = 'Personnel Updated Successfully with code - '+response.data
           this.snackbar =true
+          setTimeout(() => {
+                  this.$router.replace("/personnel/list")
+                },2000)
         })
         .catch(error => {
           this.show_message = true

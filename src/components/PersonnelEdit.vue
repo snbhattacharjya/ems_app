@@ -792,12 +792,15 @@ import RemarkList from '@/components/RemarkList'
           bank_account_no: this.bank_account_no,
         })
         .then(response => {
-          //this.$refs.form.reset()
+
           this.show_message = true
           this.message_type = 'success'
           this.message_icon = 'check_circle'
           this.message_text = 'Personnel Updated Successfully with code - '+response.data
           this.snackbar =true
+          setTimeout(() => {
+                  this.$router.replace("/personnel/list")
+                },2000)
         })
         .catch(error => {
           this.show_message = true
@@ -806,6 +809,7 @@ import RemarkList from '@/components/RemarkList'
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
+
       }
     }
 

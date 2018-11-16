@@ -18,7 +18,7 @@
                 ></office-list>
               </template>
 
-              <v-stepper v-model="personnel_form" vertical>
+              <v-stepper v-if="this.office_id != '' || this.getuser.level == 10" v-model="personnel_form" vertical >
                 <v-stepper-step :complete="personnel_form > 1" step="1" editable>
                   Personal Details
                   <small class="red--text">(*) Fields are mandatory</small>
@@ -159,7 +159,7 @@
                     data-vv-name="basic_pay"
                   ></v-text-field>
 
-                  <v-text-field v-if="this.getuser.officelevel != '01'"
+                  <v-text-field v-show="this.show_grade"
                     prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay(*)"
@@ -170,7 +170,7 @@
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
-                  <v-select v-if="this.getuser.officelevel === '01'"
+                  <v-select v-show="this.show_level"
                     :items="pay_levels"
                     prepend-icon="list"
                     label="Pay Level(*)"
@@ -431,7 +431,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
+            <v-btn v-if="this.office_id != ''" color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line=multiline :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -467,6 +467,9 @@ import RemarkList from '@/components/RemarkList'
         snackbar: false,
         office_id: '',
         officer_name: '',
+        officelevel:'',
+        show_grade:true,
+        show_level:true,
         designation: '',
         aadhaar: '',
         dob: '',
@@ -667,11 +670,26 @@ import RemarkList from '@/components/RemarkList'
 
       }
     },
+    beforeUpdate(){
+
+    },
    created(){
-      console.log('User data in PP2 '+this.getuser.name)
+    //  console.log('User data in PP2 '+this.getuser.officelevel)
+    //   console.log('GD '+this.show_grade)
+    //   console.log('PL'+this.show_level)
+      if(this.getuser.officelevel == '01'){
+        this.show_grade=false
+        this.show_level=true
+      }
+      else if(this.getuser.officelevel != '01'){
+        this.show_grade=true
+        this.show_level=false
+      }
+
    },
     mounted() {
     this.$validator.localize("en", this.dictionary)
+
   },
    computed: {
       getuser(){
@@ -686,8 +704,35 @@ import RemarkList from '@/components/RemarkList'
         if(val === '01'){this.emp_groups=['C','D']}
         else{this.emp_groups=['A','B','C','D']}
       },
+      office_id:function(val){
+        this.getlevel(val)
+      }
     },
     methods: {
+
+      getlevel(val){
+        if(val != ''){
+          axios.get('/officetype/'+val,{
+
+          })
+          .then((response, data) => {
+            if(response.data !='')
+           {
+              this.officelevel=response.data['officeType'][0]
+              if(this.officelevel == '01'){
+               this.show_grade=false
+               this.show_level=true
+               }
+               else{
+               this.show_grade=true
+               this.show_level=false
+               }
+           }
+
+          })
+        }
+
+      },
       changetype:function(){
         if(this.bank_account_no != '' && this.type_text === 'text'){this.type_text = 'password'}
         else if(this.bank_account_no != '' && this.type_text === 'password'){this.type_text = 'text'}
@@ -763,6 +808,37 @@ import RemarkList from '@/components/RemarkList'
         .then(response => {
 
             this.$store.dispatch('storeAccessToken', this.getAccessToken)
+            this.officer_name=null,
+            this.designation=null,
+            this.aadhaar=null,
+            this.dob=null,
+            this.gender=null,
+            this.qualification_id=null,
+            this.language_id=null,
+            this.remark_id=null,
+            this.scale=null,
+            this.basic_pay=null,
+            this.grade_pay=null,
+            this.pay_level=null,
+            this.emp_group=null,
+            this.working_status=null,
+            this.gender=null,
+            this.present_address=null,
+            this.permanent_address=null,
+            this.email=null,
+            this.phone=null,
+            this.mobile=null,
+            this.block_muni_temp_id=null,
+            this.block_muni_perm_id=null,
+            this.block_muni_off_id=null,
+            this.epic=null,
+            this.part_no=null,
+            this.sl_no=null,
+            this.assembly_temp_id=null,
+            this.assembly_perm_id=null,
+            this.assembly_off_id=null,
+            this.branch_ifsc=null,
+            this.bank_account_no=null,
             this.show_message = true
             this.message_type = 'success'
             this.message_icon = 'check_circle'

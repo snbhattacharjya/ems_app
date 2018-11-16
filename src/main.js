@@ -20,6 +20,7 @@ Vue.use(VueScrollTo)
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://service.ems.test/api'
 window.axios = axios
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

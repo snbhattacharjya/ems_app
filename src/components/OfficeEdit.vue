@@ -234,6 +234,8 @@
                 label="Total Staff"
                 type="text"
                 v-model.number="total_staff"
+                v-validate="'required|numeric|min_value:1'"
+                :error-messages="errors.collect('total_staff')"
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
@@ -375,6 +377,9 @@ export default {
           female_staff: {
             required: "Please provide total number of female staff"
           },
+          total_staff:{
+              min_value: "Total Staff must be greater than 0"
+            },
           agree: {
             required: "You must give the declartion on the above information"
           }

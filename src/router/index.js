@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import paths from './path'
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import store from '../store'
 
 Vue.use(Router)
 const router =  new Router({
@@ -13,13 +13,22 @@ const router =  new Router({
   routes: paths
 })
 router.beforeEach((to, from, next) => {
+
   NProgress.start();
+  console.log('return - '+sessionStorage.getItem('is_authenticated'))
   document.title = to.meta.title
   next()
 })
 router.afterEach((to, from) => {
-  //console.log( this.$store.getters.getUser)
+
   NProgress.done();
 });
+
+function redirectIfNotAuth (to, from, next) {
+  if(!to.meta.public && sessionStorage.getItem('is_authenticated') == null){
+    return '/signin'
+  }
+}
+
 
 export default router

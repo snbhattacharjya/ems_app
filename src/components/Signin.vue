@@ -13,7 +13,7 @@
                   name="login"
                   label="Username"
                   type="text"
-                  autofocus=true
+                  :autofocus=true
                   v-model="username"
                   v-validate="'required'"
                   data-vv-name="username"
@@ -36,18 +36,9 @@
                 <v-layout row wrap class="my-2">
                 <v-flex xs6>
                   <v-layout row wrap>
-                    <v-flex xs10>
-                  <v-text-field
-                  id="captcha_real"
-                  class="captcha"
-                  prepend-icon="donut_small"
-                  name="captcha_real"
-                  label="Captcha"
-                  type="text"
-                  v-model="captcha_real"
-                  :disabled="true"
-                >
-                </v-text-field></v-flex>
+                    <v-flex xs10 >
+                      <canvas class="captcha" id="captcha_canvas" ref="captcha_canvas"  width="150" height="40" style="border:1px solid #000000;"/>
+                </v-flex>
                 <v-flex xs2 class="mt-4">
                                   <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-icon style="cursor:pointer" @click="reload_captcha">autorenew</v-icon></v-slide-x-reverse-transition>
                 </v-flex>
@@ -117,6 +108,7 @@
         }
       }
     },
+
    components: {
 
     },
@@ -124,13 +116,13 @@
       validator: 'new'
     },
     created(){
-      this.captcha_real=this.random()
+      //this.random()
     },
     mounted() {
     this.$validator.localize("en", this.dictionary)
+    this.random()
   },
     methods: {
-
       login(){
         if(this.captcha_pass === true ){
           this.$validator.validate()
@@ -189,14 +181,24 @@
 
       },
       random(l=5) {
+        var canvas = this.$refs.captcha_canvas
+        var ctx = canvas.getContext('2d')
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.font = "25px Arial"
+        ctx.strokeStyle = 'rgb(0,0,0)';
         var text = ""
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-        for (var i = 0; i <= l; i++)
-          text += possible.charAt(Math.floor(Math.random() * possible.length))
-        return text
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"
+        for (var i = 0; i <= l; i++){
+          text+= possible.charAt(Math.floor(Math.random() * possible.length))
+          //ctx.transform(2,-0.1,-0.5,1,0,0)
+         }
+        this.captcha_real=text
+        ctx.fillText(text, 22, 22)
+
+
       },
       reload_captcha(){
-        this.captcha_real=this.random()
+        this.random()
       }
 
     },
@@ -227,6 +229,7 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    margin:10px 0 0 10px;
 }
 </style>
 

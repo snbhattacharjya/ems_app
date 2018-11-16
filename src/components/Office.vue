@@ -242,6 +242,8 @@
                 label="Total Staff"
                 type="text"
                 v-model.number="total_staff"
+                v-validate="'required|numeric|min_value:1'"
+                :error-messages="errors.collect('total_staff')"
                 data-vv-name="total_staff"
                 readonly
               ></v-text-field>
@@ -372,6 +374,9 @@
             female_staff: {
               required: "Please provide total number of female staff"
             },
+            total_staff:{
+              min_value: "Total Staff must be greater than 0"
+            },
             agree: {
               required: 'You must give the declartion on the above information'
             }
@@ -427,17 +432,17 @@
         .then(response => {
         this.office_name= ''
         this.identification_code= ''
-        this.subdivision_id= ''
-        this.block_muni_id= ''
+        this.subdivision_id= null
+        this.block_muni_id= null
         this.office_address= ''
         this.officer_designation= ''
         this.post_office= ''
         this.pin= ''
-        this.police_station_id= ''
-        this.ac_id= ''
-        this.pc_id= ''
-        this.category_id= ''
-        this.institute_id= ''
+        this.police_station_id= null
+        this.ac_id= null
+        this.pc_id= null
+        this.category_id= null
+        this.institute_id= null
         this.email= ''
         this.phone= ''
         this.mobile= ''
