@@ -57,7 +57,7 @@ export default new Vuex.Store({
         context.commit('storePrevillegeDetails',response.data.previllege)
         context.commit('storeDashboard',response.data.dashboard)
         context.commit('storeElection',response.data.election)
-        sessionStorage.setItem('is_authenticated', true)
+        window.sessionStorage.setItem('is_authenticated', true)
         //console.log(response.data)
       })
       .catch(error => {
@@ -71,6 +71,7 @@ export default new Vuex.Store({
       })
       .then(response => {
         context.commit('destroyToken')
+        window.sessionStorage.removeItem('is_authenticated')
       })
       .catch(error => {
 

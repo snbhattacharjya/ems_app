@@ -15,7 +15,10 @@ const router =  new Router({
 router.beforeEach((to, from, next) => {
 
   NProgress.start();
-  console.log('return - '+sessionStorage.getItem('is_authenticated'))
+  console.log('seesion - '+window.sessionStorage.getItem('is_authenticated'))
+  if(!to.meta.public && window.sessionStorage.getItem('is_authenticated') == null){
+    next('/signin')
+  }
   document.title = to.meta.title
   next()
 })
@@ -25,7 +28,7 @@ router.afterEach((to, from) => {
 });
 
 function redirectIfNotAuth (to, from, next) {
-  if(!to.meta.public && sessionStorage.getItem('is_authenticated') == null){
+  if(!to.meta.public && window.sessionStorage.getItem('is_authenticated') == null){
     return '/signin'
   }
 }
