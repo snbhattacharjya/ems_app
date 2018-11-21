@@ -336,12 +336,21 @@ export default [
       )
     },
     {
-      path: `/officestatus`,
-      meta: {title:'Office Status | Welcome to PPMS'},
+      path: `/office_status_zero`,
+      meta: {title:'Office Status(0% updated) | Welcome to PPMS'},
       name: 'OfficeSttatus',
       component: () => import(
 
         '@/components/OfficeStatus'
+      )
+    },
+    {
+      path: `/office_status_complete`,
+      meta: {title:'Office Status(100% updated) | Welcome to PPMS'},
+      name: 'OfficesttatusComplete',
+      component: () => import(
+
+        '@/components/OfficestatusComplete'
       )
     },
     {

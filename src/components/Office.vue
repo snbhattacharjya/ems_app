@@ -3,16 +3,17 @@
     <v-layout align-center justify-center>
       <v-flex xs12>
 
-        <v-card class="elevation-6">
+        <v-card class="elevation-6 mb-5">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Create New Office</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
+            <small class="red--text">(*) Fields are mandatory</small>
             <v-form autocomplete="off">
               <v-text-field
                 prepend-icon="person"
                 name="office_name"
-                label="Office Name"
+                label="Office Name(*)"
                 type="text"
                 v-model="office_name"
                 counter
@@ -20,13 +21,13 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
-                 @input="uppercase"
+                @input="uppercase"
               ></v-text-field>
 
               <v-text-field
                 prepend-icon="credit_card"
                 name="identification_code"
-                label="Identification Code eg. DDO Code/IFSC/DISE Code alike"
+                label="Identification Code eg. DDO Code/IFSC/DISE Code alike(*)"
                 type="text"
                 v-model="identification_code"
                 counter
@@ -39,7 +40,7 @@
               <v-text-field
                 prepend-icon="account_box"
                 name="officer_designation"
-                label="Designation of Head of Office"
+                label="Designation of Head of Office(*)"
                 type="text"
                 v-model="officer_designation"
                 counter
@@ -52,7 +53,7 @@
               <v-text-field
                 prepend-icon="account_balance"
                 name="office_address"
-                label="Office Address"
+                label="Office Address(*)"
                 type="text"
                 v-model="office_address"
                 counter
@@ -65,7 +66,7 @@
               <v-text-field
                 prepend-icon="local_post_office"
                 name="post_office"
-                label="Post Office"
+                label="Post Office(*)"
                 type="text"
                 v-model="post_office"
                 counter
@@ -79,12 +80,12 @@
               <v-text-field
                 prepend-icon="fiber_pin"
                 name="pin"
-                label="Pincode"
+                label="Pincode(*)"
                 type="text"
                 v-model="pin"
                 counter
                 maxlength="6"
-                v-validate="'required|digits:6'"
+                v-validate="'required|digits:6|not_zero'"
                 :error-messages="errors.collect('pin')"
                 data-vv-name="pin"
               ></v-text-field>
@@ -101,8 +102,10 @@
                 item-text= "name"
                 item-value= "id"
                 prepend-icon="list"
-                label="Select Sub Division"
-
+                label="Select Sub Division(*)"
+                v-validate="'required'"
+                data-vv-name="subdivision_id"
+                :error="errors.collect('subdivision_id')"
                 @change="getpolicestation(subdivision_id)"
                 >
               </v-select>
@@ -126,9 +129,11 @@
                 item-text= "name"
                 item-value= "id"
                 prepend-icon="list"
-                label="Select Police Station"
+                label="Select Police Station(*)"
                 :disabled="makedisable"
-
+                v-validate="'required'"
+                data-vv-name="police_station_id"
+                :error="errors.collect('police_station_id')"
                 >
               </v-select>
 
@@ -163,7 +168,7 @@
               <v-text-field
                 prepend-icon="email"
                 name="email"
-                label="Email"
+                label="Email(*)"
                 type="text"
                 v-model="email"
                 counter
@@ -180,8 +185,8 @@
                 type="text"
                 v-model="phone"
                 counter
-                maxlength="10"
-                v-validate="'numeric|digits:10'"
+                maxlength="15"
+                v-validate="'numeric|not_zero'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -189,12 +194,12 @@
               <v-text-field
                 prepend-icon="phone_android"
                 name="mobile"
-                label="Mobile of Head of Office"
+                label="Mobile of Head of Office(*)"
                 type="text"
                 v-model="mobile"
                 counter
                 maxlength="10"
-                v-validate="'required|digits:10'"
+                v-validate="'required|digits:10|not_zero'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
@@ -207,7 +212,7 @@
                 v-model="fax"
                 counter
                 maxlength="10"
-                v-validate="'numeric'"
+                v-validate="'numeric|not_zero'"
                 :error-messages="errors.collect('fax')"
                 data-vv-name="fax"
               ></v-text-field>
@@ -215,10 +220,11 @@
               <v-text-field
                 prepend-icon="account_circle"
                 name="male_staff"
-                label="Male Staff (in count)"
+                label="Male Staff (in count)(*)"
                 type="text"
+                maxlength="5"
                 v-model.number="male_staff"
-                v-validate="'required|numeric'"
+                v-validate="'required|numeric|not_zero'"
                 :error-messages="errors.collect('male_staff')"
                 data-vv-name="male_staff"
                 @input="calculateTotalStaff"
@@ -227,10 +233,11 @@
               <v-text-field
                 prepend-icon="face"
                 name="female_staff"
-                label="Female Staff (in count)"
+                label="Female Staff (in count)(*)"
                 type="text"
+                maxlength="5"
                 v-model.number="female_staff"
-                v-validate="'required|numeric'"
+                v-validate="'required|numeric|not_zero'"
                 :error-messages="errors.collect('female_staff')"
                 data-vv-name="female_staff"
                 @input="calculateTotalStaff"
@@ -258,6 +265,7 @@
             <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
+            <v-btn color="info" :to="'/office/list'">Back</v-btn>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>
@@ -298,14 +306,14 @@
         office_name: '',
         identification_code: '',
         subdivisions:[],
-        subdivision_id: null,
+        subdivision_id: '',
         block_muni_id: '',
         office_address: '',
         officer_designation: '',
         post_office: '',
         pin: '',
         policestations:[],
-        police_station_id: null,
+        police_station_id: '',
         ac_id: '',
         pc_id: '',
         category_id: '',
@@ -331,6 +339,7 @@
           custom: {
             office_name: {
               required: 'Office Name can not be empty',
+
             },
             identification_code: {
               required: 'Identification Code is required'
@@ -387,6 +396,14 @@
     },
     mounted () {
       this.$validator.localize('en', this.dictionary)
+      this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       })
+
     },
     methods: {
       validateOffice(){
@@ -457,7 +474,7 @@
           this.message_icon = 'check_circle'
           this.message_text = 'Office Added Successfully with Office code - '+response.data
           this.snackbar =true
-          //this.$validator.reset()
+          this.$validator.reset()
         })
         .catch(error => {
           this.show_message = true
@@ -494,11 +511,11 @@
         this.total_staff = this.male_staff + this.female_staff
       },
       uppercase:function(){
-        this.office_name=this.office_name.toUpperCase()
-        this.identification_code= this.identification_code.toUpperCase()
-        this.officer_designation=this.officer_designation.toUpperCase()
-        this.office_address=this.office_address.toUpperCase()
-        this.post_office=this.post_office.toUpperCase()
+        this.office_name=this.office_name.toUpperCase().trim()
+        this.identification_code= this.identification_code.toUpperCase().trim()
+        this.officer_designation=this.officer_designation.toUpperCase().trim()
+        this.office_address=this.office_address.toUpperCase().trim()
+        this.post_office=this.post_office.toUpperCase().trim()
       }
     },
     created(){

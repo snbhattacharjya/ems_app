@@ -5,7 +5,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      :label="label ? label : 'Assembly Constituency'"
+      :label="label ? label : 'Assembly Constituency(*)'"
       :error-messages="error"
       autocomplete
       :search-input.sync="searchInput"
@@ -51,7 +51,7 @@ export default {
     axios.get(url)
       .then((response, data) => {
        response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
+         item.name=item.id+'-'+item.name.toUpperCase()
           this.assemblies.push(item)
 
         })

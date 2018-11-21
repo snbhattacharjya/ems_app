@@ -86,9 +86,10 @@
                   <tr>
                     <td colspan="2">
                       <v-layout row wrap class="mb-2">
+                        <v-flex class="xs5 mt-5"><strong>Date : </strong><br><br><strong>Place : </strong></v-flex>
                         <v-flex class="xs7 mt-5"><h3 class="mt-5">----------------------------------------------------------<br>
                         Signature with Office Seal of Officer-in-Charge<br>({{reports[0].name}})</h3></v-flex>
-                        <v-flex class="xs5 mt-5"><strong>Date : </strong><br><br><strong>Place : </strong></v-flex>
+
                       </v-layout>
                     </td>
                   </tr>

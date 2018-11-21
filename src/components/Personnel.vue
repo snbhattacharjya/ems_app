@@ -18,7 +18,7 @@
                 ></office-list>
               </template>
 
-              <v-stepper v-if="this.office_id != '' || this.getuser.level == 10" v-model="personnel_form" vertical >
+              <v-stepper v-model="personnel_form" vertical>
                 <v-stepper-step :complete="personnel_form > 1" step="1" editable>
                   Personal Details
                   <small class="red--text">(*) Fields are mandatory</small>
@@ -36,6 +36,7 @@
                   v-validate="'required'"
                   :error-messages="errors.collect('officer_name')"
                   data-vv-name="officer_name"
+                  @input="uppercase"
                 ></v-text-field>
 
                 <v-text-field
@@ -49,6 +50,7 @@
                   v-validate="'required'"
                   :error-messages="errors.collect('designation')"
                   data-vv-name="designation"
+                  @input="uppercase"
                 ></v-text-field>
 
                 <!-- <v-text-field
@@ -118,6 +120,7 @@
                   v-validate="'required'"
                   data-vv-name="language_id"
                   :error="errors.collect('language_id')"
+                  :selected="language_id"
                 ></language-list>
 
                 <remark-list
@@ -125,7 +128,7 @@
                   v-validate="'required'"
                   data-vv-name="remark_id"
                   :error="errors.collect('remark_id')"
-                  :selected="this.remark_id"
+                  :selected="remark_id"
                 ></remark-list>
 
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
@@ -143,6 +146,7 @@
                     label="Pay Scale(*)"
                     type="text"
                     v-model="scale"
+                    maxlength=50
                     v-validate="'required'"
                     :error-messages="errors.collect('scale')"
                     data-vv-name="scale"
@@ -154,6 +158,7 @@
                     label="Basic Pay(*)"
                     type="text"
                     v-model="basic_pay"
+                     maxlength=9
                     v-validate="'required'"
                     :error-messages="errors.collect('basic_pay')"
                     data-vv-name="basic_pay"
@@ -223,6 +228,7 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('present_address')"
                     data-vv-name="present_address"
+                    @input="uppercase"
                   ></v-textarea>
 
                   <v-textarea
@@ -236,6 +242,7 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('permanent_address')"
                     data-vv-name="permanent_address"
+                    @input="uppercase"
                   ></v-textarea>
 
                   <v-text-field
@@ -406,6 +413,7 @@
                     data-vv-name="bank_account_no"
                     @blur="changetype"
                     @focus="changetype"
+                    :suffix="acc_hint"
                   ></v-text-field>
 
                   <v-text-field
@@ -431,7 +439,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn v-if="this.office_id != ''" color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line=multiline :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -467,18 +475,18 @@ import RemarkList from '@/components/RemarkList'
         snackbar: false,
         office_id: '',
         officer_name: '',
-        officelevel:'',
-        show_grade:true,
-        show_level:true,
         designation: '',
+        show_grade:false,
+        show_level:false,
         aadhaar: '',
         dob: '',
         dob_menu: '',
         gender: '',
         qualification_id: '',
-        language_id: '',
-        remark_id: '',
+        language_id: 1,
+        remark_id: '99',
         ifsc_hint:'',
+        acc_hint:'',
         scale: '',
         basic_pay: 0,
         grade_pay: '',
@@ -670,26 +678,11 @@ import RemarkList from '@/components/RemarkList'
 
       }
     },
-    beforeUpdate(){
-
-    },
    created(){
-    //  console.log('User data in PP2 '+this.getuser.officelevel)
-    //   console.log('GD '+this.show_grade)
-    //   console.log('PL'+this.show_level)
-      if(this.getuser.officelevel == '01'){
-        this.show_grade=false
-        this.show_level=true
-      }
-      else if(this.getuser.officelevel != '01'){
-        this.show_grade=true
-        this.show_level=false
-      }
 
    },
     mounted() {
     this.$validator.localize("en", this.dictionary)
-
   },
    computed: {
       getuser(){
@@ -697,6 +690,13 @@ import RemarkList from '@/components/RemarkList'
        },
       getAccessToken:function(){
       return this.$store.getters.getAccessToken
+      },
+      uppercase:function(){
+        this.officer_name=this.officer_name.toUpperCase().trim()
+        this.designation= this.designation.toUpperCase().trim()
+        this.present_address=this.present_address.toUpperCase().trim()
+        this.permanent_address=this.permanent_address.toUpperCase().trim()
+
       }
     },
     watch:{
@@ -709,8 +709,7 @@ import RemarkList from '@/components/RemarkList'
       }
     },
     methods: {
-
-      getlevel(val){
+       getlevel(val){
         if(val != ''){
           axios.get('/officetype/'+val,{
 
@@ -722,10 +721,12 @@ import RemarkList from '@/components/RemarkList'
               if(this.officelevel == '01'){
                this.show_grade=false
                this.show_level=true
+               this.grade_pay=0
                }
                else{
                this.show_grade=true
                this.show_level=false
+               this.pay_level=0
                }
            }
 
@@ -736,6 +737,7 @@ import RemarkList from '@/components/RemarkList'
       changetype:function(){
         if(this.bank_account_no != '' && this.type_text === 'text'){this.type_text = 'password'}
         else if(this.bank_account_no != '' && this.type_text === 'password'){this.type_text = 'text'}
+        this.checkaccount()
       },
       ifsc:function(){
         if(this.branch_ifsc != ''){ this.ifsc_hint=''
@@ -753,6 +755,26 @@ import RemarkList from '@/components/RemarkList'
           })
         }
         else{this.ifsc_hint='' }
+      },
+      checkaccount:function(){
+        if(this.bank_account_no != ''){
+          this.disable_save=true
+          this.acc_hint=''
+          axios.get('/accountcheck/'+this.bank_account_no,{
+
+          })
+          .then((response, data) => {
+            if(response.data['msg']=='Account Exists'){
+              this.acc_hint='Bank Account Exists'
+              this.disable_save=true
+              }
+            else if(response.data.msg=='Not Found'){
+              this.acc_hint=''
+              this.disable_save=false
+            }
+
+          })
+        }
       },
       validatePersonnel(){
         this.disable_save = true
@@ -808,42 +830,42 @@ import RemarkList from '@/components/RemarkList'
         .then(response => {
 
             this.$store.dispatch('storeAccessToken', this.getAccessToken)
-            this.officer_name=null,
-            this.designation=null,
-            this.aadhaar=null,
-            this.dob=null,
-            this.gender=null,
-            this.qualification_id=null,
-            this.language_id=null,
-            this.remark_id=null,
-            this.scale=null,
-            this.basic_pay=null,
-            this.grade_pay=null,
-            this.pay_level=null,
-            this.emp_group=null,
-            this.working_status=null,
-            this.gender=null,
-            this.present_address=null,
-            this.permanent_address=null,
-            this.email=null,
-            this.phone=null,
-            this.mobile=null,
-            this.block_muni_temp_id=null,
-            this.block_muni_perm_id=null,
-            this.block_muni_off_id=null,
-            this.epic=null,
-            this.part_no=null,
-            this.sl_no=null,
-            this.assembly_temp_id=null,
-            this.assembly_perm_id=null,
-            this.assembly_off_id=null,
-            this.branch_ifsc=null,
-            this.bank_account_no=null,
             this.show_message = true
             this.message_type = 'success'
             this.message_icon = 'check_circle'
             this.multiline =false
             this.message_text = 'Personnel Added Successfully with code - '+response.data
+            this.officer_name=''
+            this.designation=''
+            this.aadhaar=''
+            this.dob=''
+            this.gender=''
+            this.qualification_id=''
+            this.language_id=''
+            this.remark_id=''
+            this.scale=''
+            this.basic_pay=''
+            this.grade_pay=''
+            this.pay_level=''
+            this.emp_group=''
+            this.working_status=''
+            this.gender=''
+            this.present_address=''
+            this.permanent_address=''
+            this.email=''
+            this.phone=''
+            this.mobile=''
+            this.block_muni_temp_id=''
+            this.block_muni_perm_id=''
+            this.block_muni_off_id=''
+            this.epic=''
+            this.part_no=''
+            this.sl_no=''
+            this.assembly_temp_id=''
+            this.assembly_perm_id=''
+            this.assembly_off_id=''
+            this.branch_ifsc=''
+            this.bank_account_no=''
             this.$validator.reset()
             this.snackbar =true
         })

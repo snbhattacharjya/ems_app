@@ -2,7 +2,7 @@
 <v-container fluid>
     <v-layout align-center justify-center>
       <v-flex xs12>
-        <v-card class="elevation-12">
+        <v-card class="elevation-12 mb-5">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Edit Personnel</v-toolbar-title>
           </v-toolbar>
@@ -410,6 +410,8 @@
                     v-validate="'required|numeric'"
                     :error-messages="errors.collect('bank_account_no')"
                     data-vv-name="bank_account_no"
+
+                    :suffix="acc_hint"
                   ></v-text-field>
 
                   <v-text-field
@@ -480,6 +482,7 @@ import RemarkList from '@/components/RemarkList'
         gender: '',
         qualification_id: '',
         ifsc_hint:'',
+        acc_hint:'',
         language_id: '',
         remark_id: '',
         remark_reason:'',
@@ -676,6 +679,11 @@ import RemarkList from '@/components/RemarkList'
     mounted() {
     this.$validator.localize("en", this.dictionary)
   },
+  watch:{
+    bank_account_no:function(val){
+        this.checkaccount()
+    }
+  },
     methods: {
       ifsc:function(){
         if(this.branch_ifsc != ''){ this.ifsc_hint=''
@@ -693,6 +701,26 @@ import RemarkList from '@/components/RemarkList'
           })
         }
         else{this.ifsc_hint='' }
+      },
+      checkaccount:function(){
+        if(this.bank_account_no != ''){
+          this.disable_save=true
+          this.acc_hint=''
+          axios.get('/accountcheck/'+this.bank_account_no,{
+
+          })
+          .then((response, data) => {
+            if(response.data['msg']=='Account Exists'){
+              this.acc_hint='Bank Account Exists'
+              this.disable_save=true
+              }
+            else if(response.data.msg=='Not Found'){
+              this.acc_hint=''
+              this.disable_save=false
+            }
+
+          })
+        }
       },
       initialize () {
 

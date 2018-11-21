@@ -101,9 +101,13 @@
                               <v-text-field
                               v-model="basic_pay[0]"
                               class="mt-0"
-                              hide-details
                               single-line
-                              type="number"
+                              type="text"
+                              counter
+                              maxlength="6"
+                              v-validate="'required'"
+                              :error-messages="errors.collect('basic_pay[0]')"
+                              data-vv-name="basic_pay[0]"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2>
@@ -125,9 +129,14 @@
                               <v-text-field
                               v-model="basic_pay[1]"
                               class="mt-0"
-                              hide-details
+
                               single-line
-                              type="number"
+                              type="text"
+                              counter
+                              maxlength="6"
+                              v-validate="'required'"
+                              :error-messages="errors.collect('basic_pay[1]')"
+                              data-vv-name="basic_pay[1]"
                               ></v-text-field>
                             </v-flex>
 
@@ -149,9 +158,14 @@
                               <v-text-field
                               v-model="grade_pay[0]"
                               class="mt-0"
-                              hide-details
+
                               single-line
-                              type="number"
+                              type="text"
+                              counter
+                              maxlength="6"
+                              v-validate="'required'"
+                              :error-messages="errors.collect('grade_pay[0]')"
+                              data-vv-name="grade_pay[0]"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs2>
@@ -170,9 +184,14 @@
                               <v-text-field
                               v-model="grade_pay[1]"
                               class="mt-0"
-                              hide-details
+
                               single-line
-                              type="number"
+                              type="text"
+                              counter
+                              maxlength="6"
+                              v-validate="'required'"
+                              :error-messages="errors.collect('grade_pay[1]')"
+                              data-vv-name="grade_pay[1]"
                               ></v-text-field>
                             </v-flex>
                           </v-layout>
@@ -316,13 +335,13 @@ export default {
       loading: false,
       subdivision_id:'ALL',
       category_id:'',
-      disable_offcat: false,
+      disable_offcat: true,
       office_id:'',
-      disable_off:false,
+      disable_off:true,
       qualification_id:'',
-      disble_qual:false,
+      disble_qual:true,
       designation:'',
-      disable_desig:false,
+      disable_desig:true,
       gender:'',
       age:'',
       disable_agegrp:false,
@@ -389,7 +408,8 @@ export default {
             },
             poststat_to:{
               required: 'Please select Post Status which will be applied upon selected users'
-            }
+            },
+
           }
         }
 
@@ -412,6 +432,14 @@ export default {
   },
   computed: {
 
+  },
+  watch:{
+    poststat_from:function(val){
+      if(val != '' && this.poststat_to !=''){ this.disable_offcat=false}
+    },
+    poststat_to:function(val){
+      if(val != '' && this.poststat_from !=''){ this.disable_offcat=false}
+    }
   },
   methods:{
     resetrule:function(){
@@ -465,6 +493,7 @@ export default {
       if(response.data['office'].length >=1 ) {
         this.offices.push({officename:"ALL",officecode:"ALL"})
         this.disable_offcat=true
+        this.disable_off=false
       }
        response.data['office'].forEach(item => {
          console.log('Off - '+item)
@@ -503,6 +532,7 @@ export default {
        response.data['qualification'].forEach(item => {
          item.QualificationName=item.QualificationName.toUpperCase()
           this.qualifications.push(item)
+          this.disble_qual=false
         });
 
       })
@@ -545,6 +575,7 @@ export default {
        response.data['designation'].forEach(item => {
          item.Designation=item.Designation.toUpperCase()
           this.designations.push(item)
+          this.disable_desig=false
         });
 
       })

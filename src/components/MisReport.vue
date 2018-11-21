@@ -6,7 +6,7 @@
          <v-flex xs11><h1 class="headline" >MIS Report As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
-          <v-flex xs12 class="my-5">
+          <v-flex xs12 class="my-2">
             <h1 class="headline">Districtwise Male</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
@@ -31,7 +31,7 @@
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.district_id">
                   <td class="nopad">{{ report.district_id }}</td>
-                  <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}">{{ report.name }}</router-link></td>
+                  <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.male_party }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
                   <td class="nopad" :class="report.P1_M_class">{{ report.P1_M }}</td>
@@ -40,12 +40,12 @@
                   <td class="nopad">{{ report.MO_M }}</td>
                   <td >{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
                   </tr>
-                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td class="nopad"><strong>Total</strong></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
                 </tbody>
               </table>
             </v-layout>
           </v-flex>
-          <v-flex xs12>
+          <v-flex xs12 mb-5>
             <h1 class="headline">Districtwise Female </h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" id=""  border=1>
@@ -71,7 +71,7 @@
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.district_id">
                   <td class="nopad">{{ report.district_id }}</td>
-                  <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}">{{ report.name }}</router-link></td>
+                  <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.female_party }}</td>
 
                   <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
@@ -81,7 +81,7 @@
                   <td class="nopad" >{{ report.MO_F }}</td>
                   <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F) }}</td>
                   </tr>
-                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td></td><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td class="nopad"><strong>Total</strong><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
 
                 </tbody>
               </table>
@@ -175,7 +175,7 @@ export default {
             else{
               this.loadingTXT='No data found'
             }
-            
+
 
           })
           .catch(error => {

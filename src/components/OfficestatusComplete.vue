@@ -6,7 +6,7 @@
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>Office List(Partial updated)</v-toolbar-title>
+      <v-toolbar-title>Office List(100% updated)</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
@@ -51,7 +51,7 @@
 
 <script>
   export default {
-    name:'OfficePartial',
+    name:'OfficestatusComplete',
     data: () => ({
       dialog: false,
       search: '',
@@ -85,7 +85,7 @@
     methods: {
       initialize () {
         this.tableloading=true
-        axios.get('/officepartialentrystatus')
+        axios.get('/officecompletestatus')
         .then((response, data) => {
           if(response.data.length === 0){this.tableloading=false}
          else{

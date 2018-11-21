@@ -42,7 +42,7 @@
       </v-flex>
       </v-layout>
       </v-flex>
-      <v-flex v-if="this.subdivision_id != '' && this.office_id != ''" xs12>
+      <v-flex  xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>All Personnel</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>

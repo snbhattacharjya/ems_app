@@ -2,6 +2,7 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section>
+        <v-btn color="info" :to="'/office/list'">Back</v-btn>
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">

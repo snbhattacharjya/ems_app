@@ -5,7 +5,7 @@
       item-text= "name"
       item-value= "id"
       prepend-icon="list"
-      :label="label ? label : 'Block or Municipality'"
+      :label="label ? label : 'Block or Municipality(*)'"
       :error-messages="error"
       autocomplete
       :search-input.sync="searchInput"
@@ -49,7 +49,7 @@ export default {
     axios.get('/blockmunis')
       .then((response, data) => {
        response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
+         item.name=item.id+'-'+item.name.toUpperCase()
           this.block_munis.push(item)
 
         })

@@ -3,7 +3,7 @@
     <v-layout align-center justify-center>
       <v-flex xs12>
 
-        <v-card class="elevation-6">
+        <v-card class="elevation-6 mb-5">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Edit your Office</v-toolbar-title>
           </v-toolbar>
@@ -236,6 +236,7 @@
           </v-snackbar>
             <!-- <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.getofficeid.user_id"><v-icon dark>print</v-icon></v-btn></label> -->
             <v-spacer></v-spacer>
+            <v-btn color="info" :to="'/dashboard'">Cancel</v-btn>
             <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>

@@ -2,6 +2,11 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section>
+        <v-layout row wrap v-if="this.getuser.level == 12 ||this.getuser.level == 3" >
+        <v-btn color="primary" :to="'/office_status_zero'">Office Status(0% updated)</v-btn>
+        <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
+        <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated)</v-btn>
+        </v-layout>
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
@@ -11,8 +16,7 @@
         inset
         vertical
       ></v-divider>
-      <v-btn color="primary" :to="'/officestatus'">Office Status</v-btn>
-      <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
+
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -74,7 +78,9 @@
     }),
 
     computed: {
-
+      getuser(){
+          return this.$store.getters.getUser
+       },
     },
 
     watch: {

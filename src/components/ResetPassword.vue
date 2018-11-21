@@ -152,7 +152,7 @@
       },
 
       getOfficelist(){
-        //console.log('SUB - '+this.subdivision_id)
+        if(this.subdivision_id !=''){
         axios.get('/offices/'+this.subdivision_id)
           .then((response, data) => {
             this.isdisabled=false
@@ -166,6 +166,10 @@
           .catch(error => {
             console.log(error)
           })
+        }
+        else{
+          alert('Please select subdivision first !')
+        }
       },
       resetpass(val){
           this.disable_save=true

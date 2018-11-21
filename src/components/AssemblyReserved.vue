@@ -103,6 +103,11 @@ export default {
       dist_total_req_25:0,
     }
   },
+   computed: {
+       getUser:function(){
+          return this.$store.getters.getUser
+       },
+    },
 
   methods:{
      show:function(){
@@ -167,7 +172,12 @@ export default {
       .then((response, data) => { //console.log(response.data['available'])
        response.data.forEach(item => { //console.log(item)
           this.districts.push(item)
-        });
+        })
+         if(this.getUser.level != 2){
+          this.dist_old=99
+          this.district_id=this.getUser.area
+          this.show()
+          }
 
       })
       .catch(error => {

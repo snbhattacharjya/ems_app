@@ -240,12 +240,18 @@ export default {
       .then((response, data) => { //console.log(response.data['available'])
        response.data.forEach(item => { //console.log(item)
           this.districts.push(item)
-        });
+        })
 
+          if(this.getUser.level != 2){
+          this.dist_old=99
+          this.district_id=this.getUser.area
+          this.show()
+          }
       })
       .catch(error => {
         console.log(error)
       })
+
   }
 }
 </script>

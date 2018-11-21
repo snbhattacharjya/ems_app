@@ -43,7 +43,7 @@
                       label="Email"
                       type="text"
                       v-model="email"
-                      v-validate="'email'"
+                      v-validate="'email|required'"
                       :error-messages="errors.collect('email')"
                       data-vv-name="email"
                     ></v-text-field>
@@ -115,17 +115,18 @@
         dictionary: {
 
           custom: {
-            office_name: {
-              required: 'Office Name can not be empty',
+            name: {
+              required: 'Name can not be empty',
             },
-            identification_code: {
-              required: 'Identification Code is required'
+            designation: {
+              required: 'Designation is required'
             },
-            subdivision_id: {
-              required: 'Subdivision is required'
+            email: {
+              required: 'Email is required',
+              email:'Email is not valid'
             },
-            block_muni_id: {
-              required: 'Block/Municipality is required'
+            mobile: {
+              required: 'Mobile Number is required'
             }
           }
         }
