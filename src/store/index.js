@@ -11,7 +11,7 @@ export default new Vuex.Store({
 
   },
   state: {
-    token: '',
+    token: [],
     user: [],
     menus :[],
     previllege:[],
@@ -49,7 +49,7 @@ export default new Vuex.Store({
   actions: {
     storeAccessToken(context, token){
       context.commit('storeAccessToken', token)
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token.access_token
       axios.get('/user')
       .then(response => {
         context.commit('storeUserDetails',response.data.user)
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       })
     },
     destroyToken(context, state){
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token.access_token
       axios.get('/logout',{
 
       })

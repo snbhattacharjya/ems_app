@@ -16,6 +16,8 @@
                       name="name"
                       label="Name of the User"
                       type="text"
+                      counter
+                      maxlength=40
                       v-model="name"
                       v-validate="'required'"
                       :error-messages="errors.collect('name')"
@@ -28,6 +30,8 @@
                       name="designation"
                       label="Designation of User"
                       type="text"
+                      counter
+                      maxlength=40
                       v-model="designation"
                       v-validate="'required'"
                       :error-messages="errors.collect('designation')"
@@ -42,6 +46,8 @@
                       name="email"
                       label="Email"
                       type="text"
+                      counter
+                      maxlength=30
                       v-model="email"
                       v-validate="'email|required'"
                       :error-messages="errors.collect('email')"
@@ -54,6 +60,8 @@
                       name="mobile"
                       label="Mobile of User"
                       type="text"
+                      counter
+                      maxlength=10
                       v-model="mobile"
                       v-validate="'required|digits:10'"
                       :error-messages="errors.collect('mobile')"

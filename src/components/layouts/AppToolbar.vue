@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard">
     <v-toolbar :clipped-left="true" color="primary" app dark>
-      <v-toolbar-side-icon  id="menu" @click.stop="toogle()" ></v-toolbar-side-icon>
+      <v-toolbar-side-icon  id="menu"></v-toolbar-side-icon>
       <v-toolbar-title>
         <v-avatar color="primary"><img src="/static/Election_Commission_of_India_Logo.png" alt="avatar"></v-avatar>
         <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">PPMS</router-link>
@@ -13,7 +13,8 @@
         {{getElection[0].name}} - {{getElection[0].year}}
       </v-toolbar-title>
       <v-toolbar-title class="ml-5 mr-5">
-        {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}}
+        <!-- {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}} -->
+        <h5>{{this.date}} {{this.time}}</h5>
       </v-toolbar-title>
         Code: {{getUser.user_id}} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
@@ -58,7 +59,8 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         username: '',
         drawer:null,
         show:null,
-        datetime:'',
+        date:'',
+        time:'',
         items: [
           {title: 'Profile', path: '/profile'},
 
@@ -77,7 +79,9 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         }
     },
     created(){
-
+      setInterval(() => {
+          this.timer()
+        },1000)
     },
     components: {
       AppDrawer,
@@ -87,9 +91,22 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         this.$store.dispatch('destroyToken')
         this.$router.replace("/")
       },
-      toogle(){ alert(this.show)
+      toogle(){
         if(this.show === false){this.show= true}
         else if(this.show === true){this.show = false}
+      },
+      timer(){
+      var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+       var cd = new Date()
+       this.date = this.zeroPadding(cd.getDate(), 2) + '-' +this.zeroPadding(cd.getMonth()+1, 2)  + '-' +this.zeroPadding(cd.getFullYear(), 4) + ' ' +  week[cd.getDay()]
+       this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2) + ':' + this.zeroPadding(cd.getSeconds(), 2)
+      },
+      zeroPadding(num, digit) {
+          var zero = ''
+          for(var i = 0; i < digit; i++) {
+              zero += '0'
+          }
+          return (zero + num).slice(-digit)
       }
     },
     computed: {

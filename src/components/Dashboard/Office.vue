@@ -14,16 +14,16 @@
               </v-layout>
               <v-layout row wrap fill-height>
                   <v-flex  xs12 sm6 md3 >
-                    <v-card color="green" class="white--text" fill-height elevation-6>
+                    <v-card color="green" class="white--text" fill-height elevation-6 height="150">
                       <v-card-title v-if="getUser.level === 10" primary-title>
 
-                        <h3 class="pb-4">Total EMP as per office : {{getdashboard.officeStuff}}</h3>
+                        <h3 class="pb-5">Total EMP as per office : {{getdashboard.officeStuff}}</h3>
 
                         <h3 class="">Total EMP Registered : {{getdashboard.totalemployee}}</h3>
                       </v-card-title>
                       <v-card-title v-else  primary-title>
 
-                        <h3 class="pb-4">Total Office : {{getdashboard.totalOffice}}</h3>
+                        <h3 class="pb-5">Total Office : {{getdashboard.totalOffice}}</h3>
 
                         <h3 class="">Office Registered : {{getdashboard.distinct_office}}</h3>
                       </v-card-title>
@@ -32,11 +32,11 @@
                   </v-flex>
 
                   <v-flex xs12 sm6 md3 >
-                    <v-card color="cyan darken-2" class="white--text" fill-height elevation-6>
+                    <v-card color="cyan darken-2" class="white--text" fill-height elevation-6 height="150">
                       <v-card-title primary-title>
                         <i class="material-icons">perm_identity</i>
                         <h3 >Total Male Registerd</h3>
-                      </v-card-title>
+                      </v-card-title><br><br>
                       <v-divider></v-divider>
 
                       <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalMale==null ? 0 : getdashboard.totalMale}}</h1></v-card-actions>
@@ -44,11 +44,11 @@
                   </v-flex>
 
                   <v-flex xs12 sm6 md3 >
-                    <v-card color="blue" class="white--text" fill-height elevation-6>
+                    <v-card color="blue" class="white--text" fill-height elevation-6 height="150">
                       <v-card-title primary-title>
                         <i class="material-icons">face</i>
                         <h3>Total Female Registerd</h3>
-                      </v-card-title>
+                      </v-card-title><br><br>
                       <v-divider></v-divider>
 
                       <v-card-actions><v-spacer></v-spacer><h1>{{getdashboard.totalfemale==null ? 0 : getdashboard.totalfemale}}</h1></v-card-actions>
@@ -56,7 +56,7 @@
                   </v-flex>
 
                   <v-flex xs12 sm6 md3 >
-                    <v-card color="blue-grey" class="white--text" fill-height elevation-6>
+                    <v-card color="blue-grey" class="white--text" fill-height elevation-6 height="150">
                       <v-card-title primary-title>
                         <i class="material-icons">people_outline</i>
                         <h3>Total Employee Registerd</h3>

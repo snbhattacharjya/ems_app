@@ -12,7 +12,7 @@
             <v-toolbar-title>Exports</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <a :href="url" tag="span" style="cursor: pointer">Export Office user details</a><br>
+            <a :href="url" tag="span" target="_blank" style="cursor: pointer">Export Office user details</a><br>
           </v-card-text>
           <v-card-actions>
 
@@ -38,10 +38,10 @@ export default {
   data () {
     return {
 
-      url: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken
+      url: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token
     }
   },
-  beforeUpdate() { console.log('Token '+this.$store.getters.getAccessToken)
+  beforeUpdate() {
    this.url+=this.$store.getters.getAccessToken
   },
   computed: {

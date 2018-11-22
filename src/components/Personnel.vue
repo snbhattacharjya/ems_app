@@ -2,7 +2,7 @@
 <v-container fluid>
     <v-layout align-center justify-center>
       <v-flex xs12>
-        <v-card class="elevation-12">
+        <v-card class="elevation-12 mb-5">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Create New Personnel</v-toolbar-title>
           </v-toolbar>
@@ -533,8 +533,8 @@ import RemarkList from '@/components/RemarkList'
           }
         ],
         emp_group: '',
-        working_status: '',
-        gender: '',
+        working_status: 'Y',
+        gender: 'M',
         present_address: '',
         permanent_address: '',
         email: '',
@@ -680,6 +680,9 @@ import RemarkList from '@/components/RemarkList'
     },
    created(){
 
+      if(this.getuser.level== 10){
+        this.getlevel(this.getuser.user_id)
+      }
    },
     mounted() {
     this.$validator.localize("en", this.dictionary)
@@ -839,16 +842,16 @@ import RemarkList from '@/components/RemarkList'
             this.designation=''
             this.aadhaar=''
             this.dob=''
-            this.gender=''
+            this.gender='M'
             this.qualification_id=''
-            this.language_id=''
-            this.remark_id=''
+            this.language_id=1
+            this.remark_id='99'
             this.scale=''
             this.basic_pay=''
             this.grade_pay=''
             this.pay_level=''
             this.emp_group=''
-            this.working_status=''
+            this.working_status='Y'
             this.gender=''
             this.present_address=''
             this.permanent_address=''
@@ -866,6 +869,7 @@ import RemarkList from '@/components/RemarkList'
             this.assembly_off_id=''
             this.branch_ifsc=''
             this.bank_account_no=''
+            this.confirm_bank_account_no=''
             this.$validator.reset()
             this.snackbar =true
         })

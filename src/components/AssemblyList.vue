@@ -10,6 +10,7 @@
       autocomplete
       :search-input.sync="searchInput"
       @input="$emit('input',$event)"
+
     >
     </v-select>
 </template>
@@ -43,11 +44,8 @@ export default {
   },
 
   methods:{
-
-  },
-
-  created(){ console.log('Mode -'+this.mode)
-    let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
+    init:function(){
+      let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
     axios.get(url)
       .then((response, data) => {
        response.data.forEach(item => {
@@ -60,6 +58,11 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    }
+  },
+
+  created(){
+    this.init()
   }
 }
 </script>
