@@ -15,7 +15,7 @@ const router =  new Router({
 router.beforeEach((to, from, next) => {
 
   NProgress.start();
-  console.log('seesion - '+window.sessionStorage.getItem('is_authenticated'))
+
   if(!to.meta.public && window.sessionStorage.getItem('is_authenticated') == null){
     next('/signin')
   }

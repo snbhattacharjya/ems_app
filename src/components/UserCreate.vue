@@ -3,7 +3,7 @@
     <v-layout align-center justify-center>
       <v-flex xs12>
 
-        <v-card class="elevation-6">
+        <v-card class="elevation-6 mb-5">
           <v-toolbar dark color="blue-grey darken-3">
             <v-toolbar-title>Create New User</v-toolbar-title>
           </v-toolbar>
@@ -15,7 +15,7 @@
                 item-text= "name"
                 item-value= "user_type_code"
                 prepend-icon="list"
-                label="Select Type(Level) of User you want to create"
+                label="Select Type(Level) of User you want to create(*)"
                 @change="getSubuserlevels(user_level)">
               </v-select>
               <v-select
@@ -24,7 +24,7 @@
                 item-text= "sub_user_name"
                 item-value= "sub_user_code"
                 prepend-icon="list"
-                label="Select Sub Division"
+                label="Select Sub Division(*)"
                 :disabled="makedisable_subdiv"
                 @change="getBDO(subdivision_id,user_level)"
                 >
@@ -35,7 +35,7 @@
                 item-text= "sub_user_name"
                 item-value= "sub_user_code"
                 prepend-icon="list"
-                label="Select Sub Type(Sub Level) of User you want to create"
+                label="Select Sub Type(Sub Level) of User you want to create(*)"
                 :disabled="makedisable"
                 @change="getppcelllevels(user_sublevel)"
                 >
@@ -46,7 +46,7 @@
                 item-text= "name"
                 item-value= "code"
                 prepend-icon="list"
-                label="Select Type of PPCELL user you want to create"
+                label="Select Type of PPCELL user you want to create(*)"
                 :disabled="makedisable_ppcell"
                 >
               </v-select>
@@ -55,8 +55,10 @@
               <v-text-field
                 prepend-icon="person"
                 name="name"
-                label="Name of the User"
+                label="Name of the User(*)"
                 type="text"
+                counter
+                maxlength=30
                 v-model="name"
                 v-validate="'required'"
                 :error-messages="errors.collect('name')"
@@ -67,8 +69,10 @@
               <v-text-field
                 prepend-icon="account_box"
                 name="designation"
-                label="Designation of User"
+                label="Designation of User(*)"
                 type="text"
+                counter
+                maxlength=30
                 v-model="designation"
                 v-validate="'required'"
                 :error-messages="errors.collect('designation')"
@@ -79,10 +83,12 @@
               <v-text-field
                 prepend-icon="email"
                 name="email"
-                label="Email"
+                label="Email(*)"
                 type="text"
+                counter
+                maxlength=20
                 v-model="email"
-                v-validate="'email'"
+                v-validate="'email|required'"
                 :error-messages="errors.collect('email')"
                 data-vv-name="email"
               ></v-text-field>
@@ -90,8 +96,10 @@
               <v-text-field
                 prepend-icon="phone_android"
                 name="mobile"
-                label="Mobile of User"
+                label="Mobile of User(*)"
                 type="text"
+                counter
+                maxlength=10
                 v-model="mobile"
                 v-validate="'required|digits:10'"
                 :error-messages="errors.collect('mobile')"
@@ -241,6 +249,7 @@
           this.message_icon = 'check_circle'
           this.message_text = response.data
           this.snackbar =true
+          this.$validator.reset()
         })
         .catch(error => {
           this.show_message = true

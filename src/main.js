@@ -24,19 +24,19 @@ window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 900000
+  idleTime: 60000*15 //15 minutes
 })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   data () {
     return {
-      messageStr: 'Hello'
+      messageStr: 'Window is Idle for 15 minutes, you will be loged out'
     }
   },
   onIdle() {
     if(window.sessionStorage.getItem('is_authenticated') != null){
-    alert('Timeout')
+    alert('Window is Idle for 15 minutes, you will be loged out')
     store.dispatch('destroyToken')
     window.sessionStorage.removeItem('is_authenticated')
     this.$router.replace("/")

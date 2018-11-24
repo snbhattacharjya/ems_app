@@ -7,7 +7,7 @@
             <v-toolbar-title>Create New Personnel</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form ref="form">
              <template v-if="this.getuser.level != 10">
                 <office-list
                   v-model="office_id"
@@ -146,7 +146,7 @@
                     label="Pay Scale(*)"
                     type="text"
                     v-model="scale"
-                    maxlength=50
+                    maxlength=15
                     v-validate="'required'"
                     :error-messages="errors.collect('scale')"
                     data-vv-name="scale"
@@ -158,7 +158,7 @@
                     label="Basic Pay(*)"
                     type="text"
                     v-model="basic_pay"
-                     maxlength=9
+                    maxlength=7
                     v-validate="'required'"
                     :error-messages="errors.collect('basic_pay')"
                     data-vv-name="basic_pay"
@@ -170,7 +170,7 @@
                     label="Grade Pay(*)"
                     type="text"
                     v-model="grade_pay"
-                    maxlength="5"
+                    maxlength="7"
                     v-validate="'required|numeric'"
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
@@ -261,12 +261,12 @@
                   <v-text-field
                     prepend-icon="phone"
                     name="phone"
-                    label="Phone"
+                    label="Phone(with STD)"
                     type="text"
                     v-model="phone"
                     counter
-                    maxlength="10"
-                    v-validate="'numeric'"
+                    maxlength="15"
+                    v-validate="'numeric|not_zero|landline'"
                     :error-messages="errors.collect('phone')"
                     data-vv-name="phone"
                   ></v-text-field>
@@ -279,7 +279,7 @@
                     v-model="mobile"
                     counter
                     maxlength="10"
-                    v-validate="'required|numeric|digits:10'"
+                    v-validate="'required|numeric|digits:10|mobile'"
                     :error-messages="errors.collect('mobile')"
                     data-vv-name="mobile"
                   ></v-text-field>
@@ -321,6 +321,7 @@
                     name="epic"
                     label="EPIC No(*)"
                     type="text"
+                    maxlength=20
                     v-model="epic"
                     v-validate="'required'"
                     :error-messages="errors.collect('epic')"
@@ -333,7 +334,7 @@
                     label="Part no"
                     type="text"
                     v-model="part_no"
-                    maxlength="5"
+                    maxlength="4"
                     v-validate="'numeric'"
                     :error-messages="errors.collect('part_no')"
                     data-vv-name="part_no"
@@ -345,7 +346,7 @@
                     label="Serial No"
                     type="text"
                     v-model="sl_no"
-                    maxlength="5"
+                    maxlength="4"
                     v-validate="'numeric'"
                     :error-messages="errors.collect('sl_no')"
                     data-vv-name="sl_no"
@@ -391,6 +392,7 @@
                     name="branch_ifsc"
                     label="IFSC No(*)"
                     type="text"
+                    maxlength=15
                     v-model="branch_ifsc"
                     v-validate="'required|alpha_num'"
                     :error-messages="errors.collect('branch_ifsc')"
@@ -686,6 +688,35 @@ import RemarkList from '@/components/RemarkList'
    },
     mounted() {
     this.$validator.localize("en", this.dictionary)
+
+       this.$validator.extend('mobile', {
+        getMessage: field => `Invalid mobile number`,
+        validate: value => {
+            if(value.substring(0,1)>5 && value.substring(0,1)<=9)
+            {
+             return true
+            }
+            else{
+              return false
+            }
+        }
+       })
+       this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       })
+       this.$validator.extend('landline', {
+        getMessage: field => `Invalid Phone number`,
+        validate: value => {
+            var strongRegex = new RegExp("([0-9])\\1{4}");
+            if(strongRegex.test(value)==true){return false}
+            else{return true}
+
+        }
+       })
   },
    computed: {
       getuser(){
@@ -695,11 +726,11 @@ import RemarkList from '@/components/RemarkList'
       return this.$store.getters.getAccessToken
       },
       uppercase:function(){
-        this.officer_name=this.officer_name.toUpperCase().trim()
-        this.designation= this.designation.toUpperCase().trim()
-        this.present_address=this.present_address.toUpperCase().trim()
-        this.permanent_address=this.permanent_address.toUpperCase().trim()
-
+        this.officer_name=this.officer_name.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.designation= this.designation.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.present_address=this.present_address.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.permanent_address=this.permanent_address.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.branch_ifsc=this.branch_ifsc.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
       }
     },
     watch:{
@@ -858,15 +889,15 @@ import RemarkList from '@/components/RemarkList'
             this.email=''
             this.phone=''
             this.mobile=''
-            this.block_muni_temp_id=''
-            this.block_muni_perm_id=''
-            this.block_muni_off_id=''
+            // this.block_muni_temp_id=''
+            // this.block_muni_perm_id=''
+            // this.block_muni_off_id=''
             this.epic=''
             this.part_no=''
             this.sl_no=''
-            this.assembly_temp_id=''
-            this.assembly_perm_id=''
-            this.assembly_off_id=''
+            // this.assembly_temp_id=''
+            // this.assembly_perm_id=''
+            // this.assembly_off_id=''
             this.branch_ifsc=''
             this.bank_account_no=''
             this.confirm_bank_account_no=''

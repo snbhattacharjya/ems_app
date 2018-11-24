@@ -103,9 +103,7 @@
                 item-value= "id"
                 prepend-icon="list"
                 label="Select Sub Division(*)"
-                v-validate="'required'"
-                data-vv-name="subdivision_id"
-                :error="errors.collect('subdivision_id')"
+
                 @change="getpolicestation(subdivision_id)"
                 >
               </v-select>
@@ -131,9 +129,7 @@
                 prepend-icon="list"
                 label="Select Police Station(*)"
                 :disabled="makedisable"
-                v-validate="'required'"
-                data-vv-name="police_station_id"
-                :error="errors.collect('police_station_id')"
+
                 >
               </v-select>
 
@@ -199,7 +195,7 @@
                 v-model="mobile"
                 counter
                 maxlength="10"
-                v-validate="'required|digits:10|not_zero'"
+                v-validate="'required|digits:10|not_zero|mobile'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
@@ -224,7 +220,7 @@
                 type="text"
                 maxlength="5"
                 v-model.number="male_staff"
-                v-validate="'required|numeric|not_zero'"
+                v-validate="'required|numeric'"
                 :error-messages="errors.collect('male_staff')"
                 data-vv-name="male_staff"
                 @input="calculateTotalStaff"
@@ -237,7 +233,7 @@
                 type="text"
                 maxlength="5"
                 v-model.number="female_staff"
-                v-validate="'required|numeric|not_zero'"
+                v-validate="'required|numeric'"
                 :error-messages="errors.collect('female_staff')"
                 data-vv-name="female_staff"
                 @input="calculateTotalStaff"
@@ -338,8 +334,7 @@
 
           custom: {
             office_name: {
-              required: 'Office Name can not be empty',
-
+              required: 'Office Name can not be empty'
             },
             identification_code: {
               required: 'Identification Code is required'
@@ -402,27 +397,48 @@
             var v = parseInt(value)
             return v>1
         }
+       }),
+       this.$validator.extend('mobile', {
+        getMessage: field => `Invalid mobile number`,
+        validate: value => {
+            if(value.substring(0,1)>5 && value.substring(0,1)<=9)
+            {
+             return true
+            }
+            else{
+              return false
+            }
+        }
        })
 
     },
+
     methods: {
       validateOffice(){
         this.disable_save = true
-        this.$validator.validate()
-          .then(result => {
-            result ? this.saveOffice() : this.showError()
-            this.disable_save = false
-          })
+        this.$validator.validate().then(result => {
+        result ? this.saveOffice() : this.showError()
+        this.disable_save = false
+      })
+
       },
       showError(){
         this.show_message = true
         this.message_type = 'error'
         this.message_icon = 'warning'
-        this.message_text = 'Error Occurred!!!'
+        this.message_text = 'Validation error, please check all (*) marked fields'
         this.snackbar =true
       },
       saveOffice(){
-        axios.post('/office',{
+        if(this.subdivision_id=='' || this.police_station_id==''){
+          this.show_message = true
+          this.message_type = 'error'
+          this.message_icon = 'warning'
+          this.message_text = 'Please select Subdivision & Police Station'
+          this.snackbar =true
+        }
+        else{
+           axios.post('/office',{
           office_name: this.office_name,
           identification_code: this.identification_code,
           officer_designation: this.officer_designation,
@@ -450,16 +466,16 @@
         this.office_name= ''
         this.identification_code= ''
         this.subdivision_id= null
-        this.block_muni_id= null
+        this.block_muni_id= ''
         this.office_address= ''
         this.officer_designation= ''
         this.post_office= ''
         this.pin= ''
         this.police_station_id= null
-        this.ac_id= null
-        this.pc_id= null
-        this.category_id= null
-        this.institute_id= null
+        this.ac_id= ''
+        this.pc_id= ''
+        this.category_id= ''
+        this.institute_id= ''
         this.email= ''
         this.phone= ''
         this.mobile= ''
@@ -468,6 +484,7 @@
         this.female_staff= 0
         this.total_staff= 0
         this.agree=''
+
 
           this.show_message = true
           this.message_type = 'success'
@@ -483,6 +500,7 @@
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
+        }
       },
       getpolicestation(subdivision_id){
         if(subdivision_id != null){
@@ -511,14 +529,15 @@
         this.total_staff = this.male_staff + this.female_staff
       },
       uppercase:function(){
-        this.office_name=this.office_name.toUpperCase().trim()
-        this.identification_code= this.identification_code.toUpperCase().trim()
-        this.officer_designation=this.officer_designation.toUpperCase().trim()
-        this.office_address=this.office_address.toUpperCase().trim()
-        this.post_office=this.post_office.toUpperCase().trim()
+        this.office_name=this.office_name.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.identification_code= this.identification_code.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.officer_designation=this.officer_designation.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.office_address=this.office_address.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.post_office=this.post_office.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
       }
     },
     created(){
+
     axios.get('/subdivisions')
       .then((response, data) => {
        response.data.forEach(item => {
@@ -530,7 +549,8 @@
       .catch(error => {
         console.log(error)
       })
-  }
+  },
+
 
   }
 </script>

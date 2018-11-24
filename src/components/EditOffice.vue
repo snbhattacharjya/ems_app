@@ -18,6 +18,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -29,6 +30,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -40,6 +42,7 @@
                 v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -51,6 +54,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_address')"
                 data-vv-name="office_address"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -62,6 +66,7 @@
                 v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -543,6 +548,13 @@ export default {
     },
     getAccessToken:function(){
       return this.$store.getters.getAccessToken
+    },
+    uppercase: function() {
+      this.office_name=this.office_name.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.identification_code= this.identification_code.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.officer_designation=this.officer_designation.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.office_address=this.office_address.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.post_office=this.post_office.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
     }
   }
 }

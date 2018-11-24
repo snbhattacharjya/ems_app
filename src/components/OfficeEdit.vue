@@ -18,6 +18,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
                 data-vv-name="office_name"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -29,6 +30,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
                 data-vv-name="identification_code"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -40,6 +42,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('officer_designation')"
                 data-vv-name="officer_designation"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -51,6 +54,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('office_address')"
                 data-vv-name="office_address"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -62,6 +66,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('post_office')"
                 data-vv-name="post_office"
+                 @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -72,7 +77,7 @@
                 v-model="pin"
                 counter
                 maxlength="6"
-                v-validate="'required|numeric|digits:6'"
+                v-validate="'required|numeric|digits:6|not_zero'"
                 :error-messages="errors.collect('pin')"
                 data-vv-name="pin"
               ></v-text-field>
@@ -186,7 +191,7 @@
                 v-model="mobile"
                 counter
                 maxlength="10"
-                v-validate="'required|numeric|digits:10'"
+                v-validate="'required|numeric|digits:10|not_zero|mobile'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
@@ -395,6 +400,25 @@ export default {
   },
   mounted() {
     this.$validator.localize("en", this.dictionary);
+    this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       }),
+       this.$validator.extend('mobile', {
+        getMessage: field => `Invalid mobile number`,
+        validate: value => {
+            if(value.substring(0,1)>5 && value.substring(0,1)<=9)
+            {
+             return true
+            }
+            else{
+              return false
+            }
+        }
+       })
   },
   methods: {
     initialize() {
@@ -550,11 +574,11 @@ export default {
       this.total_staff = this.male_staff + this.female_staff;
     },
     uppercase: function() {
-      this.office_name = this.office_name.toUpperCase();
-      this.identification_code = this.identification_code.toUpperCase();
-      this.officer_designation = this.officer_designation.toUpperCase();
-      this.office_address = this.office_address.toUpperCase();
-      this.post_office = this.post_office.toUpperCase();
+      this.office_name=this.office_name.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.identification_code= this.identification_code.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.officer_designation=this.officer_designation.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.office_address=this.office_address.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.post_office=this.post_office.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
     }
   },
 

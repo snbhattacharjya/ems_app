@@ -147,7 +147,7 @@
                     label="Pay Scale(*)"
                     type="text"
                     v-model="scale"
-
+                    maxlength=15
                     v-validate="'required'"
                     :error-messages="errors.collect('scale')"
                     data-vv-name="scale"
@@ -159,23 +159,24 @@
                     label="Basic Pay(*)"
                     type="text"
                     v-model="basic_pay"
-
+                    maxlength=7
                     v-validate="'required'"
                     :error-messages="errors.collect('basic_pay')"
                     data-vv-name="basic_pay"
                   ></v-text-field>
 
-                  <v-text-field v-if="this.getuser.officelevel != '01'"
+                  <v-text-field v-show="this.show_grade"
                     prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay(*)"
                     type="text"
+                    maxlength=7
                     v-model="grade_pay"
                     v-validate="'required'"
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
-                  <v-select v-if="this.getuser.officelevel === '01'"
+                  <v-select v-show="this.show_level"
                     :items="pay_levels"
                     prepend-icon="list"
                     label="Pay Level(*)"
@@ -260,12 +261,12 @@
                   <v-text-field
                     prepend-icon="phone"
                     name="phone"
-                    label="Phone"
+                    label="Phone(with STD)"
                     type="text"
                     v-model="phone"
                     counter
-                    maxlength="10"
-                    v-validate="'numeric|digits:10'"
+                    maxlength="15"
+                    v-validate="'numeric|digits:10|not_zero|landline'"
                     :error-messages="errors.collect('phone')"
                     data-vv-name="phone"
                   ></v-text-field>
@@ -278,7 +279,7 @@
                     v-model="mobile"
                     counter
                     maxlength="10"
-                    v-validate="'required|numeric|digits:10'"
+                    v-validate="'required|numeric|digits:10|mobile'"
                     :error-messages="errors.collect('mobile')"
                     data-vv-name="mobile"
                   ></v-text-field>
@@ -319,6 +320,7 @@
                     name="epic"
                     label="EPIC No(*)"
                     type="text"
+                    maxlength=20
                     v-model="epic"
                     v-validate="'required'"
                     :error-messages="errors.collect('epic')"
@@ -331,7 +333,7 @@
                     label="Part no"
                     type="text"
                     v-model="part_no"
-                    maxlength="5"
+                    maxlength="4"
                     v-validate="'numeric'"
                     :error-messages="errors.collect('part_no')"
                     data-vv-name="part_no"
@@ -343,7 +345,7 @@
                     label="Serial No"
                     type="text"
                     v-model="sl_no"
-                    maxlength="5"
+                    maxlength="4"
                     v-validate="'numeric'"
                     :error-messages="errors.collect('sl_no')"
                     data-vv-name="sl_no"
@@ -390,6 +392,7 @@
                     name="branch_ifsc"
                     label="IFSC No(*)"
                     type="text"
+                    maxlength=15
                     v-model="branch_ifsc"
                     v-validate="'required|alpha_num'"
                     :error-messages="errors.collect('branch_ifsc')"
@@ -489,6 +492,8 @@ import RemarkList from '@/components/RemarkList'
         scale: '',
         basic_pay: 0,
         grade_pay: '',
+        show_grade:false,
+        show_level:false,
         emp_groups: [
           'A',
           'B',
@@ -678,13 +683,72 @@ import RemarkList from '@/components/RemarkList'
 
     mounted() {
     this.$validator.localize("en", this.dictionary)
+
+       this.$validator.extend('mobile', {
+        getMessage: field => `Invalid mobile number`,
+        validate: value => {
+            if(value.substring(0,1)>5 && value.substring(0,1)<=9)
+            {
+             return true
+            }
+            else{
+              return false
+            }
+        }
+       })
+       this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       })
+       this.$validator.extend('landline', {
+        getMessage: field => `Invalid Phone number`,
+        validate: value => {
+            var strongRegex = new RegExp("([0-9])\\1{4}");
+            if(strongRegex.test(value)==true){return false}
+            else{return true}
+
+        }
+       })
   },
   watch:{
     bank_account_no:function(val){
-        this.checkaccount()
-    }
+        if(this.bank_account_no != val){
+          this.checkaccount()
+        }
+    },
+    office_id:function(val){
+        this.getlevel(val)
+      }
   },
     methods: {
+      getlevel(val){
+        if(val != ''){
+          axios.get('/officetype/'+val,{
+
+          })
+          .then((response, data) => {
+            if(response.data !='')
+           {
+              this.officelevel=response.data['officeType'][0]
+              if(this.officelevel == '01'){
+               this.show_grade=false
+               this.show_level=true
+               this.grade_pay=0
+               }
+               else{
+               this.show_grade=true
+               this.show_level=false
+               this.pay_level=0
+               }
+           }
+
+          })
+        }
+
+      },
       ifsc:function(){
         if(this.branch_ifsc != ''){ this.ifsc_hint=''
           axios.get('/ifsc/'+this.branch_ifsc,{

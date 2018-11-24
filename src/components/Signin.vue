@@ -125,6 +125,11 @@
     methods: {
       login(){
         if(this.captcha_pass === true ){
+          this.show_message = false
+          this.message_type = ''
+          this.message_icon = ''
+          this.message_text = ''
+          this.snackbar =false
           this.$validator.validate()
           .then(result =>{
             if(result){

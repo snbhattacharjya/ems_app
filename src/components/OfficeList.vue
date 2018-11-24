@@ -10,6 +10,7 @@
       @input="$emit('input',$event)"
        autocomplete
       :search-input.sync="searchInput"
+      :disabled=disabled
     >
 
     </v-select>
