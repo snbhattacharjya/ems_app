@@ -782,7 +782,7 @@ import RemarkList from '@/components/RemarkList'
             if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is outside of West Bengal '}
             else{
               response.data.forEach(item => {
-                this.ifsc_hint= 'Branch - '+item.branch
+                this.ifsc_hint= item.bank+'('+item.branch+')'
               })
             }
 

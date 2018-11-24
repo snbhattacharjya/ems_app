@@ -182,7 +182,7 @@
                 v-model="phone"
                 counter
                 maxlength="15"
-                v-validate="'numeric|not_zero'"
+                v-validate="'numeric|not_zero|landline'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -391,14 +391,7 @@
     },
     mounted () {
       this.$validator.localize('en', this.dictionary)
-      this.$validator.extend('not_zero', {
-        getMessage: field => `Zero not allowed`,
-        validate: value => {
-            var v = parseInt(value)
-            return v>1
-        }
-       }),
-       this.$validator.extend('mobile', {
+      this.$validator.extend('mobile', {
         getMessage: field => `Invalid mobile number`,
         validate: value => {
             if(value.substring(0,1)>5 && value.substring(0,1)<=9)
@@ -408,6 +401,22 @@
             else{
               return false
             }
+        }
+       })
+       this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       })
+       this.$validator.extend('landline', {
+        getMessage: field => `Invalid Phone number`,
+        validate: value => {
+            var strongRegex = new RegExp("([0-9])\\1{4}");
+            if(strongRegex.test(value)==true){return false}
+            else{return true}
+
         }
        })
 
