@@ -63,6 +63,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('name')"
                 data-vv-name="name"
+                @input="uppercase"
               ></v-text-field>
 
 
@@ -77,6 +78,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('designation')"
                 data-vv-name="designation"
+                @input="uppercase"
               ></v-text-field>
 
 
@@ -91,6 +93,7 @@
                 v-validate="'email|required'"
                 :error-messages="errors.collect('email')"
                 data-vv-name="email"
+                @input="uppercase"
               ></v-text-field>
 
               <v-text-field
@@ -179,8 +182,8 @@
         dictionary: {
 
           custom: {
-            office_name: {
-              required: 'Office Name can not be empty',
+            name: {
+              required: 'Name can not be empty',
             },
             identification_code: {
               required: 'Identification Code is required'
@@ -369,7 +372,11 @@
       },
     },
     computed: {
-
+      uppercase: function(){
+        this.name=this.name.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.designation=this.designation.toUpperCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+        this.email=this.email.toLowerCase().trim().replace(/<\/?[^>]+(>|$)/g, "")
+      }
     }
 
   }
