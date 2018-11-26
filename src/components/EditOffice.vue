@@ -126,7 +126,21 @@
 
                 >
               </v-select>
+              <assembly-list
+                v-model="ac_id"
+                v-validate="'required'"
+                data-vv-name="ac_id"
+                :error="errors.collect('ac_id')"
+                :selected="ac_id"
+              ></assembly-list>
 
+              <pc-list
+                v-model="pc_id"
+                v-validate="'required'"
+                data-vv-name="pc_id"
+                :error="errors.collect('pc_id')"
+                :selected="pc_id"
+              ></pc-list>
 
               <category-list
                 :label="ctlbl"
