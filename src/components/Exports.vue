@@ -12,7 +12,10 @@
             <v-toolbar-title>Exports</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <a :href="url" tag="span" target="_blank" style="cursor: pointer">Export Office user details</a><br>
+            <v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
+            <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn>
+            <!-- <a :href="urluser" tag="span" target="_blank" style="cursor: pointer">Export Office user details</a><br>
+            <a :href="urlpersonnel" tag="span" target="_blank" style="cursor: pointer">Export Personnel details</a><br> -->
           </v-card-text>
           <v-card-actions>
 
@@ -37,12 +40,12 @@ export default {
   name: 'Exports',
   data () {
     return {
-
-      url: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token
+      urlpersonnel: axios.defaults.baseURL+"/export/personnel/"+this.$store.getters.getAccessToken.access_token,
+      urluser: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token
     }
   },
   beforeUpdate() {
-   this.url+=this.$store.getters.getAccessToken
+
   },
   computed: {
     getToken:function(){

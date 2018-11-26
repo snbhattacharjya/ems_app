@@ -17,9 +17,11 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
 
   if(!to.meta.public && window.sessionStorage.getItem('is_authenticated') == null){
+
     next('/signin')
+    document.title = to.meta.title
   }
-  document.title = to.meta.title
+
   next()
 })
 router.afterEach((to, from) => {

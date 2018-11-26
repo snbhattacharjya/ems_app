@@ -14,7 +14,7 @@
       </v-toolbar-title>
       <v-toolbar-title class="ml-5 mr-5">
         <!-- {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}} -->
-        <h5>{{this.date}} {{this.time}}</h5>
+        <h5><v-icon>date_range</v-icon>{{this.date}} <v-icon>access_time</v-icon>{{this.time}}</h5>
       </v-toolbar-title>
         Code: {{getUser.user_id}} <br>District : {{getUser.district[0]}}
         <v-menu bottom left>
