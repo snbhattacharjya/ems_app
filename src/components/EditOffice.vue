@@ -179,7 +179,7 @@
                 v-model="phone"
                 counter
                 maxlength="10"
-                v-validate="'numeric|digits:10'"
+                v-validate="'numeric|not_zero'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
@@ -192,7 +192,7 @@
                 v-model="mobile"
                 counter
                 maxlength="10"
-                v-validate="'required|numeric|digits:10'"
+                v-validate="'required|numeric|digits:10|not_zero|mobile'"
                 :error-messages="errors.collect('mobile')"
                 data-vv-name="mobile"
               ></v-text-field>
@@ -400,6 +400,25 @@ export default {
   },
   mounted() {
     this.$validator.localize("en", this.dictionary)
+    this.$validator.extend('not_zero', {
+        getMessage: field => `Zero not allowed`,
+        validate: value => {
+            var v = parseInt(value)
+            return v>1
+        }
+       }),
+       this.$validator.extend('mobile', {
+        getMessage: field => `Invalid mobile number`,
+        validate: value => {
+            if(value.substring(0,1)>5 && value.substring(0,1)<=9)
+            {
+             return true
+            }
+            else{
+              return false
+            }
+        }
+       })
   },
   methods: {
    initialize () {

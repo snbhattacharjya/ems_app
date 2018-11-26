@@ -178,7 +178,7 @@
                 v-model="phone"
                 counter
                 maxlength="10"
-                v-validate="'numeric'"
+                v-validate="'numeric|not_zero'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
               ></v-text-field>
