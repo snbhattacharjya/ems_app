@@ -441,7 +441,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save" :loading="disable_save">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -476,6 +476,7 @@ import RemarkList from '@/components/RemarkList'
         valid: true,
         snackbar: false,
         personnel_id: '',
+        personnel_id_fetched:'',
         office_id: '',
         officer_name: '',
         designation: '',
@@ -793,6 +794,7 @@ import RemarkList from '@/components/RemarkList'
         })
         .then((response, data) => {
         response.data.forEach(item => {
+          this.personnel_id_fetched=item.id,
           this.office_id= item.office_id,
           this.officer_name= item.name,
           this.designation= item.designation,
@@ -849,8 +851,13 @@ import RemarkList from '@/components/RemarkList'
         this.snackbar =true
       },
       savePersonnel(){
-        axios.post('/personnel/update',{
-          id:this.personnel_id,
+        this.disable_save=true
+        var hash='';
+        var bcrypt = require('bcryptjs')
+        var hash = bcrypt.hashSync(this.personnel_id_fetched, 8)
+        //console.log('enc- '+hash)
+         axios.post('/personnel/update',{
+          token:hash,
           office_id: this.office_id,
           officer_name: this.officer_name,
           designation: this.designation,
@@ -890,6 +897,7 @@ import RemarkList from '@/components/RemarkList'
           this.message_icon = 'check_circle'
           this.message_text = 'Personnel Updated Successfully with code - '+response.data
           this.snackbar =true
+          this.disable_save=false
           setTimeout(() => {
                   this.$router.replace("/personnel/list")
                 },2000)
@@ -901,6 +909,7 @@ import RemarkList from '@/components/RemarkList'
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
         })
+
 
       }
     }

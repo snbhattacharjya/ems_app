@@ -12,6 +12,9 @@ import printjs from 'print-js'
 import moment from 'moment'
 import IdleVue from 'idle-vue'
 
+
+
+
 Vue.prototype.moment = moment
 Vue.use(Vuetify)
 Vue.use(VeeValidate)
@@ -48,7 +51,7 @@ new Vue({
   },
   router,
   store,
-  components: { App },
+  components: { App},
   template: '<App/>'
 })
 

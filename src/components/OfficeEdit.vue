@@ -177,7 +177,7 @@
                 type="text"
                 v-model="phone"
                 counter
-                maxlength="10"
+                maxlength="15"
                 v-validate="'numeric|not_zero'"
                 :error-messages="errors.collect('phone')"
                 data-vv-name="phone"
@@ -469,9 +469,12 @@ export default {
       this.message_text = "Error Occurred!!!";
     },
     saveOffice() {
+        var hash='';
+        var bcrypt = require('bcryptjs')
+        var hash = bcrypt.hashSync(this.office_id, 8)
       axios
         .post("/office/update", {
-          office_id: this.office_id,
+          token: hash,
           office_name: this.office_name,
           identification_code: this.identification_code,
           officer_designation: this.officer_designation,

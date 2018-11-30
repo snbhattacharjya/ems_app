@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
     next('/signin')
     document.title = to.meta.title
   }
-
+  document.title = to.meta.title
   next()
 })
 router.afterEach((to, from) => {

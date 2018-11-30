@@ -19,17 +19,6 @@
                 @change="getSubuserlevels(user_level)">
               </v-select>
               <v-select
-                :items="subdivisions"
-                v-model="subdivision_id"
-                item-text= "sub_user_name"
-                item-value= "sub_user_code"
-                prepend-icon="list"
-                label="Select Sub Division(*)"
-                :disabled="makedisable_subdiv"
-                @change="getBDO(subdivision_id,user_level)"
-                >
-              </v-select>
-              <v-select
                 :items="sublevels"
                 v-model="user_sublevel"
                 item-text= "sub_user_name"
@@ -40,6 +29,18 @@
                 @change="getppcelllevels(user_sublevel)"
                 >
               </v-select>
+              <v-select
+                :items="subdivisions"
+                v-model="subdivision_id"
+                item-text= "sub_user_name"
+                item-value= "sub_user_code"
+                prepend-icon="list"
+                label="Select Sub Division(*)"
+                :disabled="makedisable_subdiv"
+                @change="getBDO(subdivision_id,user_level)"
+                >
+              </v-select>
+
               <v-select
                 :items="pplevels"
                 v-model="user_pplevel"
@@ -122,7 +123,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
+            <v-snackbar v-model="snackbar" :multi-line="ture" :timeout=0 :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validateUser" :disabled="disable_save">Save</v-btn>
