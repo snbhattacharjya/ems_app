@@ -90,13 +90,13 @@
       disable_save: false,
       headers: [
         { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Office ID', value: 'office_id',align: 'left', },
-        { text: 'Personnel Name',align: 'left',sortable: false,value: 'name'},
+        { text: 'Office ID', value: 'office_id',align: 'left',sortable: false },
+        { text: 'Personnel Name',align: 'left',value: 'name'},
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Permanent Address', value: 'permanent_address',align: 'left', sortable: false},
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at', sortable: false }
+        { text: 'Updated at', value: 'updated_at',  }
       ],
       personnels: [],
       searchInput: ''

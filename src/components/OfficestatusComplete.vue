@@ -3,6 +3,15 @@
     <v-container fluid>
       <section>
         <v-btn color="info" :to="'/office/list'">Back</v-btn>
+        <download-csv
+                        :data="office_csv"
+                        :name="dataFile"
+                        :labels="labels"
+                        :fields="csvfields"
+
+                >
+                    <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.btn_txt}}</v-btn>
+                </download-csv>
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
@@ -50,8 +59,10 @@
 </template>
 
 <script>
+import JsonCSV from 'vue-json-csv'
   export default {
     name:'OfficestatusComplete',
+    components: {'download-csv': JsonCSV},
     data: () => ({
       dialog: false,
       search: '',
@@ -66,7 +77,18 @@
 
       ],
       offices: [],
-
+      office_csv:[],
+      dataFile: 'office_complete_export.csv',
+        labels: {
+          officeId: 'Office ID',
+          officeName: 'Office Name',
+          mobile:'Mobile',
+          totalStuff: 'Total Staff',
+          personelenty: 'Personnel Entered',
+          progress: 'Progress(%)'
+        },
+        csvfields : ['officeId','officeName','mobile','totalStuff','personelenty','progress'],
+        btn_txt:'Download as CSV'
 
     }),
 
@@ -91,6 +113,8 @@
          else{
             response.data['officelist'].forEach(item => {
                 this.offices.push(item)
+                 item['progress']=Math.round((parseInt(item.personelenty)/parseInt(item.totalStuff))*100,0)
+                this.office_csv.push(item)
               })
               this.tableloading=false
          }

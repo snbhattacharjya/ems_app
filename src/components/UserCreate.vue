@@ -162,7 +162,7 @@
         subdivisions:[],
         pplevels:[
           {name: 'OC', code: 'OC'},
-          {name: 'HC', code: 'HC'},
+          // {name: 'HC', code: 'HC'},
           {name: 'DEO', code: 'DEO'}
         ],
         user_level : '',

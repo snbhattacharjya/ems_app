@@ -322,6 +322,9 @@ export default {
       male_staff: 0,
       female_staff: 0,
       total_staff: 0,
+      stored_male_staff: 0,
+      stored_female_staff: 0,
+      stored_total_staff: 0,
       show_message: false,
       message_type: "",
       message_icon: "",
@@ -449,6 +452,9 @@ export default {
               this.male_staff= item.male_staff,
               this.female_staff= item.female_staff,
               this.total_staff= item.total_staff
+              this.stored_male_staff= item.male_staff,
+              this.stored_female_staff= item.female_staff,
+              this.stored_total_staff= item.total_staff
               this.$store.dispatch('storeofficecategory', item.category_id)
               this.loadpolicestation(this.subdivision_id)
           })
@@ -471,6 +477,7 @@ export default {
       this.message_text = "Error Occurred!!!"
     },
     saveOffice() {
+if(this.total_staff>= this.stored_total_staff){
        var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.getofficeid.user_id, 8)
       axios
@@ -516,6 +523,14 @@ export default {
             "Error Occurred!!! " + error.response.data.message
           this.snackbar = true
         })
+    }
+    else{
+          this.show_message = true
+          this.message_type = "error"
+          this.message_icon = "warning"
+          this.message_text ="Number of Total Staff cann't be decreased."
+          this.snackbar = true
+    }
     },
     getpolicestation(subdivision_id){
         if(subdivision_id != null){

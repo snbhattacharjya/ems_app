@@ -4,9 +4,9 @@
             <v-container grid-list-md align-center>
               <v-layout row wrap fill-height>
                   <v-flex xs12>
-                <v-card class="elevation-6">
+                <v-card class="elevation-6 mb-5">
                   <v-toolbar dark color="blue-grey darken-3">
-                    <v-toolbar-title>Set new rule for Personnel Categorization <v-btn color="primary" :to="'/pppoststatlist'">View Rules</v-btn> <v-btn color="primary" :to="'/poststatus_bulk_update'">Bulk Update</v-btn>  </v-toolbar-title>
+                    <v-toolbar-title>Set new rule for Personnel Categorization   </v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form autocomplete="off">
@@ -335,7 +335,7 @@ export default {
       loading: false,
       subdivision_id:'ALL',
       category_id:'',
-      disable_offcat: true,
+      disable_offcat: false,
       office_id:'',
       disable_off:true,
       qualification_id:'',
@@ -434,7 +434,7 @@ export default {
 
   },
   watch:{
-    poststat_from:function(val){
+    poststat_from:function(val){ alert(val)
       if(val != '' && this.poststat_to !=''){ this.disable_offcat=false}
     },
     poststat_to:function(val){

@@ -3,6 +3,15 @@
     <v-container fluid>
       <section>
         <v-btn color="info" :to="'/office/list'">Back</v-btn>
+        <download-csv
+                        :data="office_csv"
+                        :name="dataFile"
+                        :labels="labels"
+                        :fields="csvfields"
+
+                >
+                    <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.btn_txt}}</v-btn>
+                </download-csv>
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
@@ -49,23 +58,35 @@
 </template>
 
 <script>
+import JsonCSV from 'vue-json-csv'
   export default {
     name:'OfficeStaus',
+    components: {'download-csv': JsonCSV},
     data: () => ({
       dialog: false,
       search: '',
       tableloading:false,
       headers: [
         { text: 'ID', value: 'id',align: 'left', },
-        { text: 'Office Name', align: 'left', sortable: false, value: 'name'},
-        { text: 'Address', value: 'adress',align: 'left', },
+        { text: 'Office Name', align: 'left', sortable: true, value: 'name'},
+        { text: 'Address', value: 'address',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
-        { text: 'Post Office', value: 'post_office', sortable: false },
+        { text: 'Post Office', value: 'post_office', sortable: true },
         { text: 'Pin', value: 'pin',align: 'left', }
       ],
       offices: [],
-
-
+      office_csv:[],
+      dataFile: 'office_not_upadated_export.csv',
+        labels: {
+          id: 'Office ID',
+          name: 'Office Name',
+          mobile:'Mobile',
+          address: 'Address',
+          post_office: 'Post Office',
+          pin: 'PIN'
+        },
+        csvfields : ['id','name','mobile','address','post_office','pin'],
+        btn_txt:'Download as CSV'
     }),
 
     computed: {
@@ -85,10 +106,14 @@
         this.tableloading=true
         axios.get('/officeentrystatus')
         .then((response, data) => {
-          if(response.data.length === 0){this.tableloading=false}
+          if(response.data.length === 0){
+            this.tableloading=false
+            this.btn_txt='No Data to Download'
+          }
          else{
             response.data.forEach(item => {
                 this.offices.push(item)
+                this.office_csv.push(item)
               })
               this.tableloading=false
          }

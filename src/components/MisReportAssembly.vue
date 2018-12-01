@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude','clk2e'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
           <v-flex xs12 class="my-5" id="exclude">
@@ -49,7 +49,7 @@
                   <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{ report.id }}</td>
                   <td class="nopad">{{ report.name }}</td>
-                 <td v-if="getUser.level == 12" class="text--center">
+                 <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.male_party_count"
                       lazy
@@ -58,7 +58,7 @@
                       @cancel="cancel"
                       @open="open"
                       @close="close"
-                    > {{ report.male_party_count }}
+                    > {{ report.male_party_count }} <v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
                       <v-text-field
                         slot="input"
                         v-model="report.male_party_count"
@@ -71,7 +71,7 @@
 
                     </td>
                     <td v-else class="nopad">{{ report.male_party_count }}</td>
-                  <td v-if="getUser.level == 12" class="text--center">
+                  <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.female_party_count"
                       lazy
@@ -80,7 +80,7 @@
                       @cancel="cancel"
                       @open="open"
                       @close="close"
-                    > {{ report.female_party_count }}
+                    > {{ report.female_party_count }}<v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
                       <v-text-field
                         slot="input"
                         v-model="report.female_party_count"
@@ -256,6 +256,8 @@ export default {
 }
 </script>
 <style scoped>
+#clk2e{ display: none;}
+#edt:hover  #clk2e{ display: block;}
 table{table-layout: fixed; width: 100%;}
 table tr td.nopad{ padding: 0 !important; text-align: center;}
 table th tr, .application .theme--light.v-table tbody tr:not(:last-child), .theme--light .v-table tbody tr:not(:last-child){ border-bottom: 1px solid ! important;}

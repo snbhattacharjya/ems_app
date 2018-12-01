@@ -406,15 +406,20 @@
                     name="bank_account_no"
                     ref="bank_account_no"
                     label="Bank Account no(*)"
-                    type="text"
+                    :type="type_text"
                     v-model="bank_account_no"
                     counter
                     maxlength="16"
                     v-validate="'required|numeric'"
                     :error-messages="errors.collect('bank_account_no')"
                     data-vv-name="bank_account_no"
-
+                    @blur="changetypeblur"
+                    @focus="changetypefocus"
                     :suffix="acc_hint"
+                    onCopy="return false"
+                    onDrag="return false"
+                    onDrop="return false"
+                    onPaste="return false"
                   ></v-text-field>
 
                   <v-text-field
@@ -428,6 +433,10 @@
                     v-validate="'required|numeric|confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
+                    onCopy="return false"
+                    onDrag="return false"
+                    onDrop="return false"
+                    onPaste="return false"
 
                   ></v-text-field>
 
@@ -440,6 +449,12 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
+            <v-flex v-if="this.server_errors != ''">
+              <ol style="color:red;">
+                <li v-for="error in server_errors" :prop="error" :key="error.id">{{error}}</li>
+
+              </ol>
+            </v-flex>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save" :loading="disable_save">Save</v-btn>
           </v-card-actions>
@@ -495,6 +510,7 @@ import RemarkList from '@/components/RemarkList'
         grade_pay: '',
         show_grade:false,
         show_level:false,
+        type_text:'text',
         emp_groups: [
           'A',
           'B',
@@ -549,12 +565,12 @@ import RemarkList from '@/components/RemarkList'
           'Permanent Block or Municipality',
           'Office Block or Municipality',
         ],
-        block_muni_temp_id: '',
-        block_muni_perm_id: '',
-        block_muni_off_id: '',
+        block_muni_temp_id: 0,
+        block_muni_perm_id: 0,
+        block_muni_off_id: 0,
         epic: '',
-        part_no: '',
-        sl_no: '',
+        part_no: 0,
+        sl_no: 0,
         assembly_labels: [
           'Present Assembly Constituency(*)',
           'Permanent Assembly Constituency(*)',
@@ -575,6 +591,7 @@ import RemarkList from '@/components/RemarkList'
         message_text: "",
         disable_save: false,
         personnel_form: 1,
+        server_errors:[],
        dictionary: {
           custom: {
             office_id:{
@@ -725,6 +742,13 @@ import RemarkList from '@/components/RemarkList'
       }
   },
     methods: {
+      changetypeblur:function(){
+          if(this.type_text === 'text'){this.type_text = 'password'}
+      },
+      changetypefocus:function(){
+         if(this.type_text === 'password'){this.type_text = 'text'}
+      },
+
       getlevel(val){
         if(val != ''){
           axios.get('/officetype/'+val,{
@@ -906,7 +930,8 @@ import RemarkList from '@/components/RemarkList'
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
-          this.message_text = 'Error Occurred!!! '+error
+          this.message_text = error.response.data.message
+          this.server_errors=error.response.data.errors
           this.snackbar =true
         })
 

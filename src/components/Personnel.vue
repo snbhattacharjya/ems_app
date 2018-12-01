@@ -416,6 +416,10 @@
                     @blur="changetype"
                     @focus="changetype"
                     :suffix="acc_hint"
+                    onCopy="return false"
+                    onDrag="return false"
+                    onDrop="return false"
+                    onPaste="return false"
                   ></v-text-field>
 
                   <v-text-field
@@ -429,6 +433,10 @@
                     v-validate="'required|numeric|confirmed:bank_account_no'"
                     :error-messages="errors.collect('confirm_bank_account_no')"
                     data-vv-name="confirm_bank_account_no"
+                    onCopy="return false"
+                    onDrag="return false"
+                    onDrop="return false"
+                    onPaste="return false"
                   ></v-text-field>
 
 
@@ -440,6 +448,12 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
+            <v-flex v-if="this.server_errors != ''">
+              <ol style="color:red;">
+                <li v-for="error in server_errors" :prop="error" :key="error.id">{{error}}</li>
+
+              </ol>
+            </v-flex>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
@@ -547,12 +561,12 @@ import RemarkList from '@/components/RemarkList'
           'Permanent Block or Municipality',
           'Office Block or Municipality',
         ],
-        block_muni_temp_id: '',
-        block_muni_perm_id: '',
-        block_muni_off_id: '',
+        block_muni_temp_id: 0,
+        block_muni_perm_id: 0,
+        block_muni_off_id: 0,
         epic: '',
-        part_no: '',
-        sl_no: '',
+        part_no: 0,
+        sl_no: 0,
         assembly_labels: [
           'Present Assembly Constituency(*)',
           'Permanent Assembly Constituency(*)',
@@ -583,6 +597,7 @@ import RemarkList from '@/components/RemarkList'
         step3_error:'',
         step4_error:'',
         step5_error:'',
+        server_errors:[],
         dictionary: {
           custom: {
             office_id:{
@@ -685,8 +700,10 @@ import RemarkList from '@/components/RemarkList'
       if(this.getuser.level== 10){
         this.getlevel(this.getuser.user_id)
       }
+
    },
     mounted() {
+
     this.$validator.localize("en", this.dictionary)
 
        this.$validator.extend('mobile', {
@@ -911,9 +928,14 @@ import RemarkList from '@/components/RemarkList'
           if(error.response.data === "Total Number Exceeded"){
           this.multiline =true
           this.message_text = 'Total number of personnel exceeded. Please update office before adding more personnel.'
-          }else{
+          }else if(error.response.data === "Please Update Office Data First"){
+            this.multiline =true
+          this.message_text = 'Please Update Office first and then you will be able to add Personnel.'
+          }
+          else{
           this.multiline =false
-          this.message_text = 'Error Occurred!!! '+error
+          this.message_text = error.response.data.message
+          this.server_errors=error.response.data.errors
           }
 
           this.snackbar =true

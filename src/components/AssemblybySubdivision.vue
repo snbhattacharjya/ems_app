@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ getUser.district[0]}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{ getUser.district[0]}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
 
@@ -72,14 +72,14 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td class="nopad">Total</td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </v-layout>
@@ -111,14 +111,14 @@
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2),0) }}</td>
                   <td class="nopad">{{ Math.round((report.male_party_count*0.2)+report.male_party_count,0)}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td class="nopad">Total</td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
                     <td class="nopad"></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </v-layout>

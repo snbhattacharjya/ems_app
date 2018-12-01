@@ -506,7 +506,7 @@
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
-          this.message_text = 'Error Occurred!!! '+error
+          this.message_text = error.response.data.message
           this.snackbar =true
         })
         }

@@ -11,7 +11,7 @@
 
               <img src="/static/Election_Commission_of_India_Logo.png" alt="avatar">
 
-            <h1 class="white--text mb-2 display-3 text-xs-center font-weight-black">Welcome to PPMS</h1>
+            <h1 class="white--text mb-2 display-3 text-xs-center font-weight-black">Welcome to WBPPMS</h1>
             <div class="title mb-3 text-xs-center">A simple way to work with Polling Personnel Data</div>
             <v-btn
               class="blue lighten-2 mt-5"

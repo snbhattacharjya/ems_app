@@ -6,10 +6,10 @@
         <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleString() }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
-          <v-flex xs12 class="my-5">
-            <!-- <h1 class="headline">Districtwise Male</h1> -->
+          <v-flex xs12 class="my-3">
+            <h1 class="headline mb-3">Check List :</h1>
             <v-layout row wrap >
-              <table class="v-datatable v-table dark" style=""  border=1>
+              <table class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
                 <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
               <tr v-for="report in reports" :prop="report" :key="report.office_id">
@@ -86,7 +86,7 @@ export default {
           else{
             this.loadingTXT='No data found'
           }
-        
+
         })
         .catch(error => {
           console.log(error)

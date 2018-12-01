@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'MIS Report - Districtwise',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'Polling Personnel Management System',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-5">
@@ -43,7 +43,7 @@
               </table>
             </v-layout>
           </v-flex>
-          <v-flex xs12>
+          <v-flex xs12 mb-5>
             <h1 class="headline">Subdivisionwise Female</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>

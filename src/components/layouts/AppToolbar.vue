@@ -4,7 +4,7 @@
       <v-toolbar-side-icon  id="menu"></v-toolbar-side-icon>
       <v-toolbar-title>
         <v-avatar color="primary"><img src="/static/Election_Commission_of_India_Logo.png" alt="avatar"></v-avatar>
-        <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">PPMS</router-link>
+        <router-link to="/" tag="span" style="cursor: pointer" class="ml-2 headline font-weight-black">WBPPMS</router-link>
       </v-toolbar-title>
 
 
@@ -37,17 +37,43 @@
               </v-list-tile>
             </v-list>
           </v-menu>
-          <v-icon @click="logout">exit_to_app</v-icon>
+          <v-icon @click="dialog = true">exit_to_app</v-icon>
 
     </v-toolbar>
     <app-drawer :mode="drawer" v-if="show"></app-drawer>
-    <!-- <v-navigation-drawer class="grey lighten-3" :clipped="true" app v-model="drawer">
-  <v-divider></v-divider>
-  <v-list dense class="pt-1">
-    <h1>Drawer</h1>
-    </v-list>
+   <v-dialog
+      v-model="dialog"
+      max-width="290"
+      persistent=true
+    >
+      <v-card>
+        <v-card-title class="headline">WBPPMS</v-card-title>
 
-  </v-navigation-drawer> -->
+        <v-card-text>
+         {{this.msg}}
+        </v-card-text>
+
+        <v-card-actions v-show="this.show_action">
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+
+            @click="logout"
+          >
+            Confirm
+          </v-btn>
+          <v-btn
+            color="red darken-1"
+
+            @click="dialog = false"
+          >
+            Close
+          </v-btn>
+
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -64,8 +90,10 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         items: [
           {title: 'Profile', path: '/profile'},
 
-        ]
-
+        ],
+        dialog: false,
+        msg:'Are you sure to Sign out ? Please confirm.',
+        show_action:true
       }
     },
     beforeUpdate(){
@@ -88,8 +116,17 @@ import AppDrawer from '@/components/layouts/AppDrawer'
     },
     methods: {
       logout(){
+        this.show_action=false
+        this.msg='Logging out from system.........'
         this.$store.dispatch('destroyToken')
+
+        setTimeout(() => {
+        this.dialog=false
+        this.msg=''
         this.$router.replace("/")
+                },2000)
+
+
       },
       toogle(){
         if(this.show === false){this.show= true}
