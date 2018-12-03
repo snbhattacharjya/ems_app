@@ -60,7 +60,7 @@ export default [
         path: '/signin',
         meta: {
           public: true,
-          title:'Login | Welcome to PPMS'
+          title:'Login | Welcome to WBPPMS'
         },
         name: 'Signin',
         beforeEnter: (to, from, next) => {
@@ -76,7 +76,7 @@ export default [
         path: '/signout',
         meta: {
           public: true,
-          title:'Logout | Welcome to PPMS'
+          title:'Logout | Welcome to WBPPMS'
         },
         name: 'Signout',
         beforeEnter: (to, from, next) => {
@@ -92,7 +92,7 @@ export default [
       path: '/signup',
       meta: {
         public: true,
-        title:'Sign up here | Welcome to PPMS'
+        title:'Sign up here | Welcome to WBPPMS'
       },
       name: 'Signup',
       component: () => import(
@@ -102,7 +102,7 @@ export default [
     },
     {
       path: '/',
-      meta: { public: true,title:'Welcome to PPMS'},
+      meta: { public: true,title:'Welcome to WBPPMS'},
       name: 'Welcome',
       component: () => import(
 
@@ -112,7 +112,7 @@ export default [
 
     {
       path: '/dashboard',
-      meta: { breadcrumb: true,title:'Dashboard | Welcome to PPMS' },
+      meta: { breadcrumb: true,title:'Dashboard | Welcome to WBPPMS' },
       name: 'DashboardOffice',
       component: () => import(
 
@@ -121,7 +121,7 @@ export default [
     },
     {
       path: '/downloads',
-      meta: { breadcrumb: true,title:'Downloads | Welcome to PPMS' },
+      meta: { breadcrumb: true,title:'Downloads | Welcome to WBPPMS' },
       name: 'Downloads',
       component: () => import(
 
@@ -130,7 +130,7 @@ export default [
     },
     {
       path: '/exports',
-      meta: { breadcrumb: true,title:'Exports | Welcome to PPMS' },
+      meta: { breadcrumb: true,title:'Exports | Welcome to WBPPMS' },
       name: 'Exports',
       component: () => import(
 
@@ -139,7 +139,7 @@ export default [
     },
     {
       path: '/dashboard/help',
-      meta: { breadcrumb: true,title:'Help | Welcome to PPMS' },
+      meta: { breadcrumb: true,title:'Help | Welcome to WBPPMS' },
       name: 'Help',
       component: () => import(
 
@@ -148,7 +148,7 @@ export default [
     },
     {
       path: '/office/list',
-      meta: {title:'View office | Welcome to PPMS'},
+      meta: {title:'View office | Welcome to WBPPMS'},
       name: 'ViewOffice',
       component: () => import(
 
@@ -157,7 +157,7 @@ export default [
     },
     {
       path: '/office/create',
-      meta: {title:'Create new office | Welcome to PPMS'},
+      meta: {title:'Create new office | Welcome to WBPPMS'},
       name: 'CreateOffice',
       component: () => import(
 
@@ -166,7 +166,7 @@ export default [
     },
     {
       path: `/office/:id/edit/`,
-      meta: {title:'Edit office | Welcome to PPMS'},
+      meta: {title:'Edit office | Welcome to WBPPMS'},
       name: 'OfficeEdit',
       component: () => import(
 
@@ -175,7 +175,7 @@ export default [
     },
     {
       path: `/office/edit/`,
-      meta: {title:'Edit your office | Welcome to PPMS'},
+      meta: {title:'Edit your office | Welcome to WBPPMS'},
       name: 'EditOffice',
       component: () => import(
 
@@ -184,7 +184,7 @@ export default [
     },
     {
       path: `/misreport/pp1`,
-      meta: {title:'Print PP1 Data | Welcome to PPMS'},
+      meta: {title:'Print PP1 Data | Welcome to WBPPMS'},
       name: 'PrintPP1Data',
       component: () => import(
 
@@ -193,7 +193,7 @@ export default [
     },
     {
       path: `/misreport/pp2`,
-      meta: {title:'Print PP2 Data | Welcome to PPMS'},
+      meta: {title:'Print PP2 Data | Welcome to WBPPMS'},
       name: 'PrintPP2Data',
       component: () => import(
 
@@ -202,7 +202,7 @@ export default [
     },
     {
       path: '/personnel/list',
-      meta: {title:'View Personnel | Welcome to PPMS'},
+      meta: {title:'View Personnel | Welcome to WBPPMS'},
       name: 'Viewpersonnel',
       component: () => import(
 
@@ -211,7 +211,7 @@ export default [
     },
     {
       path: '/personnel/create',
-      meta: {title:'Create new personnel | Welcome to PPMS'},
+      meta: {title:'Create new personnel | Welcome to WBPPMS'},
       name: 'CreatePersonnel',
       component: () => import(
 
@@ -220,7 +220,7 @@ export default [
     },
     {
       path: `/personnel/:id/edit/`,
-      meta: {title:'Edit personnel | Welcome to PPMS'},
+      meta: {title:'Edit personnel | Welcome to WBPPMS'},
       name: 'PersonnelEdit',
       component: () => import(
 
@@ -229,7 +229,7 @@ export default [
     },
     {
       path: `/users/create`,
-      meta: {title:'Create User | Welcome to PPMS'},
+      meta: {title:'Create User | Welcome to WBPPMS'},
       name: 'UserCreate',
       component: () => import(
 
@@ -238,7 +238,7 @@ export default [
     },
     {
       path: '/users/list',
-      meta: {title:'View User | Welcome to PPMS'},
+      meta: {title:'View User | Welcome to WBPPMS'},
       name: 'ViewUser',
       component: () => import(
 
@@ -247,7 +247,7 @@ export default [
     },
     {
       path: `/user/:id/edit/`,
-      meta: {title:'Edit user | Welcome to PPMS'},
+      meta: {title:'Edit user | Welcome to WBPPMS'},
       name: 'UserEdit',
       component: () => import(
 
@@ -256,7 +256,7 @@ export default [
     },
     {
       path: `/profile`,
-      meta: {title:'Profile | Welcome to PPMS'},
+      meta: {title:'Profile | Welcome to WBPPMS'},
       name: 'Profile',
       component: () => import(
 
@@ -265,7 +265,7 @@ export default [
     },
     {
       path: `/misreport/district`,
-      meta: {title:'See All Report for District | Welcome to PPMS'},
+      meta: {title:'See All Report for District | Welcome to WBPPMS'},
       name: 'MISReport District',
       component: () => import(
 
@@ -274,7 +274,7 @@ export default [
     },
     {
       path: `/misreport/district/:id`,
-      meta: {title:'See All Report for Subdivision | Welcome to PPMS'},
+      meta: {title:'See All Report for Subdivision | Welcome to WBPPMS'},
       name: 'MISReportSubdivision',
       component: () => import(
 
@@ -283,7 +283,7 @@ export default [
     },
     {
       path: `/misreport/assembly`,
-      meta: {title:'See All Report for Assembly | Welcome to PPMS'},
+      meta: {title:'See All Report for Assembly | Welcome to WBPPMS'},
       name: 'MISReport Assembly',
       component: () => import(
 
@@ -292,7 +292,7 @@ export default [
     },
     {
       path: `/change_password`,
-      meta: {title:'Change your password | Welcome to PPMS'},
+      meta: {title:'Change your password | Welcome to WBPPMS'},
       name: 'Change password',
       component: () => import(
 
@@ -301,7 +301,7 @@ export default [
     },
     {
       path: `/pppoststat`,
-      meta: {title:'Set rules for PP post Status | Welcome to PPMS'},
+      meta: {title:'Set rules for PP post Status | Welcome to WBPPMS'},
       name: 'PPpostStatus',
       component: () => import(
 
@@ -310,7 +310,7 @@ export default [
     },
     {
       path: `/pppoststatlist`,
-      meta: {title:'View rules for PP post Status | Welcome to PPMS'},
+      meta: {title:'View rules for PP post Status | Welcome to WBPPMS'},
       name: 'PPpostStatusList',
       component: () => import(
 
@@ -319,7 +319,7 @@ export default [
     },
     {
       path: `/resetpassword`,
-      meta: {title:'Reset Password for Personnel | Welcome to PPMS'},
+      meta: {title:'Reset Password for Personnel | Welcome to WBPPMS'},
       name: 'ResetPassword',
       component: () => import(
 
@@ -328,7 +328,7 @@ export default [
     },
     {
       path: `/poststatus_bulk_update`,
-      meta: {title:'Bulk update post status for Personnel | Welcome to PPMS'},
+      meta: {title:'Bulk update post status for Personnel | Welcome to WBPPMS'},
       name: 'PoststatusbulkUpdate',
       component: () => import(
 
@@ -337,7 +337,7 @@ export default [
     },
     {
       path: `/office_status_zero`,
-      meta: {title:'Office Status(0% updated) | Welcome to PPMS'},
+      meta: {title:'Office Status(0% updated) | Welcome to WBPPMS'},
       name: 'OfficeSttatus',
       component: () => import(
 
@@ -346,7 +346,7 @@ export default [
     },
     {
       path: `/office_status_complete`,
-      meta: {title:'Office Status(100% updated) | Welcome to PPMS'},
+      meta: {title:'Office Status(100% updated) | Welcome to WBPPMS'},
       name: 'OfficesttatusComplete',
       component: () => import(
 
@@ -355,7 +355,7 @@ export default [
     },
     {
       path: `/assembly_wise_reserved`,
-      meta: {title:'Office Status | Welcome to PPMS'},
+      meta: {title:'Office Status | Welcome to WBPPMS'},
       name: 'AssemblywiseReserved',
       component: () => import(
 
@@ -364,7 +364,7 @@ export default [
     },
     {
       path: `/assembly_groupby_subdivision`,
-      meta: {title:'Subdivision wise Assembly Report | Welcome to PPMS'},
+      meta: {title:'Subdivision wise Assembly Report | Welcome to WBPPMS'},
       name: 'AssemblybySubdivision',
       component: () => import(
 
@@ -373,7 +373,7 @@ export default [
     },
     {
       path: `/pollingpersonnel_progress_report`,
-      meta: {title:'Polling Personnel Progress Report | Welcome to PPMS'},
+      meta: {title:'Polling Personnel Progress Report | Welcome to WBPPMS'},
       name: 'ProgessReport',
       component: () => import(
 
@@ -382,7 +382,7 @@ export default [
     },
     {
       path: `/office_partials`,
-      meta: {title:'Office list partially updated | Welcome to PPMS'},
+      meta: {title:'Office list partially updated | Welcome to WBPPMS'},
       name: 'OfficePartial',
       component: () => import(
 

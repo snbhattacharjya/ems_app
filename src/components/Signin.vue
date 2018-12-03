@@ -4,7 +4,7 @@
         <v-flex xs12 sm8 md4>
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
-              <v-toolbar-title>Login To PPMS</v-toolbar-title>
+              <v-toolbar-title>Login To WBPPMS</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form autocomplete="off">
