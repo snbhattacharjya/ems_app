@@ -22,9 +22,9 @@ const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
 //Vue.use(printjs)
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://10.247.144.104/ems_service/public/index.php/api'
-//axios.defaults.baseURL = 'http://service.ems.test/api'
-//axios.defaults.baseURL = 'http://10.173.128.19:8000/api'
+axios.defaults.baseURL = 'http://10.247.144.104/ems_service/public/index.php/api' //live server
+//axios.defaults.baseURL = 'http://service.ems.test/api' //local
+//axios.defaults.baseURL = 'http://10.173.128.19:8000/api' //local test server
 window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
