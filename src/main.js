@@ -24,6 +24,7 @@ Vue.use(VueScrollTo)
 Vue.config.productionTip = false
 //axios.defaults.baseURL = 'http://10.247.144.104/ems_service/public/index.php/api'
 axios.defaults.baseURL = 'http://service.ems.test/api'
+//axios.defaults.baseURL = 'http://10.173.128.19:8000/api'
 window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {

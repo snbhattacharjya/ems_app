@@ -230,7 +230,10 @@
                     data-vv-name="present_address"
                     @input="uppercase"
                   ></v-textarea>
-
+                  <v-switch
+      label="Permanent Address is same as above"
+      v-model="address" @change="copy_address" class="ml-3"
+    ></v-switch>
                   <v-textarea
                     prepend-icon="account_balance"
                     name="permanent_address"
@@ -551,6 +554,7 @@ import RemarkList from '@/components/RemarkList'
         emp_group: '',
         working_status: 'Y',
         gender: 'M',
+        address:false,
         present_address: '',
         permanent_address: '',
         email: '',
@@ -760,6 +764,13 @@ import RemarkList from '@/components/RemarkList'
       }
     },
     methods: {
+      copy_address:function(){
+        if(this.address == true){
+          this.permanent_address = this.present_address
+        }else{
+
+        }
+      },
        getlevel(val){
         if(val != ''){
           axios.get('/officetype/'+val,{

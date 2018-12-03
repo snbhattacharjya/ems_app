@@ -7,7 +7,7 @@
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-2">
-            <h1 class="headline">Districtwise Male</h1>
+            <h1 class="headline">Districtwise PP Requirement Male</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
@@ -46,7 +46,7 @@
             </v-layout>
           </v-flex>
           <v-flex xs12 mb-5>
-            <h1 class="headline">Districtwise Female </h1>
+            <h1 class="headline">Districtwise PP Requirement Female </h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>

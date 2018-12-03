@@ -231,7 +231,10 @@
                     :error-messages="errors.collect('present_address')"
                     data-vv-name="present_address"
                   ></v-textarea>
-
+<v-switch
+      label="Permanent Address is same as above"
+      v-model="address" @change="copy_address" class="ml-3"
+    ></v-switch>
                   <v-textarea
                     prepend-icon="account_balance"
                     name="permanent_address"
@@ -555,6 +558,7 @@ import RemarkList from '@/components/RemarkList'
         emp_group: '',
         working_status: '',
         gender: '',
+        address:false,
         present_address: '',
         permanent_address: '',
         email: '',
@@ -742,6 +746,13 @@ import RemarkList from '@/components/RemarkList'
       }
   },
     methods: {
+      copy_address:function(){
+        if(this.address == true){
+          this.permanent_address = this.present_address
+        }else{
+
+        }
+      },
       changetypeblur:function(){
           if(this.type_text === 'text'){this.type_text = 'password'}
       },
@@ -837,6 +848,7 @@ import RemarkList from '@/components/RemarkList'
           this.gender= item.gender,
           this.present_address= item.present_address,
           this.permanent_address= item.permanent_address,
+          this.address= this.permanent_address == this.present_address ? true : false,
           this.email= item.email,
           this.phone= item.phone,
           this.mobile= item.mobile,

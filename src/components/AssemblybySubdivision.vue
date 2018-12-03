@@ -8,7 +8,7 @@
         <v-layout row wrap >
 
           <v-flex xs12 >
-            <h1 class="headline">Assemblywise Report </h1>
+            <h1 class="headline">Assemblywise Analysis Report </h1>
             <v-layout row wrap >
               <table  class="v-datatable v-table dark my-3" id=""  border=1>
                 <thead>
@@ -19,7 +19,7 @@
                 <th width="20%" ><strong>Subdivision</strong></th>
                 <th width="10%"><strong>No of Party</strong></th>
                 <th width="15%"><strong>20%</strong></th>
-                <th width="15%"><strong>With 120%</strong></th>
+                <th width="15%"><strong>With 20%</strong></th>
                 </tr>
 
                 </thead>
@@ -58,7 +58,7 @@
                 <th width="25%" ><strong>Subdivision</strong></th>
                 <th width="8%"><strong>No of Party</strong></th>
                 <th width="8%"><strong>20%</strong></th>
-                <th width="9%"><strong>With 120%</strong></th>
+                <th width="9%"><strong>With 20%</strong></th>
                 </tr>
 
                 </thead>
@@ -97,7 +97,7 @@
                 <th width="25%" ><strong>Subdivision</strong></th>
                 <th width="8%"><strong>No of Party</strong></th>
                 <th width="8%"><strong>20%</strong></th>
-                <th width="9%"><strong>With 120%</strong></th>
+                <th width="9%"><strong>With 20%</strong></th>
                 </tr>
 
                 </thead>

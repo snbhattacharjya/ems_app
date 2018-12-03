@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Reserved Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
           <v-flex xs12 class="my-5" id="exclude">
@@ -26,7 +26,7 @@
             </v-layout>
           </v-flex>
           <v-flex xs12 >
-            <h1 class="headline">Assemblywise Report </h1>
+            <h1 class="headline">Assemblywise Reserved Report </h1>
             <v-layout row wrap >
               <table  class="v-datatable v-table dark my-5" id=""  border=1>
                 <thead>
@@ -34,10 +34,10 @@
                 <th width="5%" ><strong>Serial<br> No</strong></th>
                 <th width="20%"><strong>Assembly</strong></th>
                 <th width="15%" ><strong>No of Polling Booth<br>(Required)</strong></th>
-                <th width="15%" ><strong>110% Reserved</strong></th>
-                <th width="15%" ><strong>115% Reserved</strong></th>
-                <th width="15%"><strong>120% Reserved</strong></th>
-                <th width="15%"><strong>125% Reserved</strong></th>
+                <th width="15%" ><strong>With 10% Reserved</strong></th>
+                <th width="15%" ><strong>With 15% Reserved</strong></th>
+                <th width="15%"><strong>With 20% Reserved</strong></th>
+                <th width="15%"><strong>With 25% Reserved</strong></th>
                 </tr>
 
 

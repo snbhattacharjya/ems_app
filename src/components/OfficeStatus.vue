@@ -79,13 +79,17 @@ import JsonCSV from 'vue-json-csv'
       dataFile: 'office_not_upadated_export.csv',
         labels: {
           id: 'Office ID',
+          identification_code:'Identification Code',
           name: 'Office Name',
           mobile:'Mobile',
           address: 'Address',
           post_office: 'Post Office',
+          subdivision: 'Subdivision',
+          block: 'Block/Municipality',
+          policestations: 'Police Station',
           pin: 'PIN'
         },
-        csvfields : ['id','name','mobile','address','post_office','pin'],
+        csvfields : ['id','identification_code','name','mobile','address','post_office','subdivision','block','policestations','pin'],
         btn_txt:'Download as CSV'
     }),
 

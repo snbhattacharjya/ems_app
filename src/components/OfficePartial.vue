@@ -81,12 +81,19 @@ import JsonCSV from 'vue-json-csv'
         labels: {
           officeId: 'Office ID',
           officeName: 'Office Name',
+          identification_code:'Identification Code',
           mobile:'Mobile',
+          address: 'Address',
+          post_office: 'Post Office',
+          subdivision: 'Subdivision',
+          block: 'Block/Municipality',
+          policestations: 'Police Station',
+          pin: 'PIN',
           totalStuff: 'Total Staff',
           personelenty: 'Personnel Entered',
           progress: 'Progress(%)'
         },
-        csvfields : ['officeId','officeName','mobile','totalStuff','personelenty','progress'],
+        csvfields : ['officeId','officeName','identification_code','mobile','address','post_office','subdivision','block','policestations','pin','totalStuff','personelenty','progress'],
         btn_txt:'Download as CSV'
 
     }),

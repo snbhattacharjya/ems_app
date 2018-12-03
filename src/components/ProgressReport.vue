@@ -7,8 +7,8 @@
         </v-layout>
         <v-layout row wrap>
 
-          <v-flex xs12 my-5>
-            <h1 class="headline">Polling Personnel Progress Report</h1>
+          <v-flex xs12 mb-5>
+            <h1 class="headline mb-3">Subdivisionwise Polling Personnel Progress Report</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>
@@ -22,7 +22,7 @@
                 <th width="10%" ><strong>Total Staff PP1</strong></th>
                 <th width="10%" ><strong>Male PP1</strong></th>
                 <th width="10%" ><strong>Female PP1</strong></th>
-                <th width="5%" ><strong>Letter</strong></th>
+                <!-- <th width="5%" ><strong>Letter</strong></th> -->
                 </tr>
 
                 </thead>
@@ -38,7 +38,7 @@
                   <td class="nopad" >{{ report.totalStuff }}</td>
                   <td class="nopad" >{{ report.totalMale }}</td>
                   <td class="nopad" >{{ report.female_staff }}</td>
-                  <td class="nopad" ></td>
+                  <!-- <td class="nopad" ></td> -->
                   </tr>
                   <tr>
                     <td class="nopad"  colspan=3><strong>Total</strong></td>
@@ -48,7 +48,7 @@
                     <td class="nopad" >{{this.totalStuff_count}}</td>
                     <td class="nopad" >{{this.totalMale_count}}</td>
                     <td class="nopad" >{{this.female_staff_count}}</td>
-                    <td class="nopad" ></td>
+                    <!-- <td class="nopad" ></td> -->
                   </tr>
                 </tbody>
               </table>
