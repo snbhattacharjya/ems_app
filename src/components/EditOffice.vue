@@ -14,6 +14,8 @@
                 name="office_name"
                 label="Office Name(*)"
                 type="text"
+                counter
+                maxlength="50"
                 v-model="office_name"
                 v-validate="'required'"
                 :error-messages="errors.collect('office_name')"
@@ -26,6 +28,8 @@
                 name="identification_code"
                 label="Identification Code eg. DDO Code/IFSC/DISE Code alike(*)"
                 type="text"
+                counter
+                maxlength="50"
                 v-model="identification_code"
                 v-validate="'required'"
                 :error-messages="errors.collect('identification_code')"
@@ -38,6 +42,8 @@
                 name="officer_designation"
                 label="Designation of Head of Office(*)"
                 type="text"
+                counter
+                maxlength="50"
                 v-model="officer_designation"
                 v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('officer_designation')"
@@ -50,6 +56,8 @@
                 name="office_address"
                 label="Office Address(*)"
                 type="text"
+                counter
+                maxlength="50"
                 v-model="office_address"
                 v-validate="'required'"
                 :error-messages="errors.collect('office_address')"
@@ -62,6 +70,8 @@
                 name="post_office"
                 label="Post Office(*)"
                 type="text"
+                counter
+                maxlength="50"
                 v-model="post_office"
                 v-validate="'required|alpha_spaces'"
                 :error-messages="errors.collect('post_office')"
