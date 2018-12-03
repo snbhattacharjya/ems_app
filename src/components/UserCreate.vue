@@ -305,6 +305,7 @@
       getSubuserlevels(level){ console.log(level)
           if(level === '07' || level === '06'){
             this.makedisable=true
+            this.makedisable_ppcell=true
             this.sublevels=[]
             this.subdivisions=[]
                 axios.get('/sublevel/06')
@@ -371,7 +372,7 @@
           })
         }
       },
-      getppcelllevels(level){ console.log('ppcell - '+level)
+      getppcelllevels(level){
         if(level === '06'){
 
             this.subdivisions=[]
