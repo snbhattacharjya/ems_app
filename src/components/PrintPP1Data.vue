@@ -62,15 +62,15 @@
                   </tr>
                   <tr>
                     <td><strong>Total Employees</strong> </td>
-                    <td>{{parseInt(reports[1].maleEntry) + parseInt(reports[1].femaleEntry)}}</td>
+                    <td>{{parseInt(reports[1].maleEntry=null ? 0:reports[1].maleEntry) + parseInt(reports[1].femaleEntry=null ? 0:reports[1].femaleEntry)}}</td>
                   </tr>
                   <tr>
                     <td><strong>Male</strong> </td>
-                    <td>{{reports[1].maleEntry}}</td>
+                    <td>{{reports[1].maleEntry=null ? 0:reports[1].maleEntry}}</td>
                   </tr>
                   <tr>
                     <td><strong>Female</strong> </td>
-                    <td>{{reports[1].femaleEntry}}</td>
+                    <td>{{reports[1].femaleEntry=null ? 0:reports[1].femaleEntry}}</td>
                   </tr>
 
                   <tr>
