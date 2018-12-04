@@ -2,8 +2,8 @@
   <div id="pageDashboard">
     <v-container fluid>
       <v-layout row wrap>
-          <v-card-title primary-title class="layout"><div class="headline">What is Lorem Ipsum?</div></v-card-title>
-          <v-card-text><v-divider class="my-3"></v-divider>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</v-card-text>
+          <v-card-title primary-title class="layout"><div class="headline">Forewords</div></v-card-title>
+          <v-card-text><v-divider class="mb-5"></v-divider>In an endeavor to have an integrated database for the election personnel of the state of West Bengal for the General Elections to the Lok Sabha, 2019, the aim is  to generate  a database of election personnel containing the detailed particulars of each and every eligible person of the district .The collection of data at the entry level is expectedly minimize the errors in recording particulars and also be less time consuming. Moreover, the availability of the database at the state level will enable transfer of data to the areas of deficit in an easy mode.  The Portal is also provided with the features of online randomization in different phases as per rules and regulations, stipulated by the Election commission of India. Expectedly, this user-friendly approach will be a path breaking exercise and facilitate the process of manpower management in a seam less manner.</v-card-text>
       </v-layout>
     </v-container>
   </div>
