@@ -71,7 +71,7 @@ export default new Vuex.Store({
       })
       .then(response => {
         context.commit('destroyToken')
-        window.sessionStorage.removeItem('is_authenticated')
+        window.sessionStorage.setItem('is_authenticated', null)
       })
       .catch(error => {
 

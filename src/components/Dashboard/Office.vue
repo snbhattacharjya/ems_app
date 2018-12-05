@@ -69,7 +69,7 @@
 
               </v-layout>
               <v-layout row wrap>
-                  <v-card-title primary-title class="layout"><div class="headline">Welcome to PPMS</div></v-card-title>
+                  <v-card-title primary-title class="layout"><div class="headline">Welcome to WBPPMS</div></v-card-title>
                   <v-card-text><v-divider class="my-3"></v-divider>West Bengal CEO's PP Portal.</v-card-text>
               </v-layout>
             </v-container>

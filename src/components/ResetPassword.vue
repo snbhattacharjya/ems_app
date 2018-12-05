@@ -55,7 +55,7 @@
         <v-card-title class="headline">User Password Reset</v-card-title>
 
         <v-card-text>
-         Password reseted successfully.<br> New Password - <span class="green--text"> {{this.newpassword}}</span>
+         Password reseted successfully for <strong>{{this.userid}}</strong><br> New Password - <span class="green--text"> {{this.newpassword}}</span>
         </v-card-text>
 
         <v-card-actions>
@@ -73,6 +73,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
       </v-layout>
       </section>
     </v-container>
@@ -103,6 +104,7 @@
       offices: [],
       searchInput: '',
       newpassword:'',
+      userid:''
 
     }),
     components: {
@@ -172,9 +174,11 @@
         }
       },
       resetpass(val){
+        if(confirm('Are you sure to reset password for '+val+' ?')){
           this.disable_save=true
          axios.get('/resetpassword/'+val)
           .then((response, data) => {
+            this.userid=val
             this.newpassword=response.data
             this.dialog=true
 
@@ -182,6 +186,7 @@
           .catch(error => {
             console.log(error)
           })
+        }
       },
 
 

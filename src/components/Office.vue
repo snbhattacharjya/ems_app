@@ -108,20 +108,32 @@
                 >
               </v-select>
 
-              <block-muni-list
+              <!-- <block-muni-list
                 v-model="block_muni_id"
                 v-validate="'required'"
                 data-vv-name="block_muni_id"
                 :error="errors.collect('block_muni_id')"
-              ></block-muni-list>
+              ></block-muni-list> -->
 
-              <!-- <police-station-list
+              <v-select
+                :items="blocmunies"
+                v-model="block_muni_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select Block/Municipality(*)"
+                :disabled="makedisable"
+
+                >
+              </v-select>
+
+              <police-station-list
                 v-model="police_station_id"
                 v-validate="'required'"
                 data-vv-name="police_station_id"
                 :error="errors.collect('police_station_id')"
-              ></police-station-list> -->
-              <v-select
+              ></police-station-list>
+              <!-- <v-select
                 :items="policestations"
                 v-model="police_station_id"
                 item-text= "name"
@@ -131,7 +143,7 @@
                 :disabled="makedisable"
 
                 >
-              </v-select>
+              </v-select> -->
 
               <assembly-list
                 v-model="ac_id"
@@ -308,6 +320,7 @@
         officer_designation: '',
         post_office: '',
         pin: '',
+        blocmunies:[],
         policestations:[],
         police_station_id: '',
         ac_id: '',
@@ -523,6 +536,23 @@
             response.data.forEach(item => {
                 item.name=item.name.toUpperCase()
                 this.policestations.push(item)
+              });
+          }
+          this.makedisable=false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+          axios.get('/getblockbysubdission/'+subdivision_id)
+          .then((response, data) => {
+          if(response.data.length === 0 ) {
+            this.makedisable=true
+          }else{
+            this.subdivision_id=subdivision_id
+            this.blocmunies=[]
+            response.data.forEach(item => {
+                item.name=item.name.toUpperCase()
+                this.blocmunies.push(item)
               });
           }
           this.makedisable=false

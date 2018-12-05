@@ -22,9 +22,9 @@ const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
 //Vue.use(printjs)
 Vue.config.productionTip = false
-//axios.defaults.baseURL = 'http://10.247.144.104/ems_service/public/index.php/api' //live server
-//axios.defaults.baseURL = 'http://service.ems.test/api' //local
-axios.defaults.baseURL = 'http://10.173.128.19/api' //local test server
+//axios.defaults.baseURL = 'http://wbppms.gov.in/ems_service/public/index.php/api' //live server
+axios.defaults.baseURL = 'http://service.ems.test/api' //local
+//axios.defaults.baseURL = 'http://10.173.128.19/api' //local test server
 window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
@@ -43,7 +43,7 @@ new Vue({
     if(window.sessionStorage.getItem('is_authenticated') != null){
     alert('Window is Idle for 15 minutes, you will be loged out')
     store.dispatch('destroyToken')
-    window.sessionStorage.removeItem('is_authenticated')
+    window.sessionStorage.setItem('is_authenticated', null)
     this.$router.replace("/")
     }
   },

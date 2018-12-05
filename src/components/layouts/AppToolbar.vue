@@ -67,7 +67,7 @@
 
             @click="dialog = false"
           >
-            Close
+            Cancel
           </v-btn>
 
 

@@ -147,6 +147,15 @@ export default [
       )
     },
     {
+      path: '/dashboard/contact',
+      meta: { breadcrumb: true,title:'Contact | Welcome to WBPPMS' },
+      name: 'Contact',
+      component: () => import(
+
+        '@/components/pages/Contact.vue'
+      )
+    },
+    {
       path: '/office/list',
       meta: {title:'View office | Welcome to WBPPMS'},
       name: 'ViewOffice',

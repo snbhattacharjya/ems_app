@@ -163,7 +163,7 @@
         pplevels:[
           {name: 'OC', code: 'OC'},
           // {name: 'HC', code: 'HC'},
-          {name: 'DEO', code: 'DEO'}
+          {name: 'DATA ENTRY OPERATOR', code: 'DEO'}
         ],
         user_level : '',
         user_sublevel : '',
