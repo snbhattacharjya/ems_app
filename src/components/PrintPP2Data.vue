@@ -19,7 +19,7 @@
                     <strong>{{report.sl}} ) </strong>
                     <strong>Name : </strong>{{report.empname}} <strong>Designation : </strong>{{report.designation}}
                     <strong>Present Address : </strong>{{report.present_address}} <strong>Permanent Address : </strong>{{report.permanent_address}}
-                    <strong>Date of Birth : </strong>{{report.dob}} <strong>Gender : </strong>{{report.gender}}
+                    <strong>Date of Birth : </strong>{{moment(report.dob).format('DD/MM/YYYY')}} <strong>Gender : </strong>{{report.gender}}
                     <strong>Pay Scale : </strong>{{report.scale}} <strong>Basic Pay : </strong>{{report.basic_pay}} <strong>Grade Pay : </strong>{{report.grade_pay}} <strong>Pay Level : </strong>{{report.pay_level}}
                     <strong>Employee Group : </strong>{{report.emp_group}} <strong>Working Status : </strong>{{report.working_status}} <strong>Email : </strong>{{report.email}} <strong>Phone : </strong>{{report.phone}} <strong>Mobile : </strong>{{report.mobile}}
                     <strong>Epic No : </strong>{{report.epic}} <strong>Part No : </strong>{{report.part_no}} <strong>Serial No : </strong>{{report.sl_no}} <strong>Post Status : </strong>{{report.post_stat}}
@@ -80,7 +80,7 @@ export default {
                 this.reports.push(item)
                 i++
             })
-              this.$store.dispatch('storePP2report', this.reports)
+              //this.$store.dispatch('storePP2report', this.reports)
               this.tableloading=false
           }
           else{
@@ -96,13 +96,13 @@ export default {
   },
 
   created(){
-    if(this.getppdata != ''){console.log('PP2 -'+this.getppdata)
-    this.reports=this.getppdata
-    console.log('PP2 from store - '+this.reports)
-    }
-    else{console.log('PP2 - No data')
+    // if(this.getppdata != ''){
+    // this.reports=this.getppdata
+
+    // }
+    // else{
         this.initialize()
-    }
+    //}
 
   },
   computed:{

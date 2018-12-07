@@ -44,7 +44,7 @@
    <v-dialog
       v-model="dialog"
       max-width="290"
-      persistent=true
+      :persistent=true
     >
       <v-card>
         <v-card-title class="headline">WBPPMS</v-card-title>

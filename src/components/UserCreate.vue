@@ -59,7 +59,7 @@
                 label="Name of the User(*)"
                 type="text"
                 counter
-                maxlength=30
+                maxlength=50
                 v-model="name"
                 v-validate="'required'"
                 :error-messages="errors.collect('name')"
@@ -74,7 +74,7 @@
                 label="Designation of User(*)"
                 type="text"
                 counter
-                maxlength=30
+                maxlength=50
                 v-model="designation"
                 v-validate="'required'"
                 :error-messages="errors.collect('designation')"
@@ -89,7 +89,7 @@
                 label="Email(*)"
                 type="text"
                 counter
-                maxlength=20
+                maxlength=50
                 v-model="email"
                 v-validate="'email|required'"
                 :error-messages="errors.collect('email')"

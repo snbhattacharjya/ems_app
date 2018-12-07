@@ -514,6 +514,9 @@
           this.message_text = 'Office Added Successfully with Office code - '+response.data
           this.snackbar =true
           this.$validator.reset()
+          setTimeout(() => {
+                  this.$router.replace("/office/list")
+                },2000)
         })
         .catch(error => {
           this.show_message = true

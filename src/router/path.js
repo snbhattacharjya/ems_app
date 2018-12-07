@@ -222,6 +222,7 @@ export default [
       path: '/personnel/create',
       meta: {title:'Create new personnel | Welcome to WBPPMS'},
       name: 'CreatePersonnel',
+      force: true,
       component: () => import(
 
         '@/components/Personnel'

@@ -171,7 +171,7 @@
                     type="text"
                     v-model="grade_pay"
                     maxlength="7"
-                    v-validate="'required|numeric'"
+                    v-validate="'required|numeric|max_value:32000'"
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
@@ -632,7 +632,8 @@ import RemarkList from '@/components/RemarkList'
               required: "Pay Scale is required"
             },
             grade_pay: {
-              required: "Grade Pay is required"
+              required: "Grade Pay is required",
+              max_value: 'Grade pay can not be greater than 32000 '
             },
             basic_pay: {
               required: "Basic Pay is required"
@@ -807,7 +808,7 @@ import RemarkList from '@/components/RemarkList'
           branch_ifsc: this.branch_ifsc
           })
           .then((response, data) => {
-            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is outside of West Bengal '}
+            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is not listed yet'}
             else{
               response.data.forEach(item => {
                 this.ifsc_hint= item.bank+'('+item.branch+')'
@@ -897,40 +898,13 @@ import RemarkList from '@/components/RemarkList'
             this.message_icon = 'check_circle'
             this.multiline =false
             this.message_text = 'Personnel Added Successfully with code - '+response.data
-            this.officer_name=''
-            this.designation=''
-            this.aadhaar=''
-            this.dob=''
-            this.gender='M'
-            this.qualification_id=''
-            this.language_id=1
-            this.remark_id='99'
-            this.scale=''
-            this.basic_pay=''
-            this.grade_pay=''
-            this.pay_level=''
-            this.emp_group=''
-            this.working_status='Y'
-            this.gender=''
-            this.present_address=''
-            this.permanent_address=''
-            this.email=''
-            this.phone=''
-            this.mobile=''
-            // this.block_muni_temp_id=''
-            // this.block_muni_perm_id=''
-            // this.block_muni_off_id=''
-            this.epic=''
-            this.part_no=''
-            this.sl_no=''
-            // this.assembly_temp_id=''
-            // this.assembly_perm_id=''
-            // this.assembly_off_id=''
-            this.branch_ifsc=''
-            this.bank_account_no=''
-            this.confirm_bank_account_no=''
             this.$validator.reset()
             this.snackbar =true
+            this.server_errors=''
+            setTimeout(() => {
+                  this.$router.replace("/personnel/list")
+                },2000)
+
         })
         .catch(error => {
           this.show_message = true

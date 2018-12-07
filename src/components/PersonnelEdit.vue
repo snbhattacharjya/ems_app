@@ -425,7 +425,7 @@
                     onPaste="return false"
                   ></v-text-field>
 
-                  <v-text-field
+                  <v-text-field v-if="confim_acc"
                     prepend-icon="account_balance"
                     name="confirm_bank_account_no"
                     label="Confirm Bank Account No(*)"
@@ -588,7 +588,9 @@ import RemarkList from '@/components/RemarkList'
         assembly_perm_id: '',
         assembly_off_id: '',
         branch_ifsc: '',
+        bank_account_no_stored:'',
         bank_account_no: '',
+        confim_acc:false,
         show_message: false,
         message_type: "",
         message_icon: "",
@@ -737,8 +739,12 @@ import RemarkList from '@/components/RemarkList'
   },
   watch:{
     bank_account_no:function(val){
-        if(this.bank_account_no != val){
+        if(this.bank_account_no_stored != val){
           this.checkaccount()
+          this.confim_acc=true
+        }
+        else if(this.bank_account_no_stored == val){
+          this.confim_acc=false
         }
     },
     office_id:function(val){
@@ -791,7 +797,7 @@ import RemarkList from '@/components/RemarkList'
           branch_ifsc: this.branch_ifsc
           })
           .then((response, data) => {
-            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is outside of West Bengal '}
+            if(response.data == 'Your Bank not in WB'){this.ifsc_hint='Either IFSC Code you entered is wrong or bank is not listed yet'}
             else{
               response.data.forEach(item => {
                 this.ifsc_hint= item.bank+'('+item.branch+')'
@@ -864,6 +870,7 @@ import RemarkList from '@/components/RemarkList'
           this.assembly_off_id= item.assembly_off_id,
           this.branch_ifsc= item.branch_ifsc,
           this.bank_account_no= item.bank_account_no
+          this.bank_account_no_stored= item.bank_account_no
           })
         })
         .catch(error => {
