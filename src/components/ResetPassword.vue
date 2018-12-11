@@ -20,8 +20,8 @@
         </v-select>
       </v-flex>
 
-      <v-flex xs1>
-
+      <v-flex xs8>
+        <v-btn v-if="this.getuser.level == 12" color="primary" @click="getAdminlist" >Show Admin Users</v-btn>
       </v-flex>
       </v-layout>
       </v-flex>
@@ -34,11 +34,16 @@
         </v-toolbar>
           <v-data-table :headers="headers" :items="offices" :search="search" class="elevation-1" :loading="tableloading">
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.id }}</td>
-              <td >{{ props.item.name }} ({{ props.item.identification_code }})</td>
+              <td v-if="isadmin==false">{{ props.item.id }}</td>
+              <td v-else>{{ props.item.user_id }}</td>
+              <td v-if="isadmin==false" >{{ props.item.name }} ({{ props.item.identification_code }})</td>
+              <td v-else>{{ props.item.name }}</td>
               <td >{{ props.item.mobile }}</td>
-              <td class="justify-center layout px-0">
+              <td v-if="isadmin==false"  class="justify-center layout px-0">
                 <v-btn flat @click="resetpass(props.item.id)"><v-icon small class="mr-2">restore</v-icon>Reset Password</v-btn>
+              </td>
+              <td v-else class="justify-center layout px-0">
+                <v-btn flat @click="resetpass(props.item.user_id)"><v-icon small class="mr-2">restore</v-icon>Reset Password</v-btn>
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -94,10 +99,11 @@
       offices:[],
       isdisabled:true,
       disable_save: false,
+      isadmin:false,
       headers: [
 
-        { text: 'Office ID', value: 'id',align: 'left', },
-        { text: 'Office Name',align: 'left',sortable: false,value: 'name'},
+        { text: 'ID', value: 'id',align: 'left', },
+        { text: 'Name',align: 'left',sortable: false,value: 'name'},
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false },
       ],
@@ -133,6 +139,7 @@
 
     methods: {
       getsubdivision(){
+
           axios.get('/subdivisions')
           .then((response, data) => {
           response.data.forEach(item => {
@@ -144,6 +151,23 @@
             console.log(error)
           })
       },
+     getAdminlist(){
+
+        axios.get('/offices/admin')
+          .then((response, data) => {
+
+            this.offices=[]
+          response.data.forEach(item => {
+
+              this.offices.push(item)
+            });
+          this.isadmin=true
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
+     },
 
       showError(){
         this.show_message = true
@@ -155,6 +179,7 @@
 
       getOfficelist(){
         if(this.subdivision_id !=''){
+           this.isadmin=false
         axios.get('/offices/'+this.subdivision_id)
           .then((response, data) => {
             this.isdisabled=false

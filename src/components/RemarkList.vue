@@ -12,18 +12,7 @@
       @input="$emit('input',$event)"
     >
     </v-select>
-     <v-text-field v-if="comment === true || selected === '13'"
-                  prepend-icon="feedback"
-                  name="remark_comment"
-                  label="Type Reasone (Maximum 128 charecter)"
-                  type="text"
-                  counter
-                  maxlength="128"
-                  v-model="remark_comment"
-                  v-validate="'required|max:128'"
-                  :error-messages="errors.collect('remark_comment')"
-                  data-vv-name="remark_comment"
-                ></v-text-field>
+
 </div>
 </template>
 

@@ -43,6 +43,7 @@ export default {
       .then((response, data) => {
        response.data.forEach(item => {
           this.pcs.push(item)
+          this.pcs.push({name:"OTHER",id:"99"})
         });
       })
       .catch(error => {

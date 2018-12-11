@@ -131,6 +131,19 @@
                   :selected="remark_id"
                   :remark_comment="remark_comment"
                 ></remark-list>
+                <v-text-field v-if="this.remark_id === '13'"
+                  prepend-icon="feedback"
+                  name="remark_comment"
+                  label="Type Reasone (Maximum 128 charecter)"
+                  type="text"
+                  counter
+                  maxlength="128"
+                  v-model="remark_comment"
+                  v-validate="'required|max:128'"
+                  :error-messages="errors.collect('remark_comment')"
+                  data-vv-name="remark_comment"
+
+                ></v-text-field>
 
                   <v-btn color="primary" @click="personnel_form = 2">Continue</v-btn>
 
@@ -507,7 +520,7 @@ import RemarkList from '@/components/RemarkList'
         acc_hint:'',
         language_id: '',
         remark_id: '',
-        remark_reason:'',
+        remark_comment:'',
         scale: '',
         basic_pay: 0,
         grade_pay: '',
@@ -909,6 +922,7 @@ import RemarkList from '@/components/RemarkList'
           qualification_id: this.qualification_id,
           language_id: this.language_id,
           remark_id:this.remark_id,
+          remark_reason: this.remark_comment,
           scale: this.scale,
           basic_pay: this.basic_pay,
           grade_pay: this.grade_pay ? this.grade_pay : '0',

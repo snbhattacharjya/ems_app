@@ -23,9 +23,9 @@
                       </v-card-title>
                       <v-card-title v-else  primary-title>
 
-                        <h3 class="pb-5">Total Office : {{getdashboard.totalOffice}}</h3>
+                        <h3 class="pb-5">Total NO. of Office : {{getdashboard.totalOffice}}</h3>
 
-                        <h3 class="">Total EMP Registered : {{getdashboard.distinct_office}}</h3>
+                        <h3 class="">Total Office Registered so far : {{getdashboard.distinct_office}}</h3>
                       </v-card-title>
 
                     </v-card>

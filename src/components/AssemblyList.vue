@@ -53,7 +53,7 @@ export default {
           this.assemblies.push(item)
 
         })
-        this.block_munis.push({name:"OTHER",id:"999901"})
+        this.assemblies.push({name:"OTHER",id:"999"})
       })
       .catch(error => {
         console.log(error)

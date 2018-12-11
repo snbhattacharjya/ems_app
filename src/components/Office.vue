@@ -516,7 +516,7 @@
           this.$validator.reset()
           setTimeout(() => {
                   this.$router.replace("/office/list")
-                },2000)
+          },1000*60)
         })
         .catch(error => {
           this.show_message = true
