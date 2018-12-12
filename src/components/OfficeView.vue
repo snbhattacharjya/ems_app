@@ -2,7 +2,7 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section>
-        <v-layout row wrap v-if="this.getuser.level == 12 ||this.getuser.level == 3 ||this.getuser.level == 5 ||this.getuser.level == 6 ||this.getuser.level == 7" >
+        <v-layout row wrap v-if="this.getuser.level == 12 ||this.getuser.level == 3 ||this.getuser.level == 5 ||this.getuser.level == 6 ||this.getuser.level == 7 " >
         <v-btn color="primary" :to="'/office_status_zero'">Office Status(0% updated)</v-btn>
         <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
         <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated)</v-btn>

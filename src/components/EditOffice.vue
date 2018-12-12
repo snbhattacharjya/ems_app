@@ -487,7 +487,7 @@ export default {
       this.message_text = "Error Occurred!!!"
     },
     saveOffice() {
-if(this.total_staff>= this.stored_total_staff){
+// if(this.total_staff>= this.stored_total_staff){
        var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.getofficeid.user_id, 8)
       axios
@@ -533,14 +533,14 @@ if(this.total_staff>= this.stored_total_staff){
             "Error Occurred!!! " + error.response.data.message
           this.snackbar = true
         })
-    }
-    else{
-          this.show_message = true
-          this.message_type = "error"
-          this.message_icon = "warning"
-          this.message_text ="Number of Total Staff cann't be decreased."
-          this.snackbar = true
-    }
+    // }
+    // else{
+    //       this.show_message = true
+    //       this.message_type = "error"
+    //       this.message_icon = "warning"
+    //       this.message_text ="Number of Total Staff cann't be decreased."
+    //       this.snackbar = true
+    // }
     },
     getpolicestation(subdivision_id){
         if(subdivision_id != null){
