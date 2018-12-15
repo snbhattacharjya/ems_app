@@ -7,8 +7,9 @@
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
-            <h1 class="headline mb-3">Check List :</h1>
-            <v-layout row wrap >
+            <h1 class="headline mb-3 blue--text">Check List : Comming Soon</h1>
+
+            <!-- <v-layout row wrap >
               <table class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
                 <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
@@ -30,10 +31,9 @@
                 </v-layout>
               </td>
               </tr>
-
               </tbody>
               </table>
-            </v-layout>
+            </v-layout> -->
           </v-flex>
 
         </v-layout>
@@ -101,7 +101,7 @@ export default {
 
     // }
     // else{
-        this.initialize()
+        //this.initialize()
     //}
 
   },

@@ -134,7 +134,7 @@
   </v-container>
 </template>
 <script>
-
+import _ from 'lodash'
 
   export default{
     name: 'UserCreate',
@@ -236,6 +236,9 @@
        })
     },
     methods: {
+       throttledMethod: _.throttle(function()  {
+      this.validateUser()
+       }, 10000),
       validateUser(){
         this.disable_save = true
         this.$validator.validate()

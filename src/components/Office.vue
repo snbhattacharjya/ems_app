@@ -274,7 +274,7 @@
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="info" :to="'/office/list'">Back</v-btn>
-            <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -289,7 +289,7 @@
   import PcList from '@/components/PcList'
   import CategoryList from '@/components/CategoryList'
   import InstituteList from '@/components/InstituteList'
-
+  import _ from 'lodash'
   export default{
     name: 'Office',
 
@@ -338,7 +338,7 @@
         message_type: "",
         message_icon: "",
         message_text: "",
-        disable_save: false,
+        disable_save: true,
         makedisable:true,
         agree:'',
         agree_text:'Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.',
@@ -436,11 +436,14 @@
     },
 
     methods: {
-      validateOffice(){
-        this.disable_save = true
+      throttledMethod: _.throttle(function()  {
+      this.validateOffice()
+       }, 10000),
+      validateOffice() {
+        this.disable_save = false
         this.$validator.validate().then(result => {
         result ? this.saveOffice() : this.showError()
-        this.disable_save = false
+        this.disable_save = true
       })
 
       },
@@ -487,17 +490,10 @@
         .then(response => {
         this.office_name= ''
         this.identification_code= ''
-        this.subdivision_id= null
-        this.block_muni_id= ''
         this.office_address= ''
         this.officer_designation= ''
         this.post_office= ''
         this.pin= ''
-        this.police_station_id= null
-        this.ac_id= ''
-        this.pc_id= ''
-        this.category_id= ''
-        this.institute_id= ''
         this.email= ''
         this.phone= ''
         this.mobile= ''
@@ -514,9 +510,10 @@
           this.message_text = 'Office Added Successfully with Office code - '+response.data
           this.snackbar =true
           this.$validator.reset()
-          setTimeout(() => {
-                  this.$router.replace("/office/list")
-          },1000*60)
+          //window.sessionStorage.setItem('is_office_created', 'Office Added Successfully with Office code - '+response.data)
+          // setTimeout(() => {
+          //         this.$router.replace("/office/list")
+          // },0)
         })
         .catch(error => {
           this.show_message = true

@@ -148,9 +148,11 @@
 
               })
               .catch(error => {
+
                 this.captcha=''
                 this.reload_captcha()
                 this.password = ''
+                if(error.response.status == 400 || error.response.status== 401){
                 this.errors.add(
                   {
                     field: 'username',
@@ -161,8 +163,16 @@
                     msg: 'Invalid Captcha'
                   }
                 )
+                }else{
+                  this.show_message = true
+                  this.message_type = 'error'
+                  this.message_icon = 'warning'
+                  this.message_text = 'Server error!!! Please try after sometime.... '
+                  this.snackbar =true
+                }
                 this.loading = false
               })
+
             }
           })
         }

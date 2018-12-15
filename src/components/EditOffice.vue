@@ -132,7 +132,7 @@
                 item-value= "id"
                 prepend-icon="list"
                 label="Select Police Station(*)"
-                disabled=true
+
 
                 >
               </v-select>

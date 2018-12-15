@@ -45,7 +45,8 @@ export default {
 
   methods:{
     init:function(){
-      let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
+
+    let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
     axios.get(url)
       .then((response, data) => {
        response.data.forEach(item => {
@@ -53,6 +54,7 @@ export default {
           this.assemblies.push(item)
 
         })
+        this.mode == 'all' ? this.$store.dispatch('storeassemblyall',this.assemblies): this.$store.dispatch('storeassemblylocal',this.assemblies)
         this.assemblies.push({name:"OTHER",id:"999"})
       })
       .catch(error => {
@@ -62,7 +64,32 @@ export default {
   },
 
   created(){
-    this.init()
+    if(this.mode == 'all'){
+      if(this.getassemblyall==''){
+        this.init()
+      }
+      else{
+        this.assemblies=this.getassemblyall
+      }
+    }
+    else{
+      if(this.getassemblylocal==''){
+        this.init()
+      }
+      else{
+        this.assemblies=this.getassemblylocal
+      }
+    }
+
+  },
+  computed:{
+    getassemblyall:function(){
+     return this.$store.getters.getassemblyall
+    },
+    getassemblylocal:function(){
+     return this.$store.getters.getassemblylocal
+    },
+
   }
 }
 </script>

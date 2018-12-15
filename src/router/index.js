@@ -5,21 +5,20 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from '../store'
 
-const scrollBehavior = (to, from, savedPosition) => {
-  if (savedPosition) {
-    return savedPosition
-  } else {
-      position.x = 0
-      position.y = 0
-    }
-    return position
-  }
+// const scrollBehavior = (to, from, savedPosition) => {
+//   if (savedPosition) {
+//     return savedPosition
+//   } else {
+//       position.x = 0
+//       position.y = 0
+//     }
+//     return position
+//   }
 
 Vue.use(Router)
 const router =  new Router({
   base: '/',
   mode: 'history',
-  scrollBehavior,
   linkActiveClass: 'active',
   routes: paths
 })

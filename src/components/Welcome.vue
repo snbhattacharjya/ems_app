@@ -13,11 +13,19 @@
 
             <h1 class="mb-2 display-3 text-xs-center font-weight-black">Welcome to WBPPMS</h1>
             <div class="title mb-3 text-xs-center">A simple way to work with Polling Personnel Data</div>
-            <v-btn
+            <v-btn v-if="!this.$store.getters.getAccessToken.access_token"
               class="blue lighten-2 mt-5"
               dark
               large
              to='/signin'
+            >
+              Get Started
+            </v-btn>
+            <v-btn v-else
+              class="blue lighten-2 mt-5"
+              dark
+              large
+             to='/dashboard'
             >
               Get Started
             </v-btn>
@@ -60,11 +68,19 @@
         <v-parallax src="/static/voter2.jpg" height="380">
           <v-layout column align-center justify-center>
             <div class="headline  mb-3 text-xs-center">Welcome to WBPPMS</div>
-            <v-btn
+            <v-btn v-if="!this.$store.getters.getAccessToken.access_token"
               class="blue lighten-2 mt-5"
               dark
               large
-              to='/signin'
+             to='/signin'
+            >
+              Get Started
+            </v-btn>
+            <v-btn v-else
+              class="blue lighten-2 mt-5"
+              dark
+              large
+             to='/dashboard'
             >
               Get Started
             </v-btn>

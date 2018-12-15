@@ -472,7 +472,7 @@
               </ol>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save" :loading="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save" >Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -488,7 +488,7 @@ import LanguageList from '@/components/LanguageList'
 import BlockMuniList from '@/components/BlockMuniList'
 import AssemblyList from '@/components/AssemblyList'
 import RemarkList from '@/components/RemarkList'
-
+import _ from 'lodash'
   export default{
     name: 'PersonnelEdit',
     components: {
@@ -608,7 +608,7 @@ import RemarkList from '@/components/RemarkList'
         message_type: "",
         message_icon: "",
         message_text: "",
-        disable_save: false,
+        disable_save: true,
         personnel_form: 1,
         server_errors:[],
        dictionary: {
@@ -823,7 +823,7 @@ import RemarkList from '@/components/RemarkList'
       },
       checkaccount:function(){
         if(this.bank_account_no != ''){
-          this.disable_save=true
+          this.disable_save=false
           this.acc_hint=''
           axios.get('/accountcheck/'+this.bank_account_no,{
 
@@ -831,11 +831,11 @@ import RemarkList from '@/components/RemarkList'
           .then((response, data) => {
             if(response.data['msg']=='Account Exists'){
               this.acc_hint='Bank Account Exists'
-              this.disable_save=true
+              this.disable_save=false
               }
             else if(response.data.msg=='Not Found'){
               this.acc_hint=''
-              this.disable_save=false
+              this.disable_save=true
             }
 
           })
@@ -884,18 +884,22 @@ import RemarkList from '@/components/RemarkList'
           this.branch_ifsc= item.branch_ifsc,
           this.bank_account_no= item.bank_account_no
           this.bank_account_no_stored= item.bank_account_no
+          this.ifsc()
           })
         })
         .catch(error => {
           console.log(error)
         })
       },
+      throttledMethod: _.throttle(function()  {
+      this.validatePersonnel()
+       }, 10000),
       validatePersonnel(){
-        this.disable_save = true
+        this.disable_save = false
         this.$validator.validate()
           .then(result => {
             result ? this.savePersonnel() : this.showError('invalid')
-            this.disable_save = false
+            this.disable_save = true
           })
       },
       showError(txt){
@@ -907,7 +911,7 @@ import RemarkList from '@/components/RemarkList'
         this.snackbar =true
       },
       savePersonnel(){
-        this.disable_save=true
+        this.disable_save=false
         var hash='';
         var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.personnel_id_fetched, 8)
@@ -953,11 +957,12 @@ import RemarkList from '@/components/RemarkList'
           this.message_type = 'success'
           this.message_icon = 'check_circle'
           this.message_text = 'Personnel Updated Successfully with code - '+response.data
-          this.snackbar =true
+          window.sessionStorage.setItem('is_personnel_created', 'Personnel Updated Successfully with code - '+response.data)
+          this.snackbar =false
           this.disable_save=false
           setTimeout(() => {
                   this.$router.replace("/personnel/list")
-                },2000)
+                },1000)
         })
         .catch(error => {
           this.show_message = true

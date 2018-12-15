@@ -46,6 +46,7 @@ export default {
   },
 
   created(){
+    if(this.getblock==''){
     axios.get('/blockmunis')
       .then((response, data) => {
        response.data.forEach(item => {
@@ -53,11 +54,22 @@ export default {
           this.block_munis.push(item)
 
         })
+        this.$store.dispatch('storeblockmuni',this.block_munis)
         this.block_munis.push({name:"OTHER",id:"999901"})
       })
       .catch(error => {
         console.log(error)
       })
+    }
+    else{
+      this.block_munis=this.getblock
+    }
+  },
+  computed:{
+    getblock:function(){
+     return this.$store.getters.getblockmuni
+    },
+
   }
 }
 </script>

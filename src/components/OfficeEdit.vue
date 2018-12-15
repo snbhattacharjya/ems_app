@@ -267,7 +267,7 @@
           </v-snackbar>
             <v-spacer></v-spacer>
             <v-btn color="info" :to="'/office/list'">Back</v-btn>
-            <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" :disabled="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -275,14 +275,14 @@
   </v-container>
 </template>
 <script>
-import SubdivisionList from "@/components/SubdivisionList";
-import BlockMuniList from "@/components/BlockMuniList";
-import PoliceStationList from "@/components/PoliceStationList";
-import AssemblyList from "@/components/AssemblyList";
-import PcList from "@/components/PcList";
-import CategoryList from "@/components/CategoryList";
-import InstituteList from "@/components/InstituteList";
-
+import SubdivisionList from "@/components/SubdivisionList"
+import BlockMuniList from "@/components/BlockMuniList"
+import PoliceStationList from "@/components/PoliceStationList"
+import AssemblyList from "@/components/AssemblyList"
+import PcList from "@/components/PcList"
+import CategoryList from "@/components/CategoryList"
+import InstituteList from "@/components/InstituteList"
+import _ from 'lodash'
 export default {
   name: "OfficeEdit",
 
@@ -467,6 +467,9 @@ export default {
           console.log(error);
         });
     },
+     throttledMethod: _.throttle(function()  {
+      this.validateOffice()
+       }, 10000),
     validateOffice() {
       this.disable_save = true;
       this.$validator.validate().then(result => {

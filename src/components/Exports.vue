@@ -12,6 +12,7 @@
             <v-toolbar-title>Exports</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
+            <h1 class="headline mb-3">Comming Soon</h1>
             <!--<v-progress-linear :indeterminate="true" v-show="loader"></v-progress-linear>
             <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>
              <download-csv
@@ -31,8 +32,8 @@
                 >
                 <v-btn v-show="urluser" flat color="info" class="button" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn>
                 </download-csv> -->
-<v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
-            <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn>
+<!-- <v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
+            <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn> -->
           </v-card-text>
           <v-card-actions>
 

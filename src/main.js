@@ -40,12 +40,12 @@ new Vue({
     }
   },
   onIdle() {
-    if(window.sessionStorage.getItem('is_authenticated') != null){
-    alert('Window is Idle for 15 minutes, you will be loged out')
-    store.dispatch('destroyToken')
-    window.sessionStorage.setItem('is_authenticated', null)
-    this.$router.replace("/")
-    }
+    // if(window.sessionStorage.getItem('is_authenticated') != null){
+    // alert('Window is Idle for 15 minutes, you will be loged out')
+    // store.dispatch('destroyToken')
+    // window.sessionStorage.setItem('is_authenticated', null)
+    // this.$router.replace("/")
+    // }
   },
   onActive() {
     //alert('Welcome')

@@ -30,16 +30,16 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>Office Category & Office type</strong> </td>
-                    <td>{{reports[0].category}} , {{reports[0].institute}}</td>
+                    <td><strong>Office Category & Office Type</strong> </td>
+                    <td><strong>Category</strong> - {{reports[0].category}} <br><strong>Type</strong> - {{reports[0].institute}}</td>
                   </tr>
                   <tr>
                     <td><strong>Email</strong> </td>
                     <td>{{reports[0].email}}</td>
                   </tr>
                   <tr>
-                    <td><strong>Contact Details(Mobile/Phone/fax)</strong> </td>
-                    <td>{{reports[0].mobile}} / {{reports[0].phone}} / {{reports[0].fax}}</td>
+                    <td><strong>Contact Details</strong> </td>
+                    <td><strong>Mobile</strong> - {{reports[0].mobile}} | <strong>Phone</strong> - {{reports[0].phone}} | <strong>Fax</strong> - {{reports[0].fax}}</td>
                   </tr>
                   <tr>
                     <td><strong>Total Employees</strong> </td>
@@ -66,11 +66,11 @@
                   </tr>
                   <tr>
                     <td><strong>Male</strong> </td>
-                    <td>{{reports[1].maleEntry=null ? 0:reports[1].maleEntry}}</td>
+                    <td>{{parseInt(reports[1].maleEntry=null ? 0:reports[1].maleEntry)}}</td>
                   </tr>
                   <tr>
                     <td><strong>Female</strong> </td>
-                    <td>{{reports[1].femaleEntry=null ? 0:reports[1].femaleEntry}}</td>
+                    <td>{{parseInt(reports[1].femaleEntry=null ? 0:reports[1].femaleEntry)}}</td>
                   </tr>
 
                   <tr>

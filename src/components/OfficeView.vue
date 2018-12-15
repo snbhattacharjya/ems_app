@@ -8,7 +8,9 @@
         <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated)</v-btn>
         </v-layout>
       <v-layout row wrap  class="my-5">
-
+        <!-- <v-alert v-if="office_created" v-model="alert" dismissible type="success">
+        {{ this.office_created }}
+        </v-alert> -->
       <v-flex xs12>
         <v-toolbar flat color="white">
       <v-toolbar-title>All Offices</v-toolbar-title>
@@ -75,6 +77,8 @@
         { text: 'Updated at', value: 'updated_at', sortable: false }
       ],
       offices: [],
+      office_created:'',
+      alert:false,
 
     }),
 
@@ -89,6 +93,15 @@
     },
 
     created () {
+      if(window.sessionStorage.getItem('is_office_created')!='null'){
+        this.office_created=window.sessionStorage.getItem('is_office_created')
+        this.alert=true
+        window.sessionStorage.setItem('is_office_created',null)
+      }
+      else{
+        this.alert=false
+        window.sessionStorage.setItem('is_office_created',null)
+      }
       this.initialize()
 
     },

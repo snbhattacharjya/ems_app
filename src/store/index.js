@@ -19,6 +19,13 @@ export default new Vuex.Store({
     election:[],
     misreport:[],
     pp2report:[],
+    personnel:[],
+    qualification:[],
+    language:[],
+    remark:[],
+    block_muni:[],
+    assembly_all:[],
+    assembly_local:[]
   },
   getters: {
     getAccessToken(state){
@@ -44,12 +51,35 @@ export default new Vuex.Store({
     },
     getpp2report(state){
       return state.pp2report
+    },
+    getpersonnel(state){
+      return state.personnel
+    },
+    getqualification(state){
+      return state.qualification
+    },
+    getlanguage(state){
+      return state.language
+    },
+    getremark(state){
+      return state.remark
+    },
+    getblockmuni(state){
+      return state.block_muni
+    },
+    getassemblyall(state){
+      return state.assembly_all
+    },
+    getassemblylocal(state){
+      return state.assembly_local
     }
   },
   actions: {
     storeAccessToken(context, token){
       context.commit('storeAccessToken', token)
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token.access_token
+      // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+      // axios.defaults.headers.Common['Access-Control-Max-Age'] = 86400
       axios.get('/user')
       .then(response => {
         context.commit('storeUserDetails',response.data.user)
@@ -86,7 +116,30 @@ export default new Vuex.Store({
     storePP2report(context,pp2data){
       context.commit('storePP2report', pp2data)
     },
-
+    storepersonnel(context,personneldata){
+      context.commit('storepersonnel', personneldata)
+    },
+    updatepersonnel(context,personneldata){
+      context.commit('updatepersonnel', personneldata)
+    },
+    storequalification(context,qualificationdata){
+      context.commit('storequalification', qualificationdata)
+    },
+    storelanguage(context,languagedata){
+      context.commit('storelanguage', languagedata)
+    },
+    storeremark(context,remarkdata){
+      context.commit('storeremark',remarkdata)
+    },
+    storeblockmuni(context,blockmunidata){
+      context.commit('storeblockmuni', blockmunidata)
+    },
+    storeassemblyall(context,assemblyalldata){
+      context.commit('storeassemblyall', assemblyalldata)
+    },
+    storeassemblylocal(context,assemblylocaldata){
+      context.commit('storeassemblylocal', assemblylocaldata)
+    },
 
   },
   mutations: {
@@ -115,9 +168,35 @@ export default new Vuex.Store({
       state.pp2report = pp2data
     },
     storeofficecategory(state,id){
-     // if(id === '01'){}
       state.user['officelevel'] = id
     },
+    storepersonnel(state,personneldata){
+      state.personnel = personneldata
+    },
+    updatepersonnel(state,personneldata){
+      state.personnel.push(personneldata)
+    },
+    storequalification(state,qualificationdata){
+      state.qualification=qualificationdata
+    },
+    storelanguage(state,languagedata){
+      state.language=languagedata
+    },
+    storeremark(state,remarkdata){
+      state.remark=remarkdata
+    },
+    storeblockmuni(state,blockmunidata){
+      state.block_muni=blockmunidata
+    },
+    storeassemblyall(state,assemblyalldata){
+      state.assembly_all=assemblyalldata
+    },
+    storeassemblylocal(state,assemblylocaldata){
+      state.assembly_local=assemblylocaldata
+    },
+
+
+
     destroyToken(state){
       state.token = ''
       state.user = ''
@@ -127,6 +206,13 @@ export default new Vuex.Store({
       state.election= ''
       state.misreport= ''
       state.pp2report=''
+      state.personnel=''
+      state.qualification=''
+      state.language=''
+      state.remark=''
+      state.block_muni=''
+      state.assembly_all=''
+      state.assembly_local=''
     }
   }
 

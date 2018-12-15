@@ -10,7 +10,7 @@
 
       <v-spacer></v-spacer>
       <v-toolbar-title class="ml-0 mr-5">
-        {{getElection[0].name}} - {{getElection[0].year}}
+        General Elections To The Lok Sabha - 2019
       </v-toolbar-title>
       <v-toolbar-title class="ml-5 mr-5">
         <!-- {{ moment(new Date()).format('DD/MM/YYYY h:mm a')}} -->

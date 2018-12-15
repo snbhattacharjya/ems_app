@@ -172,7 +172,7 @@
                     type="text"
                     v-model="basic_pay"
                     maxlength=7
-                    v-validate="'required'"
+                    v-validate="'required|numeric'"
                     :error-messages="errors.collect('basic_pay')"
                     data-vv-name="basic_pay"
                   ></v-text-field>
@@ -471,7 +471,7 @@
               </ol>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validatePersonnel" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line=multiline :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -487,7 +487,7 @@ import LanguageList from '@/components/LanguageList'
 import BlockMuniList from '@/components/BlockMuniList'
 import AssemblyList from '@/components/AssemblyList'
 import RemarkList from '@/components/RemarkList'
-
+import _ from 'lodash'
   export default{
     name: 'Personnel',
     components: {
@@ -605,7 +605,7 @@ import RemarkList from '@/components/RemarkList'
         message_icon: "",
         message_text: "",
         multiline: "",
-        disable_save: false,
+        disable_save: true,
         agrrelable: "Certified that the detail information furnished earlier in PP-1 format and also PP-2 format are verified with office record and genuine.Names of all officials have been included in the PP-2 format and no information has been concealed.",
         agree:false,
         personnel_form: 1,
@@ -616,6 +616,7 @@ import RemarkList from '@/components/RemarkList'
         step4_error:'',
         step5_error:'',
         server_errors:[],
+        personnel_obj:[],
         dictionary: {
           custom: {
             office_id:{
@@ -715,7 +716,7 @@ import RemarkList from '@/components/RemarkList'
       }
     },
    created(){
-
+      window.sessionStorage.setItem('is_personnel_created', null)
       if(this.getuser.level== 10){
         this.getlevel(this.getuser.user_id)
       }
@@ -843,22 +844,25 @@ import RemarkList from '@/components/RemarkList'
           .then((response, data) => {
             if(response.data['msg']=='Account Exists'){
               this.acc_hint='Bank Account Exists'
-              this.disable_save=true
+              this.disable_save=false
               }
             else if(response.data.msg=='Not Found'){
               this.acc_hint=''
-              this.disable_save=false
+              this.disable_save=true
             }
 
           })
         }
       },
+       throttledMethod: _.throttle(function()  {
+      this.validatePersonnel()
+       }, 10000),
       validatePersonnel(){
-        this.disable_save = true
+        this.disable_save = false
         this.$validator.validate()
           .then(result => {
             result ? this.savePersonnel() : this.showError('invalid')
-            this.disable_save = false
+            this.disable_save = true
           })
       },
       showError(txt){
@@ -870,6 +874,46 @@ import RemarkList from '@/components/RemarkList'
         this.snackbar =true
       },
       savePersonnel(){
+        this.personnel_obj={
+        "aadhaar": "0",
+        "assembly_off_id": this.assembly_off_id,
+        "assembly_perm_id": this.assembly_perm_id,
+        "assembly_temp_id": this.assembly_temp_id,
+        "bank_account_no": this.bank_account_no,
+        "basic_pay": this.basic_pay,
+        "block_muni_off_id": this.block_muni_off_id,
+        "block_muni_perm_id": this.block_muni_perm_id,
+        "block_muni_temp_id": this.block_muni_temp_id,
+        "branch_ifsc": this.branch_ifsc,
+        "designation":this.designation,
+        "district_id": this.getuser.area,
+        "dob": this.dob,
+        "email": this.email,
+        "emp_group": this.emp_group,
+        "epic": this.epic,
+        "gender": this.gender,
+        "grade_pay": this.grade_pay,
+        "id": '',
+        "image_path": null,
+        "language_id": this.language_id,
+        "mobile": this.mobile,
+        "name": this.officer_name,
+        "office_id": this.getuser.user_id,
+        "part_no": this.part_no,
+        "pay_level": this.pay_level,
+        "permanent_address": this.permanent_address,
+        "phone": this.phone,
+        "post_stat": '',
+        "present_address": this.present_address,
+        "qualification_id": this.qualification_id,
+        "remark_id": this.remark_id,
+        "remark_reason": this.remark_comment,
+        "scale": this.scale,
+        "sl_no": this.sl_no,
+        "subdivision_id": this.subdivision_id,
+        "updated_at": null,
+        "working_status": this.working_status
+        }
         axios.post('/personnel',{
           office_id: this.office_id,
           officer_name: this.officer_name,
@@ -904,21 +948,48 @@ import RemarkList from '@/components/RemarkList'
           assembly_off_id: this.assembly_off_id,
           branch_ifsc: this.branch_ifsc,
           bank_account_no: this.bank_account_no,
+
         })
         .then(response => {
 
-            this.$store.dispatch('storeAccessToken', this.getAccessToken)
-            this.show_message = true
-            this.message_type = 'success'
-            this.message_icon = 'check_circle'
-            this.multiline =false
-            this.message_text = 'Personnel Added Successfully with code - '+response.data
-            this.$validator.reset()
-            this.snackbar =true
-            this.server_errors=''
-            setTimeout(() => {
-                  this.$router.replace("/personnel/list")
-            },1000*2)
+          this.officer_name=''
+          this.designation=''
+          this.dob=''
+          this.gender=''
+          this.remark_comment=''
+          this.scale=''
+          this.basic_pay=''
+          this.grade_pay=''
+          this.pay_level=1
+          this.emp_group=''
+          this.working_status=''
+          this.gender=''
+          this.present_address=''
+          this.permanent_address=''
+          this.address=false
+          this.email=''
+          this.phone=''
+          this.mobile=''
+          this.epic=''
+          this.part_no=''
+          this.sl_no=''
+          this.branch_ifsc=''
+          this.ifsc_hint=''
+          this.bank_account_no=''
+          this.confirm_bank_account_no=''
+          this.show_message = true
+          this.message_type = 'success'
+          this.message_icon = 'check_circle'
+          this.multiline =false
+          this.message_text = 'Personnel Added Successfully with code - '+response.data
+          this.$validator.reset()
+          this.snackbar =true
+          this.server_errors=''
+          //update user details
+          //this.$store.dispatch('storeAccessToken', this.getAccessToken)
+          //update personnel details
+          this.personnel_obj['id']=response.data
+          this.$store.dispatch('updatepersonnel',this.personnel_obj)
 
         })
         .catch(error => {
@@ -939,10 +1010,12 @@ import RemarkList from '@/components/RemarkList'
           }
 
           this.snackbar =true
+          this.disable_save=false
         })
       },
 
-    }
+    },
+
 
 
   }

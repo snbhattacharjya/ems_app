@@ -50,16 +50,27 @@ export default {
   },
 
   created(){
+
+    if(this.getremark==''){
     axios.get('/remarks')
       .then((response, data) => {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.remarks.push(item)
-        });
+        })
+        this.$store.dispatch('storeremark',this.remarks)
       })
       .catch(error => {
         console.log(error)
       })
+    }else{
+      this.remarks=this.getremark
+    }
+  },
+  computed:{
+   getremark:function(){
+     return this.$store.getters.getremark
+   }
   }
 }
 </script>

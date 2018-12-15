@@ -3,6 +3,9 @@
     <v-container fluid>
       <section>
       <v-layout row wrap  class="my-5">
+        <v-alert v-if="personnel_created" v-model="alert" dismissible type="success">
+        {{ this.personnel_created }}
+        </v-alert>
       <v-flex x12 v-if="this.getuser.level != 10">
       <v-layout row wrap  >
       <v-flex xs4>
@@ -88,6 +91,8 @@
       offices:[],
       isdisabled:true,
       disable_save: false,
+      personnel_created:'',
+      alert:false,
       headers: [
         { text: 'ID', value: 'id',align: 'left', },
         { text: 'Office ID', value: 'office_id',align: 'left',sortable: false },
@@ -112,6 +117,9 @@
        getuser:function(){
           return this.$store.getters.getUser
        },
+       getpersonnel:function(){
+          return this.$store.getters.getpersonnel
+       },
     },
 
     mounted() {
@@ -119,6 +127,15 @@
     },
 
     created () {
+      if(window.sessionStorage.getItem('is_personnel_created')!='null'){
+        this.personnel_created=window.sessionStorage.getItem('is_personnel_created')
+        this.alert=true
+        window.sessionStorage.setItem('is_personnel_created',null)
+      }
+      else{
+        this.alert=false
+        window.sessionStorage.setItem('is_personnel_created',null)
+      }
       if(this.getuser.level != 10){this.getsubdivision()}
       else{
         this.initialize_personnel()
@@ -155,9 +172,9 @@
         this.message_text = 'Error Occurred!!!'
         this.snackbar =true
       },
-      initialize () {
-        console.log('creating filter....')
+      initialize () {console.log('inside initialize')
         this.tableloading=true
+
         axios.get('/personnelbyoffice/'+this.office_id,{
           //office_id: this.office_id
         })
@@ -170,8 +187,8 @@
            this.personnels=[]
             response.data.forEach(item => {
                 this.personnels.push(item)
-
               })
+
               this.tableloading=false
          }
             })
@@ -179,10 +196,19 @@
           console.log(error)
           this.tableloading=false
         })
+
       },
       initialize_personnel () {
-        //console.log('creating filter....')
         this.tableloading=true
+        if(this.getpersonnel!=''){
+
+          this.personnels=[]
+            this.getpersonnel.forEach(item => {
+                this.personnels.push(item)
+
+              })
+              this.tableloading=false
+        }else{
         axios.get('/personnelbyoffice/'+this.getuser.user_id,{
           //office_id: this.office_id
         })
@@ -192,8 +218,8 @@
            this.personnels=[]
             response.data.forEach(item => {
                 this.personnels.push(item)
-
               })
+              this.$store.dispatch('storepersonnel', this.personnels)
               this.tableloading=false
          }
             })
@@ -201,6 +227,7 @@
           console.log(error)
           this.tableloading=false
         })
+        }
       },
       getOfficelist(){
         //console.log('SUB - '+this.subdivision_id)
