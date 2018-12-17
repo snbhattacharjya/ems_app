@@ -40,16 +40,27 @@ export default {
   },
 
   created(){
+    if(this.getpolice!=''){
     axios.get('/policestations/all')
       .then((response, data) => {
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.police_stations.push(item)
-        });
+        })
+        this.$store.dispatch('storepolice',this.police_stations)
       })
       .catch(error => {
         console.log(error)
       })
+    }else{
+      this.police_stations=this.getpolice
+    }
+  },
+  computed:{
+    getpolice:function(){
+     return this.$store.getters.getpolice
+    },
+
   }
 }
 </script>

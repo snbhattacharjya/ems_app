@@ -25,7 +25,11 @@ export default new Vuex.Store({
     remark:[],
     block_muni:[],
     assembly_all:[],
-    assembly_local:[]
+    assembly_local:[],
+    category:[],
+    institute:[],
+    pc:[],
+    police:[],
   },
   getters: {
     getAccessToken(state){
@@ -72,6 +76,18 @@ export default new Vuex.Store({
     },
     getassemblylocal(state){
       return state.assembly_local
+    },
+    getcategory(state){
+      return state.category
+    },
+    getinstitute(state){
+      return state.institute
+    },
+    getpc(state){
+      return state.pc
+    },
+    getpolice(state){
+      return state.police
     }
   },
   actions: {
@@ -122,23 +138,154 @@ export default new Vuex.Store({
     updatepersonnel(context,personneldata){
       context.commit('updatepersonnel', personneldata)
     },
-    storequalification(context,qualificationdata){
-      context.commit('storequalification', qualificationdata)
+    storequalification(context){
+      if(context.state.qualification.length== 0){
+        axios.get('/qualifications')
+          .then((response, data) => {
+           response.data.forEach(item => {
+             item.name=item.name.toUpperCase()
+            })
+            context.commit('storequalification', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
     },
-    storelanguage(context,languagedata){
-      context.commit('storelanguage', languagedata)
+    storelanguage(context){
+      if(context.state.language.length== 0){
+        axios.get('/languages')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+            context.commit('storelanguage', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
     },
-    storeremark(context,remarkdata){
-      context.commit('storeremark',remarkdata)
+    storeremark(context){
+      if(context.state.remark.length== 0){
+        axios.get('/remarks')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+            context.commit('storeremark', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
     },
-    storeblockmuni(context,blockmunidata){
-      context.commit('storeblockmuni', blockmunidata)
+    storeblockmuni(context){
+      if(context.state.block_muni.length== 0){
+        axios.get('/blockmunis')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+             response.data.push({name:"OTHER",id:"999901"})
+             context.commit('storeblockmuni', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
     },
-    storeassemblyall(context,assemblyalldata){
-      context.commit('storeassemblyall', assemblyalldata)
+    storeassemblyall(context){
+      if(context.state.assembly_all.length== 0){
+        axios.get('/allassemblies')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.id+'-'+item.name.toUpperCase()
+             })
+             response.data.push({name:"OTHER",id:"999"})
+             context.commit('storeassemblyall', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
     },
-    storeassemblylocal(context,assemblylocaldata){
-      context.commit('storeassemblylocal', assemblylocaldata)
+    storeassemblylocal(context){
+      if(context.state.assembly_local.length== 0){
+        axios.get('/assemblies')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.id+'-'+item.name.toUpperCase()
+             })
+             response.data.push({name:"OTHER",id:"999"})
+             context.commit('storeassemblylocal', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+
+    },
+    storecategory(context){
+      if(context.state.category.length== 0){
+        axios.get('/categories')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+             context.commit('storecategory', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+    },
+    storeinstitute(context){
+      if(context.state.institute.length== 0){
+        axios.get('/institutes')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+             context.commit('storeinstitute', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+    },
+    storepc(context){
+      if(context.state.pc.length== 0){
+        axios.get('/pcs')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+             context.commit('storepc', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+    },
+    storepolice(context){
+      if(context.state.police.length== 0){
+        axios.get('/policestations/all')
+          .then((response, data) => {
+            response.data.forEach(item => {
+              item.name=item.name.toUpperCase()
+             })
+             context.commit('storepolice', response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
     },
 
   },
@@ -194,9 +341,18 @@ export default new Vuex.Store({
     storeassemblylocal(state,assemblylocaldata){
       state.assembly_local=assemblylocaldata
     },
-
-
-
+    storecategory(state,categorydata){
+      state.category=categorydata
+    },
+    storeinstitute(state,institutedata){
+      state.institute=institutedata
+    },
+    storepc(state,pcdata){
+      state.pc=pcdata
+    },
+    storepolice(state,policedata){
+      state.police=policedata
+    },
     destroyToken(state){
       state.token = ''
       state.user = ''
@@ -213,6 +369,10 @@ export default new Vuex.Store({
       state.block_muni=''
       state.assembly_all=''
       state.assembly_local=''
+      state.category=''
+      state.institue=''
+      state.pc=''
+      state.police=''
     }
   }
 

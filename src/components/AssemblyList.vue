@@ -44,42 +44,12 @@ export default {
   },
 
   methods:{
-    init:function(){
 
-    let url = this.mode == 'all' ? '/allassemblies' : '/assemblies'
-    axios.get(url)
-      .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.id+'-'+item.name.toUpperCase()
-          this.assemblies.push(item)
-
-        })
-        this.mode == 'all' ? this.$store.dispatch('storeassemblyall',this.assemblies): this.$store.dispatch('storeassemblylocal',this.assemblies)
-        this.assemblies.push({name:"OTHER",id:"999"})
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }
   },
 
   created(){
-    if(this.mode == 'all'){
-      if(this.getassemblyall==''){
-        this.init()
-      }
-      else{
-        this.assemblies=this.getassemblyall
-      }
-    }
-    else{
-      if(this.getassemblylocal==''){
-        this.init()
-      }
-      else{
-        this.assemblies=this.getassemblylocal
-      }
-    }
+    this.mode == 'all' ? this.$store.dispatch('storeassemblyall'): this.$store.dispatch('storeassemblylocal')
+    this.mode == 'all' ? this.assemblies=this.getassemblyall: this.assemblies=this.getassemblylocal
 
   },
   computed:{

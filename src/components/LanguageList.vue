@@ -39,21 +39,9 @@ export default {
   },
 
   created(){
-    if(this.getlanguage==''){
-    axios.get('/languages')
-      .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
-          this.languages.push(item)
-        })
-        this.$store.dispatch('storelanguage',this.languages)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }else{
-      this.languages=this.getlanguage
-    }
+   this.$store.dispatch('storelanguage')
+   this.languages=this.getlanguage
+
   },
   computed:{
     getlanguage:function(){

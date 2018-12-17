@@ -58,7 +58,7 @@
               <td >{{ props.item.office_id }}</td>
               <td >{{ props.item.name }}</td>
               <td >{{ props.item.designation }}</td>
-              <td >{{ props.item.permanent_address }}</td>
+              <td >{{ props.item.bank_account_no }}</td>
               <td >{{ props.item.mobile }}</td>
               <td class="justify-center layout px-0">
                 <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
@@ -98,7 +98,7 @@
         { text: 'Office ID', value: 'office_id',align: 'left',sortable: false },
         { text: 'Personnel Name',align: 'left',value: 'name'},
         { text: 'Designation', value: 'designation',align: 'left', },
-        { text: 'Permanent Address', value: 'permanent_address',align: 'left', sortable: false},
+        { text: 'Bank Account No', value: 'bank_account_no',align: 'left', sortable: false},
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false },
         { text: 'Updated at', value: 'updated_at',  }

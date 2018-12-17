@@ -266,7 +266,7 @@
             <!-- <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.getofficeid.user_id"><v-icon dark>print</v-icon></v-btn></label> -->
             <v-spacer></v-spacer>
             <v-btn color="info" :to="'/dashboard'">Cancel</v-btn>
-            <v-btn color="primary" @click="validateOffice" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -281,7 +281,7 @@ import AssemblyList from "@/components/AssemblyList";
 import PcList from "@/components/PcList";
 import CategoryList from "@/components/CategoryList";
 import InstituteList from "@/components/InstituteList";
-
+import _ from 'lodash'
 export default {
   name: "EditOfice",
 
@@ -339,7 +339,7 @@ export default {
       message_type: "",
       message_icon: "",
       message_text: "",
-      disable_save: false,
+      disable_save: true,
       agree: "",
       agree_text:
         "Certified that the details information furnished earlier in PP-1 format is verified with office records and genuine. Names of all officials will be included in PP-2 format and no information has been concealed.",
@@ -434,6 +434,9 @@ export default {
        })
   },
   methods: {
+     throttledMethod: _.throttle(function()  {
+      this.validateOffice()
+       }, 10000),
    initialize () {
         //console.log('Office id - '+this.getofficeid.user_id)
         axios.get('/office/'+this.getofficeid.user_id,{
@@ -474,10 +477,10 @@ export default {
         })
       },
     validateOffice() {
-      this.disable_save = true
+      this.disable_save = false
       this.$validator.validate().then(result => {
         result ? this.saveOffice() : this.showError()
-        this.disable_save = false
+        this.disable_save = true
       })
     },
     showError() {
@@ -488,6 +491,7 @@ export default {
     },
     saveOffice() {
 // if(this.total_staff>= this.stored_total_staff){
+  this.disable_save = false
        var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.getofficeid.user_id, 8)
       axios

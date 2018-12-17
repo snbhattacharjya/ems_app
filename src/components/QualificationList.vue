@@ -39,21 +39,9 @@ export default {
   },
 
   created(){
-    if(this.getqualification==''){
-    axios.get('/qualifications')
-      .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
-          this.qualifications.push(item)
-        })
-        this.$store.dispatch('storequalification',this.qualifications)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }else{
-      this.qualifications=this.getqualification
-    }
+    this.$store.dispatch('storequalification')
+    this.qualifications=this.getqualification
+
   },
    computed:{
     getqualification:function(){

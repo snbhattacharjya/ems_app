@@ -8,6 +8,7 @@
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
             <h1 class="headline mb-3 blue--text">Check List : Comming Soon</h1>
+            <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
 
             <!-- <v-layout row wrap >
               <table class="v-datatable v-table dark mb-5" style=""  border=1>

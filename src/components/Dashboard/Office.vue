@@ -96,7 +96,7 @@ export default {
       return this.$store.getters.getDashboard
     },
     calculateTotalEmployee:function(){
-      return this.getdashboard.totalMale + this.getDashboard.totalfemale
+      return persInt(this.getdashboard.totalMale) + persInt(this.getDashboard.totalfemale)
     },
     getUser:function(){
       return this.$store.getters.getUser

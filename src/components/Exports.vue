@@ -13,6 +13,7 @@
           </v-toolbar>
           <v-card-text>
             <h1 class="headline mb-3">Comming Soon</h1>
+            <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
             <!--<v-progress-linear :indeterminate="true" v-show="loader"></v-progress-linear>
             <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>
              <download-csv

@@ -39,16 +39,15 @@ export default {
   },
 
   created(){
-    axios.get('/categories')
-      .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
-          this.categories.push(item)
-        });
-      })
-      .catch(error => {
-        console.log(error)
-      })
+   this.$store.dispatch('storecategory')
+   this.categories=this.getcategory
+
+  },
+  computed:{
+    getcategory:function(){
+     return this.$store.getters.getcategory
+    },
+
   }
 }
 </script>

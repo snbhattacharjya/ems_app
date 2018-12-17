@@ -715,6 +715,9 @@ import _ from 'lodash'
     computed: {
       getuser(){
           return this.$store.getters.getUser
+       },
+       getpersonnel:function(){
+         return this.$store.getters.getpersonnel
        }
     },
 
@@ -765,6 +768,7 @@ import _ from 'lodash'
       }
   },
     methods: {
+
       copy_address:function(){
         if(this.address == true){
           this.permanent_address = this.present_address
