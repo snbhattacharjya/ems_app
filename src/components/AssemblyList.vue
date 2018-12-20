@@ -46,10 +46,12 @@ export default {
   methods:{
 
   },
-
-  created(){
+  beforeUpdate(){
     this.mode == 'all' ? this.$store.dispatch('storeassemblyall'): this.$store.dispatch('storeassemblylocal')
     this.mode == 'all' ? this.assemblies=this.getassemblyall: this.assemblies=this.getassemblylocal
+  },
+  created(){
+
 
   },
   computed:{

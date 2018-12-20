@@ -76,7 +76,7 @@
             <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :topo=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="validateUser" :disabled="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="validateUser" :disabled="disable_save" :loading="loading">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -99,6 +99,7 @@
 
     data (){
       return {
+        loading:false,
         user_id:'',
         valid: true,
         snackbar: false,
@@ -185,12 +186,14 @@
     },
     methods: {
       validateUser(){
+        this.loading=true
         this.disable_save = true
         this.$validator.validate()
           .then(result => {
             result ? this.saveUser() : this.showError()
             this.disable_save = false
           })
+          this.loading=false
       },
       showError(){
         this.show_message = true
@@ -200,6 +203,7 @@
         this.snackbar =true
       },
       saveUser(){
+        this.loading=true
         axios.post('/edituser',{
         name: this.name,
         designation: this.designation,
@@ -215,6 +219,7 @@
           this.message_icon = 'check_circle'
           this.message_text = response.data
           this.snackbar =true
+          this.loading=false
         })
         .catch(error => {
           this.show_message = true
@@ -222,6 +227,7 @@
           this.message_icon = 'warning'
           this.message_text = 'Error Occurred!!! '+error
           this.snackbar =true
+          this.loading=false
         })
       },
 

@@ -44,10 +44,12 @@ export default {
   watch: {
 
   },
-
-  created(){
+  beforeUpdate(){
     this.$store.dispatch('storeblockmuni')
     this.block_munis=this.getblock
+  },
+  created(){
+
 
   },
   computed:{

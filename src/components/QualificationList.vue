@@ -38,7 +38,7 @@ export default {
 
   },
 
-  created(){
+  beforeUpdate(){
     this.$store.dispatch('storequalification')
     this.qualifications=this.getqualification
 

@@ -38,22 +38,9 @@ export default {
 
   },
 
-  created(){
-    if(this.getinstitute.length==0){
-    axios.get('/institutes')
-      .then((response, data) => {
-       response.data.forEach(item => {
-         item.name=item.name.toUpperCase()
-          this.institutes.push(item)
-        })
-        this.$store.dispatch('storeinstitute',this.institutes)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }else{
+  beforeUpdate(){
+      this.$store.dispatch('storeinstitute')
       this.institutes=this.getinstitute
-    }
   },
   computed:{
     getinstitute:function(){

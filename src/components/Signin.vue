@@ -149,10 +149,11 @@
               })
               .catch(error => {
 
+
+                if(error.response.status == 400 || error.response.status== 401){
                 this.captcha=''
                 this.reload_captcha()
                 this.password = ''
-                if(error.response.status == 400 || error.response.status== 401){
                 this.errors.add(
                   {
                     field: 'username',

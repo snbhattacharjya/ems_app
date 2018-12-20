@@ -38,7 +38,7 @@ export default {
 
   },
 
-  created(){
+  beforeUpdate(){
    this.$store.dispatch('storecategory')
    this.categories=this.getcategory
 

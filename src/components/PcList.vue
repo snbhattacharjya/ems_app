@@ -38,23 +38,9 @@ export default {
 
   },
 
-  created(){
-    if(this.getpc.length==0){
-    axios.get('/pcs')
-      .then((response, data) => {
-       response.data.forEach(item => {
-          this.pcs.push(item)
-
-        })
-        this.pcs.push({name:"OTHER",id:"99"})
-        this.$store.dispatch('storepc',this.pcs)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }else{
-      this.pcs=this.getpc
-    }
+  beforeUpdate(){
+    this.$store.dispatch('storepc')
+    this.pcs=this.getpc
   },
   computed:{
     getpc:function(){

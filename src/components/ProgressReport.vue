@@ -13,16 +13,19 @@
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>
                 <tr>
-                <th width="5%"><strong>Sl No</strong></th>
-                <th width="15%"><strong>Subdivision</strong></th>
-                <th width="15%" ><strong>Block/Municipality</strong></th>
-                <th width="10%" ><strong>Office Total</strong></th>
-                <th width="10%" ><strong>Office Updated</strong></th>
-                <th width="10%" ><strong>Progress</strong></th>
-                <th width="10%" ><strong>Total Staff PP1</strong></th>
-                <th width="10%" ><strong>Male PP1</strong></th>
-                <th width="10%" ><strong>Female PP1</strong></th>
-                <!-- <th width="5%" ><strong>Letter</strong></th> -->
+                <th width="5%"><strong>Sl<br> No</strong></th>
+                <th width="25%"><strong>Subdivision &<br>Block/Municipality</strong></th>
+                <th width="10%" ><strong>Office<br>Total</strong></th>
+                <th width="10%" ><strong>Office <br>Updated</strong></th>
+                <th width="10%" ><strong>PP1<br>Progress</strong></th>
+                <th width="10%" ><strong>Total <br>Staff PP1</strong></th>
+                <th width="10%" ><strong>Male<br> PP1</strong></th>
+                <th width="10%" ><strong>Female<br> PP1</strong></th>
+                <th width="10%" v-if="this.pp2male_count!=0" ><strong>Male<br> PP2</strong></th>
+                <th width="10%" v-if="this.pp2female_count!=0" ><strong>Female<br> PP2</strong></th>
+                <th width="10%" v-if="this.pp2male_count+this.pp2female_count!=0" ><strong>Total<br> PP2</strong></th>
+                <!-- <th width="10%" v-if="this.pp2start_count!=0"><strong>PP2 <br>Started</strong></th> -->
+                <th width="10%" v-if="this.pp2start_count!=0" ><strong>PP2<br>Progress</strong></th>
                 </tr>
 
                 </thead>
@@ -30,25 +33,32 @@
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.sl">
                   <td class="nopad" >{{ report.sl }}</td>
-                  <td class="nopad">{{ report.subdivision_id }}-{{ report.subdivision }}</td>
-                  <td class="nopad">{{ report.block_munis_id }}-{{ report.block }}</td>
+                  <td class="nopad">{{ report.subdivision_id }}-{{ report.subdivision }}<br>{{ report.block_munis_id }}-{{ report.block }}</td>
                   <td class="nopad">{{ report.totalOffice }}</td>
                   <td class="nopad" >{{ report.updateOffice }}</td>
                   <td class="nopad" >{{ parseFloat((report.updateOffice/report.totalOffice)*100).toFixed(2) }}%</td>
                   <td class="nopad" >{{ report.totalStuff }}</td>
                   <td class="nopad" >{{ report.totalMale }}</td>
                   <td class="nopad" >{{ report.female_staff }}</td>
-                  <!-- <td class="nopad" ></td> -->
+                  <td class="nopad" v-if="report.malepp2">{{ report.malepp2 }}</td>
+                  <td class="nopad" v-if="report.femalepp2">{{ report.femalepp2 }}</td>
+                  <td class="nopad" v-if="report.malepp2+report.femalepp2!=0">{{ parseInt(report.malepp2)+parseInt(report.femalepp2) }}</td>
+                  <!-- <td class="nopad" v-if="report.pp2started">{{ report.pp2started }}</td> -->
+                  <td class="nopad" v-if="report.pp2started">{{ parseFloat(((parseFloat(report.malepp2)+parseFloat(report.femalepp2))/report.totalStuff)*100).toFixed(2) }}%</td>
                   </tr>
                   <tr>
-                    <td class="nopad"  colspan=3><strong>Total</strong></td>
+                    <td class="nopad"  colspan=2><strong>Total</strong></td>
                     <td class="nopad" >{{this.totalOffice_count}}</td>
                     <td class="nopad" >{{this.updateOffice_count}}</td>
                     <td class="nopad" >{{parseFloat((parseInt(this.updateOffice_count)/parseInt(this.totalOffice_count))*100).toFixed(2)}}%</td>
                     <td class="nopad" >{{this.totalStuff_count}}</td>
                     <td class="nopad" >{{this.totalMale_count}}</td>
                     <td class="nopad" >{{this.female_staff_count}}</td>
-                    <!-- <td class="nopad" ></td> -->
+                    <td class="nopad" v-if="this.pp2male_count!=0">{{this.pp2male_count}}</td>
+                    <td class="nopad" v-if="this.pp2female_count!=0">{{this.pp2female_count}}</td>
+                    <td class="nopad" v-if="this.pp2female_count!=0">{{parseInt(this.pp2male_count)+parseInt(this.pp2female_count)}}</td>
+                    <!-- <td class="nopad" v-if="this.pp2start_count!=0">{{this.pp2start_count}}</td> -->
+                    <td class="nopad" v-if="this.pp2start_count!=0">{{parseFloat((this.pp2start_count/this.totalOffice_count)*100).toFixed(2)}}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -84,6 +94,9 @@ export default {
       totalStuff_count:0,
       totalMale_count:0,
       female_staff_count:0,
+      pp2male_count:0,
+      pp2female_count:0,
+      pp2start_count:0
     }
   },
   computed:{
@@ -105,6 +118,11 @@ export default {
                this.totalStuff_count+=parseInt(item.totalStuff)
                this.totalMale_count+=parseInt(item.totalMale)
                this.female_staff_count+=parseInt(item.female_staff)
+               if(item.malepp2 && item.femalepp2 && item.pp2started){
+                this.pp2male_count+=parseInt(item.malepp2)
+                this.pp2female_count+=parseInt(item.femalepp2)
+                this.pp2start_count+=parseInt(item.pp2started)
+               }
                this.reports.push(item)
                this.count++
             })

@@ -471,7 +471,7 @@
               </ol>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save" :loading="loading">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line=multiline :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -503,6 +503,7 @@ import _ from 'lodash'
     },
     data (){
       return {
+        loading:false,
         valid: true,
         snackbar: false,
         office_id: '',
@@ -859,11 +860,13 @@ import _ from 'lodash'
        }, 10000),
       validatePersonnel(){
         this.disable_save = false
+        this.loading=true
         this.$validator.validate()
           .then(result => {
             result ? this.savePersonnel() : this.showError('invalid')
             this.disable_save = true
           })
+          this.loading=false
       },
       showError(txt){
         this.show_message = true
@@ -874,6 +877,7 @@ import _ from 'lodash'
         this.snackbar =true
       },
       savePersonnel(){
+        this.loading=true
         this.personnel_obj={
         "aadhaar": "0",
         "assembly_off_id": this.assembly_off_id,
@@ -989,7 +993,10 @@ import _ from 'lodash'
           //this.$store.dispatch('storeAccessToken', this.getAccessToken)
           //update personnel details
           this.personnel_obj['id']=response.data
+          if(this.getuser.level==10){
           this.$store.dispatch('updatepersonnel',this.personnel_obj)
+          }
+          this.loading=false
 
         })
         .catch(error => {
@@ -1002,15 +1009,17 @@ import _ from 'lodash'
           }else if(error.response.data === "Please Update Office Data First"){
             this.multiline =true
           this.message_text = 'Please Update Office first and then you will be able to add Personnel.'
+
           }
           else{
           this.multiline =false
           this.message_text = error.response.data.message
           this.server_errors=error.response.data.errors
+          this.loading=false
           }
-
           this.snackbar =true
           this.disable_save=false
+          this.loading=false
         })
       },
 

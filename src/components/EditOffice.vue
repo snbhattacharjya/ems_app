@@ -266,7 +266,7 @@
             <!-- <label v-if="this.message_type === 'success'"><h3>Print PP1 Data</h3><v-btn  fab dark small color="primary" :to="'/print/pp1/'+this.getofficeid.user_id"><v-icon dark>print</v-icon></v-btn></label> -->
             <v-spacer></v-spacer>
             <v-btn color="info" :to="'/dashboard'">Cancel</v-btn>
-            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save">Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save" :loading="loading">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -301,6 +301,7 @@ export default {
 
   data() {
     return {
+      loading:false,
       valid: true,
       snackbar: false,
       office_id: "",
@@ -437,7 +438,7 @@ export default {
      throttledMethod: _.throttle(function()  {
       this.validateOffice()
        }, 10000),
-   initialize () {
+   initialize () { this.loading=true
         //console.log('Office id - '+this.getofficeid.user_id)
         axios.get('/office/'+this.getofficeid.user_id,{
           id: this.getofficeid.user_id
@@ -475,13 +476,16 @@ export default {
         .catch(error => {
           console.log(error)
         })
+        this.loading=false
       },
     validateOffice() {
       this.disable_save = false
+      this.loading=true
       this.$validator.validate().then(result => {
         result ? this.saveOffice() : this.showError()
         this.disable_save = true
       })
+      this.loading=false
     },
     showError() {
       this.show_message = true
@@ -492,6 +496,7 @@ export default {
     saveOffice() {
 // if(this.total_staff>= this.stored_total_staff){
   this.disable_save = false
+  this.loading=true
        var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.getofficeid.user_id, 8)
       axios
@@ -528,6 +533,7 @@ export default {
           this.message_icon = "check_circle"
           this.message_text = "Office Updated Successfully "
           this.snackbar = true
+          this.loading=false
         })
         .catch(error => {
           this.show_message = true
@@ -536,6 +542,7 @@ export default {
           this.message_text =
             "Error Occurred!!! " + error.response.data.message
           this.snackbar = true
+          this.loading=false
         })
     // }
     // else{

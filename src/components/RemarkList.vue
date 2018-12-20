@@ -49,7 +49,7 @@ export default {
       }
   },
 
-  created(){
+  beforeUpdate(){
     this.$store.dispatch('storeremark')
     this.remarks=this.getremark
 

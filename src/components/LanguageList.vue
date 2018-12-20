@@ -38,7 +38,7 @@ export default {
 
   },
 
-  created(){
+  beforeUpdate(){
    this.$store.dispatch('storelanguage')
    this.languages=this.getlanguage
 

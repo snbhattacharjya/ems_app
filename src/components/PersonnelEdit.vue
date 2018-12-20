@@ -472,7 +472,7 @@
               </ol>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save" >Save</v-btn>
+            <v-btn color="primary" @click="throttledMethod()" v-if="disable_save" :loading="loading">Save</v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :multi-line="false" :timeout=0 :value=show_message :color=message_type :bottom=true>{{ message_text }}<v-btn dark flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
@@ -504,6 +504,7 @@ import _ from 'lodash'
     },
     data (){
       return {
+        loading:false,
         valid: true,
         snackbar: false,
         personnel_id: '',
@@ -846,7 +847,7 @@ import _ from 'lodash'
         }
       },
       initialize () {
-
+        this.loading=true
         axios.get('/personnel/'+this.personnel_id,{
           id: this.personnel_id
         })
@@ -894,17 +895,20 @@ import _ from 'lodash'
         .catch(error => {
           console.log(error)
         })
+        this.loading=false
       },
       throttledMethod: _.throttle(function()  {
       this.validatePersonnel()
        }, 10000),
       validatePersonnel(){
         this.disable_save = false
+        this.loading=true
         this.$validator.validate()
           .then(result => {
             result ? this.savePersonnel() : this.showError('invalid')
             this.disable_save = true
           })
+          this.loading=false
       },
       showError(txt){
         this.show_message = true
@@ -916,6 +920,7 @@ import _ from 'lodash'
       },
       savePersonnel(){
         this.disable_save=false
+        this.loading=true
         var hash='';
         var bcrypt = require('bcryptjs')
         var hash = bcrypt.hashSync(this.personnel_id_fetched, 8)
@@ -967,6 +972,7 @@ import _ from 'lodash'
           setTimeout(() => {
                   this.$router.replace("/personnel/list")
                 },1000)
+
         })
         .catch(error => {
           this.show_message = true
@@ -975,6 +981,7 @@ import _ from 'lodash'
           this.message_text = error.response.data.message
           this.server_errors=error.response.data.errors
           this.snackbar =true
+          this.loading=false
         })
 
 
