@@ -22,30 +22,30 @@ const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
 //Vue.use(printjs)
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://wbppms.gov.in/ems_service/public/index.php/api' //live server
-//axios.defaults.baseURL = 'http://service.ems.test/api' //local
+//axios.defaults.baseURL = 'http://wbppms.gov.in/ems_service/public/index.php/api' //live server
+axios.defaults.baseURL = 'http://service.ems.test/api' //local
 //axios.defaults.baseURL = 'http://10.173.128.19/api' //local test server
 window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 60000*15 //15 minutes
+  idleTime: 60000*5 //1minutes *number of minutes
 })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   data () {
     return {
-      messageStr: 'Window is Idle for 15 minutes, you will be loged out'
+      messageStr: 'Window is Idle for 2 minutes, you will be loged out'
     }
   },
   onIdle() {
-    // if(window.sessionStorage.getItem('is_authenticated') != null){
-    // alert('Window is Idle for 15 minutes, you will be loged out')
-    // store.dispatch('destroyToken')
-    // window.sessionStorage.setItem('is_authenticated', null)
-    // this.$router.replace("/")
-    // }
+    if(window.sessionStorage.getItem('is_authenticated') != 'null'){
+    alert('Window is Idle for 5 minutes, you will be loged out')
+    store.dispatch('destroyToken')
+    window.sessionStorage.setItem('is_authenticated', null)
+    this.$router.replace("/")
+    }
   },
   onActive() {
     //alert('Welcome')

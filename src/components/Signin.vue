@@ -13,7 +13,7 @@
                   name="login"
                   label="Username"
                   type="text"
-                  :autofocus=true
+                  autofocus=true
                   v-model="username"
                   v-validate="'required'"
                   data-vv-name="username"
@@ -158,12 +158,9 @@
                   {
                     field: 'username',
                     msg: 'Invalid Username or Password'
-                  },
-                  {
-                    field: 'captcha',
-                    msg: 'Invalid Captcha'
                   }
                 )
+
                 }else{
                   this.show_message = true
                   this.message_type = 'error'
@@ -180,13 +177,14 @@
         else{
                 this.captcha=''
                 this.reload_captcha()
-                this.password = ''
+
                 this.errors.add(
                   {
                     field: 'captcha',
                     msg: 'Invalid Captcha'
                   }
                 )
+
           this.show_message = true
           this.message_type = 'error'
           this.message_icon = 'warning'
