@@ -2,21 +2,13 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section>
-        <v-layout row wrap v-if="this.getuser.level == 12 ||this.getuser.level == 3 ||this.getuser.level == 5 ||this.getuser.level == 6 ||this.getuser.level == 7 " >
-        <v-btn color="primary" :to="'/office_not_statred'">Office Not Started</v-btn>
-        <v-btn color="primary" :to="'/office_status_zero'">Office Status(0% updated)</v-btn>
-        <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
-        <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated)</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
-        </v-layout>
-      <v-layout row wrap  class="my-5">
-        <!-- <v-alert v-if="office_created" v-model="alert" dismissible type="success">
-        {{ this.office_created }}
-        </v-alert> -->
-      <v-flex xs12>
+       <v-alert v-if="restored" v-model="alert" dismissible type="success">
+        Office restored successfully
+        </v-alert>
+      <v-layout row wrap  class="">
+        <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>All Offices</v-toolbar-title>
+      <v-toolbar-title>Trashed Offices</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
@@ -47,10 +39,8 @@
         <td >{{ props.item.mobile }}</td>
         <td >{{ props.item.pin }}</td>
         <td class="justify-center layout px-0">
-          <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
-          <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
+          <v-btn title="Click to restore office" flat><v-icon  class="mr-2" @click="restore_office(props.item.id)">restore_from_trash</v-icon></v-btn>
         </td>
-        <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
         Your search for "{{ search }}" found no results.
@@ -67,7 +57,7 @@
 
   export default {
     data: () => ({
-      dialog: false,
+      alert: false,
       search: '',
       tableloading:false,
       headers: [
@@ -77,12 +67,9 @@
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Pin', value: 'pin',align: 'left', },
         { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at', sortable: false }
       ],
       offices: [],
-      office_created:'',
-      alert:false,
-
+      restored:false
     }),
 
     computed: {
@@ -96,26 +83,19 @@
     },
 
     created () {
-      if(window.sessionStorage.getItem('is_office_created')!='null'){
-        this.office_created=window.sessionStorage.getItem('is_office_created')
-        this.alert=true
-        window.sessionStorage.setItem('is_office_created',null)
-      }
-      else{
-        this.alert=false
-        window.sessionStorage.setItem('is_office_created',null)
-      }
-      this.initialize()
-
+        this.initialize()
     },
 
     methods: {
       initialize () {
         this.tableloading=true
-        axios.get('/offices')
+        axios.get('/gettrashedOffice')
         .then((response, data) => {
-          if(response.data.length === 0){this.tableloading=false}
+          if(response.data.length === 0){
+          this.offices=[]
+          this.tableloading=false}
          else{
+           this.offices=[]
             response.data.forEach(item => {
                 this.offices.push(item)
               })
@@ -126,6 +106,25 @@
           console.log(error)
           this.tableloading=false
         })
+      },
+      restore_office:function(val) {
+        if(confirm('Are you sure to Restore office - '+val+' ?')){
+        this.tableloading=true
+        this.deleting=true
+        axios.get('/isrestore/'+val)
+        .then((response, data) => {
+            this.initialize()
+            this.restored=true
+            this.alert=true
+            })
+        this.deleting=false
+
+        .catch(error => {
+          console.log(error)
+          this.tableloading=false
+        })
+
+        }
       },
 
 

@@ -165,6 +165,24 @@ export default [
       )
     },
     {
+      path: '/office_delete',
+      meta: {title:'Delete office | Welcome to WBPPMS'},
+      name: 'DeleteOffice',
+      component: () => import(
+
+        '@/components/OfficeDelete.vue'
+      )
+    },
+    {
+      path: '/office_restore',
+      meta: {title:'Restore office | Welcome to WBPPMS'},
+      name: 'RestoreOffice',
+      component: () => import(
+
+        '@/components/RestoreOffice.vue'
+      )
+    },
+    {
       path: '/office/create',
       meta: {title:'Create new office | Welcome to WBPPMS'},
       name: 'CreateOffice',
@@ -397,6 +415,33 @@ export default [
       component: () => import(
 
         '@/components/OfficePartial'
+      )
+    },
+    {
+      path: `/office_not_statred`,
+      meta: {title:'Office list not started | Welcome to WBPPMS'},
+      name: 'OfficenotStarted',
+      component: () => import(
+
+        '@/components/OfficenotStarted'
+      )
+    },
+    {
+      path: `/remarkwise_report`,
+      meta: {title:'Personne list Remarkwise | Welcome to WBPPMS'},
+      name: 'RemarkwisePersonnel',
+      component: () => import(
+
+        '@/components/RemarkwisePersonnel'
+      )
+    },
+    {
+      path: `/district_wise_pp_status`,
+      meta: {title:'Distrcit wise polling personnel status report | Welcome to WBPPMS'},
+      name: 'DistrictwiseppStatus',
+      component: () => import(
+
+        '@/components/DistrictwiseppStatus'
       )
     },
   ];

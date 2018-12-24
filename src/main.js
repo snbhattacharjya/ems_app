@@ -29,14 +29,14 @@ window.axios = axios
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 60000*5 //1minutes *number of minutes
+  idleTime: 60000*15 //1minutes *number of minutes
 })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   data () {
     return {
-      messageStr: 'Window is Idle for 2 minutes, you will be loged out'
+      messageStr: 'Window is Idle for 5 minutes, you will be loged out'
     }
   },
   onIdle() {

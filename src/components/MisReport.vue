@@ -1,6 +1,9 @@
 <template>
   <div id="pageDashboard">
     <v-container fluid>
+      <v-layout row wrap v-if="getUser.level == 2 " >
+      <v-btn color="primary" :to="'/district_wise_pp_status'">District wise polling personnel status</v-btn>
+      </v-layout>
       <section id="report">
         <v-layout row wrap>
          <v-flex xs11><h1 class="headline" >MIS Report As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'Polling Personnel Management System',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
@@ -128,7 +131,10 @@ export default {
   computed:{
      getmisdata:function(){
        return this.$store.getters.getMisreport
-     }
+     },
+     getUser:function(){
+        return this.$store.getters.getUser
+      }
   },
   methods:{
     createclass:function(available,requirement){

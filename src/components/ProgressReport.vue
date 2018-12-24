@@ -1,6 +1,11 @@
 <template>
   <div id="pageDashboard">
     <v-container fluid>
+      <v-layout row wrap v-if="getUser.level == 12 " >
+              <v-btn color="primary" :to="'/remarkwise_report'">Remarkwise Personnel Report</v-btn>
+
+              </v-layout>
+
       <section id="report">
         <v-layout row wrap>
          <v-flex xs11><h1 class="headline" >MIS Report As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'Polling Personnel Management System',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
@@ -14,18 +19,18 @@
                 <thead>
                 <tr>
                 <th width="5%"><strong>Sl<br> No</strong></th>
-                <th width="25%"><strong>Subdivision &<br>Block/Municipality</strong></th>
-                <th width="10%" ><strong>Office<br>Total</strong></th>
-                <th width="10%" ><strong>Office <br>Updated</strong></th>
-                <th width="10%" ><strong>PP1<br>Progress</strong></th>
-                <th width="10%" ><strong>Total <br>Staff PP1</strong></th>
-                <th width="10%" ><strong>Male<br> PP1</strong></th>
-                <th width="10%" ><strong>Female<br> PP1</strong></th>
-                <th width="10%" v-if="this.pp2male_count!=0" ><strong>Male<br> PP2</strong></th>
-                <th width="10%" v-if="this.pp2female_count!=0" ><strong>Female<br> PP2</strong></th>
-                <th width="10%" v-if="this.pp2male_count+this.pp2female_count!=0" ><strong>Total<br> PP2</strong></th>
-                <th width="10%" v-if="this.pp2start_count!=0"><strong>Number<br> of Office<br>Started<br>PP2<br>Entry</strong></th>
-                <th width="10%" v-if="this.pp2start_count!=0" ><strong>PP2<br>Progress</strong></th>
+                <th width="20%"><strong>Subdivision &<br>Block/Municipality</strong></th>
+                <th width="5%" ><strong>Office<br>Total</strong></th>
+                <th width="7%" ><strong>Office <br>Updated</strong></th>
+                <th width="7%" ><strong>PP1<br>Progress</strong></th>
+                <th width="7%" ><strong>Total <br>Staff PP1</strong></th>
+                <th width="5%" ><strong>Male<br> PP1</strong></th>
+                <th width="7%" ><strong>Female<br> PP1</strong></th>
+                <th width="5%" ><strong>Male<br> PP2</strong></th>
+                <th width="7%" ><strong>Female<br> PP2</strong></th>
+                <th width="7%" ><strong>Total<br> PP2</strong></th>
+                <th width="9%" ><strong>Number<br> of Office<br>Started<br>PP2<br>Entry</strong></th>
+                <th width="9%" ><strong>PP2<br>Progress</strong></th>
                 </tr>
 
                 </thead>
@@ -40,11 +45,11 @@
                   <td class="nopad" >{{ report.totalStuff }}</td>
                   <td class="nopad" >{{ report.totalMale }}</td>
                   <td class="nopad" >{{ report.female_staff }}</td>
-                  <td class="nopad" v-if="report.malepp2">{{ report.malepp2 }}</td>
-                  <td class="nopad" v-if="report.femalepp2">{{ report.femalepp2 }}</td>
-                  <td class="nopad" v-if="parseInt(report.malepp2)+parseInt(report.femalepp2)>=0">{{ parseInt(report.malepp2)+parseInt(report.femalepp2) }}</td>
-                  <td class="nopad" v-if="parseInt(report.pp2started)>=0">{{ parseInt(report.pp2started) }}</td>
-                  <td class="nopad" v-if="parseInt(report.pp2started)>=0">{{ parseFloat(((parseFloat(report.malepp2)+parseFloat(report.femalepp2))/report.totalStuff)*100).toFixed(2) }}%</td>
+                  <td class="nopad" >{{ report.malepp2 ? report.malepp2 : 0 }}</td>
+                  <td class="nopad" >{{ report.femalepp2 ? report.femalepp2 : 0 }}</td>
+                  <td class="nopad" >{{ report.malepp2 && report.femalepp2 ? parseInt(report.malepp2)+parseInt(report.femalepp2) : 0 }}</td>
+                  <td class="nopad" >{{ report.pp2started ? parseInt(report.pp2started) : 0 }}</td>
+                  <td class="nopad" >{{ report.malepp2 && report.femalepp2 ? parseFloat(((parseFloat(report.malepp2)+parseFloat(report.femalepp2))/report.totalStuff)*100).toFixed(2) : 0 }}%</td>
                   </tr>
                   <tr>
                     <td class="nopad"  colspan=2><strong>Total</strong></td>
@@ -54,11 +59,11 @@
                     <td class="nopad" >{{this.totalStuff_count}}</td>
                     <td class="nopad" >{{this.totalMale_count}}</td>
                     <td class="nopad" >{{this.female_staff_count}}</td>
-                    <td class="nopad" v-if="this.pp2male_count>=0">{{this.pp2male_count}}</td>
-                    <td class="nopad" v-if="this.pp2female_count>=0">{{this.pp2female_count}}</td>
+                    <td class="nopad" v-if="parseInt(this.pp2male_count)>=0">{{this.pp2male_count}}</td>
+                    <td class="nopad" v-if="parseInt(this.pp2female_count)>=0">{{this.pp2female_count}}</td>
                     <td class="nopad" v-if="parseInt(this.pp2male_count)+parseInt(this.pp2female_count)>=0">{{parseInt(this.pp2male_count)+parseInt(this.pp2female_count)}}</td>
-                    <td class="nopad" v-if="this.pp2start_count>=0">{{this.pp2start_count}}</td>
-                    <td class="nopad" v-if="this.pp2start_count>=0">{{parseFloat((parseFloat(this.pp2start_count)/parseFloat(this.totalOffice_count))*100).toFixed(2)}}%</td>
+                    <td class="nopad" v-if="parseInt(this.pp2start_count)>=0">{{this.pp2start_count}}</td>
+                    <td class="nopad" v-if="parseInt(this.pp2start_count)>=0">{{parseFloat((parseFloat(this.pp2start_count)/parseFloat(this.totalOffice_count))*100).toFixed(2)}}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -102,7 +107,10 @@ export default {
   computed:{
      getmisdata:function(){
        return this.$store.getters.getMisreport
-     }
+     },
+     getUser:function(){
+          return this.$store.getters.getUser
+       },
   },
   methods:{
 
