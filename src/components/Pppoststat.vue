@@ -22,6 +22,7 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('poststat_from')"
                             data-vv-name="poststat_from"
+                            :disabled="disable_offcat"
                           ></v-select>
                          </v-flex>
                          <v-flex xs6>
@@ -35,6 +36,7 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('poststat_to')"
                             data-vv-name="poststat_to"
+                            :disabled="disable_offcat"
                           ></v-select>
                          </v-flex>
                        </v-layout>
@@ -66,7 +68,7 @@
                             data-vv-name="category_id"
                             :disabled="disable_offcat"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_offcat" @click="loadoffices" :loading="loading">Load Office</v-btn></v-slide-x-reverse-transition>
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_offcat" @click="loadoffices" :loading="loading_offcat">Load Office</v-btn></v-slide-x-reverse-transition>
                           </v-select>
 
                          </v-flex>
@@ -85,7 +87,7 @@
                             data-vv-name="office_id"
                             :disabled="disable_off"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_off" @click="loadqualifications" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_off" @click="loadqualifications" :loading="loading_off">Next</v-btn></v-slide-x-reverse-transition>
                           </v-select>
 
                          </v-flex>
@@ -229,7 +231,7 @@
                             :error-messages="errors.collect('qualification_id')"
                             data-vv-name="qualification_id"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disble_qual" @click="loaddesignations" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disble_qual" @click="loaddesignations" :loading="loading_designation">Next</v-btn></v-slide-x-reverse-transition>
                           </v-select>
                            </v-layout>
                          </v-flex>
@@ -282,7 +284,7 @@
                             data-vv-name="age"
                             :disabled="disable_agegrp"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_agegrp" @click="loadremarks" :loading="loading">Next</v-btn></v-slide-x-reverse-transition>
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_agegrp" @click="loadremarks" :loading="loading_remark">Next</v-btn></v-slide-x-reverse-transition>
                           </v-select>
                          </v-flex>
                        </v-layout>
@@ -332,7 +334,10 @@ export default {
     },
   data () {
     return {
-      loading: false,
+      loading_offcat: false,
+      loading_off:false,
+      loading_designation:false,
+      loading_remark:false,
       subdivision_id:'ALL',
       category_id:'',
       disable_offcat: false,
@@ -483,7 +488,9 @@ export default {
       })
     },
     loadoffices:function(event){
+    if(this.poststat_from!='' && this.poststat_to!=''){
       if(this.disable_offcat === false && this.category_id != ''){
+        this.loading_offcat=true
         axios.post('/officebysubdivision',{
          subdivision_id:this.subdivision_id,
          category_id: this.category_id
@@ -494,6 +501,7 @@ export default {
         this.offices.push({officename:"ALL",officecode:"ALL"})
         this.disable_offcat=true
         this.disable_off=false
+        this.loading_offcat=false
       }
        response.data['office'].forEach(item => {
          console.log('Off - '+item)
@@ -515,9 +523,25 @@ export default {
              )
 
       }
+    }else{
+      this.errors.add(
+                  {
+                    field: 'poststat_from',
+                    msg: 'Please select Post Status from which users will be selected'
+                  }
+             )
+             this.errors.add(
+
+                  {
+                    field: 'poststat_to',
+                    msg: 'Please select Post Status which will be applied upon selected users'
+                  }
+             )
+    }
     },
     loadqualifications:function(){
       if(this.disable_off === false && this.category_id != '' && this.office_id != ''){
+        this.loading_off=true
          axios.post('/fetch_qualification_by_oficecode',{
          subdivision_id:this.subdivision_id,
          category_id: this.category_id,
@@ -533,6 +557,7 @@ export default {
          item.QualificationName=item.QualificationName.toUpperCase()
           this.qualifications.push(item)
           this.disble_qual=false
+          this.loading_off=false
         });
 
       })
@@ -556,6 +581,7 @@ export default {
     },
     loaddesignations:function(){
       if(this.disble_qual == false){
+        this.loading_designation=true
        axios.post('/fetch_designation_of_pp',{
           subdivision_id:this.subdivision_id,
           category_id:this.category_id,
@@ -577,6 +603,7 @@ export default {
           this.designations.push(item)
           this.disable_desig=false
         });
+        this.loading_designation=false
 
       })
       .catch(error => {
@@ -586,6 +613,7 @@ export default {
     },
     loadremarks:function(){
       if(this.disable_desig === false){
+        this.loading_remark=true
        axios.post('/fetch_remarks_by_condition',{
          subdivision_id: this.subdivision_id,
                 category_id: this.category_id,
@@ -611,7 +639,7 @@ export default {
          item.RemarksName=item.RemarksName.toUpperCase()
           this.remarks.push(item)
         });
-
+      this.loading_remark=false
       })
       .catch(error => {
         console.log(error)

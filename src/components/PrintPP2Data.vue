@@ -9,7 +9,15 @@
           <v-flex xs12 class="my-3">
             <h1 class="headline mb-3 blue--text">Check List : Comming Soon</h1>
             <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
+            <!-- <download-csv
+                        :data="reports"
+                        :name="dataFile"
+                        :labels="labels"
+                        :fields="csvfields"
 
+                >
+                    <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT}}</v-btn>
+                </download-csv> -->
             <!-- <v-layout row wrap >
               <table class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
@@ -49,16 +57,49 @@
 
 
 <script>
+import JsonCSV from 'vue-json-csv'
 export default {
   name: 'PrintPP2Data',
-
+  components: {'download-csv': JsonCSV},
   data(){
     return {
       reports:[],
       search: '',
       loadingTXT:'Loading....',
       tableloading:false,
-
+      dataFile: 'pp2_data_export.csv',
+        labels: {
+          empname: 'Name',
+          designation:'Designation',
+          present_address:'Present Address',
+          permanent_address:'Permanent Address',
+          dob:'Date of Birth',
+          gender:'Gender',
+          scale: 'Pay Scale',
+          basic_pay:'Basic Pay',
+          grade_pay: 'Grade Pay',
+          pay_level: 'Pay Level',
+          emp_group: 'Employee Group',
+          working_status: 'Working Status',
+          email:'Email',
+          phone:'Phone',
+          mobile:'Mobile',
+          epic:'Epic No',
+          part_no: 'Part No',
+          sl_no: 'Serial No',
+          post_stat: 'Post Status',
+          qualification: 'Qualification',
+          bank_account_no: 'Bank AC Number',
+          branch_ifsc: 'Branch IFSC Number',
+          subdivision: 'Subdivision',
+          actemp: 'Temporary Assembly Constituency',
+          acpermanent: 'Permanent Assembly Constituency',
+          acofficename: 'Office Assembly Constituency',
+          remark: 'Remark'
+        },
+        csvfields : ['empname','designation','present_address','permanent_address','dob','gender','scale','basic_pay','grade_pay','pay_level','emp_group','working_status','email','phone','mobile',
+'epic','part_no','sl_no','post_stat','qualification','bank_account_no','branch_ifsc','subdivision','actemp','acpermanent','acofficename','emark'],
+        btn_txt:'Download as CSV'
 
 
     }
@@ -83,6 +124,7 @@ export default {
             })
               //this.$store.dispatch('storePP2report', this.reports)
               this.tableloading=false
+              this.loadingTXT='Download as CSV'
           }
           else{
             this.loadingTXT='No data found'
@@ -97,13 +139,7 @@ export default {
   },
 
   created(){
-    // if(this.getppdata != ''){
-    // this.reports=this.getppdata
-
-    // }
-    // else{
-        //this.initialize()
-    //}
+    //this.initialize()
 
   },
   computed:{

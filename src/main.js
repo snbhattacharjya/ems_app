@@ -36,12 +36,12 @@ new Vue({
   el: '#app',
   data () {
     return {
-      messageStr: 'Window is Idle for 5 minutes, you will be loged out'
+      messageStr: 'Window is Idle for 15 minutes, you will be loged out'
     }
   },
   onIdle() {
     if(window.sessionStorage.getItem('is_authenticated') != 'null'){
-    alert('Window is Idle for 5 minutes, you will be loged out')
+    alert('Window is Idle for 15 minutes, you will be loged out')
     store.dispatch('destroyToken')
     window.sessionStorage.setItem('is_authenticated', null)
     this.$router.replace("/")

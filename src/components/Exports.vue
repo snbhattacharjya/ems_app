@@ -14,24 +14,24 @@
           <v-card-text>
             <h1 class="headline mb-3">Comming Soon</h1>
             <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
-            <!--<v-progress-linear :indeterminate="true" v-show="loader"></v-progress-linear>
+
             <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>
-             <download-csv
+             <!-- <download-csv
                         :data="offices_csv"
                         :name="userfilename"
                         :labels="labels"
                         :fields="csvfields"
                 >
-                <v-btn v-show="urlpersonnel" flat color="info" class="button"  style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
+                <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_user}}</v-btn>
 
-                </download-csv>
-                <download-csv
+                </download-csv> -->
+                <!-- <download-csv
                         :data="personnel_csv"
                         :name="personnelfilename"
                         :labels="personnel_labels"
                         :fields="personnel_csvfields"
                 >
-                <v-btn v-show="urluser" flat color="info" class="button" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn>
+                <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_personnel}}</v-btn>
                 </download-csv> -->
 <!-- <v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
             <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn> -->
@@ -63,11 +63,13 @@ export default {
       urlpersonnel: axios.defaults.baseURL+"/export/personnel/"+this.$store.getters.getAccessToken.access_token,
       urluser: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token,
       loader:true,
-
+      tableloading:true,
       offices_csv: [],
       personnel_csv:[],
       userfilename:'Users.csv',
       personnelfilename:'Personnel.csv',
+      loadingTXT_user:'Loading....',
+      loadingTXT_personnel:'Loading....',
       userscsv:'',
       personnelcsv:'',
 
@@ -130,15 +132,18 @@ export default {
   methods:{
 
       getofficedata () {
-
+        this.tableloading=true
         axios.get('/export/office')
         .then((response, data) => {
-          if(response.data.length === 0){ this,userscsv=false}
+          if(response.data.length === 0){
+            this.tableloading=false
+            this.loadingTXT_user='No Data Found'
+            }
          else{
             response.data.forEach(item => {
                 this.offices_csv.push(item)
               })
-          this.urluser=true
+          this.loadingTXT_user='Export Office user details'
          }
             })
         .catch(error => {
