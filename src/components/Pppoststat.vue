@@ -679,8 +679,11 @@ export default {
 
             })
             .catch(error => {
+              this.setting_rule=false
               console.log(error)
             })
+          }else{
+            this.setting_rule=false
           }
         })
 
