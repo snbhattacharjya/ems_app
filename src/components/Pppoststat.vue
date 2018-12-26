@@ -306,7 +306,7 @@
                          </v-flex>
                        </v-layout>
 
-                       <v-btn color="primary" @click="setrule" :loading="loading">Set Rule</v-btn>
+                       <v-btn color="primary" @click="throttledMethod()" :loading="setting_rule">Set Rule</v-btn>
                        <v-btn color="primary" v-if="this.disable_agegrp === true" @click="resetrule">Reset</v-btn>
                     </v-form>
                   </v-card-text>
@@ -328,6 +328,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   name: 'PppostStatus',
    components: {
@@ -338,6 +339,7 @@ export default {
       loading_off:false,
       loading_designation:false,
       loading_remark:false,
+      setting_rule:false,
       subdivision_id:'ALL',
       category_id:'',
       disable_offcat: false,
@@ -646,7 +648,11 @@ export default {
       })
       }
     },
+    throttledMethod: _.throttle(function()  {
+      this.setrule()
+       }, 10000),
     setrule:function(){
+      this.setting_rule=true
       this.$validator.validate()
         .then(result =>{
           if(result){
