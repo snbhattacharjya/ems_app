@@ -15,7 +15,7 @@
           item-text= "name"
           item-value= "id"
           prepend-icon="list"
-          label="Select Subdivision"
+          label="Select Subdivision/Block"
           v-validate="'required'"
           :error-messages="errors.collect('subdivision_id')"
           data-vv-name="subdivision_id"

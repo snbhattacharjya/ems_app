@@ -15,7 +15,7 @@
       <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>Office List(100% updated)</v-toolbar-title>
+      <v-toolbar-title>Office List(100% updated PP2)</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset

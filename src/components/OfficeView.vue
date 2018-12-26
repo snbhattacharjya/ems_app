@@ -3,12 +3,13 @@
     <v-container fluid>
       <section>
         <v-layout row wrap v-if="this.getuser.level == 12 ||this.getuser.level == 3 ||this.getuser.level == 5 ||this.getuser.level == 6 ||this.getuser.level == 7 " >
-        <v-btn color="primary" :to="'/office_not_statred'">Office Not Started</v-btn>
-        <v-btn color="primary" :to="'/office_status_zero'">Office Status(0% updated)</v-btn>
-        <v-btn color="primary" :to="'/office_partials'">Office Partial Updated</v-btn>
-        <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated)</v-btn>
+        <v-btn color="primary" :to="'/office_not_statred'">Office Not yet Started</v-btn>
+        <v-btn color="primary" :to="'/office_status_zero'">Office Status(0% updated PP2)</v-btn>
+        <v-btn color="primary" :to="'/office_partials'">Office Partial Updated(PP2)</v-btn>
+        <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
+        <v-btn v-if="this.getuser.level == 6 || this.getuser.level == 7" color="info" :to="'/pollingpersonnel_progress_report'">Polling Personnel Progress Report</v-btn>
         </v-layout>
       <v-layout row wrap  class="my-5">
         <!-- <v-alert v-if="office_created" v-model="alert" dismissible type="success">
