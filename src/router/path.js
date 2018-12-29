@@ -444,4 +444,13 @@ export default [
         '@/components/DistrictwiseppStatus'
       )
     },
+    {
+      path: `/office_category_wise_pp_status`,
+      meta: {title:'Office category wise polling personnel status report | Welcome to WBPPMS'},
+      name: 'OfficecategorywisePersonnel',
+      component: () => import(
+
+        '@/components/OfficecategorywisePersonnel'
+      )
+    },
   ];

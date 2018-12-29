@@ -12,11 +12,11 @@
             <v-toolbar-title>Exports</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <h1 class="headline mb-3">Comming Soon</h1>
-            <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
+            <!--<h1 class="headline mb-3">Comming Soon</h1>
+             <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
 
             <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>
-             <!-- <download-csv
+             <download-csv
                         :data="offices_csv"
                         :name="userfilename"
                         :labels="labels"
@@ -25,17 +25,17 @@
                 <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_user}}</v-btn>
 
                 </download-csv> -->
-                <!-- <download-csv
+                <download-csv
                         :data="personnel_csv"
                         :name="personnelfilename"
                         :labels="personnel_labels"
                         :fields="personnel_csvfields"
                 >
-                <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_personnel}}</v-btn>
-                </download-csv> -->
-<!-- <v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>
-            <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn> -->
-          </v-card-text>
+                <v-btn color="info" :loading="personnelloading" class="button"><v-icon>receipt</v-icon>Export Personnel data as CSV</v-btn>
+                </download-csv>
+<!-- <v-btn flat color="info" :href='urluser' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Office user details</v-btn>-->
+            <!-- <v-btn flat color="info" :href='urlpersonnel' target="_blank" style="cursor: pointer"><v-icon color="info">assignment_returned</v-icon> Export Personnel details</v-btn>
+          --></v-card-text>
           <v-card-actions>
 
           </v-card-actions>
@@ -64,6 +64,7 @@ export default {
       urluser: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token,
       loader:true,
       tableloading:true,
+      personnelloading:false,
       offices_csv: [],
       personnel_csv:[],
       userfilename:'Users.csv',
@@ -103,10 +104,26 @@ export default {
           phone: 'Phone',
           post_stat: 'Post Status',
           present_address: 'Present Address',
+          qualification_id: 'Qualification',
+          language_id:'Language',
+          epic:'EPIC',
+          part_no:'Part No',
+          sl_no:'Serial No',
+          assembly_temp_id:'Temporary Assembly',
+          assembly_perm_id:'Permanent Assembly',
+          assembly_off_id:'Office Assembly',
+          block_muni_temp_id:'Temporary Block/Municipality',
+          block_muni_perm_id:'Permanent Block/Municipality',
+          block_muni_off_id:'Office Block/Municipality',
+          subdivision_id:'Subdivision',
+          branch_ifsc:'IFSC',
+          bank_account_no:'Bank Account No',
+          remark_id:'Remark',
+          remark_reason:'Remark Reason'
 
         },
         csvfields : ['rand_id','name','email','mobile','address','post_office','pin','ps','blk','subdiv','rand_password'],
-        personnel_csvfields : ['basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address'],
+        personnel_csvfields : ['basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason'],
     }
   },
   beforeUpdate() {
@@ -125,7 +142,7 @@ export default {
     this.userfilename=this.$store.getters.getUser.district[0]+'_users_'+datestring+'.csv'
     this.personnelfilename=this.$store.getters.getUser.district[0]+'_personnel_'+datestring+'.csv'
       //this.getofficedata()
-      //this.getpersonneldata()
+      this.getpersonneldata()
 
 
     },
@@ -152,22 +169,24 @@ export default {
         })
       },
       getpersonneldata () {
-
-        axios.get('/export/personnel')
+         this.personnelloading=true
+        axios.get('/personnelExport')
         .then((response, data) => {
-          if(response.data.length === 0){this.personnelcsv=false}
+          if(response.data.length === 0){
+            this.personnelcsv=false
+            this.personnelloading=false
+            }
          else{
             response.data.forEach(item => {
                 this.personnel_csv.push(item)
               })
-          this.urlpersonnel=true
-          this.loader=false
+           this.personnelloading=false
 
          }
             })
         .catch(error => {
           console.log(error)
-
+          this.personnelloading=false
         })
 
       },

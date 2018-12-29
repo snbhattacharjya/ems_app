@@ -490,8 +490,12 @@ export default {
       })
     },
     loadoffices:function(event){
-    if(this.poststat_from!='' && this.poststat_to!=''){
-      if(this.disable_offcat === false && this.category_id != ''){
+    if(this.poststat_from=='' || this.poststat_to==''){
+      alert('Please select both Post Status')
+    }else{
+
+
+    if(this.disable_offcat === false && this.category_id != ''){
         this.loading_offcat=true
         axios.post('/officebysubdivision',{
          subdivision_id:this.subdivision_id,
@@ -525,21 +529,8 @@ export default {
              )
 
       }
-    }else{
-      this.errors.add(
-                  {
-                    field: 'poststat_from',
-                    msg: 'Please select Post Status from which users will be selected'
-                  }
-             )
-             this.errors.add(
+      }
 
-                  {
-                    field: 'poststat_to',
-                    msg: 'Please select Post Status which will be applied upon selected users'
-                  }
-             )
-    }
     },
     loadqualifications:function(){
       if(this.disable_off === false && this.category_id != '' && this.office_id != ''){

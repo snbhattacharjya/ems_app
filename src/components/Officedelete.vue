@@ -4,6 +4,7 @@
       <section>
 
       <v-layout row wrap  class="">
+        <h1>Serch Office for delete</h1><br>
         <v-text-field
                 prepend-icon="search"
                 name="office_search"
@@ -20,6 +21,7 @@
         <v-alert v-if="not_found" v-model="alert" dismissible type="error">
         Not Found
         </v-alert>
+        <p v-if="items_found>0">Found {{this.items_found}} Office(s)</p>
         <v-card class="my-5" :loading="tableloading" v-if="offices.length>0">
         <template v-for="(office, index) in offices" >
         <v-list :key="index">
@@ -57,7 +59,8 @@
       office_search: '',
       offices: [],
       not_found:false,
-      alert:false
+      alert:false,
+      items_found:0
     }),
 
     computed: {
@@ -94,6 +97,7 @@
               this.alert=true
             }
           else{
+            this.items_found=response.data.length
             this.offices=[]
               response.data.forEach(item => {
                   this.offices.push(item)

@@ -807,8 +807,18 @@ import _ from 'lodash'
                this.show_level=false
                this.pay_level=0
                }
+           }else{
+             this.show_grade=true
+             this.show_level=false
+             this.pay_level=0
            }
 
+          })
+          .catch(error => {
+            console.log(error)
+            this.show_grade=true
+            this.show_level=false
+            this.pay_level=0
           })
         }
 

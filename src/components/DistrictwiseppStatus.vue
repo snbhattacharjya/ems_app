@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleString() }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude','clk2e'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
+         <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleDateString('en-GB') }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude','clk2e'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
 
@@ -121,6 +121,24 @@ export default {
                 else{
                   response.data.forEach(item => {
                       item['sl']=this.count
+                      if(!item['Total_PP_Declared']){
+                        item['Total_PP_Declared']=0
+                      }
+                      if(!item['Male_PP_Declared']){
+                        item['Male_PP_Declared']=0
+                      }
+                      if(!item['Male_PP_Added']){
+                        item['Male_PP_Added']=0
+                      }
+                      if(!item['Female_PP_Declared']){
+                        item['Female_PP_Declared']=0
+                      }
+                      if(!item['Female_PP_Added']){
+                        item['Female_PP_Added']=0
+                      }
+                      if(!item['Total_PP_Added']){
+                        item['Total_PP_Added']=0
+                      }
                       this.reports.push(item)
                       this.sum_Total_Offices+= parseInt(item.Total_Offices)
                       this.sum_PP1_Updated+=parseInt(item.PP1_Updated)

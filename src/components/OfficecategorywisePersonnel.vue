@@ -8,13 +8,13 @@
         <v-layout row wrap >
 
           <v-flex xs12 >
-            <h1 class="headline">Remarkwise Personnel Report </h1>
+            <h1 class="headline">Office Category wise Personnel Report </h1>
             <v-layout row wrap >
               <table  class="v-datatable v-table dark my-5" id=""  border=1>
                 <thead>
                 <tr>
                 <th width="5%" ><strong>Serial<br> No</strong></th>
-                <th width="20%"><strong>Remark</strong></th>
+                <th width="20%"><strong>Office Category</strong></th>
                 <th width="15%" ><strong>No of Male(Available)</strong></th>
                 <th width="15%" ><strong>No of Female(Available)</strong></th>
                 <th width="15%" ><strong>No of Total<br> Personnel(Available)</strong></th>
@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: 'RemarkwisePersonnel',
+  name: 'OfficecategorywisePersonnel',
   props: {
 
   },
@@ -94,7 +94,7 @@ export default {
           this.reports=[]
           this.count=1
           this.loadingtxt='Loading...'
-            axios.get('/remarkwise_report')
+            axios.get('/officeCategoryWise_pp2')
               .then((response, data) => {
                 if(response.data['available'].length === 0){
 

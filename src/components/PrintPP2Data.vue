@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleString() }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleDateString('en-GB') }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
