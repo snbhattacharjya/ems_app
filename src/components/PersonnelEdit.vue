@@ -164,6 +164,8 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('scale')"
                     data-vv-name="scale"
+                    hint="Please provide Pay Scale like 9000-40500 without any other charecter"
+                    persistent-hint
                   ></v-text-field>
 
                   <v-text-field
@@ -338,7 +340,7 @@
                     type="text"
                     maxlength=20
                     v-model="epic"
-                    v-validate="'required'"
+                    v-validate="'required|regex:^[A-Z0-9\/]+$'"
                     :error-messages="errors.collect('epic')"
                     data-vv-name="epic"
                   ></v-text-field>
@@ -408,14 +410,16 @@
                     name="branch_ifsc"
                     label="IFSC No(*)"
                     type="text"
-                    maxlength=15
+                    counter
+                    maxlength=11
                     v-model="branch_ifsc"
-                    v-validate="'required|alpha_num'"
+                    v-validate="'required|alpha_num|length:11|regex:^[A-Z]{4}0[A-Z0-9]{6}$'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
                     @blur="ifsc"
                     :suffix="ifsc_hint"
                   ></v-text-field>
+                  <small class="red--text">N.B. Please provide correct IFSC otherwise Election payment will be held and office will be responsible for that.</small>
 
                   <v-text-field
                     prepend-icon="account_balance"
@@ -693,7 +697,9 @@ import _ from 'lodash'
             },
             branch_ifsc: {
               required: "Please provide IFSC number",
-              alpha_num: "No Special character allowed"
+              alpha_num: "No Special character allowed",
+              length: "Bank IFSC Code must be of 11 character",
+              regex: "Invalid IFSC code"
             },
             bank_account_no: {
               required: "Please provide Bank Account number",
@@ -810,7 +816,10 @@ import _ from 'lodash'
 
       },
       ifsc:function(){
-        if(this.branch_ifsc != ''){ this.ifsc_hint=''
+        if(this.branch_ifsc != ''){
+          var strongRegex = new RegExp("[A-Z]{4}0[A-Z0-9]{6}$");
+            if(strongRegex.test(this.branch_ifsc)==true){
+          this.ifsc_hint=''
           axios.get('/ifsc/'+this.branch_ifsc,{
           branch_ifsc: this.branch_ifsc
           })
@@ -823,6 +832,7 @@ import _ from 'lodash'
             }
 
           })
+          }
         }
         else{this.ifsc_hint='' }
       },

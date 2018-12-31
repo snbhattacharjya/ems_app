@@ -15,16 +15,16 @@
             <!--<h1 class="headline mb-3">Comming Soon</h1>
              <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
 
-            <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>
+            <p v-if="this.usercsv == false && this.personnelcsv == false">Sorry Nothing to Export.</p>-->
              <download-csv
                         :data="offices_csv"
                         :name="userfilename"
                         :labels="labels"
                         :fields="csvfields"
                 >
-                <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_user}}</v-btn>
+                <v-btn color="info" :loading="officeloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_user}}</v-btn>
 
-                </download-csv> -->
+                </download-csv>
                 <download-csv
                         :data="personnel_csv"
                         :name="personnelfilename"
@@ -63,7 +63,7 @@ export default {
       urlpersonnel: axios.defaults.baseURL+"/export/personnel/"+this.$store.getters.getAccessToken.access_token,
       urluser: axios.defaults.baseURL+"/export/office/"+this.$store.getters.getAccessToken.access_token,
       loader:true,
-      tableloading:true,
+      officeloading:false,
       personnelloading:false,
       offices_csv: [],
       personnel_csv:[],
@@ -75,20 +75,26 @@ export default {
       personnelcsv:'',
 
         labels: {
-          rand_id: 'ID',
-          name: 'Name',
-          email: 'Email',
-          mobile: 'Mobile',
-          address: 'Address',
-          post_office: 'Post Office',
-          pin: 'PIN',
-          ps: 'Police Staton',
-          blk: 'Block/Municipality',
-          subdiv: 'Subdivision',
-          rand_password: 'Password'
+          id:"Office ID",
+          name:"Name",
+          email:"Email",
+          phone:"Phone",
+          mobile:"Mobile",
+          identification_code:"Identification Code",
+          address:"Address",
+          post_office:"Post Office",
+          pin:"PIN",
+          ac_id:"Assembly Constituency ID",
+          pc_id:"Parliamentary Constituency ID",
+          subdivision_id:"Subdivision ID",
+          block_muni_id:"Block/Municipality ID",
+          police_station_id:"Police Station ID",
+          category_id:"Office Category ID",
+          institute_id:"Institute ID"
 
         },
         personnel_labels: {
+          id:'Personnel ID',
           basic_pay: 'Basic Pay',
           designation: 'Designation',
           dob:'Date of Birth',
@@ -122,8 +128,10 @@ export default {
           remark_reason:'Remark Reason'
 
         },
-        csvfields : ['rand_id','name','email','mobile','address','post_office','pin','ps','blk','subdiv','rand_password'],
-        personnel_csvfields : ['basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason'],
+        csvfields : ['id','name','email','phone','mobile','identification_code',
+        'address','post_office','pin','ac_id','pc_id','subdivision_id','block_muni_id','police_station_id',
+        'category_id','institute_id'],
+        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason'],
     }
   },
   beforeUpdate() {
@@ -141,7 +149,7 @@ export default {
 
     this.userfilename=this.$store.getters.getUser.district[0]+'_users_'+datestring+'.csv'
     this.personnelfilename=this.$store.getters.getUser.district[0]+'_personnel_'+datestring+'.csv'
-      //this.getofficedata()
+    this.getofficedata()
       this.getpersonneldata()
 
 
@@ -149,23 +157,25 @@ export default {
   methods:{
 
       getofficedata () {
-        this.tableloading=true
-        axios.get('/export/office')
+        this.officeloading=true
+        axios.get('/exportoffice')
         .then((response, data) => {
           if(response.data.length === 0){
-            this.tableloading=false
+            this.officeloading=false
             this.loadingTXT_user='No Data Found'
             }
          else{
             response.data.forEach(item => {
                 this.offices_csv.push(item)
               })
-          this.loadingTXT_user='Export Office user details'
+          this.officeloading=false
+          this.loadingTXT_user='Export Office user details as CSV'
          }
             })
         .catch(error => {
           console.log(error)
-
+          this.officeloading=false
+          this.loadingTXT_user='Error fetching data'
         })
       },
       getpersonneldata () {
