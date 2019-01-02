@@ -453,4 +453,22 @@ export default [
         '@/components/OfficecategorywisePersonnel'
       )
     },
+    {
+      path: `/office_category_wise_post_status`,
+      meta: {title:'Office category wise post status report | Welcome to WBPPMS'},
+      name: 'OfficecategorywisePoststatus',
+      component: () => import(
+
+        '@/components/OfficecategorywisePoststatus'
+      )
+    },
+    {
+      path: `/macro_level_pp_statistic`,
+      meta: {title:'Macro Level PP Statistic report | Welcome to WBPPMS'},
+      name: 'MacrolevelPpstat',
+      component: () => import(
+
+        '@/components/MacrolevelPpstat'
+      )
+    },
   ];

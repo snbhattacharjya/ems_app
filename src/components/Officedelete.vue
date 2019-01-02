@@ -4,7 +4,7 @@
       <section>
 
       <v-layout row wrap  class="">
-        <h1>Serch Office for delete</h1><br>
+
         <v-text-field
                 prepend-icon="search"
                 name="office_search"
@@ -73,6 +73,7 @@
       office_search:function(val){
         if(this.office_search == null || this.office_search==''){
           this.offices=[]
+          this.items_found=0
         }
       }
     },
@@ -91,6 +92,8 @@
           axios.get('/issearch/'+this.office_search)
           .then((response, data) => {
             if(response.data.length === 0){
+              this.offices=[]
+              this.items_found=0
               this.tableloading=false
               this.searching=false
               this.not_found=true
@@ -124,11 +127,16 @@
         this.deleting=true
         axios.get('/isdelete/'+val)
         .then((response, data) => {
+
             this.offices=[]
-            })
-        this.deleting=false
+
+          this.deleting=false
+        })
         .catch(error => {
-          console.log(error)
+          console.log(error.response.data)
+          if(error.response.data.msg== 'Personnel Exists'){
+            alert('Sorry !! Can not delete this office as it has personnel.')
+          }
           this.tableloading=false
         })
         }

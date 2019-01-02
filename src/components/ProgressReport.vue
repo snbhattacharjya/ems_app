@@ -60,7 +60,7 @@
                     <td class="nopad" v-if="parseInt(this.pp2female_count)>=0">{{this.pp2female_count}}</td>
                     <td class="nopad" v-if="parseInt(this.pp2male_count)+parseInt(this.pp2female_count)>=0">{{parseInt(this.pp2male_count)+parseInt(this.pp2female_count)}}</td>
                     <td class="nopad" v-if="parseInt(this.pp2start_count)>=0">{{this.pp2start_count}}</td>
-                    <td class="nopad" v-if="parseInt(this.pp2start_count)>=0">{{parseFloat((parseFloat(this.pp2start_count)/parseFloat(this.totalOffice_count))*100).toFixed(2)}}%</td>
+                    <td class="nopad" v-if="parseInt(this.pp2start_count)>=0">{{parseFloat((parseFloat(parseInt(this.pp2male_count)+parseInt(this.pp2female_count))/parseFloat(this.totalStuff_count))*100).toFixed(2)}}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -118,6 +118,12 @@ export default {
             if(response.data.length != 0 || response.data!=''){
             response.data.forEach(item => { //console.log(item)
                item['sl']=this.count
+               if(!item['totalOffice']){item['totalOffice']=0}
+               if(!item['updateOffice']){item['updateOffice']=0}
+               if(!item['totalStuff']){item['totalStuff']=0}
+               if(!item['totalMale']){item['totalMale']=0}
+               if(!item['female_staff']){item['female_staff']=0}
+
                this.totalOffice_count+=parseInt(item.totalOffice)
                this.updateOffice_count+=parseInt(item.updateOffice)
                this.totalStuff_count+=parseInt(item.totalStuff)

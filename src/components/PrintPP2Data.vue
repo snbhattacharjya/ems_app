@@ -7,9 +7,9 @@
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
-            <h1 class="headline mb-3 blue--text">Check List : Comming Soon</h1>
-            <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p>
-            <!-- <download-csv
+            <h1 class="headline mb-3 blue--text">Check List : </h1>
+            <!-- <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p> -->
+            <download-csv
                         :data="reports"
                         :name="dataFile"
                         :labels="labels"
@@ -17,7 +17,7 @@
 
                 >
                     <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT}}</v-btn>
-                </download-csv> -->
+                </download-csv>
             <!-- <v-layout row wrap >
               <table class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
@@ -139,7 +139,7 @@ export default {
   },
 
   created(){
-    //this.initialize()
+    this.initialize()
 
   },
   computed:{

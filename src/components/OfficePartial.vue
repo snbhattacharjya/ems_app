@@ -122,7 +122,7 @@ import JsonCSV from 'vue-json-csv'
          else{
             response.data['officelist'].forEach(item => {
                 this.offices.push(item)
-                item['progress']=Math.round((parseInt(item.personelenty)/parseInt(item.totalStuff))*100,0)
+                item['progress']=((parseInt(item.personelenty)/parseInt(item.totalStuff))*100).toFixed(2)
                 this.office_csv.push(item)
 
               })
