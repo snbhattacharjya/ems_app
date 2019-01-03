@@ -116,7 +116,10 @@ import JsonCSV from 'vue-json-csv'
         this.tableloading=true
         axios.get('/officecompletestatus')
         .then((response, data) => {
-          if(response.data.length === 0){this.tableloading=false}
+          if(response.data['officelist'].length === 0){
+            this.tableloading=false
+            this.btn_txt='NO Data to download'
+            }
          else{
             response.data['officelist'].forEach(item => {
                 this.offices.push(item)

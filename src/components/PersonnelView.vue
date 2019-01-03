@@ -52,7 +52,8 @@
             <v-spacer></v-spacer>
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
-          <v-data-table :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
+          <v-data-table v-if="this.getuser.level==12 || this.getuser.level==8 || this.getuser.level==10"
+ :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.id }}</td>
               <td >{{ props.item.office_id }}</td>
@@ -60,11 +61,30 @@
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.bank_account_no }}</td>
               <td >{{ props.item.mobile }}</td>
+              <td>{{ props.item.updated_at=== null ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')  }}</td>
               <td class="justify-center layout px-0">
                 <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
                 <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
               </td>
+            </template>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+              Your search for "{{ search }}" found no results.
+            </v-alert>
+          </v-data-table>
+          <v-data-table v-else
+ :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.id }}</td>
+              <td >{{ props.item.office_id }}</td>
+              <td >{{ props.item.name }}</td>
+              <td >{{ props.item.designation }}</td>
+              <td >{{ props.item.bank_account_no }}</td>
+              <td >{{ props.item.mobile }}</td>
               <td>{{ props.item.updated_at=== null ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')  }}</td>
+              <td class="justify-center layout px-0">
+                <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn> -->
+                <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
+              </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
               Your search for "{{ search }}" found no results.
@@ -81,6 +101,12 @@
 //  import SubdivisionList from '@/components/SubdivisionList'
 //  import OfficeList from '@/components/OfficeList'
   export default {
+    props: {
+    user_level: {
+      type: String,
+      required: true
+    },
+    },
     data: () => ({
       dialog: false,
       search: '',
@@ -100,8 +126,8 @@
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Bank Account No', value: 'bank_account_no',align: 'left', sortable: false},
         { text: 'Mobile', value: 'mobile',align: 'left', },
+        { text: 'Updated at', value: 'updated_at',  },
         { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at',  }
       ],
       personnels: [],
       searchInput: ''

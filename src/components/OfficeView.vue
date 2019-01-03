@@ -11,7 +11,7 @@
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/office_category_wise_pp_status'">Office category wise entry Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/office_category_wise_post_status'">Office category wise Post Status Report(PP2)</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn>
+        <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn> -->
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
 
@@ -40,23 +40,48 @@
 
     </v-toolbar>
     <v-data-table
+      v-if="this.getuser.level==12 || this.getuser.level==8"
       :headers="headers"
       :items="offices"
       :search="search"
       class="elevation-1"
       :loading="tableloading"
     >
-      <template slot="items" slot-scope="props">
+      <template   slot="items" slot-scope="props">
         <td>{{ props.item.id }}</td>
         <td >{{ props.item.name }}</td>
         <td >{{ props.item.address }}</td>
         <td >{{ props.item.mobile }}</td>
         <td >{{ props.item.pin }}</td>
-        <td class="justify-center layout px-0">
+        <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
+        <td  class="justify-center layout px-0">
           <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
           <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
         </td>
+      </template>
+      <v-alert slot="no-results" :value="true" color="error" icon="warning">
+        Your search for "{{ search }}" found no results.
+      </v-alert>
+    </v-data-table>
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="offices"
+      :search="search"
+      class="elevation-1"
+      :loading="tableloading"
+    >
+      <template   slot="items" slot-scope="props">
+        <td>{{ props.item.id }}</td>
+        <td >{{ props.item.name }}</td>
+        <td >{{ props.item.address }}</td>
+        <td >{{ props.item.mobile }}</td>
+        <td >{{ props.item.pin }}</td>
         <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
+        <td  class="justify-center layout px-0">
+          <!-- <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn> -->
+          <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
+        </td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
         Your search for "{{ search }}" found no results.
@@ -72,6 +97,12 @@
 <script>
 
   export default {
+    props: {
+    user_level: {
+      type: String,
+      required: false
+    },
+    },
     data: () => ({
       dialog: false,
       search: '',
@@ -82,8 +113,9 @@
         { text: 'Address', value: 'adress',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Pin', value: 'pin',align: 'left', },
+        { text: 'Updated at', value: 'updated_at', sortable: false },
         { text: 'Actions', value: 'name', sortable: false },
-        { text: 'Updated at', value: 'updated_at', sortable: false }
+
       ],
       offices: [],
       office_created:'',

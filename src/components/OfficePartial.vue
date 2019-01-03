@@ -115,7 +115,7 @@ import JsonCSV from 'vue-json-csv'
         this.tableloading=true
         axios.get('/officepartialentrystatus')
         .then((response, data) => {
-          if(response.data.length === 0){
+          if(response.data['totalpartialoffice'].length === 0){
             this.tableloading=false
             this.btn_txt='No Data to Download'
             }

@@ -69,6 +69,8 @@ export default {
       tableloading:false,
       dataFile: 'pp2_data_export.csv',
         labels: {
+          office_id:'Office ID',
+          id:'Personnel ID',
           empname: 'Name',
           designation:'Designation',
           present_address:'Present Address',
@@ -97,7 +99,7 @@ export default {
           acofficename: 'Office Assembly Constituency',
           remark: 'Remark'
         },
-        csvfields : ['empname','designation','present_address','permanent_address','dob','gender','scale','basic_pay','grade_pay','pay_level','emp_group','working_status','email','phone','mobile',
+        csvfields : ['office_id','id','empname','designation','present_address','permanent_address','dob','gender','scale','basic_pay','grade_pay','pay_level','emp_group','working_status','email','phone','mobile',
 'epic','part_no','sl_no','post_stat','qualification','bank_account_no','branch_ifsc','subdivision','actemp','acpermanent','acofficename','emark'],
         btn_txt:'Download as CSV'
 
