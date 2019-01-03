@@ -16,7 +16,7 @@
                             v-model="poststat_from"
                             :items="poststats"
                             item-text= "name"
-                            item-value= "val"
+                            item-value= "id"
                             prepend-icon="call_received"
                             label="Post Status (From)"
                             v-validate="'required'"
@@ -30,7 +30,7 @@
                            v-model="poststat_to"
                             :items="poststats"
                             item-text= "name"
-                            item-value= "val"
+                            item-value= "id"
                             prepend-icon="call_made"
                             label="Post Status (To)"
                             v-validate="'required'"
@@ -375,14 +375,7 @@ export default {
         { name:'LESS THAN 60',val: '<60'},
         { name:'LESS THAN 59',val: '<59'}
       ],
-      poststats:[
-        {name: 'N/A', val:'NA'},
-        {name: 'PR', val:'PR'},
-        {name: 'P1', val:'P1'},
-        {name: 'P2', val:'P2'},
-        {name: 'P3', val:'P3'},
-        {name: 'MO', val:'MO'},
-      ],
+      poststats:[],
       basic_pay: [2100, 40400],
       grade_pay:[2100, 40400],
       pay_level:[10, 15],
@@ -430,6 +423,7 @@ export default {
 
   },
   created(){
+   this.loadpoststatus()
    this.loadsubdivision()
    this.loadofficecategory()
 
@@ -460,6 +454,20 @@ export default {
       this.qualification_id=null
       this.designation=null
       this.$validator.reset()
+    },
+    loadpoststatus:function(){
+      axios.get('/pollingPost')
+      .then((response, data) => {
+
+       response.data.forEach(item => {
+
+          this.poststats.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     loadsubdivision:function(){
        axios.get('/subdivisions')

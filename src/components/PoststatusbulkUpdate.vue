@@ -56,8 +56,8 @@
                   <v-select
                     :items="poststats"
                     v-model="props.item.post_stat"
-                    item-text= "name"
-                    item-value= "val"
+                    item-text= "id"
+                    item-value= "id"
                     prepend-icon=""
                     >
                     </v-select>
@@ -101,14 +101,7 @@
         message_icon: "",
         message_text: "",
 
-      poststats:[
-        {name: 'N/A', val:'NA'},
-        {name: 'PR', val:'PR'},
-        {name: 'P1', val:'P1'},
-        {name: 'P2', val:'P2'},
-        {name: 'P3', val:'P3'},
-        {name: 'MO', val:'MO'},
-      ],
+      poststats:[],
       headers: [
         { text: 'ID', value: 'id',align: 'left', },
         { text: 'Personnel Name',align: 'left',value: 'name'},
@@ -141,11 +134,26 @@
       if(this.getuser.level != 10){this.getsubdivision()}
       else{
         this.initialize_personnel()
+        this.loadpoststatus()
       }
 
     },
 
     methods: {
+      loadpoststatus:function(){
+      axios.get('/pollingPost')
+      .then((response, data) => {
+
+       response.data.forEach(item => {
+
+          this.poststats.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
       pp($event){
         alert(this.post_state)
       },
@@ -195,6 +203,7 @@
 
               })
               this.tableloading=false
+              this.loadpoststatus()
          }
             })
         .catch(error => {
