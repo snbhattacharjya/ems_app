@@ -7,6 +7,7 @@
         {{ this.personnel_created }}
         </v-alert>
       <v-flex x12 v-if="this.getuser.level != 10">
+         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/personnel_transfer'">Transfer Personnel</v-btn>
       <v-layout row wrap  >
       <v-flex xs4>
           <v-select

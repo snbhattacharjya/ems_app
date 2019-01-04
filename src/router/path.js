@@ -471,4 +471,13 @@ export default [
         '@/components/MacrolevelPpstat'
       )
     },
+    {
+      path: `/personnel_transfer`,
+      meta: {title:'Transfer Personnel | Welcome to WBPPMS'},
+      name: 'PersonnelTranfer',
+      component: () => import(
+
+        '@/components/PersonnelTransfer'
+      )
+    },
   ];
