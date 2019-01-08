@@ -9,7 +9,7 @@
           <v-flex xs12 class="my-3">
             <h1 class="headline mb-3 blue--text">Check List : </h1>
             <!-- <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p> -->
-            <download-csv
+            <!-- <download-csv
                         :data="reports"
                         :name="dataFile"
                         :labels="labels"
@@ -17,8 +17,8 @@
 
                 >
                     <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT}}</v-btn>
-                </download-csv>
-            <!-- <v-layout row wrap >
+                </download-csv> -->
+            <v-layout row wrap >
               <table class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
                 <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
@@ -42,7 +42,7 @@
               </tr>
               </tbody>
               </table>
-            </v-layout> -->
+            </v-layout>
           </v-flex>
 
         </v-layout>
@@ -117,7 +117,7 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-          if(response.data.length !=0){
+          if(response.data.length !=0 && response.data!='Checklist will be available from 5:30 pm to 6:30 am Everyday'){
             var i=1;
             response.data.forEach(item => {
                 item['sl']=i
@@ -127,6 +127,9 @@ export default {
               //this.$store.dispatch('storePP2report', this.reports)
               this.tableloading=false
               this.loadingTXT='Download as CSV'
+          }
+          else if(response.data=='Checklist will be available from 5:30 pm to 6:30 am Everyday'){
+            this.loadingTXT=response.data
           }
           else{
             this.loadingTXT='No data found'

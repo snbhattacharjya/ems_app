@@ -480,4 +480,13 @@ export default [
         '@/components/PersonnelTransfer'
       )
     },
+    {
+      path: `/exemption`,
+      meta: {title:'Exemption | Welcome to WBPPMS'},
+      name: 'Exemption',
+      component: () => import(
+
+        '@/components/Exemption'
+      )
+    },
   ];
