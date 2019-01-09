@@ -22,9 +22,9 @@
                 <strong>Office :</strong> {{ props.item.Office }}<br>
                 <strong>Basic Pay :</strong> {{ props.item.BasicPay }}<br>
                 <strong>Garde Pay/Pay Level :</strong> {{ props.item.GradePay }} / {{ props.item.PayLevel }}<br>
-                <strong>Qualification :</strong>{{ props.item.Qualification }}<br>
-                <strong>Designation :</strong> {{ props.item.Designation }}<br>
-                <strong>Remarks :</strong> {{ props.item.Remarks }}<br>
+                <strong>Qualification :</strong>{{props.item.NotQualification==0 ? 'Include- ' : 'Exclude- '}}{{ props.item.Qualification }}<br>
+                <strong>Designation :</strong> {{props.item.NotDesignation==0 ? 'Include- ' : 'Exclude- '}}{{ props.item.Designation }}<br>
+                <strong>Remarks :</strong> {{props.item.NotRemarks==0 ? 'Include- ' : 'Exclude- '}}{{ props.item.Remarks }}<br>
                 <strong>Gender :</strong> {{ props.item.Gender }}<br>
                 <strong>Age :</strong> {{ props.item.Age }}<br>
               </td>

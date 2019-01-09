@@ -103,6 +103,7 @@
                               <v-text-field
                               v-model="basic_pay[0]"
                               class="mt-0"
+                              :disabled="disble_qual"
                               single-line
                               type="text"
                               counter
@@ -131,7 +132,7 @@
                               <v-text-field
                               v-model="basic_pay[1]"
                               class="mt-0"
-
+                              :disabled="disble_qual"
                               single-line
                               type="text"
                               counter
@@ -160,7 +161,7 @@
                               <v-text-field
                               v-model="grade_pay[0]"
                               class="mt-0"
-
+                              :disabled="disble_qual"
                               single-line
                               type="text"
                               counter
@@ -186,7 +187,7 @@
                               <v-text-field
                               v-model="grade_pay[1]"
                               class="mt-0"
-
+                              :disabled="disble_qual"
                               single-line
                               type="text"
                               counter
@@ -631,7 +632,11 @@ export default {
                 age:this.age,
        })
       .then((response, data) => {
-       if(response.data['remarks'].length >=1 ) {
+       if(response.data.erorr=='designation length can not be greater than 200'){
+         alert('Please chosse less Number of Designation.')
+         this.loading_remark=false
+       }
+       else if(response.data['remarks'].length >=1 ) {
          this.remarks.push({RemarksName: 'ALL', RemarksCode: 'ALL'})
          this.disable_desig=true
          this.disable_agegrp=true
@@ -695,8 +700,10 @@ export default {
     category_id:function(val){
 
       if(val == '01'){
-        this.visible_grade=false
-        this.visible_level=true
+        // this.visible_grade=false
+        // this.visible_level=true
+        this.visible_grade=true
+        this.visible_level=false
       }
       else{
         this.visible_grade=true

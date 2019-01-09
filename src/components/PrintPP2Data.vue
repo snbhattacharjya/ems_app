@@ -117,7 +117,7 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-          if(response.data.length !=0 && response.data!='Checklist will be available from 5:30 pm to 6:30 am Everyday'){
+          if(response.data.length !=0 && response.data!='Checklist will be available from 5:00 pm to 10:00 am Everyday'){
             var i=1;
             response.data.forEach(item => {
                 item['sl']=i
@@ -128,7 +128,7 @@ export default {
               this.tableloading=false
               this.loadingTXT='Download as CSV'
           }
-          else if(response.data=='Checklist will be available from 5:30 pm to 6:30 am Everyday'){
+          else if(response.data=='Checklist will be available from 5:00 pm to 10:00 am Everyday'){
             this.loadingTXT=response.data
           }
           else{
