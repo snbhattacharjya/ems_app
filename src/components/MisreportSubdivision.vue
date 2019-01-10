@@ -7,7 +7,7 @@
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-5">
-            <h1 class="headline">Subdivisionwise PP Requirement Male</h1>
+            <h1 class="headline">Subdivisionwise  PP Requirement & Available(Male)</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
@@ -15,9 +15,11 @@
                 <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
                 <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="5"><strong>Available Male</strong></th>
+                <th width="50%" colspan="7"><strong>Available Male</strong></th>
                 </tr>
                 <tr>
+                <th>Not <br> Assigned</th>
+                <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>
                 <th>P2</th>
@@ -32,6 +34,8 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.male_party }}</td>
+                  <td class="nopad" :class="report.PR_M_class">{{ report.NA_M }}</td>
+                  <td class="nopad" :class="report.P1_M_class">{{ report.AEO_M }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
                   <td class="nopad" :class="report.P1_M_class">{{ report.P1_M }}</td>
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
@@ -44,7 +48,7 @@
             </v-layout>
           </v-flex>
           <v-flex xs12 mb-5>
-            <h1 class="headline">Subdivisionwise PP Requirement Female</h1>
+            <h1 class="headline">Subdivisionwise PP Requirement & Available(Female)</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
@@ -52,10 +56,11 @@
                 <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
                 <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="5"><strong>Available Female</strong></th>
+                <th width="50%" colspan="7"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
-
+                <th>Not <br> Assigned</th>
+                <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>
                 <th>P2</th>
@@ -69,6 +74,8 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.female_party }}</td>
+                  <td class="nopad" :class="report.PR_F_class">{{ report.NA_F }}</td>
+                  <td class="nopad" :class="report.P1_F_class">{{ report.AEO_F }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
                   <td class="nopad" :class="report.P1_F_class">{{ report.P1_F }}</td>
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>

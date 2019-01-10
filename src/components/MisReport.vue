@@ -10,7 +10,7 @@
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-2">
-            <h1 class="headline">Districtwise PP Requirement Male</h1>
+            <h1 class="headline">Districtwise PP Requirement & Available(Male)</h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
@@ -18,10 +18,12 @@
                 <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
                 <th width="25%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="6"><strong>Available Male</strong></th>
+                <th width="50%" colspan="8"><strong>Available Male</strong></th>
 
                 </tr>
                 <tr>
+                <th>NA</th>
+                <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>
                 <th>P2</th>
@@ -36,6 +38,8 @@
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.male_party }}</td>
+                  <td class="nopad" :class="report.PR_M_class">{{ report.NA_M }}</td>
+                  <td class="nopad" :class="report.P1_M_class">{{ report.AEO_M }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
                   <td class="nopad" :class="report.P1_M_class">{{ report.P1_M }}</td>
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
@@ -43,13 +47,24 @@
                   <td class="nopad">{{ report.MO_M }}</td>
                   <td >{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
                   </tr>
-                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td class="nopad"><strong>Total</strong></td><td class="nopad">{{male_party_count}}</td><td class="nopad">{{PR_M_COUNT}} </td><td class="nopad">{{P1_M_COUNT}}</td><td class="nopad">{{P2_M_COUNT}}</td><td class="nopad">{{P3_M_COUNT}}</td><td class="nopad">{{MO_M_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'">
+                    <td></td>
+                    <td class="nopad"><strong>Total</strong></td>
+                    <td class="nopad">{{male_party_count}}</td>
+                    <td class="nopad">{{NA_M_COUNT}}</td>
+                    <td class="nopad">{{AEO_M_COUNT}}</td>
+                    <td class="nopad">{{PR_M_COUNT}} </td>
+                    <td class="nopad">{{P1_M_COUNT}}</td>
+                    <td class="nopad">{{P2_M_COUNT}}</td>
+                    <td class="nopad">{{P3_M_COUNT}}</td>
+                    <td class="nopad">{{MO_M_COUNT}}</td>
+                    <td>&nbsp;</td></tr>
                 </tbody>
               </table>
             </v-layout>
           </v-flex>
           <v-flex xs12 mb-5>
-            <h1 class="headline">Districtwise PP Requirement Female </h1>
+            <h1 class="headline">Districtwise PP Requirement & Available(Female) </h1>
             <v-layout row wrap >
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>
@@ -58,10 +73,11 @@
                 <th width="25%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
 
-                <th width="50%" colspan="6"><strong>Available Female</strong></th>
+                <th width="50%" colspan="8"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
-
+                <th>NA</th>
+                <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>
                 <th>P2</th>
@@ -76,7 +92,8 @@
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.female_party }}</td>
-
+                  <td class="nopad" :class="report.PR_F_class">{{ report.NA_F }}</td>
+                  <td class="nopad" :class="report.P1_F_class">{{ report.AEO_F }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
                   <td class="nopad" :class="report.P1_F_class">{{ report.P1_F }}</td>
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
@@ -84,7 +101,18 @@
                   <td class="nopad" >{{ report.MO_F }}</td>
                   <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F) }}</td>
                   </tr>
-                  <tr v-if="this.loadingTXT != 'No data found'"><td></td><td class="nopad"><strong>Total</strong><td class="nopad">{{female_party_count}}</td><td class="nopad">{{PR_F_COUNT}} </td><td class="nopad">{{P1_F_COUNT}}</td><td class="nopad">{{P2_F_COUNT}}</td><td class="nopad">{{P3_F_COUNT}}</td><td class="nopad">{{MO_F_COUNT}}</td><td>&nbsp;</td></tr>
+                  <tr v-if="this.loadingTXT != 'No data found'">
+                    <td></td>
+                    <td class="nopad"><strong>Total</strong></td>
+                    <td class="nopad">{{female_party_count}}</td>
+                    <td class="nopad">{{NA_F_COUNT}}</td>
+                    <td class="nopad">{{AEO_F_COUNT}}</td>
+                    <td class="nopad">{{PR_F_COUNT}} </td>
+                    <td class="nopad">{{P1_F_COUNT}}</td>
+                    <td class="nopad">{{P2_F_COUNT}}</td>
+                    <td class="nopad">{{P3_F_COUNT}}</td>
+                    <td class="nopad">{{MO_F_COUNT}}</td>
+                    <td>&nbsp;</td></tr>
 
                 </tbody>
               </table>
@@ -126,6 +154,10 @@ export default {
       P3_F_COUNT:0,
       MO_M_COUNT:0,
       MO_F_COUNT:0,
+      NA_M_COUNT:0,
+      NA_F_COUNT:0,
+      AEO_M_COUNT:0,
+      AEO_F_COUNT:0,
     }
   },
   computed:{
@@ -173,6 +205,10 @@ export default {
               this.female_party_count+=parseInt(item.female_party)
               this.MO_M_COUNT+=parseInt(item.MO_M)
               this.MO_F_COUNT+=parseInt(item.MO_F)
+              this.NA_M_COUNT+=parseInt(item.NA_M)
+              this.NA_F_COUNT+=parseInt(item.NA_F)
+              this.AEO_M_COUNT+=parseInt(item.AEO_M)
+              this.AEO_F_COUNT+=parseInt(item.AEO_F)
               this.reports.push(item)
 
             })

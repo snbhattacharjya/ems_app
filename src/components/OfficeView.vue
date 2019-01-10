@@ -11,10 +11,10 @@
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/office_category_wise_pp_status'">Office category wise entry Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="primary" :to="'/office_category_wise_post_status'">Office category wise Post Status Report(PP2)</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn>
+        <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn> -->
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/exemption'">Exemption</v-btn>
+
 
         </v-layout>
       <v-layout row wrap  class="my-5">

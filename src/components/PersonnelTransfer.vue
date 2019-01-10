@@ -23,7 +23,8 @@
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.bank_account_no }}</td>
               <td >{{ props.item.mobile }}</td>
-
+              <td >{{ props.item.block }}</td>
+              <td >{{ props.item.tempblock }}</td>
               <td class="justify-center layout px-0">
                 <v-btn flat color="primary" title="Click to Transfer" @click="inittransfer(props.item.id)" ><v-icon class="mr-2">transfer_within_a_station</v-icon></v-btn>
               </td>
@@ -140,6 +141,8 @@
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Bank Account No', value: 'bank_account_no',align: 'left', sortable: false},
         { text: 'Mobile', value: 'mobile',align: 'left', },
+        { text: 'Office Block', value: 'block',align: 'left', },
+        { text: 'Present Block', value: 'tempblock',align: 'left', },
         { text: 'Actions', value: '', sortable: false },
       ],
       personnels: [],
