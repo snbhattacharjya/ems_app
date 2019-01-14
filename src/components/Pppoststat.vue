@@ -374,7 +374,7 @@ export default {
       ],
       ages:[
         { name:'LESS THAN 60',val: '<60'},
-        { name:'LESS THAN 59',val: '<59'}
+        //{ name:'LESS THAN 59',val: '<59'}
       ],
       poststats:[],
       basic_pay: [2100, 40400],
@@ -630,6 +630,7 @@ export default {
                 designation: this.designation,
                 gender:this.gender,
                 age:this.age,
+                post_stat_to:this.poststat_to
        })
       .then((response, data) => {
        if(response.data.erorr=='designation length can not be greater than 200'){

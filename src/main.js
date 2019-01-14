@@ -12,8 +12,9 @@ import printjs from 'print-js'
 import moment from 'moment'
 import IdleVue from 'idle-vue'
 
-
-
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+VueCookies.config('1d')
 
 Vue.prototype.moment = moment
 Vue.use(Vuetify)

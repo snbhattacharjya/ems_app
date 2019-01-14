@@ -183,7 +183,7 @@ export default {
         axios.get('/report')
           .then((response, data) => {
             if(response.data.length != 0 || response.data!=''){
-               this.$store.dispatch('storeMISreport', response.data)
+               //this.$store.dispatch('storeMISreport', response.data)
             response.data.forEach(item => { //console.log(item)
               // item.PR_M_class=this.createclass(item.PR_M,item.male_party)
               // item.P1_M_class=this.createclass(item.P1_M,item.male_party)

@@ -22,6 +22,7 @@
               <td >{{ props.item.name }}</td>
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.bank_account_no }}</td>
+              <td >{{ props.item.email }}</td>
               <td >{{ props.item.mobile }}</td>
               <td >{{ props.item.block }}</td>
               <td >{{ props.item.tempblock }}</td>
@@ -140,6 +141,7 @@
         { text: 'Personnel Name',align: 'left',value: 'name'},
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Bank Account No', value: 'bank_account_no',align: 'left', sortable: false},
+        { text: 'Email', value: 'email',align: 'left', },
         { text: 'Mobile', value: 'mobile',align: 'left', },
         { text: 'Office Block', value: 'block',align: 'left', },
         { text: 'Present Block', value: 'tempblock',align: 'left', },

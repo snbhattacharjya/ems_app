@@ -73,7 +73,33 @@
                   <v-card-text><v-divider class="my-3"></v-divider>West Bengal CEO's PP Portal.</v-card-text>
               </v-layout>
             </v-container>
+<v-dialog
+      v-model="dialog"
+      max-width="360"
+      persistent=true
+    >
+      <v-card>
+        <v-card-title class="headline">Important Notice !!</v-card-title>
 
+        <v-card-text>
+         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">20th January,2019</strong > as form <strong class="red--text">21st January,2019 (on 5:30 PM)</strong > it will be freezed.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="red darken-1"
+            flat="flat"
+            @click="close_notice"
+          >
+            Close
+          </v-btn>
+
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
       </section>
   </div>
 </template>
@@ -86,6 +112,8 @@ export default {
     return {
       drawer: false,
       totalemployee: 0,
+      dialog: false,
+
     }
   },
   beforeUpdate() {
@@ -96,16 +124,24 @@ export default {
       return this.$store.getters.getDashboard
     },
     calculateTotalEmployee:function(){
-      return persInt(this.getdashboard.totalMale) + persInt(this.getDashboard.totalfemale)
+      return parseInt(this.getdashboard.totalMale) + parseInt(this.getdashboard.totalfemale)
     },
     getUser:function(){
       return this.$store.getters.getUser
     }
   },
   methods:{
-
+    close_notice:function(){
+      this.dialog = false
+      this.$cookies.set('read_notice',true);
+    }
+  },
+  created(){
+    if(this.getUser.level==10 ){
+      if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
+      this.dialog=true
+    }
   }
 
 }
 </script>
-

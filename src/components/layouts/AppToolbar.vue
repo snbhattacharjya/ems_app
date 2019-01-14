@@ -119,7 +119,7 @@ import AppDrawer from '@/components/layouts/AppDrawer'
         this.show_action=false
         this.msg='Logging out from system.........'
         this.$store.dispatch('destroyToken')
-
+        $cookies.remove("read_notice")
         setTimeout(() => {
         this.dialog=false
         this.msg=''

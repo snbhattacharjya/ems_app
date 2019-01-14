@@ -144,7 +144,12 @@ export default {
   },
 
   created(){
+    if(parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)){
     this.initialize()
+    }else{
+      this.loadingTXT="Please note, Checklist will be available only after 100% personnel entry."
+      this.tableloading=true
+    }
 
   },
   computed:{
@@ -153,7 +158,10 @@ export default {
       },
       getppdata(){
         return this.$store.getters.getpp2report
-      }
+      },
+       getdashboard:function(){
+      return this.$store.getters.getDashboard
+    },
   }
 }
 </script>
