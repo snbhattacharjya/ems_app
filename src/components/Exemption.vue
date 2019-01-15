@@ -212,7 +212,7 @@ export default {
       }
     },
     do_office_exemption:function(){
-      if(this.office_id!='' && this.exemption_reason_office!=''){
+      if(this.office_id!='' && this.selected.length!=0 && this.exemption_reason_office!=''){
       this.doing_office_exemption=true
 
       this.selected.forEach(item => {
@@ -230,7 +230,7 @@ export default {
               }
             else{
               this.office_personnels=[]
-              this.office_hint=response.data.length+' Personnel Exempted by this remark'
+              this.office_hint=this.selected_personnel.length+' Personnel Exempted by this remark'
               this.exemption_reason_office=''
               this.doing_office_exemption=false
               this.tableloading_office=false

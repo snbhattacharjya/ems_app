@@ -24,6 +24,7 @@
                 <th width="10%"><strong>Female PP<br>Declared</strong></th>
                 <th width="10%"><strong>Female PP<br> Added</strong></th>
                 <th width="10%"><strong>Total PP<br> Added</strong></th>
+                <th width="10%"><strong>Percentage<br>(PP2)</strong></th>
                 </tr>
 
                 </thead>
@@ -41,6 +42,7 @@
                   <td class="nopad">{{ report.Female_PP_Declared }}</td>
                   <td class="nopad">{{ report.Female_PP_Added }}</td>
                   <td class="nopad">{{ report.Total_PP_Added }}</td>
+                  <td class="nopad">{{ report.percentage_pp2 }}%</td>
                   </tr>
                   <tr>
                     <td colspan="2" class="nopad"><strong>Total</strong></td>
@@ -53,6 +55,7 @@
                     <td class="nopad">{{this.sum_Female_PP_Declared}}</td>
                     <td class="nopad">{{this.sum_Female_PP_Added}}</td>
                     <td class="nopad">{{this.sum_Total_PP_Added}}</td>
+                    <td class="nopad">{{((parseInt(this.sum_Total_PP_Added)/parseInt(this.sum_Total_PP_Declared))*100).toFixed(2)}}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -139,6 +142,8 @@ export default {
                       if(!item['Total_PP_Added']){
                         item['Total_PP_Added']=0
                       }
+                      item['percentage_pp2']=((parseInt(item['Total_PP_Added'])/parseInt(item['Total_PP_Declared']))*100).toFixed(2)
+                      this.reports.sort(function(a, b){return b - a})
                       this.reports.push(item)
                       this.sum_Total_Offices+= parseInt(item.Total_Offices)
                       this.sum_PP1_Updated+=parseInt(item.PP1_Updated)

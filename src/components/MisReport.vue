@@ -3,6 +3,7 @@
     <v-container fluid>
       <v-layout row wrap v-if="getUser.level == 2 " >
       <v-btn color="primary" :to="'/district_wise_pp_status'">District wise polling personnel status</v-btn>
+      <v-btn v-if="this.getUser.level == 2" color="info" :to="'/data_sharing'">Data Sharing</v-btn>
       </v-layout>
       <section id="report">
         <v-layout row wrap>

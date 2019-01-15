@@ -3,11 +3,18 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleDateString('en-GB') }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleDateString('en-GB') }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','agree']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
-            <h1 class="headline mb-3 blue--text">Check List : </h1>
+            <h1 class="headline mb-3 blue--text">Check List :
+
+            </h1>
+            <v-flex xs12 id="agree">
+              <v-checkbox  v-if="this.pp_complete" :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
+                :error-messages="errors.collect('agree')"
+                data-vv-name="agree" @change="agree_with_pp2"></v-checkbox>
+              </v-flex>
             <!-- <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p> -->
             <!-- <download-csv
                         :data="reports"
@@ -101,8 +108,19 @@ export default {
         },
         csvfields : ['office_id','id','empname','designation','present_address','permanent_address','dob','gender','scale','basic_pay','grade_pay','pay_level','emp_group','working_status','email','phone','mobile',
 'epic','part_no','sl_no','post_stat','qualification','bank_account_no','branch_ifsc','subdivision','actemp','acpermanent','acofficename','emark'],
-        btn_txt:'Download as CSV'
+        btn_txt:'Download as CSV',
+        agree: "",
+      agree_text:
+        "Certified that the details information furnished earlier in PP-2 format is verified with office records and genuine. Names of all officials has been included in PP-2 format and no information has been concealed.",
+        pp_complete:false,
+        dictionary: {
+        custom: {
 
+          agree: {
+            required: "You must give the declartion on the bellow information"
+          }
+        }
+        }
 
     }
   },
@@ -110,6 +128,35 @@ export default {
 
   },
   methods:{
+   agree_with_pp2(){
+     if(this.agree==true){
+       axios.post('/ppagree',{
+            pp_agree: this.agree=true ? 1 : 0
+          })
+          .then((response, data) => {
+          console.log(response.data)
+
+        })
+        .catch(error => {
+          console.log(error)
+        })
+     }
+   },
+   is_agree_with_pp2(){
+
+       axios.get('/getppagree',{
+          })
+          .then((response, data) => {
+          if(response.data[0].pp_agree==1){
+            this.agree=true
+          }
+
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+   },
    initialize() {
       this.tableloading=true
       axios.get('/print/pp2/'+this.getuser.user_id,{
@@ -118,6 +165,9 @@ export default {
           })
         .then((response, data) => {
           if(response.data.length !=0 && response.data!='Checklist will be available from 5:00 pm to 10:00 am Everyday'){
+            if(parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)){
+            this.pp_complete=true
+            }
             var i=1;
             response.data.forEach(item => {
                 item['sl']=i
@@ -144,6 +194,7 @@ export default {
   },
 
   created(){
+    this.is_agree_with_pp2()
     if(parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)){
     this.initialize()
     }else{

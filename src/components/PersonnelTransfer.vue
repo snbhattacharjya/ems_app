@@ -48,7 +48,7 @@
          <v-text-field
                 prepend-icon="confirmation_number"
                 name="memo_no"
-                label="Memo No(*)"
+                label="Memo No Details(*)"
                 type="text"
                 v-model="memo_no"
                 counter

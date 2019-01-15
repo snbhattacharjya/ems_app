@@ -489,4 +489,13 @@ export default [
         '@/components/Exemption'
       )
     },
+    {
+      path: `/data_sharing`,
+      meta: {title:'Data Sharing | Welcome to WBPPMS'},
+      name: 'DataSharing',
+      component: () => import(
+
+        '@/components/DataSharing'
+      )
+    },
   ];
