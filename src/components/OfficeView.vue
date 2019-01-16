@@ -8,9 +8,11 @@
         <v-btn color="primary" :to="'/office_partials'">Office Partial Updated(PP2)</v-btn>
         <v-btn color="primary" :to="'/office_status_complete'">Office Status(100% updated PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 6 || this.getuser.level == 7 || this.getuser.level == 5" color="info" :to="'/pollingpersonnel_progress_report'">Polling Personnel Progress Report</v-btn>
+        <v-btn v-if="this.getuser.level == 5" color="primary" :to="'/misreport/district'">Districtwise PP2 Requirement</v-btn>
         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 5" color="primary" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 5" color="primary" :to="'/office_category_wise_pp_status'">Office category wise entry Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12  || this.getuser.level == 5" color="primary" :to="'/office_category_wise_post_status'">Office category wise Post Status Report(PP2)</v-btn>
+        <v-btn v-if="this.getuser.level == 12  || this.getuser.level == 5" color="primary" :to="'/office_category_wise_group_status'">Office category wise Group Status Report(PP2)</v-btn>
         <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn> -->
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>

@@ -3,7 +3,7 @@
     <v-container fluid>
       <section id="report">
         <v-layout row wrap>
-        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleDateString('en-GB') }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','agree']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
+        <v-flex xs11><h1 class="headline" >PP2 Report As On {{ new Date().toLocaleDateString('en-GB') }}<br>{{ getuser.name }}({{getuser.user_id}})</h1></v-flex><v-flex xs1><v-btn v-if="this.agree" fab dark small color="primary" id="printbtn" onclick="printJS({ printable: 'report', type: 'html',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','agree']  })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 class="my-3">
@@ -11,7 +11,7 @@
 
             </h1>
             <v-flex xs12 id="agree">
-              <v-checkbox  v-if="this.pp_complete" :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
+              <v-checkbox  v-if="parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)" :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
                 :error-messages="errors.collect('agree')"
                 data-vv-name="agree" @change="agree_with_pp2"></v-checkbox>
               </v-flex>
@@ -26,7 +26,7 @@
                     <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT}}</v-btn>
                 </download-csv> -->
             <v-layout row wrap >
-              <table class="v-datatable v-table dark mb-5" style=""  border=1>
+              <table v-if="this.agree" class="v-datatable v-table dark mb-5" style=""  border=1>
               <tbody>
                 <tr v-if="tableloading"><td><v-card-text  class="info--text text-center">{{this.loadingTXT}}</v-card-text></td></tr>
               <tr v-for="report in reports" :prop="report" :key="report.office_id">

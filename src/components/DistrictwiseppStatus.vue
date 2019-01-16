@@ -143,7 +143,7 @@ export default {
                         item['Total_PP_Added']=0
                       }
                       item['percentage_pp2']=((parseInt(item['Total_PP_Added'])/parseInt(item['Total_PP_Declared']))*100).toFixed(2)
-                      this.reports.sort(function(a, b){return b - a})
+                      this.reports.sort(function(a, b){return b['percentage_pp2'] - a['percentage_pp2']})
                       this.reports.push(item)
                       this.sum_Total_Offices+= parseInt(item.Total_Offices)
                       this.sum_PP1_Updated+=parseInt(item.PP1_Updated)

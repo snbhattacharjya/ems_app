@@ -463,6 +463,15 @@ export default [
       )
     },
     {
+      path: `/office_category_wise_group_status`,
+      meta: {title:'Office category wise group status report | Welcome to WBPPMS'},
+      name: 'OfficecategorywiseGroup',
+      component: () => import(
+
+        '@/components/OfficecategorywiseGroup'
+      )
+    },
+    {
       path: `/macro_level_pp_statistic`,
       meta: {title:'Macro Level PP Statistic report | Welcome to WBPPMS'},
       name: 'MacrolevelPpstat',
@@ -490,12 +499,21 @@ export default [
       )
     },
     {
-      path: `/data_sharing`,
+      path: `/data_sharing_ceo`,
       meta: {title:'Data Sharing | Welcome to WBPPMS'},
-      name: 'DataSharing',
+      name: 'DataSharingceo',
       component: () => import(
 
-        '@/components/DataSharing'
+        '@/components/DataSharingceo'
+      )
+    },
+    {
+      path: `/data_sharing_deo`,
+      meta: {title:'Data Sharing | Welcome to WBPPMS'},
+      name: 'DataSharingdeo',
+      component: () => import(
+
+        '@/components/DataSharingceo'
       )
     },
   ];

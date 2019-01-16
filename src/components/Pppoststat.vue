@@ -373,8 +373,8 @@ export default {
         { name:'FEMALE',val: 'F'},
       ],
       ages:[
-        { name:'LESS THAN 60',val: '<60'},
-        //{ name:'LESS THAN 59',val: '<59'}
+        //{ name:'LESS THAN 60',val: '<60'},
+        { name:'LESS THAN 59',val: '<59'}
       ],
       poststats:[],
       basic_pay: [2100, 40400],
