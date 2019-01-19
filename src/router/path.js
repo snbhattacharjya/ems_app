@@ -513,7 +513,7 @@ export default [
       name: 'DataSharingdeo',
       component: () => import(
 
-        '@/components/DataSharingceo'
+        '@/components/DataSharingdeo'
       )
     },
   ];

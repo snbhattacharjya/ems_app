@@ -263,6 +263,7 @@
     },
     methods:{
       get_sharing:function(){
+        this.share_data=[]
         this.tableloading=true
         axios.get('/instructlist')
         .then((response, data) => {
@@ -287,7 +288,7 @@
                 assign_polling_personnel:this.share_pp
               })
               .then((response, data) => {
-                this.share_pp=0
+                this.share_pp=''
                 this.posts_available=0
                 this.posts_required=0
                 alert(response.data)

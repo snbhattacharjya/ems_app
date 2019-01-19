@@ -82,7 +82,7 @@
         <v-card-title class="headline">Important Notice !!</v-card-title>
 
         <v-card-text>
-         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">20th January,2019</strong > as form <strong class="red--text">21st January,2019 (on 5:00 PM)</strong > it will be freezed.
+         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">20th January,2019</strong > as from <strong class="red--text">21st January,2019 (on 5:00 PM)</strong > it will be freezed.
         </v-card-text>
 
         <v-card-actions>
@@ -137,10 +137,10 @@ export default {
     }
   },
   created(){
-    if(this.getUser.level==10 ){
+
       if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
       this.dialog=true
-    }
+
   }
 
 }
