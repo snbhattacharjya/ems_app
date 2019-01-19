@@ -145,7 +145,8 @@
         .then((response, data) => {
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
             let req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
-            alert('Available PP - '+avl+'\nRequired PP - '+req)
+            req=Math.round(req*1.2,0)
+            alert('Available PP('+cat+') - '+avl+'\nRequired PP('+cat+') - '+req+' (with 20%)\nAvailable for share('+cat+') -'+(avl-req))
         })
         .catch(error => {
           console.log(error)

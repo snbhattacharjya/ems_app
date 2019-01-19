@@ -63,14 +63,14 @@
                 <thead>
                   <tr>
                   <td class="nopad">Available</td>
-                  <td class="nopad">Required<br>(for selected District[from])</td>
+                  <td class="nopad">Required<br>(with 20% reserved)</td>
                   <td class="nopad">Available<br>for Share</td>
                   </tr>
                 </thead>
                 <tr>
                   <td class="nopad">{{this.posts_available}}</td>
-                  <td class="nopad">{{this.posts_required}}</td>
-                  <td class="nopad">{{this.posts_available>this.posts_required ? this.posts_available-this.posts_required : 'NA'}}</td>
+                  <td class="nopad">{{Math.round(parseInt(this.posts_required)*1.2,0)}}</td>
+                  <td class="nopad">{{this.posts_available>this.posts_required ? this.posts_available-Math.round(parseInt(this.posts_required)*1.2,0) : 'NA'}}</td>
                 </tr>
               </table>
             </v-flex>
@@ -175,8 +175,8 @@
         { text: 'District(From)', align: 'left',  value: 'from_district'},
         { text: 'District(To)', value: 'to_district',align: 'left', },
         { text: 'Post Status', value: 'category',align: 'left', },
-        { text: 'Personnel assigned', value: 'no_of_personnel',align: 'left', },
-        { text: 'Personnel shared', value: 'no_of_personnel_shared',align: 'left', },
+        { text: 'Personnel assigned by CEO', value: 'no_of_personnel',align: 'left', },
+        { text: 'Personnel shared TO', value: 'no_of_personnel_shared',align: 'left', },
 
       ],
         dictionary: {
@@ -236,7 +236,7 @@
 
       },
       share_pp:function(val){
-        if(val> (this.posts_available-this.posts_required)){
+        if(val> (this.posts_available-Math.round(parseInt(this.posts_required)*1.2,0))){
           alert('Number is more than personnel availabe for share')
           this.disable_save=true
           this.errors.add(
@@ -277,6 +277,7 @@
         this.tableloading=false
       },
       add_sharing:function(){
+        if(confirm('Are you sure ?')){
         this.loading = true
         this.$validator.validate()
         .then(result =>{
@@ -304,6 +305,7 @@
         .catch(error => {
           this.loading = false
         })
+        }
       },
       alldistrict:function(){
         axios.get('/getdistrict')
@@ -341,7 +343,7 @@
             let req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
             this.posts_available=avl
             this.posts_required=req
-            this.share_pp= avl>req ? avl-req : ''
+            this.share_pp= avl>req ? avl-Math.round(parseInt(req)*1.2,0) : ''
 
           })
           .catch(error => {
