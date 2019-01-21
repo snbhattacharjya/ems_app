@@ -10,6 +10,7 @@
       autocomplete
       :search-input.sync="searchInput"
       @input="$emit('input',$event)"
+      :diabled="disble_block_muni ? disble_block_muni : false"
     >
     </v-select>
 </template>
@@ -27,6 +28,10 @@ export default {
       required: false
     },
     selected: {
+      type: String,
+      required: false
+    },
+    disble_block_muni: {
       type: String,
       required: false
     }

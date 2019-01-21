@@ -405,6 +405,20 @@
                   <small class="red--text">(*) Fields are mandatory</small>
                 </v-stepper-step>
                 <v-stepper-content step="5">
+                  <v-switch label="Post Office Account" v-model="post_office" @change="enable_post_offie" class="ml-3"></v-switch>
+                  <v-text-field
+                    prepend-icon="account_balance_wallet"
+                    name="branch_ifsc"
+                    label="CIF No(*)"
+                    type="text"
+                    counter
+                    maxlength=11
+                    v-model="branch_ifsc"
+                    v-validate="'required|num|length:11'"
+                    :error-messages="errors.collect('branch_ifsc')"
+                    data-vv-name="branch_ifsc"
+                    v-if="this.post_office"
+                  ></v-text-field>
                   <v-text-field
                     prepend-icon="account_balance_wallet"
                     name="branch_ifsc"
@@ -418,6 +432,7 @@
                     data-vv-name="branch_ifsc"
                     @blur="ifsc"
                     :suffix="ifsc_hint"
+                     v-if="!this.post_office"
                   ></v-text-field>
                   <small class="red--text">N.B. Please provide correct IFSC otherwise Election payment will be held and office will be responsible for that.</small>
 
@@ -613,6 +628,7 @@ import _ from 'lodash'
         disable_save: true,
         agrrelable: "Certified that the detail information furnished earlier in PP-1 format and also PP-2 format are verified with office record and genuine.Names of all officials have been included in the PP-2 format and no information has been concealed.",
         agree:false,
+        post_office:false,
         personnel_form: 1,
         remark_selected:'',
         step1_error:'',
@@ -976,6 +992,7 @@ import _ from 'lodash'
           assembly_temp_id: this.assembly_temp_id,
           assembly_perm_id: this.assembly_perm_id,
           assembly_off_id: this.assembly_off_id,
+          post_office:this.post_office==true ? 1:0,
           branch_ifsc: this.branch_ifsc,
           bank_account_no: this.bank_account_no,
 

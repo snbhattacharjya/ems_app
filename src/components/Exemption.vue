@@ -20,6 +20,19 @@
 
                   <v-card-text>
                     <v-select
+                      :items="block_munis"
+                      v-model="block_muni_id"
+                      item-text= "name"
+                      item-value= "id"
+                      prepend-icon="list"
+                      label="Block or Municipality(*)"
+                      autocomplete
+                      :search-input.sync="searchInput"
+                      @input="$emit('input',$event)"
+                      :disabled="disble_block_muni"
+                    >
+                    </v-select>
+                    <v-select
                     :items="remarks"
                     v-model="remark_id"
                     item-text= "name"
@@ -29,8 +42,38 @@
                     @input="$emit('input',$event)"
                     :hint="remarks_hint"
                     persistent-hint
+                     :disabled="disble_remark"
+                     clearable
                   >
                   </v-select>
+                  <v-data-table  v-model="selected_remarks" select-all :headers="headers" hide-actions :items="remark_personnels" class="elevation-1 my-5" :loading="tableloading_remark" :disabled="disble_remark">
+                    <template slot="items" slot-scope="props">
+                      <tr v-if="props.item.exempted == 'Yes'" class="red--text">
+                        <td></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                      <tr v-else>
+                      <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td v-if="props.item.exemp_date!=null" >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td></td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                    </template>
+
+                     </v-data-table>
                   <v-textarea
                     prepend-icon="announcement"
                     name="exemption_reason_remark"
@@ -39,9 +82,9 @@
                     v-model="exemption_reason_remark"
                     counter
                     maxlength="100"
-                    :disabled="disble_remark"
+                    :disabled="disble_remark_reason"
                   ></v-textarea>
-                  <v-btn color="primary" @click="do_remark_exemption" :disabled="disble_remark" :loading="doing_remark_exemption" >Submit for Exemption</v-btn>
+                  <v-btn color="primary" @click="do_remark_exemption" :disabled="disble_remark_reason" :loading="doing_remark_exemption" >Submit for Exemption</v-btn>
                   </v-card-text>
 
                 </v-card>
@@ -64,12 +107,30 @@
                     </v-text-field>
                     <v-data-table v-model="selected" select-all hide-actions :headers="headers" :items="office_personnels" class="elevation-1 my-5" :loading="tableloading_office" :disabled="disble_office">
                     <template slot="items" slot-scope="props">
+
+                      <tr v-if="props.item.exempted == 'Yes'" class="red--text">
+                      <td></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                      <tr v-else>
                       <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td v-if="props.item.exemp_date!=null" >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td></td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
 
                     </template>
 
@@ -106,12 +167,27 @@
                     </v-text-field>
                     <v-data-table  :headers="headers" hide-actions :items="personnels" class="elevation-1 my-5" :loading="tableloading_personnel" :disabled="disble_personnel">
                     <template slot="items" slot-scope="props">
+                      <tr v-if="props.item.exempted == 'Yes'" class="red--text">
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
-
+                      <td >{{ props.item.exempted }}</td>
+                      <td >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                      <tr v-else>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td v-if="props.item.exemp_date!=null" >{{  new Date(props.item.exemp_date).toLocaleDateString('en-GB') }}</td>
+                      <td></td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
                     </template>
 
                      </v-data-table>
@@ -138,15 +214,23 @@
 </template>
 
 <script>
+import BlockMuniList from "@/components/BlockMuniList";
 export default {
   name: 'Exemption',
+  components: {
+
+    "block-muni-list": BlockMuniList,
+
+  },
   data () {
     return {
       exemption_reason_remark:'',
       doing_remark_exemption:false,
       disble_remark:true,
+      disble_remark_reason:true,
       remark_id:'',
       remarks: [],
+      block_muni_id:'',
       remarks_hint:'Select any Remark to search',
       exemption_reason_office:'',
       doing_office_exemption:false,
@@ -159,53 +243,80 @@ export default {
         { text: 'Personnel Name',align: 'left',value: 'name',sortable: false},
         { text: 'Designation', value: 'designation',align: 'left',sortable: false },
         { text: 'Mobile', value: 'mobile',align: 'left',sortable: false },
+        { text: 'Exempted', value: 'exempted',align: 'left',sortable: false },
+        { text: 'Exemption Date', value: 'exemp_date',align: 'left',sortable: false },
+        { text: 'Exemption Reason', value: 'exemp_reason',align: 'left',sortable: false },
       ],
+      remark_personnels: [],
       office_personnels: [],
       selected: [],
       selected_personnel:[],
+      selected_remarks:[],
+      selected_remark_personnel:[],
       tableloading_office:false,
       personnels: [],
       personnel_id:'',
       personnel_hint:'Input any Personnel ID to search',
       tableloading_personnel:false,
+      tableloading_remark:false,
       exemption_reason_personnel:'',
       doing_personnel_exemption:false,
       disble_personnel:true,
+      disble_block_muni:false,
       active: null,
+      block_munis: [],
+      searchInput: '',
+      exempted_count:0,
     }
   },
   beforeUpdate() {
+    this.$store.dispatch('storeblockmuni')
+    this.block_munis=this.getblock
     this.$store.dispatch('storeremark')
     this.remarks=this.getremark
   },
   computed: {
     getremark:function(){
      return this.$store.getters.getremark
-   }
+   },
+   getblock:function(){
+     return this.$store.getters.getblockmuni
+    },
   },
   created () {
 
   },
   methods:{
+
     do_remark_exemption:function(){
       if(this.remark_id!='' && this.exemption_reason_remark!=''){
       this.doing_remark_exemption=true
+      this.selected_remarks.forEach(item => {
+        this.selected_remark_personnel.push(item.id)
+      })
       axios.post('/doexception',{
           mode:'remarks',
           remark_id: this.remark_id,
+          remark_personnl_selected:this.selected_remarks.length==this.remark_personnels.length ? 'ALL' : this.selected_remark_personnel,
           reason:this.exemption_reason_remark
           })
           .then((response, data) => {
              this.exemption_reason_remark=''
              this.doing_remark_exemption=false
-             this.disble_remark=true
+             this.disble_remark=false
+             this.disble_remark_reason=true
              this.remarks_hint=' Personnel Exempted by this remark'
+             this.remark_personnels=[]
+             this.selected_remark_personnel=[]
+             this.selected_remarks=[]
+             alert(this.remarks_hint)
 
           })
           .catch(error => {
             console.log(error)
             this.remarks_hint='Sorry !! seems there are some server problem'
             this.disble_remark=false
+            alert(this.remarks_hint)
           })
       }else{
         alert('Please select Remark and provide reason for reamrk')
@@ -227,6 +338,7 @@ export default {
           .then((response, data) => {
             if(response.data.length<=0){
               this.office_hint='Sorry !!No Personnel Exempted by this remark'
+              alert(this.office_hint)
               }
             else{
               this.office_personnels=[]
@@ -235,13 +347,15 @@ export default {
               this.doing_office_exemption=false
               this.tableloading_office=false
               this.disble_office=true
-
+              this.selected_personnel=[]
+              alert(this.office_hint)
             }
           })
           .catch(error => {
             console.log(error)
             this.office_hint='Sorry !! seems there are some server problem'
             this.disble_office=false
+            alert(this.office_hint)
           })
       }else{
         alert('Please select Personnel and provide reason for reamrk')
@@ -259,6 +373,7 @@ export default {
           .then((response, data) => {
             if(response.data.length<=0){
               this.personnel_hint='Sorry !!No Personnel Exempted by this ID'
+              alert(this.personnel_hint)
               }
             else{
               this.personnels=[]
@@ -267,6 +382,7 @@ export default {
               this.doing_personnel_exemption=false
               this.tableloading_personnel=false
               this.disble_personnel=true
+              alert(this.personnel_hint)
 
             }
           })
@@ -274,6 +390,7 @@ export default {
             console.log(error)
             this.personnel_hint='Sorry !! seems there are some server problem'
             this.disble_personnel=false
+            alert(this.personnel_hint)
           })
       }else{
         alert('Please Input Personnel and provide reason for reamrk')
@@ -282,28 +399,65 @@ export default {
 
   },
   watch:{
+    block_muni_id:function(val){
+      if(val==''){
+        this.disble_remark=true
+      }else{
+        this.disble_remark=false
+      }
+    },
     remark_id:function(val){
       this.remarks_hint=''
-      if(val!=''){
+      if(val==undefined && this.block_muni_id!=''){
+        this.disble_block_muni=false
+      }
+      else if(val!='' && this.block_muni_id!=''){
+        this.exempted_count=0
+        this.disble_block_muni=true
+        this.tableloading_remark=true
         axios.post('/getpersonnnelforexcemption',{
           mode:'remarks',
+          block_muni_off_id:this.block_muni_id,
           remark_id: this.remark_id
           })
           .then((response, data) => {
-            if(response.data.count<=0){
+            if(response.data.excemptionList.length<=0){
+              this.remark_personnels=[]
               this.remarks_hint='Sorry !!No Personnel found by this Remark'
-              this.disble_remark=true
+              this.disble_remark=false
+              this.disble_remark_reason=true
+              this.tableloading_remark=false
+              alert(this.remarks_hint)
               }
             else{
-              this.remarks_hint=response.data.count+' Personnel found by this Remark'
-              this.disble_remark=false
+              this.remark_personnels=[]
+              this.remark_personnels=response.data.excemptionList
+              this.remarks_hint=response.data.excemptionList.length+' Personnel found by this Remark'
+              this.disble_remark=true
 
+               response.data.excemptionList.forEach(item => {
+                if(item['exempted']=='Yes'){
+                  this.exempted_count++
+                }
+              })
+
+              alert(this.remarks_hint)
+              this.tableloading_remark=false
+              this.disble_remark_reason=false
+              if(response.data.excemptionList.length==this.exempted_count){
+                this.disble_remark=false
+                this.disble_remark_reason=true
+              }
             }
           })
           .catch(error => {
             console.log(error)
             this.remarks_hint='Sorry !! seems there are some server problem'
           })
+      }
+      else{
+
+        alert('Please select Block/Municipality first and then remark.')
       }
     },
     office_id:function(val){
@@ -316,6 +470,7 @@ export default {
         this.exemption_reason_office=''
       }
       else if(val.length==10 && val!=''){
+        this.exempted_count=0
         this.office_hint='Searching for Office'
         axios.post('/getpersonnnelforexcemption',{
           mode:'office',
@@ -333,6 +488,14 @@ export default {
               this.tableloading_office=true
               this.office_personnels=response.data.excemptionList
               this.tableloading_office=false
+              response.data.excemptionList.forEach(item => {
+                if(item['exempted']=='Yes'){
+                  this.exempted_count++
+                }
+              })
+              if(response.data.excemptionList.length==this.exempted_count){
+                this.disble_office=true
+              }
             }
           })
           .catch(error => {
@@ -365,10 +528,16 @@ export default {
               this.personnel_hint='Sorry !!No Personnel found by this ID'
               }
             else{
+              if(response.data['excemptionList'][0].exempted=='Yes'){
+              this.personnel_hint='Personnel already exempted by this ID'
+              this.disble_personnel=true
+              this.personnels=response.data['excemptionList']
+              }else{
               this.personnel_hint='Personnel found by this ID'
               this.disble_personnel=false
               this.personnels=response.data['excemptionList']
-
+              }
+              alert(this.personnel_hint)
             }
           })
           .catch(error => {
