@@ -414,7 +414,7 @@
                     counter
                     maxlength=11
                     v-model="branch_ifsc"
-                    v-validate="'required|num|length:11'"
+                    v-validate="'required|numeric'"
                     :error-messages="errors.collect('branch_ifsc')"
                     data-vv-name="branch_ifsc"
                     v-if="this.post_office"
@@ -912,7 +912,7 @@ import _ from 'lodash'
           this.assembly_temp_selected = item.assembly_temp_id,
           this.assembly_perm_id= item.assembly_perm_id,
           this.assembly_off_id= item.assembly_off_id,
-          this.post_office=item.post_office,
+          this.post_office=item.post_office_account == 1 ? true : false,
           this.branch_ifsc= item.branch_ifsc,
           this.bank_account_no= item.bank_account_no
           this.bank_account_no_stored= item.bank_account_no
@@ -984,7 +984,7 @@ import _ from 'lodash'
           assembly_temp_id: this.assembly_temp_id,
           assembly_perm_id: this.assembly_perm_id,
           assembly_off_id: this.assembly_off_id,
-          post_office:this.post_office==true ? 1:0,
+          post_office_account:this.post_office==true ? 1:0,
           branch_ifsc: this.branch_ifsc,
           bank_account_no: this.bank_account_no,
         })

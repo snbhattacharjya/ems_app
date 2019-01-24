@@ -216,7 +216,7 @@
 
                        </v-layout>
                        <v-layout row wrap>
-                         <v-flex xs12>
+                         <v-flex xs7>
                            <v-layout>
                              <v-checkbox label="!" v-model="exclude_qualification" :disabled="disble_qual" hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
@@ -232,9 +232,24 @@
                             :error-messages="errors.collect('qualification_id')"
                             data-vv-name="qualification_id"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disble_qual" @click="loaddesignations" :loading="loading_designation">Next</v-btn></v-slide-x-reverse-transition>
                           </v-select>
                            </v-layout>
+                         </v-flex>
+                         <v-flex xs5>
+                           <v-select
+                              :items="emp_groups"
+                              prepend-icon="list"
+                              label="Employee Group(*)"
+                              v-model="emp_group"
+                              multiple
+                              :disabled="disble_qual"
+                              v-validate="'required'"
+                              data-vv-name="emp_group"
+                              :error-messages="errors.collect('emp_group')"
+                            >
+                            <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disble_qual" @click="loaddesignations" :loading="loading_designation">Next</v-btn></v-slide-x-reverse-transition>
+
+                            </v-select>
                          </v-flex>
                        </v-layout>
                        <v-layout row wrap>
@@ -349,6 +364,7 @@ export default {
       qualification_id:'',
       disble_qual:true,
       designation:'',
+      emp_group:'',
       disable_desig:true,
       gender:'',
       age:'',
@@ -376,6 +392,13 @@ export default {
         //{ name:'LESS THAN 60',val: '<60'},
         { name:'LESS THAN 59',val: '<59'}
       ],
+      emp_groups: [
+          'ALL',
+          'A',
+          'B',
+          'C',
+          'D'
+        ],
       poststats:[],
       basic_pay: [2100, 40400],
       grade_pay:[2100, 40400],
@@ -582,7 +605,7 @@ export default {
       }
     },
     loaddesignations:function(){
-      if(this.disble_qual == false){
+      if(this.disble_qual == false && this.emp_group!=''){
         this.loading_designation=true
        axios.post('/fetch_designation_of_pp',{
           subdivision_id:this.subdivision_id,
@@ -590,6 +613,7 @@ export default {
           office_id:this.office_id,
           qualification_id:this.qualification_id,
           not_qualification:this.exclude_qualification ? 1 : 0,
+          emp_group:this.emp_group,
           basic_pay:this.basic_pay,
           grade_pay:this.visible_grade ? this.grade_pay : 0,
           pay_level:this.visible_level ? this.pay_level : 0,
@@ -611,6 +635,9 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      }else{
+        this.loading_designation=false
+        alert('Please select Employee Group !!')
       }
     },
     loadremarks:function(){
@@ -625,6 +652,7 @@ export default {
                 pay_level:this.visible_level ? this.pay_level : 0,
                 not_qualification: this.exclude_qualification ? 1 : 0,
                 not_designation:this.exclude_designation ? 1 : 0,
+                emp_group:this.emp_group,
                 not_remarks:this.exclude_remark ? 1 : 0,
                 qualification_id:this.qualification_id,
                 designation: this.designation,
@@ -673,6 +701,7 @@ export default {
                 not_remarks:this.exclude_remark ? 1 : 0,
                 qualification_id:this.qualification_id,
                 designation: this.designation,
+                emp_group:this.emp_group,
                 gender:this.gender,
                 age:this.age,
                 remarks:this.remark_id ? this.remark_id: 'ALL',

@@ -82,8 +82,10 @@
         <v-card-title class="headline">Important Notice !!</v-card-title>
 
         <v-card-text>
-         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">20th January,2019</strong > as from <strong class="red--text">21st January,2019 (on 5:00 PM)</strong > it will be freezed.
+          <strong class="green--text">Date Extended</strong><br><br>
+         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">25th January,2019 (5:00 PM)</strong >, after that it will be freezed.
         </v-card-text>
+
 
         <v-card-actions>
           <v-spacer></v-spacer>
