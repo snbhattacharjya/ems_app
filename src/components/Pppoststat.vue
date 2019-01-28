@@ -67,6 +67,8 @@
                             :error-messages="errors.collect('category_id')"
                             data-vv-name="category_id"
                             :disabled="disable_offcat"
+                            autocomplete
+                            :search-input.sync="search_office_cat"
                           >
                           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_offcat" @click="loadoffices" :loading="loading_offcat">Load Office</v-btn></v-slide-x-reverse-transition>
                           </v-select>
@@ -86,6 +88,8 @@
                             :error-messages="errors.collect('office_id')"
                             data-vv-name="office_id"
                             :disabled="disable_off"
+                            autocomplete
+                            :search-input.sync="search_office"
                           >
                           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_off" @click="loadqualifications" :loading="loading_off">Next</v-btn></v-slide-x-reverse-transition>
                           </v-select>
@@ -108,7 +112,7 @@
                               type="text"
                               counter
                               maxlength="6"
-                              v-validate="'required'"
+                              v-validate="'required|numeric'"
                               :error-messages="errors.collect('basic_pay[0]')"
                               data-vv-name="basic_pay[0]"
                               ></v-text-field>
@@ -137,7 +141,7 @@
                               type="text"
                               counter
                               maxlength="6"
-                              v-validate="'required'"
+                              v-validate="'required|numeric'"
                               :error-messages="errors.collect('basic_pay[1]')"
                               data-vv-name="basic_pay[1]"
                               ></v-text-field>
@@ -166,7 +170,7 @@
                               type="text"
                               counter
                               maxlength="6"
-                              v-validate="'required'"
+                              v-validate="'required|numeric'"
                               :error-messages="errors.collect('grade_pay[0]')"
                               data-vv-name="grade_pay[0]"
                               ></v-text-field>
@@ -192,7 +196,7 @@
                               type="text"
                               counter
                               maxlength="6"
-                              v-validate="'required'"
+                              v-validate="'required|numeric'"
                               :error-messages="errors.collect('grade_pay[1]')"
                               data-vv-name="grade_pay[1]"
                               ></v-text-field>
@@ -231,6 +235,8 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('qualification_id')"
                             data-vv-name="qualification_id"
+                            autocomplete
+                            :search-input.sync="search_qualification"
                           >
                           </v-select>
                            </v-layout>
@@ -264,6 +270,8 @@
                             prepend-icon="account_box"
                             label="Select Designation(s)"
                             multiple
+                            autocomplete
+                            :search-input.sync="search_desig"
                             :disabled="disable_desig"
                             v-validate="'required'"
                             :error-messages="errors.collect('designation')"
@@ -316,7 +324,8 @@
                             prepend-icon="announcement"
                             label="Select Remark(s)"
                             multiple
-
+                            autocomplete
+                            :search-input.sync="search_remark"
                           ></v-select>
                            </v-layout>
                          </v-flex>
@@ -351,6 +360,11 @@ export default {
     },
   data () {
     return {
+      search_desig:'',
+      search_office:'',
+      search_office_cat:'',
+      search_qualification:'',
+      search_remark:'',
       loading_offcat: false,
       loading_off:false,
       loading_designation:false,

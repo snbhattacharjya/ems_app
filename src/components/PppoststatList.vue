@@ -32,7 +32,8 @@
               <td class="justify-center">
                 <v-btn color="info" flat v-bind:id="props.item.RuleID" @click="queryrule(props.item.RuleID,$event)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn><br>
                 <v-btn :loading="applying_rule" color="success" flat v-bind:id="props.item.RuleID" @click="applyrule(props.item.RuleID,$event)"><v-icon small class="mr-2">check</v-icon> Apply</v-btn>
-                <v-btn :loading="revoking_rule" color="error" flat v-bind:id="props.item.RuleID" @click="revokerule(props.item.RuleID,$event)"><v-icon small class="mr-2">undo</v-icon> Revoke</v-btn>
+                <v-btn :loading="revoking_rule" color="error" flat v-bind:id="props.item.RuleID" @click="revokerule(props.item.RuleID,$event)"><v-icon small class="mr-2">undo</v-icon> Revoke</v-btn><br>
+                <v-btn :loading="deleting_rule" color="error" flat v-bind:id="props.item.RuleID" @click="deleterule(props.item.RuleID,$event)"><v-icon small class="mr-2">delete_forever</v-icon> Delete</v-btn>
 
 
                 <!-- <v-btn color="warning" flat v-bind:id="props.item.RuleID" @click="shortlistrule(props.item.RuleID,$event)"><v-icon small class="mr-2">star</v-icon> Sortlist</v-btn> -->
@@ -205,6 +206,24 @@ import moment from 'moment'
           this.willaffect=''
          this.affect=false
         })
+
+      },
+      deleterule:function(id,$event){
+        if(confirm('Are yoy sure to delete Rule ID - '+id+' ?')){
+         this.willaffect=''
+         this.affect=false
+         this.affect=true
+         this.willaffect='Deleting Rule ID : '+id+'.......'
+           axios.get('/deleterule/'+id)
+        .then((response, data) => {
+           this.willaffect='Rule ID : '+id+' '+response.data
+           this.initialize_ruels()
+            })
+        .catch(error => {
+          console.log(error)
+
+        })
+        }
 
       },
       formatdate:function(date){

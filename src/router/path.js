@@ -364,6 +364,24 @@ export default [
       )
     },
     {
+      path: `/poststatus_update`,
+      meta: {title:'Bulk update for Personnel By post status | Welcome to WBPPMS'},
+      name: 'PoststatusbulkUpdatebycategory',
+      component: () => import(
+
+        '@/components/PoststatusbulkUpdatebycategory'
+      )
+    },
+    {
+      path: `/poststatus_update_by_designation`,
+      meta: {title:'Bulk update for Personnel By Designation | Welcome to WBPPMS'},
+      name: 'PoststatusbulkUpdatebydesignation',
+      component: () => import(
+
+        '@/components/PoststatusbulkUpdatebydesignation'
+      )
+    },
+    {
       path: `/office_status_zero`,
       meta: {title:'Office Status(0% updated) | Welcome to WBPPMS'},
       name: 'OfficeSttatus',
@@ -427,6 +445,15 @@ export default [
       )
     },
     {
+      path: `/office_not_statred_district/:id`,
+      meta: {title:'Office list not started | Welcome to WBPPMS'},
+      name: 'OfficenotStartedbydistrict',
+      component: () => import(
+
+        '@/components/OfficenotStartedbydistrict'
+      )
+    },
+    {
       path: `/remarkwise_report`,
       meta: {title:'Personne list Remarkwise | Welcome to WBPPMS'},
       name: 'RemarkwisePersonnel',
@@ -460,6 +487,15 @@ export default [
       component: () => import(
 
         '@/components/OfficecategorywisePoststatus'
+      )
+    },
+    {
+      path: `/office_institute_wise_group_status`,
+      meta: {title:'Office institute wise group status report | Welcome to WBPPMS'},
+      name: 'OfficeinstitutewiseGroup',
+      component: () => import(
+
+        '@/components/OfficeinstitutewiseGroup'
       )
     },
     {

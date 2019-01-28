@@ -25,7 +25,7 @@
 
                 </tr>
                 <tr>
-                <th>NA</th>
+                <th>Not <br>Assigned</th>
                 <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>
@@ -79,7 +79,7 @@
                 <th width="50%" colspan="8"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
-                <th>NA</th>
+                <th>Not <br>Assigned</th>
                 <th>AEO</th>
                 <th>PR</th>
                 <th>P1</th>

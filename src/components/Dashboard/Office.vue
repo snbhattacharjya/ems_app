@@ -83,7 +83,7 @@
 
         <v-card-text>
           <strong class="green--text">Date Extended</strong><br><br>
-         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">25th January,2019 (5:00 PM)</strong >, after that it will be freezed.
+         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">28th January,2019 (5:00 PM)</strong >, after that it will be freezed.
         </v-card-text>
 
 
@@ -140,8 +140,8 @@ export default {
   },
   created(){
 
-      if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
-      this.dialog=true
+      // if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
+      // this.dialog=true
 
   }
 

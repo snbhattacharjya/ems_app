@@ -35,7 +35,7 @@
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.Total_Offices }}</td>
                   <td class="nopad">{{ report.PP1_Updated }}</td>
-                  <td class="nopad">{{ report.PP1_Not_Updated }}</td>
+                  <td class="nopad"><router-link :to="{ path: 'office_not_statred_district/'+report.id}" title="Click to See Office list">{{ report.PP1_Not_Updated }}</router-link></td>
                   <td class="nopad">{{ report.Total_PP_Declared }}</td>
                   <td class="nopad">{{ report.Male_PP_Declared }}</td>
                   <td class="nopad">{{ report.Male_PP_Added }}</td>
