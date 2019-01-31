@@ -222,7 +222,7 @@
                        <v-layout row wrap>
                          <v-flex xs7>
                            <v-layout>
-                             <v-checkbox label="!" v-model="exclude_qualification" :disabled="disble_qual" hide-details class="shrink mr-2"></v-checkbox>
+                             <v-checkbox label="Exclude" v-model="exclude_qualification" :disabled="disble_qual" hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="qualification_id"
                             :items="qualifications"
@@ -261,7 +261,7 @@
                        <v-layout row wrap>
                          <v-flex xs12>
                            <v-layout>
-                          <v-checkbox label="!" v-model="exclude_designation" hide-details :disabled="disable_desig" class="shrink mr-2"></v-checkbox>
+                          <v-checkbox label="Exclude" v-model="exclude_designation" hide-details :disabled="disable_desig" class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="designation"
                             :items="designations"
@@ -315,7 +315,7 @@
                        <v-layout row wrap>
                          <v-flex xs12>
                            <v-layout>
-                          <v-checkbox label="!" v-model="exclude_remark"  hide-details class="shrink mr-2"></v-checkbox>
+                          <v-checkbox label="Exclude" v-model="exclude_remark"  hide-details class="shrink mr-2"></v-checkbox>
                           <v-select
                             v-model="remark_id"
                             :items="remarks"
@@ -332,7 +332,7 @@
                        </v-layout>
 
                        <v-btn color="primary" @click="throttledMethod()" :loading="setting_rule">Set Rule</v-btn>
-                       <v-btn color="primary" v-if="this.disable_agegrp === true" @click="resetrule">Reset</v-btn>
+                       <v-btn color="primary" :disabled="disable_reset" @click="resetrule">Reset</v-btn>
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
@@ -380,6 +380,7 @@ export default {
       designation:'',
       emp_group:'',
       disable_desig:true,
+      disable_reset:false,
       gender:'',
       age:'',
       disable_agegrp:false,
@@ -482,6 +483,11 @@ export default {
   },
   methods:{
     resetrule:function(){
+      this.subdivisions=[]
+      this.offices=[]
+      this.qualifications=[]
+      this.designations=[]
+      this.remarks=[]
       this.disable_offcat=false
       this.disable_off=false
       this.disble_qual=false
@@ -524,11 +530,14 @@ export default {
     loadofficecategory:function(){
        axios.get('/categories')
       .then((response, data) => {
-      if(response.data.length >=1 ) {this.officecategories.push({name:"ALL",id:"ALL"})}
+      if(response.data.length >=1 ) {this.officecategories.push({name:"ALL",id:"ALL"})
        response.data.forEach(item => {
          item.name=item.name.toUpperCase()
           this.officecategories.push(item)
-        });
+        })
+      }else{
+        alert('No Categories found')
+      }
 
       })
       .catch(error => {
@@ -554,12 +563,15 @@ export default {
         this.disable_offcat=true
         this.disable_off=false
         this.loading_offcat=false
-      }
+
        response.data['office'].forEach(item => {
          console.log('Off - '+item)
          item.officename=item.officename.toUpperCase()
           this.offices.push(item)
-        });
+        })}
+        else{
+        alert('No Office found')
+      }
 
       })
       .catch(error => {
@@ -591,13 +603,16 @@ export default {
      if(response.data['qualification'].length >=1 ) {
        this.qualifications.push({QualificationName:"ALL",QualificationCode:"ALL"})
        this.disable_off=true
-     }
+
        response.data['qualification'].forEach(item => {
          item.QualificationName=item.QualificationName.toUpperCase()
           this.qualifications.push(item)
           this.disble_qual=false
           this.loading_off=false
-        });
+        })}
+        else{
+        alert('No Qualification found')
+      }
 
       })
       .catch(error => {
@@ -637,12 +652,15 @@ export default {
         if(response.data['designation'].length >=1 ) {
          this.designations.push({Designation:"ALL"})
          this.disble_qual=true
-        }
+
        response.data['designation'].forEach(item => {
          item.Designation=item.Designation.toUpperCase()
           this.designations.push(item)
           this.disable_desig=false
-        });
+        })}
+        else{
+        alert('No Designation found')
+      }
         this.loading_designation=false
 
       })
@@ -683,11 +701,14 @@ export default {
          this.remarks.push({RemarksName: 'ALL', RemarksCode: 'ALL'})
          this.disable_desig=true
          this.disable_agegrp=true
-       }
+
        response.data['remarks'].forEach(item => {
          item.RemarksName=item.RemarksName.toUpperCase()
           this.remarks.push(item)
-        });
+        })}
+        else{
+        alert('No Categories found')
+      }
       this.loading_remark=false
       })
       .catch(error => {

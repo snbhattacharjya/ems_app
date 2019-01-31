@@ -23,6 +23,16 @@
       <v-flex xs1>
         <v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn>
       </v-flex>
+      <v-flex xs3 class="ml-3">
+        <!-- <download-csv
+                        :data="personnel_csv"
+                        :name="personnelfilename"
+                        :labels="personnel_labels"
+                        :fields="personnel_csvfields"
+                >
+                <v-btn color="info" :loading="personnelloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_personnel}}</v-btn>
+                </download-csv> -->
+      </v-flex>
       </v-layout>
       </v-flex>
       <v-flex xs12>
@@ -40,7 +50,7 @@
               <td >{{ props.item.name }}</td>
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.basic_pay }}</td>
-              <td >{{ props.item.grade_pay !=0 ? props.item.grade_pay : props.item.pay_level!=''? 'LEVEL '+props.item.pay_level : '' }}</td>
+              <td >{{ props.item.grade_pay}} / {{props.item.pay_level}}</td>
               <td>{{props.item.age}}</td>
               <td>{{props.item.gender}}</td>
               <td>{{props.item.emp_group}}</td>
@@ -75,13 +85,15 @@
 </template>
 
 <script>
-import moment from 'moment'
+import JsonCSV from 'vue-json-csv'
   export default {
     name:'PoststatusbulkUpdatebycategory',
+    components: {'download-csv': JsonCSV},
     data: () => ({
       dialog: false,
       search: '',
       post_stat:'',
+      post_stat_id:'',
       snackbar: false,
       tableloading:false,
       subdivision_id: '',
@@ -111,7 +123,31 @@ import moment from 'moment'
         { text: 'Post status', value: 'post_stat',sortable: false},
         { text: 'Actions', value: 'name', sortable: false },
       ],
+      personnelloading:false,
+      loadingTXT_personnel:'No DATA',
+      personnelfilename:'Personnel.csv',
+      personnel_labels: {
+          id:'Personnel ID',
+          basic_pay: 'Basic Pay',
+          designation: 'Designation',
+          Age:'Age',
+          email:'Email',
+          emp_group:'Employee Group',
+          gender: 'Gender',
+          grade_pay: 'Grade Pay',
+          mobile: 'Mobile',
+          name: 'Name',
+          office_id:'Office ID',
+          pay_level:'Pay Level',
+          phone: 'Phone',
+          post_stat: 'Post Status',
+          remark:'Remark'
+
+        },
+        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','phone','post_stat','remark'],
+
       personnels: [],
+      personnel_csv:[],
       searchInput: ''
     }),
     components: {
@@ -132,6 +168,7 @@ import moment from 'moment'
 
     created () {
       this.loadpoststatus()
+
     },
 
     methods: {
@@ -166,7 +203,8 @@ import moment from 'moment'
         this.snackbar =true
       },
       initialize () {
-
+        this.personnelloading=true
+        this.loadingTXT_personnel='Loading....'
         this.tableloading=true
         axios.post('/getpersonnelbypoststat',{
           post_stat: this.post_stat_id
@@ -175,15 +213,21 @@ import moment from 'moment'
           if(response.data.length === 0){
             this.tableloading=false
             this.personnels=[]
+            this.personnel_csv=[]
+            this.loadingTXT_personnel='No Data Found'
+            this.personnelloading=false
           }
          else{
            this.personnels=[]
+           this.personnel_csv=[]
             response.data.forEach(item => {
-                //item['age']=moment().diff(moment(item['dob'], "DD-MM-YYYY"), 'years')
 
                 this.personnels.push(item)
+                this.personnel_csv.push(item)
 
               })
+              this.personnelloading=false
+              this.loadingTXT_personnel='Download as CSV'
               this.tableloading=false
               this.loadpoststatus()
          }

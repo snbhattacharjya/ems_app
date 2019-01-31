@@ -38,10 +38,13 @@
                 <thead>
                 <tr>
                 <th width="10%" ><strong>Serial No</strong></th>
-                <th width="10%"><strong>Assembly ID</strong></th>
-                <th width="40%" ><strong>Assembly Name</strong></th>
-                <th width="20%" ><strong>No of Polling Booth(Male)</strong></th>
-                <th width="20%"><strong>No of Polling Booth(Female)</strong></th>
+                <th width="20%"><strong>Assembly</strong></th>
+                <th width="10%" ><strong>No of <br>Polling <br>Booth(Male)</strong></th>
+                <th width="10%"><strong>No of <br>Polling <br>Booth(Female)</strong></th>
+                <th width="10%" ><strong>No of <br>AEO(Male)</strong></th>
+                <th width="10%"><strong>No of <br>AEO(Female)</strong></th>
+                <th width="10%" ><strong>No of <br>MO(Male)</strong></th>
+                <th width="10%"><strong>No of <br>MO(Female)</strong></th>
                 </tr>
 
                 </thead>
@@ -49,14 +52,14 @@
                   <tr v-if="tableloading"><td colspan="13"><v-card-text  class="info--text text-center">{{this.loadingtxt}}</v-card-text></td></tr>
                   <tr v-for="report in reports" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
-                  <td class="nopad">{{ report.id }}</td>
-                  <td class="nopad">{{ report.name }}</td>
+                  <td class="nopad">{{report.name}} ({{ report.id }})</td>
+
                  <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.male_party_count"
                       lazy
                       large
-                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count)"
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
                       @cancel="cancel"
                       @open="open"
                       @close="close"
@@ -78,7 +81,7 @@
                       :return-value.sync="report.female_party_count"
                       lazy
                       large
-                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count)"
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
                       @cancel="cancel"
                       @open="open"
                       @close="close"
@@ -94,6 +97,94 @@
                     </v-edit-dialog>
                    </td>
                    <td v-else class="nopad">{{ report.female_party_count }}</td>
+                   <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    <v-edit-dialog
+                      :return-value.sync="report.male_aeo_count"
+                      lazy
+                      large
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
+                      @cancel="cancel"
+                      @open="open"
+                      @close="close"
+                    > {{ report.male_aeo_count }} <v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
+                      <v-text-field
+                        slot="input"
+                        v-model="report.male_aeo_count"
+
+                        label="Edit"
+                        single-line
+
+                      ></v-text-field>
+                    </v-edit-dialog>
+
+                    </td>
+                    <td v-else class="nopad">{{ report.male_aeo_count }}</td>
+                    <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    <v-edit-dialog
+                      :return-value.sync="report.female_aeo_count"
+                      lazy
+                      large
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
+                      @cancel="cancel"
+                      @open="open"
+                      @close="close"
+                    > {{ report.female_aeo_count }} <v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
+                      <v-text-field
+                        slot="input"
+                        v-model="report.female_aeo_count"
+
+                        label="Edit"
+                        single-line
+
+                      ></v-text-field>
+                    </v-edit-dialog>
+
+                    </td>
+                    <td v-else class="nopad">{{ report.female_aeo_count }}</td>
+                     <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    <v-edit-dialog
+                      :return-value.sync="report.male_mo_count"
+                      lazy
+                      large
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
+                      @cancel="cancel"
+                      @open="open"
+                      @close="close"
+                    > {{ report.male_mo_count }} <v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
+                      <v-text-field
+                        slot="input"
+                        v-model="report.male_mo_count"
+
+                        label="Edit"
+                        single-line
+
+                      ></v-text-field>
+                    </v-edit-dialog>
+
+                    </td>
+                    <td v-else class="nopad">{{ report.male_mo_count }}</td>
+                    <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    <v-edit-dialog
+                      :return-value.sync="report.female_mo_count"
+                      lazy
+                      large
+                      @save="updaterequirement(report.id,report.male_party_count,report.female_party_count,report.male_mo_count,report.female_mo_count,report.male_aeo_count,report.female_aeo_count)"
+                      @cancel="cancel"
+                      @open="open"
+                      @close="close"
+                    > {{ report.female_mo_count }} <v-icon small id="clk2e" class="ml-5" color="info" title="Click to Edit">edit</v-icon>
+                      <v-text-field
+                        slot="input"
+                        v-model="report.female_mo_count"
+
+                        label="Edit"
+                        single-line
+
+                      ></v-text-field>
+                    </v-edit-dialog>
+
+                    </td>
+                    <td v-else class="nopad">{{ report.female_mo_count }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -177,11 +268,15 @@ export default {
        }
 
      },
-     updaterequirement(id,male_party_count,female_party_count){
+     updaterequirement(id,male_party_count,female_party_count,male_mo_count,female_mo_count,male_aeo_count,female_aeo_count){
        axios.post('/updateassemblyreport',{
         assembly_id: id,
         male_party_count: male_party_count,
         female_party_count:female_party_count,
+        male_aeo_count:male_aeo_count,
+        female_aeo_count:female_aeo_count,
+        male_mo_count:male_mo_count,
+        female_mo_count:female_mo_count,
         district_id: this.district_id
         })
       .then((response, data) => {

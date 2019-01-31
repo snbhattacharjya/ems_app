@@ -125,13 +125,15 @@ export default {
           branch_ifsc:'IFSC',
           bank_account_no:'Bank Account No',
           remark_id:'Remark',
-          remark_reason:'Remark Reason'
-
+          remark_reason:'Remark Reason',
+          exempted:'Exempted',
+          exemp_reason:'Reasone of Exemption',
+          exemp_date:'Date of Exemption'
         },
         csvfields : ['id','name','email','phone','mobile','identification_code',
         'address','post_office','pin','ac_id','pc_id','subdivision_id','block_muni_id','police_station_id',
         'category_id','institute_id'],
-        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason'],
+        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason','exempted','exemp_reason','exemp_date'],
     }
   },
   beforeUpdate() {

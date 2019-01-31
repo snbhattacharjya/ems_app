@@ -209,7 +209,7 @@ import moment from 'moment'
 
       },
       deleterule:function(id,$event){
-        if(confirm('Are yoy sure to delete Rule ID - '+id+' ?')){
+        if(confirm('Are yoy sure to delete Rule ID - '+id+' ?\nBeofre delete, you revoke first.')){
          this.willaffect=''
          this.affect=false
          this.affect=true

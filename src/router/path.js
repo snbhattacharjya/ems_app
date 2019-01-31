@@ -382,6 +382,24 @@ export default [
       )
     },
     {
+      path: `/poststatus_mismatch`,
+      meta: {title:'Mismatch of Post Status for personnel | Welcome to WBPPMS'},
+      name: 'Poststatusbulkbygroup',
+      component: () => import(
+
+        '@/components/Poststatusbulkbygroup'
+      )
+    },
+    {
+      path: `/checklist/:designation/:group`,
+      meta: {title:'See All Personnel in the checklist | Welcome to WBPPMS'},
+      name: 'MismatchChecklist',
+      component: () => import(
+
+        '@/components/MismatchChecklist'
+      )
+    },
+    {
       path: `/office_status_zero`,
       meta: {title:'Office Status(0% updated) | Welcome to WBPPMS'},
       name: 'OfficeSttatus',
