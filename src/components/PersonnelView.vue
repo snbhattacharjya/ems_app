@@ -69,7 +69,7 @@
               <td >{{ props.item.mobile }}</td>
               <td>{{ props.item.updated_at=== null ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')  }}</td>
               <td class="justify-center layout px-0">
-                <v-btn flat :to="'/checklist/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
+                <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
                 <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
               </td>
             </template>
@@ -88,7 +88,7 @@
               <td >{{ props.item.mobile }}</td>
               <td>{{ props.item.updated_at=== null ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')  }}</td>
               <td class="justify-center layout px-0">
-                <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn> -->
+                <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
                 <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
               </td>
             </template>

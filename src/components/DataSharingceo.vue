@@ -170,6 +170,7 @@
         message_type: "",
         message_icon: "",
         message_text: "",
+        search:'',
         headers: [
         { text: 'ID', value: 'id',align: 'left', },
         { text: 'District(From)', align: 'left',  value: 'from_district'},
@@ -247,7 +248,7 @@
                 )
         }
         else if(val==0){
-          alert('Number can not be Zero for share')
+          //alert('Number can not be Zero for share')
           this.disable_save=true
           this.errors.add(
                   {
@@ -339,8 +340,17 @@
             category:this.post
           })
           .then((response, data) => {
+            var req=0
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
-            let req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            if(this.post=='MO'){
+            var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])+parseInt(response.data['requirement'][0]['FemaleMoRequirement'])
+            }
+            else if(this.post=='AEO'){
+            var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])+parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])
+            }
+            else{
+            var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            }
             this.posts_available=avl
             this.posts_required=req
             this.share_pp= avl>req ? avl-Math.round(parseInt(req)*1.2,0) : ''

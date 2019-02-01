@@ -37,9 +37,9 @@
         <td >{{props.item.no_of_personnel_shared==null ? 0 : props.item.no_of_personnel_shared}}</td>
 
         <td>
+          <v-btn v-if="props.item.no_of_personnel<=props.item.no_of_personnel_shared" color="success" flat><v-icon small class="mr-2">check</v-icon>Done</v-btn>
+          <v-text-field v-else
 
-          <v-text-field
-          v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared"
                   name="pptoshare"
                   label="Input Number of PP you want to share"
                   type="text"
@@ -48,7 +48,6 @@
                   autocomplete="off"
                   >
                   </v-text-field>
-          <v-btn v-else color="success" flat><v-icon small class="mr-2">check</v-icon>Done</v-btn>
         </td>
         <td>
           <v-btn v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared" :loading="is_query" color="info" @click="get_status(props.item.category)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn>
@@ -143,8 +142,17 @@
         this.posts_required=0
         axios.get('/getcategorywisedistrictrequirement/'+cat)
         .then((response, data) => {
+            var req=0
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
-            let req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            if(cat=='MO'){
+            var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])+parseInt(response.data['requirement'][0]['FemaleMoRequirement'])
+            }
+            else if(cat=='AEO'){
+            var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])+parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])
+            }
+            else{
+            var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            }
             req=Math.round(req*1.2,0)
             alert('Available PP('+cat+') - '+avl+'\nRequired PP('+cat+') - '+req+' (with 20%)\nAvailable for share('+cat+') -'+(avl-req))
         })

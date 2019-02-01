@@ -2,9 +2,21 @@
   <div id="pageDashboard">
     <v-container fluid>
       <section>
-      <v-layout row wrap  class="my-5">
-
-      <v-flex xs12>
+      <v-layout row wrap  class="my-2">
+      <v-flex xs6>
+        <h2>Revoke Post Status At Bulk</h2><br>
+        <v-select v-model="poststat"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon="call_received"
+                            label="Post Status"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('poststat')"
+                            data-vv-name="poststat"
+                          ><v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary"  @click="revokepoststatebulk" :loading="loading_revokepoststate_bulk">Submit</v-btn></v-slide-x-reverse-transition></v-select>
+      </v-flex>
+      <v-flex xs12 my-5>
         <v-toolbar flat color="white">
          <v-toolbar-title>Rule Lists</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>
@@ -88,6 +100,9 @@ import moment from 'moment'
       willaffect:'',
       affect:false,
       rule:'',
+      poststats:[],
+      poststat:'',
+      revokepoststate_bulk:false
     }),
     components: {
 
@@ -106,13 +121,44 @@ import moment from 'moment'
     },
 
     created () {
-
+        this.loadpoststatus()
         this.initialize_ruels()
 
 
     },
 
     methods: {
+      loadpoststatus:function(){
+      axios.get('/pollingPost')
+      .then((response, data) => {
+       response.data= response.data.filter(item => item['id'] !=='NA')
+       response.data.forEach(item => {
+          this.poststats.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+      revokepoststatebulk:function(){
+      if(this.poststat!=''){
+         if(confirm('Are you sure to revoke Post status - '+this.poststat+'?')){
+        this.loading_revokepoststate_bulk=true
+      axios.get('/revokepoststat/'+this.poststat)
+      .then((response, data) => {
+        alert(response.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      this.loading_revokepoststate_bulk=false
+         }
+      }else{
+        alert('Please select Post type')
+      }
+
+      },
       initialize_ruels () {
 
         this.tableloading=true
@@ -209,7 +255,7 @@ import moment from 'moment'
 
       },
       deleterule:function(id,$event){
-        if(confirm('Are yoy sure to delete Rule ID - '+id+' ?\nBeofre delete, you revoke first.')){
+        if(confirm('Are yoy sure to delete Rule ID - '+id+' ?\nBefore delete, you revoke first.')){
          this.willaffect=''
          this.affect=false
          this.affect=true

@@ -77,6 +77,7 @@
                         <td></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -89,6 +90,7 @@
                       <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -149,6 +151,7 @@
                       <td></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -161,6 +164,7 @@
                       <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -213,6 +217,7 @@
                       <tr v-if="props.item.exempted == 'Yes'" class="red--text">
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -224,6 +229,7 @@
                       <tr v-else>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -256,6 +262,29 @@
               <v-tab-item>
                 <v-card-flat>
                   <v-card-text>
+                    <v-flex12>
+                      <h2>Bulk Revoke Of Exempted Personnel(s)</h2><br>
+                      <v-select
+                            v-model="type"
+                            :items="types"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon="call_received"
+                            label="Exemption Type"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('type')"
+                            data-vv-name="type"
+                          >
+                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary"  @click="revokeexcemption_bulk" :loading="loading_revokeexcemption_bulk">Submit</v-btn></v-slide-x-reverse-transition></v-select>
+                    </v-flex12>
+                    <v-toolbar flat color="white">
+      <v-toolbar-title>Personnel List</v-toolbar-title>
+       <v-divider
+        class="mx-2"
+        inset
+        vertical
+      ></v-divider>
+      <v-spacer></v-spacer>
                     <v-text-field
                     v-model="search"
                     append-icon="search"
@@ -263,11 +292,13 @@
                     single-line
                     hide-details
                   ></v-text-field>
-                    <v-data-table  :headers="headers" :search="search" :items="exempted_personnels" class="elevation-1 my-5" :loading="tableloading_exempted_personnel">
+                  </v-toolbar>
+                    <v-data-table  :headers="headers" :search="search" :items="exempted_personnels" class="elevation-1 " :loading="tableloading_exempted_personnel">
                     <template slot="items" slot-scope="props">
                       <tr>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.mobile }}</td>
@@ -309,6 +340,12 @@ export default {
       disble_remark_reason:true,
       remark_id:'',
       remarks: [],
+      type:'',
+      types:[
+        { name:'Office',id: '1'},
+        { name:'Personnel',id: '2'},
+        { name:'Remark',id: '3'},
+      ],
       block_muni_id:'',
       remarks_hint:'Select any Remark to search',
       exemption_reason_office:'',
@@ -319,6 +356,7 @@ export default {
       headers: [
         { text: 'ID', value: 'id',align: 'left',sortable: true },
         { text: 'Office ID', value: 'office_id',align: 'left',sortable: true },
+        { text: 'Office Name', value: 'officename',sortable:true},
         { text: 'Personnel Name',align: 'left',value: 'name',sortable: true},
         { text: 'Designation', value: 'designation',align: 'left',sortable: true },
         { text: 'Mobile', value: 'mobile',align: 'left',sortable: true },
@@ -352,6 +390,7 @@ export default {
       subdivision_id:'',
       subdivisions:[],
       active: null,
+      loading_revokeexcemption_bulk:false,
     }
   },
   $_veeValidate: {
@@ -365,11 +404,44 @@ export default {
 
   },
   created () {
+    this.loadpoststatus()
     this.getsubdivision()
     this.getremarkslist()
     this.getexemptedlist()
   },
   methods:{
+    revokeexcemption_bulk:function(){
+      if(confirm('Are you sure to revoke Exemption for - '+this.type+'?')){
+      if(this.type!=''){
+        this.loading_revokeexcemption_bulk=true
+      axios.get('/revokeexcemptionbytype/'+this.type)
+      .then((response, data) => {
+        alert(response.data)
+        this.getexemptedlist()
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      this.loading_revokeexcemption_bulk=false
+      }else{
+        alert('Please select Exemption type')
+      }
+      }
+    },
+    loadpoststatus:function(){
+      axios.get('/pollingPost')
+      .then((response, data) => {
+
+       response.data.forEach(item => {
+
+          this.poststats.push(item)
+        });
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
     revoke:function(id,office_id){
       if(confirm('Are you sure ?')){
       axios.post('/revokeexcemption',{
