@@ -330,7 +330,7 @@
                            </v-layout>
                          </v-flex>
                        </v-layout>
-
+                       <v-btn color="primary"  @click="prequeyrule" :loading="checking_rule">Query</v-btn>
                        <v-btn color="primary" @click="throttledMethod()" :loading="setting_rule">Set Rule</v-btn>
                        <v-btn color="primary" :disabled="disable_reset" @click="resetrule">Reset</v-btn>
                     </v-form>
@@ -404,8 +404,9 @@ export default {
         { name:'FEMALE',val: 'F'},
       ],
       ages:[
-        //{ name:'LESS THAN 60',val: '<60'},
-        { name:'LESS THAN 59',val: '<59'}
+
+        { name:'LESS THAN 59',val: '<59'},
+        //{ name:'LESS THAN OR EQUAL TO 58',val: '<=58'},
       ],
       emp_groups: [
           'ALL',
@@ -419,6 +420,7 @@ export default {
       grade_pay:[2100, 40400],
       pay_level:[10, 15],
       payment_show: false,
+      checking_rule:false,
       dictionary: {
           custom: {
             office_id: {
@@ -482,6 +484,41 @@ export default {
     }
   },
   methods:{
+    prequeyrule:function(){
+      if(this.remark_id!=''){
+        this.checking_rule=true
+      axios.post('/prequeryrule',{
+                subdivision_id: this.subdivision_id,
+                category_id: this.category_id,
+                office_id:this.office_id,
+                basic_pay: this.basic_pay,
+                grade_pay:this.visible_grade ? this.grade_pay : 0,
+                pay_level:this.visible_level ? this.pay_level : 0,
+                not_qualification: this.exclude_qualification ? 1 : 0,
+                not_designation:this.exclude_designation ? 1 : 0,
+                not_remarks:this.exclude_remark ? 1 : 0,
+                qualification_id:this.qualification_id,
+                designation: this.designation,
+                emp_group:this.emp_group,
+                gender:this.gender,
+                age:this.age,
+                remarks:this.remark_id ? this.remark_id: 'ALL',
+                post_stat_from:this.poststat_from,
+                post_stat_to:this.poststat_to
+            })
+            .then((response, data) => {
+              this.checking_rule=false
+              alert('This Rule will effect '+response.data['query']['queryval']+' rows')
+            })
+            .catch(error => {
+              this.checking_rule=false
+              console.log(error)
+            })
+
+      }else{
+        alert('Please select all required field and then query! ')
+      }
+    },
     resetrule:function(){
       this.subdivisions=[]
       this.offices=[]
