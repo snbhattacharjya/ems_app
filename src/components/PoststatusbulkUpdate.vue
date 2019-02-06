@@ -49,6 +49,8 @@
               <td>{{ props.item.id }}</td>
               <td >{{ props.item.name }}</td>
               <td >{{ props.item.designation }}</td>
+              <td >{{ props.item.qualification }}</td>
+              <td >{{ props.item.gender }}</td>
               <td >{{ props.item.basic_pay }}</td>
               <td >{{ props.item.grade_pay !=0 ? props.item.grade_pay : props.item.pay_level!=''? 'LEVEL '+props.item.pay_level : '' }}</td>
               <td >
@@ -106,6 +108,8 @@
         { text: 'ID', value: 'id',align: 'left', },
         { text: 'Personnel Name',align: 'left',value: 'name'},
         { text: 'Designation', value: 'designation',align: 'left', },
+        { text: 'Qualification', value: 'qualification',align: 'left', },
+        { text: 'Gender', value: 'gender',align: 'left', },
         { text: 'Basic Pay', value: 'basic_pay',align: 'left', },
         { text: 'Grade pay/Pay Level', value: '',align: 'left', },
         { text: 'Post status', value: 'post_stat',},

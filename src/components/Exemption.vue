@@ -15,6 +15,12 @@
               <v-tab  ripple>
                Personnel Wise
               </v-tab>
+              <v-tab  ripple>
+               Designation Wise
+              </v-tab>
+              <v-tab  ripple>
+               Age Wise(>59)
+              </v-tab>
               <v-tab ripple>
                 List Of Exempted Personnel(s)
               </v-tab>
@@ -259,10 +265,129 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+               <v-tab-item >
+                <v-card flat>
+                  <v-card-text>
+                      <v-text-field
+                      autocomplete="off"
+                      prepend-icon="search"
+                      name="personnel_desig"
+                      label="Search Personnel by Designation(*)"
+                      type="text"
+                      v-model="personnel_desig"
+                      persistent-hint
+                      :hint="personnel_desig_hint"
+                      counter
+                      maxlength="50"
+                    >
+                    <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary"  @click="personnel_desig_serarch" >Load Personnel</v-btn></v-slide-x-reverse-transition>
+                    </v-text-field>
+
+                    <v-data-table v-model="selected_desig"  :headers="headers" select-all hide-actions :items="personnels_desig" class="elevation-1 my-5" :loading="tableloading_personnel_desig" :disabled="disble_personnel_desig">
+                    <template slot="items" slot-scope="props">
+                      <tr v-if="props.item.exempted == 'Yes'" class="red--text">
+                      <td></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.remark }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                      <tr v-else>
+                        <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.remark }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td></td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                    </template>
+
+                     </v-data-table>
+                    <v-textarea
+                    prepend-icon="announcement"
+                    name="exemption_reason_personnel_desig"
+                    label="Provide Reason for Exemption(*)"
+                    type="text"
+                    v-model="exemption_reason_personnel_desig"
+                    counter
+                    maxlength="100"
+                    :disabled="disble_personnel_desig"
+                    v-validate="'required|alpha_spaces'"
+                    :error-messages="errors.collect('exemption_reason_personnel_desig')"
+                    data-vv-name="exemption_reason_personnel_desig"
+                  ></v-textarea>
+                  <v-btn color="primary" @click="do_personnel_desig_exemption" :disabled="disble_personnel_desig" :loading="doing_personnel_desig_exemption" >Submit for Exemption</v-btn>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item >
+                <v-card flat>
+                  <v-card-text>
+                    <v-data-table v-model="selected_age"  :headers="headers" select-all hide-actions :items="personnels_age" class="elevation-1 my-5" >
+                    <template slot="items" slot-scope="props">
+                      <tr v-if="props.item.exempted == 'Yes'" class="red--text">
+                      <td></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.remark }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                      <tr v-else>
+                        <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.remark }}</td>
+                      <td >{{ props.item.exempted }}</td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td></td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      </tr>
+                    </template>
+
+                     </v-data-table>
+                    <v-textarea
+                    prepend-icon="announcement"
+                    name="exemption_reason_personnel_age"
+                    label="Provide Reason for Exemption(*)"
+                    type="text"
+                    v-model="exemption_reason_personnel_age"
+                    counter
+                    maxlength="100"
+                    :disabled="disble_personnel_age"
+                    v-validate="'required|alpha_spaces'"
+                    :error-messages="errors.collect('exemption_reason_personnel_age')"
+                    data-vv-name="exemption_reason_personnel_age"
+                  ></v-textarea>
+                  <v-btn color="primary" @click="do_personnel_age_exemption" :disabled="disble_personnel_age" :loading="doing_personnel_age_exemption" >Submit for Exemption</v-btn>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
               <v-tab-item>
                 <v-card-flat>
                   <v-card-text>
-                    <v-flex12>
+                    <v-flex xs12>
                       <h2>Bulk Revoke Of Exempted Personnel(s)</h2><br>
                       <v-select
                             v-model="type"
@@ -276,15 +401,15 @@
                             data-vv-name="type"
                           >
                           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary"  @click="revokeexcemption_bulk" :loading="loading_revokeexcemption_bulk">Submit</v-btn></v-slide-x-reverse-transition></v-select>
-                    </v-flex12>
+                    </v-flex>
                     <v-toolbar flat color="white">
-      <v-toolbar-title>Personnel List</v-toolbar-title>
-       <v-divider
-        class="mx-2"
-        inset
-        vertical
-      ></v-divider>
-      <v-spacer></v-spacer>
+                <v-toolbar-title>Personnel List</v-toolbar-title>
+                <v-divider
+                  class="mx-2"
+                  inset
+                  vertical
+                ></v-divider>
+                <v-spacer></v-spacer>
                     <v-text-field
                     v-model="search"
                     append-icon="search"
@@ -345,6 +470,8 @@ export default {
         { name:'Office',id: '1'},
         { name:'Personnel',id: '2'},
         { name:'Remark',id: '3'},
+        { name:'Designation',id: '5'},
+        { name:'Age',id: '4'},
       ],
       block_muni_id:'',
       remarks_hint:'Select any Remark to search',
@@ -391,6 +518,22 @@ export default {
       subdivisions:[],
       active: null,
       loading_revokeexcemption_bulk:false,
+      personnels_desig:[],
+      personnel_desig:'',
+      tableloading_personnel_desig:false,
+      disble_personnel_desig:true,
+      doing_personnel_desig_exemption:false,
+      selected_desig:[],
+      selected_personnel_desig:[],
+      exemption_reason_personnel_desig:'',
+      personnel_desig_hint:'',
+      personnels_age:[],
+      selected_personnel_age:[],
+      personnel_desig_hint:'',
+      doing_personnel_age_exemption:false,
+      disble_personnel_age:false,
+      exemption_reason_personnel_age:'',
+      selected_age:[]
     }
   },
   $_veeValidate: {
@@ -408,6 +551,7 @@ export default {
     this.getsubdivision()
     this.getremarkslist()
     this.getexemptedlist()
+    this.getexemptedlistforage()
   },
   methods:{
     revokeexcemption_bulk:function(){
@@ -476,6 +620,21 @@ export default {
           .then((response, data) => {
           response.data['excemptedList'].forEach(item => {
               this.exempted_personnels.push(item)
+            });
+
+          })
+          .catch(error => {
+            console.log(error)
+          })
+          this.tableloading_exempted_personnel=false
+    },
+    getexemptedlistforage:function(){
+      this.personnels_age=[]
+      this.tableloading_age_exempted_personnel=true
+      axios.get('/getexcemptionbyage')
+          .then((response, data) => {
+          response.data['excemptionList'].forEach(item => {
+              this.personnels_age.push(item)
             });
 
           })
@@ -611,6 +770,120 @@ export default {
       }else{
         alert('Please Input Personnel and provide reason for reamrk')
       }
+    },
+    personnel_desig_serarch:function(){
+      var val =this.personnel_desig
+
+      this.personnel_desig_hint=''
+      if(val==''){
+        this.disble_personnel_desig=true
+        this.personnels_desig=[]
+        this.personnel_desig_hint="Input any Designation to search"
+        this.doing_personnel_desig_exemption=false
+        this.exemption_reason_personnel_desig=''
+      }
+      else if(val!=''){
+        this.personnel_desig_hint='Searching for Personnel'
+        axios.post('/getexcemptionbydesignation',{
+          designation: this.personnel_desig
+          })
+          .then((response, data) => {
+            if(response.data['excemptionList'].length<=0){
+              this.personnel_desig_hint='Sorry !!No Personnel found by this Designation'
+              }
+            else{
+              if(response.data['excemptionList'][0].exempted=='Yes'){
+              this.personnel_desig_hint='Personnel already exempted by this Designation'
+              this.disble_personnel_desig=true
+              this.personnels_desig=response.data['excemptionList']
+              }else{
+              this.personnel_desig_hint=response.data['excemptionList'].length+' Personnel found by this Designation'
+              this.disble_personnel_desig=false
+              this.personnels_desig=response.data['excemptionList']
+              }
+              alert(this.personnel_desig_hint)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            this.personnel_desig_hint='Sorry !! seems there are some server problem'
+          })
+      }
+
+    },
+    do_personnel_desig_exemption:function(){
+      if(this.personnel_desig!='' && this.selected_desig.length!=0 && this.exemption_reason_personnel_desig!=''){
+        if(confirm('Are you sure to do exemption based on above selection and criteria?')){
+          this.doing_personnel_desig_exemption=true
+
+          this.selected_desig.forEach(item => {
+            this.selected_personnel_desig.push(item.id)
+          })
+         axios.post('/doexception',{
+          mode:'designation',
+          personnl_selected:this.selected_desig.length==this.personnels_desig.length ? 'ALL' : this.selected_personnel_desig,
+          designation: this.personnel_desig,
+          reason:this.exemption_reason_personnel_desig
+          })
+          .then((response, data) => {
+
+              this.personnels_desig=[]
+              this.personnel_desig_hint=this.selected_desig.length+' Personnel Exempted by this Designation'
+              this.exemption_reason_personnel_desig=''
+              this.doing_personnel_desig_exemption=false
+              this.tableloading_personnel_desig=false
+              this.disble_personnel_desig=true
+              this.selected_personnel_desig=[]
+              alert(this.personnel_desig_hint)
+              this.getexemptedlist()
+
+          })
+          .catch(error => {
+            console.log(error)
+            this.personnel_desig_hint='Sorry !! seems there are some server problem'
+            this.disble_personnel_desig=false
+            alert(this.personnel_desig_hint)
+          })
+        }
+
+      }
+
+    },
+    do_personnel_age_exemption:function(){
+      if(this.selected_age.length!=0 && this.exemption_reason_personnel_age!=''){
+        if(confirm('Are you sure to do exemption based on above selection and criteria?')){
+          this.doing_personnel_age_exemption=true
+          this.selected_age.forEach(item => {
+            this.selected_personnel_age.push(item.id)
+          })
+         axios.post('/doexception',{
+          mode:'age',
+          personnl_selected:this.selected_age.length==this.personnels_age.length ? 'ALL' : this.selected_personnel_age,
+          reason:this.exemption_reason_personnel_age
+          })
+          .then((response, data) => {
+
+              this.personnels_age=[]
+              this.personnel_desig_hint=this.selected_personnel_age.length+' Personnel Exempted by this Age'
+              this.exemption_reason_personnel_age=''
+              this.doing_personnel_age_exemption=false
+              this.tableloading_personnel_age=false
+              this.disble_personnel_age=false
+              this.selected_personnel_age=[]
+              alert(response.data)
+              this.getexemptedlistforage()
+
+          })
+          .catch(error => {
+            console.log(error)
+            this.personnel_age_hint='Sorry !! seems there are some server problem'
+            this.disble_personnel_age=false
+            alert(this.personnel_age_hint)
+          })
+        }
+
+      }
+
     },
 
   },
@@ -761,7 +1034,8 @@ export default {
             this.personnel_hint='Sorry !! seems there are some server problem'
           })
       }
-    }
+    },
+
   }
 
 }
