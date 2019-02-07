@@ -75,15 +75,15 @@
             </v-container>
 <v-dialog
       v-model="dialog"
-      max-width="360"
+      max-width="460"
       persistent=true
     >
       <v-card>
         <v-card-title class="headline">Important Notice !!</v-card-title>
 
         <v-card-text>
-          <strong class="green--text">Date Extended</strong><br><br>
-         Please complete your entry and updation in respect of Office and Personnel within <strong class="red--text">28th January,2019 (5:00 PM)</strong >, after that it will be freezed.
+          <!-- <strong class="green--text">Date Extended</strong><br><br> -->
+         From the database it has been ovserved that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Remarks</strong>. You are requested to correct all from your end within <strong class="red--text">14th February,2019</strong >  and confirm to the respected District Election Officer.
         </v-card-text>
 
 
@@ -140,8 +140,8 @@ export default {
   },
   created(){
 
-      // if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
-      // this.dialog=true
+      if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
+      this.dialog=true
 
   }
 

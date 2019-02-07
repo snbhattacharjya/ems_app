@@ -514,8 +514,8 @@ export default {
           agree: this.agree
         })
         .then(response => {
-          //this.$refs.form.reset()
-          this.agree = false;
+          this.agree = '';
+          this.$validator.reset()
           this.show_message = true;
           this.message_type = "success";
           this.message_icon = "check_circle";

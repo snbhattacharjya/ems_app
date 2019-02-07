@@ -86,10 +86,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
-                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                       <tr v-else>
@@ -99,11 +105,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
                       <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
-                      <td></td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                     </template>
@@ -160,10 +171,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
-                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                       <tr v-else>
@@ -173,11 +190,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
                       <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
-                      <td></td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
 
@@ -226,10 +248,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
-                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                       <tr v-else>
@@ -238,11 +266,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
                       <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
-                      <td></td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                     </template>
@@ -292,10 +325,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
-                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                       <tr v-else>
@@ -305,11 +344,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
                       <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
-                      <td></td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                     </template>
@@ -344,10 +388,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
-                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                       <tr v-else>
@@ -357,11 +407,16 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
-                      <td >{{ props.item.exempted }}</td>
+                      <td >
+                        {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
                       <td v-if="props.item.exemp_date!=null" >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
-                      <td></td>
+                      <td v-else></td>
                       <td >{{ props.item.exemp_reason }}</td>
                       </tr>
                     </template>
@@ -409,7 +464,15 @@
                   inset
                   vertical
                 ></v-divider>
-                <v-spacer></v-spacer>
+                <v-spacer></v-spacer><download-csv
+                        :data="office_csv"
+                        :name="dataFile"
+                        :labels="labels"
+                        :fields="csvfields"
+
+                >
+                    <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.btn_txt}}</v-btn>
+                </download-csv>
                     <v-text-field
                     v-model="search"
                     append-icon="search"
@@ -426,10 +489,13 @@
                       <td>{{props.item.officename}}</td>
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
                       <td >
-                        By - {{props.item.exemp_type==1 ? 'Office' :''}}{{props.item.exemp_type==2 ? 'Personnel' :''}}{{props.item.exemp_type==3 ? 'Remark' :''}}
+                         {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
                       </td>
                       <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
                       <td >{{ props.item.exemp_reason }}</td>
@@ -451,9 +517,10 @@
 </template>
 
 <script>
+import JsonCSV from 'vue-json-csv'
 export default {
   name: 'Exemption',
-
+  components: {'download-csv': JsonCSV},
   data () {
     return {
       search: '',
@@ -470,8 +537,8 @@ export default {
         { name:'Office',id: '1'},
         { name:'Personnel',id: '2'},
         { name:'Remark',id: '3'},
-        { name:'Designation',id: '5'},
         { name:'Age',id: '4'},
+        { name:'Designation',id: '5'},
       ],
       block_muni_id:'',
       remarks_hint:'Select any Remark to search',
@@ -486,6 +553,9 @@ export default {
         { text: 'Office Name', value: 'officename',sortable:true},
         { text: 'Personnel Name',align: 'left',value: 'name',sortable: true},
         { text: 'Designation', value: 'designation',align: 'left',sortable: true },
+        { text: 'Qualification', value: 'qualification',align: 'left',sortable: true },
+        { text: 'Date of Birth', value: 'dob',align: 'left',sortable: true },
+        { text: 'Gender', value: 'gender',align: 'left',sortable: true },
         { text: 'Mobile', value: 'mobile',align: 'left',sortable: true },
         { text: 'Remark', value: 'remark',align: 'left',sortable: true },
         { text: 'Exempted', value: 'exempted',align: 'left',sortable: false },
@@ -533,7 +603,29 @@ export default {
       doing_personnel_age_exemption:false,
       disble_personnel_age:false,
       exemption_reason_personnel_age:'',
-      selected_age:[]
+      selected_age:[],
+      office_csv:[],
+      dataFile: 'Exemption_List.csv',
+        labels: {
+          id: 'Personnel ID',
+          office_id:'Office ID',
+          officename: 'Office Name',
+          name: 'Name',
+          designation: 'Designation',
+          qualification: 'Qualification',
+          dob:'Date of Birth',
+          mobile: 'Mobile',
+          gender: 'Gender',
+          grade_pay: 'Grade Pay',
+          post_stat: 'Post Status',
+          remark:'Remark',
+          exempted:'Exempted',
+          exemp_reason:'Reasone of Exemption',
+          exemp_date:'Date of Exemption'
+
+        },
+        csvfields : ['id','office_id','officename','name','designation','qualification','dob','mobile','gender','grade_pay','post_stat','remark','exempted','exemp_reason','exemp_date'],
+        btn_txt:'Download as CSV'
     }
   },
   $_veeValidate: {
@@ -618,10 +710,15 @@ export default {
       this.tableloading_exempted_personnel=true
       axios.get('/getexemptedlist')
           .then((response, data) => {
+          if(response.data['excemptedList'].length === 0){
+            this.tableloading_exempted_personnel=false
+            this.btn_txt='No Data to Download'
+          }else{
           response.data['excemptedList'].forEach(item => {
               this.exempted_personnels.push(item)
+              this.office_csv.push(item)
             });
-
+          }
           })
           .catch(error => {
             console.log(error)
@@ -872,6 +969,7 @@ export default {
               this.selected_personnel_age=[]
               alert(response.data)
               this.getexemptedlistforage()
+              this.getexemptedlist()
 
           })
           .catch(error => {

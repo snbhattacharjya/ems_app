@@ -51,6 +51,7 @@
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.qualification }}</td>
               <td >{{ props.item.gender }}</td>
+              <td>{{getAge(props.item.dob,new Date())}}</td>
               <td >{{ props.item.basic_pay }}</td>
               <td >{{ props.item.grade_pay !=0 ? props.item.grade_pay : props.item.pay_level!=''? 'LEVEL '+props.item.pay_level : '' }}</td>
               <td >
@@ -110,6 +111,7 @@
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Qualification', value: 'qualification',align: 'left', },
         { text: 'Gender', value: 'gender',align: 'left', },
+        { text: 'Age', value: 'dob',align: 'left', },
         { text: 'Basic Pay', value: 'basic_pay',align: 'left', },
         { text: 'Grade pay/Pay Level', value: '',align: 'left', },
         { text: 'Post status', value: 'post_stat',},
@@ -144,6 +146,19 @@
     },
 
     methods: {
+      getAge:function(birthDate, otherDate) {
+        birthDate = new Date(birthDate);
+        otherDate = new Date(otherDate);
+
+        var years = (otherDate.getFullYear() - birthDate.getFullYear());
+
+        if (otherDate.getMonth() < birthDate.getMonth() ||
+            otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+            years--;
+        }
+
+        return years;
+      },
       loadpoststatus:function(){
       axios.get('/pollingPost')
       .then((response, data) => {

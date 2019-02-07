@@ -526,7 +526,8 @@ export default {
           agree: this.agree
         })
         .then(response => {
-          this.agree=false
+          this.agree=''
+          this.$validator.reset()
           this.$store.dispatch('storeAccessToken', this.getAccessToken)
           this.show_message = true
           this.message_type = "success"
