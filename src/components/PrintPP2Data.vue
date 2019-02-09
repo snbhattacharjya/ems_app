@@ -164,7 +164,7 @@ export default {
             officeId: this.getuser.user_id
           })
         .then((response, data) => {
-          if(response.data.length !=0 && response.data!='Checklist will be available from 4:00 pm to 12:00 pm Everyday'){
+          if(response.data.length !=0 && response.data['mode']!='out_of_range'){
             if(parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)){
             this.pp_complete=true
             }
@@ -178,8 +178,8 @@ export default {
               this.tableloading=false
               this.loadingTXT='Download as CSV'
           }
-          else if(response.data=='Checklist will be available from 4:00 pm to 12:00 pm Everyday'){
-            this.loadingTXT=response.data
+          else if(response.data['mode']=='out_of_range'){
+            this.loadingTXT=response.data['message']
           }
           else{
             this.loadingTXT='No data found'

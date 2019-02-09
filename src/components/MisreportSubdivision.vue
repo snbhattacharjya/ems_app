@@ -43,6 +43,18 @@
                   <td class="nopad">{{ report.MO_M }}</td>
 
                   </tr>
+                  <tr >
+                    <td></td>
+                    <td class="nopad"><strong>Total</strong></td>
+                    <td class="nopad">{{male_party_count}}</td>
+                    <td class="nopad">{{NA_M_COUNT}}</td>
+                    <td class="nopad">{{AEO_M_COUNT}}</td>
+                    <td class="nopad">{{PR_M_COUNT}} </td>
+                    <td class="nopad">{{P1_M_COUNT}}</td>
+                    <td class="nopad">{{P2_M_COUNT}}</td>
+                    <td class="nopad">{{P3_M_COUNT}}</td>
+                    <td class="nopad">{{MO_M_COUNT}}</td>
+                   </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -82,6 +94,18 @@
                   <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad">{{ report.MO_F }}</td>
                   </tr>
+                  <tr >
+                    <td></td>
+                    <td class="nopad"><strong>Total</strong></td>
+                    <td class="nopad">{{female_party_count}}</td>
+                    <td class="nopad">{{NA_F_COUNT}}</td>
+                    <td class="nopad">{{AEO_F_COUNT}}</td>
+                    <td class="nopad">{{PR_F_COUNT}} </td>
+                    <td class="nopad">{{P1_F_COUNT}}</td>
+                    <td class="nopad">{{P2_F_COUNT}}</td>
+                    <td class="nopad">{{P3_F_COUNT}}</td>
+                    <td class="nopad">{{MO_F_COUNT}}</td>
+                    </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -109,7 +133,23 @@ export default {
       search: '',
       tableloading:false,
       district:'',
-      item_class:''
+      item_class:'',
+      male_party_count:0,
+      female_party_count:0,
+      PR_M_COUNT:0,
+      P1_M_COUNT:0,
+      P2_M_COUNT:0,
+      P3_M_COUNT:0,
+      PR_F_COUNT:0,
+      P1_F_COUNT:0,
+      P2_F_COUNT:0,
+      P3_F_COUNT:0,
+      MO_M_COUNT:0,
+      MO_F_COUNT:0,
+      NA_M_COUNT:0,
+      NA_F_COUNT:0,
+      AEO_M_COUNT:0,
+      AEO_F_COUNT:0,
     }
   },
 
@@ -129,14 +169,22 @@ export default {
     axios.get('/subdivisionreport/'+this.$route.params.id)
       .then((response, data) => { //console.log(response.data['available'])
        response.data['available'].forEach(item => { //console.log(item)
-      //  item.PR_M_class=this.createclass(item.PR_M,item.male_party)
-      //     item.P1_M_class=this.createclass(item.P1_M,item.male_party)
-      //     item.P2_M_class=this.createclass(item.P2_M,item.male_party)
-      //     item.P3_M_class=this.createclass(item.P3_M,item.male_party)
-      //     item.PR_F_class=this.createclass(item.PR_F,item.female_party)
-      //     item.P1_F_class=this.createclass(item.P1_F,item.female_party)
-      //     item.P2_F_class=this.createclass(item.P2_F,item.female_party)
-      //     item.P3_F_class=this.createclass(item.P3_F,item.female_party)
+          this.PR_M_COUNT+=parseInt(item.PR_M)
+              this.P1_M_COUNT+=parseInt(item.P1_M)
+              this.P2_M_COUNT+=parseInt(item.P2_M)
+              this.P3_M_COUNT+=parseInt(item.P3_M)
+              this.PR_F_COUNT+=parseInt(item.PR_F)
+              this.P1_F_COUNT+=parseInt(item.P1_F)
+              this.P2_F_COUNT+=parseInt(item.P2_F)
+              this.P3_F_COUNT+=parseInt(item.P3_F)
+              this.male_party_count+=parseInt(item.male_party)
+              this.female_party_count+=parseInt(item.female_party)
+              this.MO_M_COUNT+=parseInt(item.MO_M)
+              this.MO_F_COUNT+=parseInt(item.MO_F)
+              this.NA_M_COUNT+=parseInt(item.NA_M)
+              this.NA_F_COUNT+=parseInt(item.NA_F)
+              this.AEO_M_COUNT+=parseInt(item.AEO_M)
+              this.AEO_F_COUNT+=parseInt(item.AEO_F)
           this.reports.push(item)
         });
         this.district=response.data['district']

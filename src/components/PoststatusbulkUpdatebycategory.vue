@@ -23,15 +23,18 @@
       <v-flex xs1>
         <v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn>
       </v-flex>
-      <v-flex xs3 class="ml-3">
-        <!-- <download-csv
-                        :data="personnel_csv"
-                        :name="personnelfilename"
-                        :labels="personnel_labels"
-                        :fields="personnel_csvfields"
-                >
-                <v-btn color="info" :loading="personnelloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_personnel}}</v-btn>
-                </download-csv> -->
+      <v-flex xs4 class="ml-5">
+       <v-select
+                           v-model="poststat_to"
+                            :items="poststats"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon=""
+                            label="Post Status (To)"
+                            :disabled="disable_select_all"
+                          >
+                           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" :disabled="disable_select_all" @click="bulkupdate" :loading="loading_bulk">Bulk Update</v-btn></v-slide-x-reverse-transition>
+                          </v-select>
       </v-flex>
       </v-layout>
       </v-flex>
@@ -42,8 +45,9 @@
             <v-spacer></v-spacer>
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
-          <v-data-table :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
+          <v-data-table v-model="select" :headers="headers" select-all :items="personnels" :search="search" class="elevation-1" :loading="tableloading" :rows-per-page-items="rows">
             <template slot="items" slot-scope="props">
+              <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
               <td>{{ props.item.office_id }}</td>
               <td>{{ props.item.office_category }}</td>
               <td>{{ props.item.id }}</td>
@@ -90,6 +94,8 @@ import JsonCSV from 'vue-json-csv'
     name:'PoststatusbulkUpdatebycategory',
     components: {'download-csv': JsonCSV},
     data: () => ({
+      disable_select_all:true,
+      loading_bulk:false,
       dialog: false,
       search: '',
       post_stat:'',
@@ -100,6 +106,8 @@ import JsonCSV from 'vue-json-csv'
       office_id:'',
       subdivisions: [],
       offices:[],
+      select:[],
+      selected:[],
       isdisabled:true,
       disable_save: false,
       show_message: false,
@@ -108,6 +116,8 @@ import JsonCSV from 'vue-json-csv'
         message_text: "",
 
       poststats:[],
+      poststat_to: '',
+      rows:[5,10,25,100,200,500,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
       headers: [
         { text: 'Office ID', value: 'office_id',align: 'left'},
         { text: 'Office Category', value: 'office_category',align: 'left'},
@@ -116,7 +126,7 @@ import JsonCSV from 'vue-json-csv'
         { text: 'Designation', value: 'designation',align: 'left', },
         { text: 'Basic Pay', value: 'basic_pay',align: 'left', },
         { text: 'Grade pay/Pay Level', value: '',align: 'left', },
-        { text: 'Age(in Years As on Today)',align: 'left',value: 'age'},
+        { text: 'Age(in Years As on 31/05/2019)',align: 'left',value: 'age'},
         { text: 'Gender',align: 'left',value: 'gender'},
         { text: 'Group',align: 'left',value: 'emp_group'},
         { text: 'Remark',align: 'left',value: 'remark'},
@@ -170,8 +180,45 @@ import JsonCSV from 'vue-json-csv'
       this.loadpoststatus()
 
     },
-
+    watch:{
+      select:function(){
+        if(this.select.length > 0){
+          this.disable_select_all=false
+        }
+        else{
+          this.disable_select_all=true
+        }
+      }
+    },
     methods: {
+      bulkupdate:function(){
+
+        if(confirm('Are you sure to do Bulk Update ?')){
+          this.loading_bulk=true
+          this.select.forEach(item => {
+            this.selected.push(item.id)
+          })
+         axios.post('/bulkupdatebypoststattype',{
+          personnl_selected:this.select.length==this.personnels.length ? 'ALL' : this.selected,
+          poststat_from:this.post_stat_id,
+          poststat_to:this.poststat_to,
+          })
+          .then((response, data) => {
+            alert(response.data)
+            this.post_stat_id=''
+            this.poststat_to=''
+            this.personnels=[]
+            this.$validator.reset()
+            this.loading_bulk=false
+            this.disable_select_all=true
+          })
+          .catch(error => {
+            console.log(error)
+            alert(response.data)
+          })
+        }
+
+      },
       loadpoststatus:function(){
       axios.get('/pollingPost')
       .then((response, data) => {

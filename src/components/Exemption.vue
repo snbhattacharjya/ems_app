@@ -19,7 +19,7 @@
                Designation Wise
               </v-tab>
               <v-tab  ripple>
-               Age Wise(>59)
+               Age Wise(>=59)
               </v-tab>
               <v-tab ripple>
                 List Of Exempted Personnel(s)
@@ -379,6 +379,9 @@
               <v-tab-item >
                 <v-card flat>
                   <v-card-text>
+                    <v-alert v-if="this.personnels_age.length>0" v-model="alert" type="info">
+                    {{this.personnels_age.length}} Personnel found under Age>=59
+                    </v-alert>
                     <v-data-table v-model="selected_age"  :headers="headers" select-all hide-actions :items="personnels_age" class="elevation-1 my-5" >
                     <template slot="items" slot-scope="props">
                       <tr v-if="props.item.exempted == 'Yes'" class="red--text">
@@ -389,7 +392,7 @@
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.qualification }}</td>
-                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}<br>(Age -{{props.item.age}})</td>
                       <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
@@ -408,7 +411,7 @@
                       <td >{{ props.item.name }}</td>
                       <td >{{ props.item.designation }}</td>
                       <td >{{ props.item.qualification }}</td>
-                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}<br>(Age -{{props.item.age}})</td>
                       <td >{{ props.item.gender }}</td>
                       <td >{{ props.item.mobile }}</td>
                       <td >{{ props.item.remark }}</td>
@@ -523,6 +526,7 @@ export default {
   components: {'download-csv': JsonCSV},
   data () {
     return {
+      alert:true,
       search: '',
       exempted_personnels:[],
       tableloading_exempted_personnel:false,
