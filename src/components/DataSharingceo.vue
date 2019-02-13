@@ -439,22 +439,23 @@
           .then((response, data) => {
             var req=0
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
-            if(cat=='MO'){
-              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])}
-              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleMoRequirement'])}
+            if(this.post=='MO'){
+              if(this.gender=='M'){var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])}
+              else if(this.gender=='F'){var req=parseInt(response.data['requirement'][0]['FemaleMoRequirement'])}
               else{var req=0}
 
             }
-            else if(cat=='AEO'){
-              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])}
-              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])}
+            else if(this.post=='AEO'){
+              if(this.gender=='M'){var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])}
+              else if(this.gender=='F'){var req=parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])}
               else{var req=0}
             }
             else{
-            if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])}
-              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['v'])}
+            if(this.gender=='M'){var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])}
+              else if(this.gender=='F'){var req=parseInt(response.data['requirement'][0]['FemalePartyRequirement'])}
               else{var req=0}
             }
+
             this.posts_available=avl
             this.posts_required=req
             this.share_pp= avl>req ? avl-Math.round(parseInt(req)*1.2,0) : ''

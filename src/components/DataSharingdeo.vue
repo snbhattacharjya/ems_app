@@ -166,7 +166,7 @@
             }
             else{
             if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])}
-              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['v'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemalePartyRequirement'])}
               else{var req=0}
             }
             req=Math.round(req*1.2,0)
