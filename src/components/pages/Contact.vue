@@ -13,19 +13,27 @@
         vertical
       ></v-divider>
       <v-spacer></v-spacer>
-
+         <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
 
     </v-toolbar>
           <v-data-table
             :headers="headers"
             :items="personnels"
+            :search="search"
             class="elevation-1"
             :loading="tableloading"
           >
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.id }}</td>
-              <td >{{ props.item.name }}({{ props.item.identification_code }})</td>
-              <td >{{ props.item.address }}</td>
+              <td>{{ props.item.districts }}</td>
+              <td >{{ props.item.name }} </td>
+              <td >{{ props.item.user_id }} </td>
+              <td >{{ props.item.email }}</td>
               <td >{{ props.item.mobile }}</td>
 
             </template>
@@ -50,10 +58,11 @@ export default {
     search: '',
       tableloading:false,
       headers: [
-        { text: 'District', value: '',align: 'left',sortable: false, },
-        { text: 'DEO', align: 'left', sortable: false, value: ''},
-        { text: 'ADMPP', value: '',align: 'left',sortable: false, },
-        { text: 'OC-PP', value: '',align: 'left', sortable: false,},
+        { text: 'District', value: 'districts',align: 'left',sortable: true, },
+        { text: 'Name', align: 'left', sortable: true, value: 'name'},
+        { text: 'User ID', align: 'left', sortable: true, value: 'user_id'},
+        { text: 'Email', value: 'email',align: 'left',sortable: true, },
+        { text: 'Mobile', value: 'mobile',align: 'left', sortable: true,},
 
       ],
       personnels:[],
@@ -68,7 +77,7 @@ export default {
   methods: {
       initialize () {
         this.tableloading=true
-        axios.get('/officeentrystatus')
+        axios.get('/getcontact')
         .then((response, data) => {
           if(response.data.length === 0){
             this.tableloading=false

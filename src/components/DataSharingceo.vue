@@ -383,7 +383,8 @@
                 from_district:this.district_from,
                 to_district:this.district_to,
                 category:this.post,
-                assign_polling_personnel:this.share_pp
+                assign_polling_personnel:this.share_pp,
+                gender:this.gender
               })
               .then((response, data) => {
                 this.share_pp=''
