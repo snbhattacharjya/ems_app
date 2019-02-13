@@ -20,10 +20,25 @@
           >
         </v-select>
       </v-flex>
+      <v-flex xs5>
+        <v-select
+                  :items="genders"
+                  item-text= "name"
+                  item-value= "id"
+                  prepend-icon="list"
+                  label="Gender(*)"
+                  v-model="gender"
+                  v-validate="'required'"
+                  data-vv-name="gender"
+                  :error-messages="errors.collect('gender')"
+                >
+                </v-select>
+      </v-flex>
       <v-flex xs1>
         <v-btn color="primary" @click="dofilter" :disabled="disable_save">Show</v-btn>
       </v-flex>
-      <v-flex xs4 class="ml-5">
+      <v-flex xs12 class="">
+
        <v-select
                            v-model="poststat_to"
                             :items="poststats"
@@ -49,6 +64,7 @@
             <template slot="items" slot-scope="props">
               <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
               <td>{{ props.item.office_id }}</td>
+              <td>{{ props.item.office_name }}</td>
               <td>{{ props.item.office_category }}</td>
               <td>{{ props.item.id }}</td>
               <td >{{ props.item.name }}</td>
@@ -114,12 +130,23 @@ import JsonCSV from 'vue-json-csv'
         message_type: "",
         message_icon: "",
         message_text: "",
-
+      gender:'',
+       genders: [
+          {
+            id: 'M',
+            name: 'Male'
+          },
+          {
+            id: 'F',
+            name: 'Female'
+          }
+        ],
       poststats:[],
       poststat_to: '',
       rows:[5,10,25,100,200,500,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
       headers: [
         { text: 'Office ID', value: 'office_id',align: 'left'},
+        { text: 'Office Name', value: 'office_name',align: 'left'},
         { text: 'Office Category', value: 'office_category',align: 'left'},
         { text: 'Personnel ID', value: 'id',align: 'left'},
         { text: 'Personnel', value: '',align: 'left' },
@@ -192,7 +219,7 @@ import JsonCSV from 'vue-json-csv'
     },
     methods: {
       bulkupdate:function(){
-
+       if(this.post_stat_id!=this.poststat_to){
         if(confirm('Are you sure to do Bulk Update ?')){
           this.loading_bulk=true
           this.select.forEach(item => {
@@ -217,6 +244,9 @@ import JsonCSV from 'vue-json-csv'
             alert(response.data)
           })
         }
+       }else{
+         alert('Both Post cann\'t be same')
+       }
 
       },
       loadpoststatus:function(){
@@ -254,7 +284,8 @@ import JsonCSV from 'vue-json-csv'
         this.loadingTXT_personnel='Loading....'
         this.tableloading=true
         axios.post('/getpersonnelbypoststat',{
-          post_stat: this.post_stat_id
+          post_stat: this.post_stat_id,
+          gender:this.gender
         })
         .then((response, data) => {
           if(response.data.length === 0){

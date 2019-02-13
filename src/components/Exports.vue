@@ -179,6 +179,10 @@ export default {
           name: 'Name',
           office_id:'Office ID',
           officename:'Office Name',
+          office_address: "Office Address",
+          office_pin: "Office PIN",
+          office_post_office: "Post Office(Office)",
+          policestations: "Police Station(Office)",
           pay_level:'Pay Level',
           permanent_address: 'Permanent Address',
           phone: 'Phone',
@@ -210,7 +214,7 @@ export default {
         'address','post_office','pin','ac_id','pc_id','subdivision_id','block_muni_id','police_station_id',
         'category_id','institute_id'],
         personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason','exempted','exemp_reason','exemp_date'],
-        personnel_block_cvsfields:['id','basic_pay','designation','dob','email','emp_group','gender','scale','grade_pay','pay_level','mobile','name','office_id','officename','pay_level','permanent_address','phone','post_stat','present_address','qualification','languages','epic','part_no','sl_no','tempac','pertac','offac','tempblock','permblock','offblock','subdivision_id','branch_ifsc','bank_account_no','post_office_account','remark','remark_reason','exempted','exemp_reason','exemp_date'],
+        personnel_block_cvsfields:['id','basic_pay','designation','dob','email','emp_group','gender','scale','grade_pay','pay_level','mobile','name','office_id','officename','office_address','office_pin','office_post_office','policestations','pay_level','permanent_address','phone','post_stat','present_address','qualification','languages','epic','part_no','sl_no','tempac','pertac','offac','tempblock','permblock','offblock','subdivision_id','branch_ifsc','bank_account_no','post_office_account','remark','remark_reason','exempted','exemp_reason','exemp_date'],
     }
   },
   beforeUpdate() {

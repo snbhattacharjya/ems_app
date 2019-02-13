@@ -4,12 +4,13 @@
     <v-layout row wrap  class="my-5">
       <v-flex xs12>
         <v-toolbar flat color="white">
-      <v-toolbar-title>Share List</v-toolbar-title>
+      <v-toolbar-title>Share List as per WBCEO Office</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
         vertical
       ></v-divider>
+        <v-btn v-if="this.share_data.length > 0" id="printbtn" fab dark small color="primary" @click="print"><v-icon dark>print</v-icon></v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -27,15 +28,17 @@
       class="elevation-1"
       :loading="tableloading"
       hide-actions
+      id="tableprint"
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.id }}</td>
         <td >{{ props.item.from_district }}</td>
         <td >{{ props.item.to_district }}</td>
         <td >{{ props.item.category }}</td>
+        <td >{{ props.item.gender }}</td>
         <td >{{ props.item.no_of_personnel }}</td>
         <td >{{props.item.no_of_personnel_shared==null ? 0 : props.item.no_of_personnel_shared}}</td>
-
+        <td>Created - {{moment(props.item.created_at).format('DD/MM/YYYY h:mm a')}}<br> Last Updated - {{moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')}}</td>
         <td>
           <v-btn v-if="props.item.no_of_personnel<=props.item.no_of_personnel_shared" color="success" flat><v-icon small class="mr-2">check</v-icon>Done</v-btn>
           <v-text-field v-else
@@ -50,8 +53,8 @@
                   </v-text-field>
         </td>
         <td>
-          <v-btn v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared" :loading="is_query" color="info" @click="get_status(props.item.category)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn>
-          <v-btn v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared" :loading="is_share" color="green" @click="update_share(props.item.id,props.item.category,props.item.pptoshare)"><v-icon small class="mr-2">share</v-icon>Share</v-btn>
+          <v-btn v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared || props.item.no_of_personnel>props.item.no_of_personnel_shared" :loading="is_query" color="info" @click="get_status(props.item.category,props.item.gender)"><v-icon small class="mr-2">query_builder</v-icon> Query</v-btn>
+          <v-btn v-if="props.item.no_of_personnel!=props.item.no_of_personnel_shared || props.item.no_of_personnel>props.item.no_of_personnel_shared" :loading="is_share" color="green" @click="update_share(props.item.id,props.item.category,props.item.pptoshare)"><v-icon small class="mr-2">share</v-icon>Share</v-btn>
         </td>
       </template>
       <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -87,8 +90,10 @@
         { text: 'District(From)', align: 'left',  value: 'from_district'},
         { text: 'District(To)', value: 'to_district',align: 'left', },
         { text: 'Post Status', value: 'category',align: 'left', },
-        { text: 'Personnel \n assigned', value: 'no_of_personnel',align: 'left', },
+        { text: 'Gender', value: 'gender',align: 'left', },
+        { text: 'Personnel assigned', value: 'no_of_personnel',align: 'left', },
         { text: 'Personnel shared', value: 'no_of_personnel_shared',align: 'left', },
+        { text: 'Datetime Details', value: '',align: 'left',sortable: false },
         { text: 'Number of PP to share', value: '',align: 'left',sortable: false  },
         { text: 'Action', value: '',align: 'left',sortable: false  },
       ],
@@ -121,6 +126,10 @@
     },
 
     methods:{
+      print:function(){
+        //alert(this.share_data.length)
+        printJS({printable:this.share_data, header: 'Polling Personnel Management System - Share List as per WBCEO Office', properties: ['id','from_district','to_district','category','gender','no_of_personnel','no_of_personnel_shared'], type: 'json'})
+      },
       get_sharing:function(){
         this.share_data=[]
         this.tableloading=true
@@ -136,25 +145,32 @@
         })
         this.tableloading=false
       },
-      get_status:function(cat){
+      get_status:function(cat,gen){
         this.is_query=true
         this.posts_available=0
         this.posts_required=0
-        axios.get('/getcategorywisedistrictrequirement/'+cat)
+        axios.get('/getcategorywisedistrictrequirement/'+cat+'/'+gen)
         .then((response, data) => {
             var req=0
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
             if(cat=='MO'){
-            var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])+parseInt(response.data['requirement'][0]['FemaleMoRequirement'])
+              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleMoRequirement'])}
+              else{var req=0}
+
             }
             else if(cat=='AEO'){
-            var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])+parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])
+              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])}
+              else{var req=0}
             }
             else{
-            var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['v'])}
+              else{var req=0}
             }
             req=Math.round(req*1.2,0)
-            alert('Available PP('+cat+') - '+avl+'\nRequired PP('+cat+') - '+req+' (with 20%)\nAvailable for share('+cat+') -'+(avl-req))
+            alert('Available PP('+cat+') - '+avl+'\nRequired PP('+cat+') - '+req+' (with 20%)\nAvailable for share('+cat+') -'+(avl>req? avl-req: 'NA'))
         })
         .catch(error => {
           console.log(error)

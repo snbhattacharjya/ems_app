@@ -9,8 +9,8 @@
       <v-flex x12 v-if="this.getuser.level != 10">
          <v-btn v-if="this.getuser.level == 12" color="info" :to="'/personnel_transfer'">Transfer Personnel</v-btn>
          <v-btn v-if="this.getuser.level == 12" color="info" :to="'/exemption'">Exemption</v-btn>
-         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/poststatus_update'">Categorywise Personnel Update</v-btn>
-         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/poststatus_update_by_designation'">Designationwise Personnel Update</v-btn>
+         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/poststatus_update'">Categorywise Personnel Update</v-btn>
+         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/poststatus_update_by_designation'">Designationwise Personnel Update</v-btn>
           <v-btn v-if="this.getuser.level == 12" color="info" :to="'/poststatus_mismatch'">Mismatch of Post Status</v-btn>
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/poststatus_bulk_update'">Bulk Post Status Update</v-btn>
 

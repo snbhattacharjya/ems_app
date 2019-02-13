@@ -83,7 +83,7 @@
 
         <v-card-text>
           <!-- <strong class="green--text">Date Extended</strong><br><br> -->
-         From the database it has been ovserved that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Remarks</strong>. You are requested to correct all from your end within <strong class="red--text">14th February,2019</strong >  and confirm to the respected District Election Officer.
+         From the database it has been observed that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Remarks</strong>. You are requested to correct all from your end within <strong class="red--text">14th February,2019</strong >  and confirm to the respected District Election Officer.
         </v-card-text>
 
 
