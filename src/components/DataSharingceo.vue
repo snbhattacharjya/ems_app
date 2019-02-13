@@ -439,14 +439,21 @@
           .then((response, data) => {
             var req=0
             let avl=response.data['available'][0]['available']==null ? 0 : parseInt(response.data['available'][0]['available'])
-            if(this.post=='MO'){
-            var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])+parseInt(response.data['requirement'][0]['FemaleMoRequirement'])
+            if(cat=='MO'){
+              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleMoRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleMoRequirement'])}
+              else{var req=0}
+
             }
-            else if(this.post=='AEO'){
-            var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])+parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])
+            else if(cat=='AEO'){
+              if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MaleAeoRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['FemaleAeoRequirement'])}
+              else{var req=0}
             }
             else{
-            var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])+parseInt(response.data['requirement'][0]['FemalePartyRequirement'])
+            if(gen=='M'){var req=parseInt(response.data['requirement'][0]['MalePartyRequirement'])}
+              else if(gen=='F'){var req=parseInt(response.data['requirement'][0]['v'])}
+              else{var req=0}
             }
             this.posts_available=avl
             this.posts_required=req

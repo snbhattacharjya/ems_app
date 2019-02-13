@@ -170,7 +170,7 @@
               else{var req=0}
             }
             req=Math.round(req*1.2,0)
-            alert('Available PP('+cat+') - '+avl+'\nRequired PP('+cat+') - '+req+' (with 20%)\nAvailable for share('+cat+') -'+(avl>req? avl-req: 'NA'))
+            alert('Available PP('+cat+')('+gen+') - '+avl+'\nRequired PP('+cat+')('+gen+') - '+req+' (with 20%)\nAvailable for share('+cat+')('+gen+') -'+(avl>req? avl-req: 'NA'))
         })
         .catch(error => {
           console.log(error)
