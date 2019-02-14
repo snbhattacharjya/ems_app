@@ -3,7 +3,7 @@
       <section>
         <v-container grid-list-md align-center>
           <v-layout row wrap fill-height>
-            <v-flex xs12><h1 class="headline mb-2" >Exemption</h1></v-flex>
+            <v-flex xs12><h1 class="headline mb-2">Exemption</h1></v-flex>
             <v-flex xs12>
             <v-tabs grow v-model="active" color="primary" dark slider-color="yellow" max="100%" class="mb-5" >
               <v-tab  ripple >
@@ -22,7 +22,7 @@
                Age Wise(>=59)
               </v-tab>
               <v-tab ripple>
-                List Of Exempted Personnel(s)
+               List Of Exempted Personnel(s)
               </v-tab>
               <v-tab-item >
                 <v-card flat>
@@ -447,6 +447,8 @@
                   <v-card-text>
                     <v-flex xs12>
                       <h2>Bulk Revoke Of Exempted Personnel(s)</h2><br>
+                      <v-layout row wrap fill-height>
+                      <v-flex xs5>
                       <v-select
                             v-model="type"
                             :items="types"
@@ -457,8 +459,55 @@
                             v-validate="'required'"
                             :error-messages="errors.collect('type')"
                             data-vv-name="type"
+                          ></v-select>
+                      </v-flex>
+                      <v-flex xs5>
+                          <v-select
+                           :items="remarks"
+                            v-model="remark_exc"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon="list"
+                            label="Select Remark(*)"
+
+                            v-validate="'required'"
+                            :error-messages="errors.collect('remark_id')"
+                            data-vv-name="remark_id"
+                            v-if="this.type==3"
                           >
-                          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary"  @click="revokeexcemption_bulk" :loading="loading_revokeexcemption_bulk">Submit</v-btn></v-slide-x-reverse-transition></v-select>
+                          </v-select>
+
+                          <v-select
+                            v-model="office_exc"
+                            :items="office_excs"
+                            item-text= "name"
+                            item-value= "id"
+                            prepend-icon=""
+                            label="Select Office"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('office_exc')"
+                            data-vv-name="office_exc"
+                            v-if="this.type==1"
+                            autocomplete
+                          >
+                          </v-select>
+                           <v-text-field
+                              autocomplete="off"
+                              prepend-icon="search"
+                              name="designation_exc"
+                              label="Search Personnel by Designation(*)"
+                              type="text"
+                              v-model="designation_exc"
+                              counter
+                              maxlength="50"
+                              v-if="this.type==5"
+                            ></v-text-field>
+
+                      </v-flex>
+                      <v-flex xs2>
+                          <v-btn color="primary"  @click="getexemptedlist" :loading="loading_revokeexcemption_bulk">Show</v-btn>
+                      </v-flex>
+                      </v-layout>
                     </v-flex>
                     <v-toolbar flat color="white">
                 <v-toolbar-title>Personnel List</v-toolbar-title>
@@ -467,7 +516,9 @@
                   inset
                   vertical
                 ></v-divider>
-                <v-spacer></v-spacer><download-csv
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="revoke_exemption" :disabled="this.select_exempted.length<=0" :loading="doing_revoke_exemption" >Submit for Exemption</v-btn>
+                <download-csv
                         :data="office_csv"
                         :name="dataFile"
                         :labels="labels"
@@ -484,9 +535,29 @@
                     hide-details
                   ></v-text-field>
                   </v-toolbar>
-                    <v-data-table  :headers="headers" :search="search" :items="exempted_personnels" class="elevation-1 " :loading="tableloading_exempted_personnel">
+                    <v-data-table v-model="select_exempted" :headers="headers" select-all :search="search" :items="exempted_personnels" class="elevation-1 " :loading="tableloading_exempted_personnel">
                     <template slot="items" slot-scope="props">
-                      <tr>
+                      <tr v-if="props.item.exempted == ''" class="red--text" >
+                      <td></td>
+                      <td>{{ props.item.id }}</td>
+                      <td >{{ props.item.office_id }}</td>
+                      <td>{{props.item.officename}}</td>
+                      <td >{{ props.item.name }}</td>
+                      <td >{{ props.item.designation }}</td>
+                      <td >{{ props.item.qualification }}</td>
+                      <td >{{  moment(props.item.dob).format('DD/MM/YYYY') }}</td>
+                      <td >{{ props.item.gender }}</td>
+                      <td >{{ props.item.mobile }}</td>
+                      <td >{{ props.item.remark }}</td>
+                      <td >
+                         {{props.item.exemp_type==1 ? 'By - Office' :''}}{{props.item.exemp_type==2 ? 'By - Personnel' :''}}{{props.item.exemp_type==3 ? 'By - Remark' :''}}{{props.item.exemp_type==4 ? 'By - Age' :''}}{{props.item.exemp_type==5 ? 'By - Designation' :''}}
+                      </td>
+                      <td >{{  moment(props.item.exemp_date).format('DD/MM/YYYY h:mm a') }}</td>
+                      <td >{{ props.item.exemp_reason }}</td>
+                      <td>Revoked</td>
+                      </tr>
+                      <tr v-if="props.item.exempted == 'Yes'" >
+                      <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
                       <td>{{ props.item.id }}</td>
                       <td >{{ props.item.office_id }}</td>
                       <td>{{props.item.officename}}</td>
@@ -544,6 +615,12 @@ export default {
         { name:'Age',id: '4'},
         { name:'Designation',id: '5'},
       ],
+      remark_exc:'',
+      office_exc:'',
+      office_excs:[],
+      designation_exc:'',
+      select_exempted:[],
+      selected_for_revoke:[],
       block_muni_id:'',
       remarks_hint:'Select any Remark to search',
       exemption_reason_office:'',
@@ -646,37 +723,28 @@ export default {
     this.loadpoststatus()
     this.getsubdivision()
     this.getremarkslist()
-    this.getexemptedlist()
+    this.officelist()
     this.getexemptedlistforage()
   },
   methods:{
-    revokeexcemption_bulk:function(){
-      if(confirm('Are you sure to revoke Exemption for - '+this.type+'?')){
-      if(this.type!=''){
-        this.loading_revokeexcemption_bulk=true
-      axios.get('/revokeexcemptionbytype/'+this.type)
+    officelist:function(){
+       axios.get('/offices')
       .then((response, data) => {
-        alert(response.data)
-        this.getexemptedlist()
+       response.data.forEach(item => {
+         item['name']= item['id']+'-'+item['name']
+          this.office_excs.push(item)
+        });
       })
       .catch(error => {
         console.log(error)
       })
-      this.loading_revokeexcemption_bulk=false
-      }else{
-        alert('Please select Exemption type')
-      }
-      }
     },
     loadpoststatus:function(){
       axios.get('/pollingPost')
       .then((response, data) => {
-
        response.data.forEach(item => {
-
           this.poststats.push(item)
         });
-
       })
       .catch(error => {
         console.log(error)
@@ -710,24 +778,117 @@ export default {
           })
     },
     getexemptedlist:function(){
-      this.exempted_personnels=[]
-      this.tableloading_exempted_personnel=true
-      axios.get('/getexemptedlist')
+       if(this.type!=''){
+         var sw=this.type
+         switch(sw){
+          case '1':
+          var mode='office'
+          var id=this.office_exc
+          break
+          case '2': var mode='personnel'
+          var id=0
+          break
+          case '3':
+          var mode='remark'
+          var id=this.remark_exc
+          break
+          case '4': var mode='age'
+          var id=0
+          break
+          case '5': var mode='designation'
+          var id=this.designation_exc
+          break
+
+          default: var mode='remark'
+          var id=0
+
+        }
+        if(id!='' || id!=undefined){
+          this.exempted_personnels=[]
+          this.tableloading_exempted_personnel=true
+          this.loading_revokeexcemption_bulk=true
+          axios.post('/getexemptedlist',{
+            mode: mode,
+            id: id
+          })
           .then((response, data) => {
-          if(response.data['excemptedList'].length === 0){
-            this.tableloading_exempted_personnel=false
-            this.btn_txt='No Data to Download'
-          }else{
-          response.data['excemptedList'].forEach(item => {
-              this.exempted_personnels.push(item)
-              this.office_csv.push(item)
-            });
-          }
+            if(response.data['excemptedList'].length === 0){
+                this.tableloading_exempted_personnel=false
+                this.btn_txt='No Data to Download'
+              }else{
+              response.data['excemptedList'].forEach(item => {
+                  this.exempted_personnels.push(item)
+                  this.office_csv.push(item)
+                  this.btn_txt='Download as CSV'
+                });
+              }
+
           })
           .catch(error => {
             console.log(error)
           })
+          this.loading_revokeexcemption_bulk=false
           this.tableloading_exempted_personnel=false
+        }else{
+           alert('Please select Sub Type of Exemption')
+        }
+
+       }
+       else{
+         alert('Please select Type of Exemption')
+       }
+
+
+    },
+    revoke_exemption:function(){
+      if(this.type!='' && this.select_exempted.length!=0 ){
+        if(confirm('Are you sure to revoke based on above selection and criteria?')){
+      this.doing_office_exemption=true
+
+      this.select_exempted.forEach(item => {
+        this.selected_for_revoke.push(item.id)
+      })
+
+      var sw=this.type
+         switch(sw){
+          case '1':
+          var mode_revoke='office'
+
+          break
+          case '2': var mode_revoke='personnel'
+
+          break
+          case '3':
+          var mode_revoke='remark'
+
+          break
+          case '4': var mode_revoke='age'
+
+          break
+          case '5': var mode_revoke='designation'
+
+          break
+
+          default: var mode_revoke='remark'
+
+
+        }
+      axios.post('/revokeexcemptionbytype',{
+          mode:mode_revoke,
+          personnl_selected:this.select_exempted.length==this.exempted_personnels.length ? 'ALL' : this.selected_for_revoke,
+
+          })
+          .then((response, data) => {
+            alert(response.data)
+          })
+          .catch(error => {
+            console.log(error)
+
+          })
+        }
+      }else{
+        alert('Please select Personnel and then revoke')
+      }
     },
     getexemptedlistforage:function(){
       this.personnels_age=[]
@@ -779,7 +940,7 @@ export default {
              this.selected_remark_personnel=[]
              this.selected_remarks=[]
              alert(this.remarks_hint)
-            this.getexemptedlist()
+            //this.getexemptedlist()
           })
           .catch(error => {
             console.log(error)
@@ -820,7 +981,7 @@ export default {
               this.disble_office=true
               this.selected_personnel=[]
               alert(this.office_hint)
-              this.getexemptedlist()
+              // this.getexemptedlist()
             }
           })
           .catch(error => {
@@ -857,7 +1018,7 @@ export default {
               this.tableloading_personnel=false
               this.disble_personnel=true
               alert(this.personnel_hint)
-              this.getexemptedlist()
+              // this.getexemptedlist()
 
             }
           })
@@ -936,7 +1097,7 @@ export default {
               this.disble_personnel_desig=true
               this.selected_personnel_desig=[]
               alert(this.personnel_desig_hint)
-              this.getexemptedlist()
+              // this.getexemptedlist()
 
           })
           .catch(error => {
@@ -973,7 +1134,7 @@ export default {
               this.selected_personnel_age=[]
               alert(response.data)
               this.getexemptedlistforage()
-              this.getexemptedlist()
+              // this.getexemptedlist()
 
           })
           .catch(error => {

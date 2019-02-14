@@ -124,7 +124,9 @@ export default {
           block_muni_id:"Block/Municipality ID",
           police_station_id:"Police Station ID",
           category_id:"Office Category ID",
-          institute_id:"Institute ID"
+          institute_id:"Institute ID",
+          created_at: 'Created At',
+          updated_at: 'Updated At'
 
         },
         personnel_labels: {
@@ -162,7 +164,9 @@ export default {
           remark_reason:'Remark Reason',
           exempted:'Exempted',
           exemp_reason:'Reasone of Exemption',
-          exemp_date:'Date of Exemption'
+          exemp_date:'Date of Exemption',
+          created_at: 'Created At',
+          updated_at: 'Updated At'
         },
         personnel_block_labels: {
           id:'Personnel ID',
@@ -212,8 +216,8 @@ export default {
         block_muni_id:'',
         csvfields : ['id','name','email','phone','mobile','identification_code',
         'address','post_office','pin','ac_id','pc_id','subdivision_id','block_muni_id','police_station_id',
-        'category_id','institute_id'],
-        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason','exempted','exemp_reason','exemp_date'],
+        'category_id','institute_id','created_at','updated_at'],
+        personnel_csvfields : ['id','basic_pay','designation','dob','email','emp_group','gender','grade_pay','mobile','name','office_id','pay_level','permanent_address','phone','post_stat','present_address','qualification_id','language_id','epic','part_no','sl_no','assembly_temp_id','assembly_perm_id','assembly_off_id','block_muni_temp_id','block_muni_perm_id','block_muni_off_id','subdivision_id','branch_ifsc','bank_account_no','remark_id','remark_reason','exempted','exemp_reason','exemp_date','created_at','updated_at'],
         personnel_block_cvsfields:['id','basic_pay','designation','dob','email','emp_group','gender','scale','grade_pay','pay_level','mobile','name','office_id','officename','office_address','office_pin','office_post_office','policestations','pay_level','permanent_address','phone','post_stat','present_address','qualification','languages','epic','part_no','sl_no','tempac','pertac','offac','tempblock','permblock','offblock','subdivision_id','branch_ifsc','bank_account_no','post_office_account','remark','remark_reason','exempted','exemp_reason','exemp_date'],
     }
   },
