@@ -391,6 +391,15 @@ export default [
       )
     },
     {
+      path: `/epicnumbererror`,
+      meta: {title:'Mismatch of Epic Number for personnel | Welcome to WBPPMS'},
+      name: 'EpicnumberError',
+      component: () => import(
+
+        '@/components/EpicnumberError'
+      )
+    },
+    {
       path: `/checklist/:designation/:group`,
       meta: {title:'See All Personnel in the checklist | Welcome to WBPPMS'},
       name: 'MismatchChecklist',

@@ -83,6 +83,7 @@ import JsonCSV from 'vue-json-csv'
           officeName: 'Office Name',
           identification_code:'Identification Code',
           mobile:'Mobile',
+          email: 'email',
           address: 'Address',
           post_office: 'Post Office',
           subdivision: 'Subdivision',
@@ -93,7 +94,7 @@ import JsonCSV from 'vue-json-csv'
           personelenty: 'Personnel Entered',
           progress: 'Progress(%)'
         },
-        csvfields : ['officeId','officeName','identification_code','mobile','address','post_office','subdivision','block','policestations','pin','totalStuff','personelenty','progress'],
+        csvfields : ['officeId','officeName','identification_code','mobile','email','address','post_office','subdivision','block','policestations','pin','totalStuff','personelenty','progress'],
         btn_txt:'Download as CSV'
 
     }),

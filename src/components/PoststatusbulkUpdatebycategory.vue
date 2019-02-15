@@ -58,6 +58,15 @@
          <v-toolbar-title>All Personnel</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>
             <v-spacer></v-spacer>
+            <download-csv
+                        :data="personnel_csv"
+                        :name="personnelfilename"
+                        :labels="personnel_labels"
+                        :fields="personnel_csvfields"
+
+                >
+                    <v-btn color="info" :loading="tableloading" class="button"><v-icon>receipt</v-icon>{{this.loadingTXT_personnel}}</v-btn>
+                </download-csv>
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
           <v-data-table v-model="select" :headers="headers" select-all :items="personnels" :search="search" class="elevation-1" :loading="tableloading" :rows-per-page-items="rows">
@@ -187,9 +196,7 @@ import JsonCSV from 'vue-json-csv'
       personnel_csv:[],
       searchInput: ''
     }),
-    components: {
 
-    },
     $_veeValidate: {
       validator: 'new'
     },

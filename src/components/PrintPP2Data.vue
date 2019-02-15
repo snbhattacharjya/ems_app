@@ -10,11 +10,14 @@
             <h1 class="headline mb-3 blue--text">Check List :
 
             </h1>
-            <v-flex xs12 id="agree">
-              <v-checkbox  v-if="parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)" :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
+            <v-flex xs12 id="agree" v-if="parseInt(this.getdashboard.totalemployee)== parseInt(this.getdashboard.officeStuff)">
+              <v-checkbox  :label="agree_text"  v-model="agree" :value="agree" color="success" v-validate="'required'"
                 :error-messages="errors.collect('agree')"
                 data-vv-name="agree" @change="agree_with_pp2"></v-checkbox>
               </v-flex>
+            <!-- <v-flex xs12 v-else>
+              <p>Checklist will appear only after PP2 Entry is complete</p>
+            </v-flex> -->
             <!-- <p>Service has been disabled/inactive temporarily and it will be OPENED within few days, PLEASE</p> -->
             <!-- <download-csv
                         :data="reports"

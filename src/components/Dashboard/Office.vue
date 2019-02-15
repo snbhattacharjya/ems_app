@@ -82,8 +82,8 @@
         <v-card-title class="headline">Important Notice !!</v-card-title>
 
         <v-card-text>
-          <!-- <strong class="green--text">Date Extended</strong><br><br> -->
-         From the database it has been observed that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Remarks</strong>. You are requested to correct all from your end within <strong class="red--text">14th February,2019</strong >  and confirm to the respected District Election Officer.
+          <strong class="green--text">WBPPMS will be closed very shortly in respect of New Entry and Updation</strong><br><br>
+         From the database it has been observed that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Bank Account Number, Remarks</strong>. You are requested to correct all from your end and confirm to the respected District Election Officer.
         </v-card-text>
 
 

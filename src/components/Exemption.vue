@@ -382,7 +382,7 @@
                     <v-alert v-if="this.personnels_age.length>0" v-model="alert" type="info">
                     {{this.personnels_age.length}} Personnel found under Age>=59
                     </v-alert>
-                    <v-data-table v-model="selected_age"  :headers="headers" select-all hide-actions :items="personnels_age" class="elevation-1 my-5" >
+                    <v-data-table v-model="selected_age"  :headers="headers" select-all  :items="personnels_age" class="elevation-1 my-5" >
                     <template slot="items" slot-scope="props">
                       <tr v-if="props.item.exempted == 'Yes'" class="red--text">
                       <td></td>
@@ -517,7 +517,7 @@
                   vertical
                 ></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="revoke_exemption" :disabled="this.select_exempted.length<=0" :loading="doing_revoke_exemption" >Submit for Exemption</v-btn>
+                <v-btn color="primary" @click="revoke_exemption" :disabled="this.select_exempted.length<=0" :loading="doing_revoke_exemption" >Submit for Revoke</v-btn>
                 <download-csv
                         :data="office_csv"
                         :name="dataFile"
@@ -728,7 +728,7 @@ export default {
   },
   methods:{
     officelist:function(){
-       axios.get('/offices')
+       axios.get('/getExcemptedOfficeList')
       .then((response, data) => {
        response.data.forEach(item => {
          item['name']= item['id']+'-'+item['name']
@@ -873,18 +873,35 @@ export default {
 
 
         }
+
       axios.post('/revokeexcemptionbytype',{
           mode:mode_revoke,
           personnl_selected:this.select_exempted.length==this.exempted_personnels.length ? 'ALL' : this.selected_for_revoke,
+          officeId:this.office_exc!=''?this.office_exc:0,
+          remarkId:this.remark_exc!=''?this.remark_exc:0,
+          designation:this.designation_exc!=''?this.designation_exc:0,
 
           })
           .then((response, data) => {
             alert(response.data)
+            this.exempted_personnels=[]
+            this.officelist()
+            this.select_exempted=[]
+            this.personnl_selected=[]
+            officeId=''
+            remarkId=''
+            designation=''
           })
           .catch(error => {
             console.log(error)
 
           })
+          this.select_exempted=[]
+          this.personnl_selected=[]
+            officeId=''
+            remarkId=''
+            designation=''
+           this.getexemptedlistforage()  
         }
       }else{
         alert('Please select Personnel and then revoke')
@@ -1055,8 +1072,8 @@ export default {
               }
             else{
               if(response.data['excemptionList'][0].exempted=='Yes'){
-              this.personnel_desig_hint='Personnel already exempted by this Designation'
-              this.disble_personnel_desig=true
+              this.personnel_desig_hint='Some Personnel already exempted by this Designation'
+              this.disble_personnel_desig=false
               this.personnels_desig=response.data['excemptionList']
               }else{
               this.personnel_desig_hint=response.data['excemptionList'].length+' Personnel found by this Designation'

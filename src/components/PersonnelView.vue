@@ -14,6 +14,7 @@
           <v-btn v-if="this.getuser.level == 12" color="info" :to="'/poststatus_mismatch'">Mismatch of Post Status</v-btn>
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/misreport/district'">Mis Report District</v-btn>
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/poststatus_bulk_update'">Bulk Post Status Update</v-btn>
+          <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
 
       <v-layout row wrap  >
       <v-flex xs4>
