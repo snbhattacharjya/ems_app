@@ -3,6 +3,16 @@
     <v-container fluid>
       <section>
       <v-layout row wrap  class="my-5">
+        <v-select v-if="this.getuser.level==2"
+                :items="districts"
+                v-model="district_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select district"
+                >
+                <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" @click="initialize" >Show</v-btn></v-slide-x-reverse-transition>
+              </v-select>
       <v-flex xs12>
         <v-toolbar flat color="white">
          <v-toolbar-title>All Personnel</v-toolbar-title>
@@ -141,7 +151,9 @@ import JsonCSV from 'vue-json-csv'
 
       personnels: [],
       personnel_csv:[],
-      searchInput: ''
+      searchInput: '',
+      districts:[],
+      district_id:'',
     }),
 
     $_veeValidate: {
@@ -158,7 +170,12 @@ import JsonCSV from 'vue-json-csv'
     },
 
     created () {
-      this.initialize()
+      if(this.getuser.level ==2){
+      this.getdistrict()
+      }else{
+        this.initialize()
+      }
+
 
     },
     watch:{
@@ -172,7 +189,23 @@ import JsonCSV from 'vue-json-csv'
       }
     },
     methods: {
+      getdistrict(){
+       axios.get('/getdistrict')
+      .then((response, data) => { //console.log(response.data['available'])
+       response.data.forEach(item => { //console.log(item)
+          this.districts.push(item)
+        })
 
+          if(this.getUser.level != 2){
+          this.dist_old=99
+          this.district_id=this.getUser.area
+          this.show()
+          }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+     },
 
       showError(){
         this.show_message = true
@@ -182,11 +215,16 @@ import JsonCSV from 'vue-json-csv'
         this.snackbar =true
       },
       initialize () {
+        if(this.getuser.level ==2){
+          var dist=this.district_id
+        }else{
+          var dist=''
+        }
         this.personnelloading=true
         this.loadingTXT_personnel='Loading....'
         this.tableloading=true
-        axios.get('/getnoepic',{
-
+        axios.post('/getnoepic',{
+          district:dist
         })
         .then((response, data) => {
           if(response.data.length === 0){

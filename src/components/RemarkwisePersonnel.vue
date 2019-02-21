@@ -6,7 +6,16 @@
          <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleDateString('en-GB') }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
-
+<v-select v-if="this.getUser.level==2"
+                :items="districts"
+                v-model="district_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select district"
+                >
+                <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" @click="show" >Show</v-btn></v-slide-x-reverse-transition>
+              </v-select>
           <v-flex xs12 >
             <h1 class="headline">Remarkwise Personnel Report </h1>
             <v-layout row wrap >
@@ -76,6 +85,8 @@ export default {
       dist_total_emp:0,
       dist_total_male:0,
       dist_total_female:0,
+      districts:[],
+      district_id:'',
 
     }
   },
@@ -86,15 +97,33 @@ export default {
     },
 
   methods:{
-     show:function(){
+    getdistrict:function(){
+      axios.get('/getdistrict')
+      .then((response, data) => { //console.log(response.data['available'])
+       response.data.forEach(item => { //console.log(item)
+          this.districts.push(item)
+        })
 
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    },
+     show:function(){
+        if(this.getUser.level ==2){
+          var dist=this.district_id
+        }else{
+          var dist=''
+        }
 
           this.tableloading=true
           this.disable_save=true
           this.reports=[]
           this.count=1
           this.loadingtxt='Loading...'
-            axios.get('/remarkwise_report')
+            axios.post('/remarkwise_report',{district:dist})
               .then((response, data) => {
                 if(response.data['available'].length === 0){
 
@@ -113,7 +142,11 @@ export default {
                       this.dist_total_female += parseInt(item.female)
                       this.count++
                     })
-
+                    if(this.getUser.level ==2){
+                    this.district=response.data['district']
+                    }else{
+                       this.district=this.getUser.district[0]
+                    }
 
                     this.tableloading=false
                     this.disable_save=false
@@ -137,8 +170,12 @@ export default {
   },
 
   created(){
+    if(this.getUser.level ==2){
+      this.getdistrict()
+      }else{
      this.district= this.getUser.district[0]
      this.show()
+      }
 
   }
 }

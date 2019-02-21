@@ -24,10 +24,10 @@
 
 
               </v-flex>
-              <v-layout row wrap v-if="getUser.level == 12 " >
-              <v-btn color="primary" :to="'/assembly_wise_reserved'">Reserve Report</v-btn>
-              <v-btn color="primary" :to="'/assembly_groupby_subdivision'">Subdivision wise Assembly Report</v-btn>
-              <v-btn color="primary" :to="'/pollingpersonnel_progress_report'">Polling Personnel Progress Report</v-btn>
+              <v-layout row wrap >
+              <v-btn v-if="getUser.level == 12 || getUser.level ==2"  color="primary" :to="'/assembly_wise_reserved'">Reserve Report</v-btn>
+              <v-btn v-if="getUser.level == 12 " color="primary" :to="'/assembly_groupby_subdivision'">Subdivision wise Assembly Report</v-btn>
+              <v-btn v-if="getUser.level == 12 " color="primary" :to="'/pollingpersonnel_progress_report'">Polling Personnel Progress Report</v-btn>
               </v-layout>
             </v-layout>
           </v-flex>

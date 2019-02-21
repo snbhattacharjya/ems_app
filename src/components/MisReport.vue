@@ -5,6 +5,7 @@
       <v-btn color="primary" :to="'/district_wise_pp_status'">District wise polling personnel status</v-btn>
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/data_sharing_ceo'">Data Sharing</v-btn>
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/office_category_wise_post_status'">Office Categorywise Post Status</v-btn>
+      <v-btn v-if="this.getUser.level == 2" color="info" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
       <v-btn  color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
       </v-layout>
       <v-btn v-if="this.getUser.level == 12" color="info" :to="'/data_sharing_deo'">Data Sharing</v-btn>
