@@ -6,6 +6,19 @@
          <v-flex xs11><h1 class="headline" >MIS Report for {{ this.district}} As On {{ new Date().toLocaleDateString('en-GB') }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html',header: 'Polling Personnel Management System', css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn','exclude'] })"><v-icon dark>print</v-icon></v-btn></v-flex>
         </v-layout>
         <v-layout row wrap >
+              <v-select v-if="this.getUser.level==2"
+                :items="districts"
+                v-model="district_id"
+                item-text= "name"
+                item-value= "id"
+                prepend-icon="list"
+                label="Select district"
+                >
+                <v-slide-x-reverse-transition slot="append-outer" mode="out-in"><v-btn color="primary" @click="show" >Show</v-btn></v-slide-x-reverse-transition>
+              </v-select>
+
+
+
 
           <v-flex xs12 >
             <h1 class="headline">Office Category wise Post Status Report(Male) </h1>
@@ -124,6 +137,8 @@ export default {
     return {
       reports_male:[],
       reports_female:[],
+      districts:[],
+      district_id:'',
       district:'',
       search: '',
       count_m:1,
@@ -158,14 +173,20 @@ export default {
   methods:{
      show:function(){
 
-
           this.tableloading=true
           this.disable_save=true
           this.reports_male=[]
           this.reports_female=[]
           this.count=1
           this.loadingtxt='Loading...'
-            axios.get('/poststatusWise_pp')
+          if(this.getUser.level==2){
+            var url='/poststatusWise_pp'
+            var dist=this.district_id
+          }else{
+            var url='/poststatusWise_pp'
+            var dist=''
+          }
+            axios.post(url,{district:dist})
               .then((response, data) => {
                 if(response.data['availableMale'].length === 0){
 
@@ -216,7 +237,7 @@ export default {
 
                       this.count_f++
                     })
-
+                    this.district=response.data['district']
 
                     this.tableloading=false
                     this.disable_save=false
@@ -235,13 +256,37 @@ export default {
        v=parseFloat((val*p))+parseInt(val)
        return Math.round(v,0)
 
+     },
+     getdistrict(){
+       axios.get('/getdistrict')
+      .then((response, data) => { //console.log(response.data['available'])
+       response.data.forEach(item => { //console.log(item)
+          this.districts.push(item)
+        })
+
+          if(this.getUser.level != 2){
+          this.dist_old=99
+          this.district_id=this.getUser.area
+          this.show()
+          }
+      })
+      .catch(error => {
+        console.log(error)
+      })
      }
 
   },
 
   created(){
-     this.district= this.getUser.district[0]
-     this.show()
+
+     if(this.getUser.level==2){
+       this.getdistrict()
+       this.district=this.district_id
+     }else{
+       this.district= this.getUser.district[0]
+       this.show()
+     }
+
 
   }
 }

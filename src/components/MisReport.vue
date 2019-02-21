@@ -4,7 +4,8 @@
       <v-layout row wrap v-if="getUser.level == 2 " >
       <v-btn color="primary" :to="'/district_wise_pp_status'">District wise polling personnel status</v-btn>
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/data_sharing_ceo'">Data Sharing</v-btn>
-
+      <v-btn v-if="this.getUser.level == 2" color="info" :to="'/office_category_wise_post_status'">Office Categorywise Post Status</v-btn>
+      <v-btn  color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
       </v-layout>
       <v-btn v-if="this.getUser.level == 12" color="info" :to="'/data_sharing_deo'">Data Sharing</v-btn>
       <section id="report">
@@ -18,10 +19,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
-                <th width="25%" rowspan="2"><strong>District</strong></th>
+                <th width="5%" rowspan="2"><strong>Dist ID</strong></th>
+                <th width="20%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="8"><strong>Available Male</strong></th>
+                <th width="60%" colspan="9"><strong>Available Male</strong></th>
 
                 </tr>
                 <tr>
@@ -32,6 +33,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
+                <th>Exemted</th>
                 <th>Total</th>
                 </tr>
                 </thead>
@@ -48,7 +50,8 @@
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
                   <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
-                  <td >{{ parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M) }}</td>
+                  <td class="nopad">{{ report.EXE_M }}</td>
+                  <td >{{ parseInt(report.NA_M)+parseInt(report.PR_M)+parseInt(report.P1_M)+parseInt(report.P2_M)+parseInt(report.P3_M)+parseInt(report.MO_M)+parseInt(report.EXE_M) }}</td>
                   </tr>
                   <tr v-if="this.loadingTXT != 'No data found'">
                     <td></td>
@@ -61,6 +64,7 @@
                     <td class="nopad">{{P2_M_COUNT}}</td>
                     <td class="nopad">{{P3_M_COUNT}}</td>
                     <td class="nopad">{{MO_M_COUNT}}</td>
+                    <td class="nopad">{{EXE_M_COUNT}}</td>
                     <td>&nbsp;</td></tr>
                 </tbody>
               </table>
@@ -72,11 +76,10 @@
               <table class="v-datatable v-table dark" id=""  border=1>
                 <thead>
                 <tr>
-                <th width="10%" rowspan="2"><strong>Dist ID</strong></th>
-                <th width="25%" rowspan="2"><strong>District</strong></th>
+                 <th width="5%" rowspan="2"><strong>Dist ID</strong></th>
+                <th width="20%" rowspan="2"><strong>District</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-
-                <th width="50%" colspan="8"><strong>Available Female</strong></th>
+                <th width="60%" colspan="9"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
                 <th>Not <br>Assigned</th>
@@ -86,6 +89,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
+                <th>Exemted</th>
                 <th>Total</th>
                 </tr>
                 </thead>
@@ -102,7 +106,8 @@
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
                   <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad" >{{ report.MO_F }}</td>
-                  <td>{{ parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F) }}</td>
+                  <td class="nopad">{{ report.EXE_F }}</td>
+                  <td>{{ parseInt(report.NA_F)+parseInt(report.PR_F)+parseInt(report.P1_F)+parseInt(report.P2_F)+parseInt(report.P3_F)+parseInt(report.MO_F)+parseInt(report.EXE_F) }}</td>
                   </tr>
                   <tr v-if="this.loadingTXT != 'No data found'">
                     <td></td>
@@ -115,6 +120,7 @@
                     <td class="nopad">{{P2_F_COUNT}}</td>
                     <td class="nopad">{{P3_F_COUNT}}</td>
                     <td class="nopad">{{MO_F_COUNT}}</td>
+                    <td class="nopad">{{EXE_F_COUNT}}</td>
                     <td>&nbsp;</td></tr>
 
                 </tbody>
@@ -161,6 +167,8 @@ export default {
       NA_F_COUNT:0,
       AEO_M_COUNT:0,
       AEO_F_COUNT:0,
+      EXE_M_COUNT:0,
+      EXE_F_COUNT:0,
     }
   },
   computed:{
@@ -212,6 +220,8 @@ export default {
               this.NA_F_COUNT+=parseInt(item.NA_F)
               this.AEO_M_COUNT+=parseInt(item.AEO_M)
               this.AEO_F_COUNT+=parseInt(item.AEO_F)
+              this.EXE_M_COUNT+=parseInt(item.EXE_M)
+              this.EXE_F_COUNT+=parseInt(item.EXE_F)
               this.reports.push(item)
 
             })

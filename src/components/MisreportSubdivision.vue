@@ -12,10 +12,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
-                <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
+                <th width="5%" rowspan="2"><strong>Subdiv ID</strong></th>
+                <th width="20%" rowspan="2"><strong>Subdivision</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="7"><strong>Available Male</strong></th>
+                <th width="60%" colspan="8"><strong>Available Male</strong></th>
                 </tr>
                 <tr>
                 <th>Not <br> Assigned</th>
@@ -25,7 +25,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-
+                <th>Exemted</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                   <td class="nopad" :class="report.P2_M_class">{{ report.P2_M }}</td>
                   <td class="nopad" :class="report.P3_M_class">{{ report.P3_M }}</td>
                   <td class="nopad">{{ report.MO_M }}</td>
-
+                  <td class="nopad">{{ report.EXE_M }}</td>
                   </tr>
                   <tr >
                     <td></td>
@@ -54,6 +54,7 @@
                     <td class="nopad">{{P2_M_COUNT}}</td>
                     <td class="nopad">{{P3_M_COUNT}}</td>
                     <td class="nopad">{{MO_M_COUNT}}</td>
+                    <td class="nopad">{{EXE_M_COUNT}}</td>
                    </tr>
                 </tbody>
               </table>
@@ -65,10 +66,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th width="10%" rowspan="2"><strong>Subdiv ID</strong></th>
-                <th width="25%" rowspan="2"><strong>Subdivision</strong></th>
+                <th width="5%" rowspan="2"><strong>Subdiv ID</strong></th>
+                <th width="20%" rowspan="2"><strong>Subdivision</strong></th>
                 <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
-                <th width="50%" colspan="7"><strong>Available Female</strong></th>
+                <th width="60%" colspan="8"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
                 <th>Not <br> Assigned</th>
@@ -78,6 +79,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
+                <th>Exemted</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,6 +95,7 @@
                   <td class="nopad" :class="report.P2_F_class">{{ report.P2_F }}</td>
                   <td class="nopad" :class="report.P3_F_class">{{ report.P3_F }}</td>
                   <td class="nopad">{{ report.MO_F }}</td>
+                  <td class="nopad">{{ report.EXE_F }}</td>
                   </tr>
                   <tr >
                     <td></td>
@@ -105,6 +108,7 @@
                     <td class="nopad">{{P2_F_COUNT}}</td>
                     <td class="nopad">{{P3_F_COUNT}}</td>
                     <td class="nopad">{{MO_F_COUNT}}</td>
+                    <td class="nopad">{{EXE_F_COUNT}}</td>
                     </tr>
                 </tbody>
               </table>
@@ -150,6 +154,8 @@ export default {
       NA_F_COUNT:0,
       AEO_M_COUNT:0,
       AEO_F_COUNT:0,
+      EXE_M_COUNT:0,
+      EXE_F_COUNT:0,
     }
   },
 
@@ -185,6 +191,8 @@ export default {
               this.NA_F_COUNT+=parseInt(item.NA_F)
               this.AEO_M_COUNT+=parseInt(item.AEO_M)
               this.AEO_F_COUNT+=parseInt(item.AEO_F)
+               this.EXE_M_COUNT+=parseInt(item.EXE_M)
+              this.EXE_F_COUNT+=parseInt(item.EXE_F)
           this.reports.push(item)
         });
         this.district=response.data['district']

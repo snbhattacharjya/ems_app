@@ -139,7 +139,9 @@
         { text: 'Actions', value: 'name', sortable: false },
       ],
       personnels: [],
-      searchInput: ''
+      searchInput: '',
+      subdivision_c:'',
+      office_c:''
     }),
     components: {
         //  'subdivision-list': SubdivisionList,
@@ -171,7 +173,10 @@
         this.alert=false
         window.sessionStorage.setItem('is_personnel_created',null)
       }
-      if(this.getuser.level != 10){this.getsubdivision()}
+      if(this.getuser.level != 10){
+        this.getsubdivision()
+
+        }
       else{
         this.initialize_personnel()
       }
@@ -185,7 +190,15 @@
           response.data.forEach(item => {
               this.subdivisions.push(item)
             });
-
+          if(window.sessionStorage.getItem("subdivision_c")!=''){
+          this.subdivision_id=window.sessionStorage.getItem("subdivision_c")
+          this.office_id=window.sessionStorage.getItem("office_c")
+          this.getOfficelist()
+          this.initialize()
+          }else{
+            this.subdivision_id=''
+            this.$validator.reset()
+          }
           })
           .catch(error => {
             console.log(error)
@@ -209,7 +222,14 @@
       },
       initialize () {console.log('inside initialize')
         this.tableloading=true
+        if(window.sessionStorage.getItem('subdivision_c')=='' && window.sessionStorage.getItem('office_c')==''){
+        window.sessionStorage.setItem('subdivision_c',this.subdivision_id)
+        window.sessionStorage.setItem('office_c',this.office_id)
 
+        }else{
+          var officeid=window.sessionStorage.getItem('office_c')
+
+        }
         axios.get('/personnelbyoffice/'+this.office_id,{
           //office_id: this.office_id
         })
@@ -235,6 +255,7 @@
       },
       initialize_personnel () {
         this.tableloading=true
+
         if(this.getpersonnel!=''){
 
           this.personnels=[]
@@ -265,7 +286,8 @@
         }
       },
       getOfficelist(){
-        //console.log('SUB - '+this.subdivision_id)
+        console.log('SUB - '+this.subdivision_id)
+        window.sessionStorage.setItem('subdivision_c',this.subdivision_id)
         axios.get('/offices/'+this.subdivision_id)
           .then((response, data) => {
             this.isdisabled=false
@@ -274,7 +296,10 @@
             item.name=item.id+' - '+item.name
               this.offices.push(item)
             });
-
+          if(window.sessionStorage.getItem("office_c")!=''){
+            this.isdisabled=false
+          this.office_id=window.sessionStorage.getItem("office_c")
+          }
           })
           .catch(error => {
             console.log(error)

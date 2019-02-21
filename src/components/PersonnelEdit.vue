@@ -995,6 +995,8 @@ import _ from 'lodash'
           this.message_icon = 'check_circle'
           this.message_text = 'Personnel Updated Successfully with code - '+response.data
           window.sessionStorage.setItem('is_personnel_created', 'Personnel Updated Successfully with code - '+response.data)
+          window.sessionStorage.setItem('office_c',this.office_id)
+
           this.snackbar =false
           this.disable_save=false
           setTimeout(() => {

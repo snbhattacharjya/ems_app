@@ -39,7 +39,7 @@
                     v-validate="'required'"
                     :error-messages="errors.collect('subdivision_id')"
                     data-vv-name="subdivision_id"
-                    :disabled="disble_subdiv"
+
                     >
                     </v-select>
                     <!-- <v-select
@@ -65,7 +65,7 @@
                     @input="$emit('input',$event)"
                     :hint="remarks_hint"
                     persistent-hint
-                     :disabled="disble_remark"
+
                      clearable
 
                   >
@@ -901,7 +901,7 @@ export default {
             officeId=''
             remarkId=''
             designation=''
-           this.getexemptedlistforage()  
+           this.getexemptedlistforage()
         }
       }else{
         alert('Please select Personnel and then revoke')
@@ -943,6 +943,7 @@ export default {
       })
       axios.post('/doexception',{
           mode:'remarks',
+          subdivision:this.subdivision_id!=undefined ? this.subdivision_id : '',
           remark_id: this.remark_id,
           remark_personnl_selected:this.selected_remarks.length==this.remark_personnels.length ? 'ALL' : this.selected_remark_personnel,
           reason:this.exemption_reason_remark
@@ -961,6 +962,7 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            this.doing_remark_exemption=false
             this.remarks_hint='Sorry !! seems there are some server problem'
             this.disble_remark=false
             alert(this.remarks_hint)
@@ -1003,6 +1005,7 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            this.doing_office_exemption=false
             this.office_hint='Sorry !! seems there are some server problem'
             this.disble_office=false
             alert(this.office_hint)
@@ -1041,6 +1044,7 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            this.doing_personnel_exemption=false
             this.personnel_hint='Sorry !! seems there are some server problem'
             this.disble_personnel=false
             alert(this.personnel_hint)
@@ -1119,6 +1123,7 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            this.doing_personnel_desig_exemption=false
             this.personnel_desig_hint='Sorry !! seems there are some server problem'
             this.disble_personnel_desig=false
             alert(this.personnel_desig_hint)
@@ -1149,6 +1154,7 @@ export default {
               this.tableloading_personnel_age=false
               this.disble_personnel_age=false
               this.selected_personnel_age=[]
+              this.$validator.reset()
               alert(response.data)
               this.getexemptedlistforage()
               // this.getexemptedlist()
@@ -1156,6 +1162,7 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            this.doing_personnel_age_exemption=false
             this.personnel_age_hint='Sorry !! seems there are some server problem'
             this.disble_personnel_age=false
             alert(this.personnel_age_hint)

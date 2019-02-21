@@ -42,7 +42,7 @@
                     <strong>Date of Birth : </strong>{{moment(report.dob).format('DD/MM/YYYY')}} <strong>Gender : </strong>{{report.gender}}
                     <strong>Pay Scale : </strong>{{report.scale}} <strong>Basic Pay : </strong>{{report.basic_pay}} <strong>Grade Pay : </strong>{{report.grade_pay}} <strong>Pay Level : </strong>{{report.pay_level}}
                     <strong>Employee Group : </strong>{{report.emp_group}} <strong>Working Status : </strong>{{report.working_status}} <strong>Email : </strong>{{report.email}} <strong>Phone : </strong>{{report.phone}} <strong>Mobile : </strong>{{report.mobile}}
-                    <strong>Epic No : </strong>{{report.epic}} <strong>Part No : </strong>{{report.part_no}} <strong>Serial No : </strong>{{report.sl_no}} <strong>Post Status : </strong>{{report.post_stat}}
+                    <strong>Epic No : </strong>{{report.epic}} <strong>Part No : </strong>{{report.part_no}} <strong>Serial No : </strong>{{report.sl_no}} <strong>Post Status : </strong>******
                     <strong>Qualification : </strong>{{report.qualification}} <strong>Bank AC Number : </strong>{{report.bank_account_no}} <strong>Branch IFSC Number : </strong>{{report.branch_ifsc}}
                     <strong>Subdivision : </strong>{{report.subdivision}} <strong>Temporary Assembly Constituency : </strong>{{report.actemp}} <strong>Permanent Assembly Constituency : </strong>{{report.acpermanent}} <strong>Office Assembly Constituency : </strong>{{report.acofficename}}
                     <strong>Remark : </strong>{{report.remark}}

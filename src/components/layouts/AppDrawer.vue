@@ -1,5 +1,5 @@
 <template>
- <v-navigation-drawer class="grey lighten-3"  :clipped="true" app v-model="drawer" :width="300">
+ <v-navigation-drawer class="grey lighten-3"  :clipped="true" app  :width="300">
     <v-divider></v-divider>
     <v-list dense class="pt-1">
       <template v-for="item in menus">

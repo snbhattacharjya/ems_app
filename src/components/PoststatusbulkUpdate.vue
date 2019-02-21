@@ -51,7 +51,7 @@
               <td >{{ props.item.designation }}</td>
               <td >{{ props.item.qualification }}</td>
               <td >{{ props.item.gender }}</td>
-              <td>{{getAge(props.item.dob,new Date())}}</td>
+              <td>{{getAge(props.item.dob,new Date('2019-05-31'))}}</td>
               <td >{{ props.item.basic_pay }}</td>
               <td >{{ props.item.grade_pay !=0 ? props.item.grade_pay : props.item.pay_level!=''? 'LEVEL '+props.item.pay_level : '' }}</td>
               <td >
