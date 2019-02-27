@@ -7,6 +7,7 @@
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/office_category_wise_post_status'">Office Categorywise Post Status</v-btn>
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
       <v-btn  color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
+      <v-btn  color="info" :to="'/serach_personnel'">Search Personnel</v-btn>
       </v-layout>
       <v-btn v-if="this.getUser.level == 12" color="info" :to="'/data_sharing_deo'">Data Sharing</v-btn>
       <section id="report">
@@ -21,8 +22,9 @@
                 <thead>
                 <tr>
                 <th width="5%" rowspan="2"><strong>Dist ID</strong></th>
-                <th width="20%" rowspan="2"><strong>District</strong></th>
-                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
+                <th width="10%" rowspan="2"><strong>District</strong></th>
+                <th width="13%" rowspan="2"><strong>Actual <br>Requirement<br> of Polling <br>Personnel<br> of each <br>category</strong></th>
+                <th width="12%" rowspan="2"><strong>With 20%<br> Requirement</strong></th>
                 <th width="60%" colspan="9"><strong>Available Male</strong></th>
 
                 </tr>
@@ -34,7 +36,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-                <th>Exemted</th>
+                <th>Exempted</th>
                 <th>Total</th>
                 </tr>
                 </thead>
@@ -44,6 +46,7 @@
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.male_party }}</td>
+                  <td class="nopad">{{ (report.male_party*1.2).toFixed(0) }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.NA_M }}</td>
                   <td class="nopad" :class="report.P1_M_class">{{ report.AEO_M }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
@@ -58,6 +61,7 @@
                     <td></td>
                     <td class="nopad"><strong>Total</strong></td>
                     <td class="nopad">{{male_party_count}}</td>
+                    <td class="nopad">{{(male_party_count*1.2).toFixed(0)}}</td>
                     <td class="nopad">{{NA_M_COUNT}}</td>
                     <td class="nopad">{{AEO_M_COUNT}}</td>
                     <td class="nopad">{{PR_M_COUNT}} </td>
@@ -66,7 +70,7 @@
                     <td class="nopad">{{P3_M_COUNT}}</td>
                     <td class="nopad">{{MO_M_COUNT}}</td>
                     <td class="nopad">{{EXE_M_COUNT}}</td>
-                    <td>&nbsp;</td></tr>
+                  </tr>
                 </tbody>
               </table>
             </v-layout>
@@ -78,8 +82,9 @@
                 <thead>
                 <tr>
                  <th width="5%" rowspan="2"><strong>Dist ID</strong></th>
-                <th width="20%" rowspan="2"><strong>District</strong></th>
-                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
+                <th width="10%" rowspan="2"><strong>District</strong></th>
+                <th width="13%" rowspan="2"><strong>Actual <br>Requirement<br> of Polling <br>Personnel<br> of each <br>category</strong></th>
+                <th width="12%" rowspan="2"><strong>With 20%<br> Requirement</strong></th>
                 <th width="60%" colspan="9"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
@@ -90,7 +95,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-                <th>Exemted</th>
+                <th>Exempted</th>
                 <th>Total</th>
                 </tr>
                 </thead>
@@ -100,6 +105,7 @@
                   <td class="nopad">{{ report.district_id }}</td>
                   <td class="nopad"><router-link :to="{ path: 'district/'+report.district_id}" title="Click to See Subdivisionwise Report">{{ report.name }}</router-link></td>
                   <td class="nopad">{{ report.female_party }}</td>
+                  <td class="nopad">{{ (report.female_party*1.2).toFixed(0) }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.NA_F }}</td>
                   <td class="nopad" :class="report.P1_F_class">{{ report.AEO_F }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
@@ -114,6 +120,7 @@
                     <td></td>
                     <td class="nopad"><strong>Total</strong></td>
                     <td class="nopad">{{female_party_count}}</td>
+                    <td class="nopad">{{(female_party_count*1.2).toFixed(0)}}</td>
                     <td class="nopad">{{NA_F_COUNT}}</td>
                     <td class="nopad">{{AEO_F_COUNT}}</td>
                     <td class="nopad">{{PR_F_COUNT}} </td>
@@ -122,7 +129,7 @@
                     <td class="nopad">{{P3_F_COUNT}}</td>
                     <td class="nopad">{{MO_F_COUNT}}</td>
                     <td class="nopad">{{EXE_F_COUNT}}</td>
-                    <td>&nbsp;</td></tr>
+                    </tr>
 
                 </tbody>
               </table>

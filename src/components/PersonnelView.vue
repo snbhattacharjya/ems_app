@@ -15,6 +15,9 @@
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/misreport/district'">Mis Report District</v-btn>
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/poststatus_bulk_update'">Bulk Post Status Update</v-btn>
           <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
+          <v-btn  color="info" :to="'/serach_personnel'">Search Personnel</v-btn>
+          <v-btn  color="info" :to="'/bankwise_personnel'">Bankwise report</v-btn>
+          <v-btn  color="info" :to="'/epic_match'">Epic Match report</v-btn>
 
       <v-layout row wrap  >
       <v-flex xs4>

@@ -157,9 +157,9 @@ import JsonCSV from 'vue-json-csv'
         this.doing_epic_match=true
         this.personnelloading=true
 
-        axios.get('/perepicmatch')
+        axios.get('/epicdata')
         .then((response, data) => {
-          if(response.data.length === 0){
+          if(response.data['unmatchCount'].length === 0){
             this.tableloading=false
             this.doing_epic_match=false
             this.personnelloading=false
@@ -169,11 +169,12 @@ import JsonCSV from 'vue-json-csv'
          else{
            this.personnels=[]
            this.personnel_csv=[]
-            response.data['list'].forEach(item => {
+            response.data['unmatchList'].forEach(item => {
                 this.personnels.push(item)
                 this.personnel_csv.push(item)
               })
-
+            this.matchstat['verified']=response.data['matchCount']
+            this.matchstat['unverified']=response.data['unmatchCount']
               this.tableloading=false
               this.doing_epic_match=false
               this.personnelloading=false

@@ -12,9 +12,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th width="5%" rowspan="2"><strong>Subdiv ID</strong></th>
-                <th width="20%" rowspan="2"><strong>Subdivision</strong></th>
-                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
+                <th width="5%" rowspan="2"><strong>Subdiv<br> ID</strong></th>
+                <th width="15%" rowspan="2"><strong>Subdivision</strong></th>
+                <th width="10%" rowspan="2"><strong>Actual <br>Requirement<br> of Polling <br>Personnel<br> of each <br>category</strong></th>
+                <th width="10%" rowspan="2"><strong>With 20%<br> Requirement</strong></th>
                 <th width="60%" colspan="8"><strong>Available Male</strong></th>
                 </tr>
                 <tr>
@@ -25,7 +26,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-                <th>Exemted</th>
+                <th>Exempted</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.male_party }}</td>
+                  <td class="nopad">{{ (report.male_party*1.2).toFixed(0) }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.NA_M }}</td>
                   <td class="nopad" :class="report.P1_M_class">{{ report.AEO_M }}</td>
                   <td class="nopad" :class="report.PR_M_class">{{ report.PR_M }}</td>
@@ -46,7 +48,8 @@
                   <tr >
                     <td></td>
                     <td class="nopad"><strong>Total</strong></td>
-                    <td class="nopad">{{male_party_count}}</td>
+                    <td class="nopad">{{ male_party_count }}</td>
+                    <td class="nopad">{{(male_party_count*1.2).toFixed(0)}}</td>
                     <td class="nopad">{{NA_M_COUNT}}</td>
                     <td class="nopad">{{AEO_M_COUNT}}</td>
                     <td class="nopad">{{PR_M_COUNT}} </td>
@@ -66,9 +69,10 @@
               <table class="v-datatable v-table dark" style=""  border=1>
                 <thead>
                 <tr>
-                <th width="5%" rowspan="2"><strong>Subdiv ID</strong></th>
-                <th width="20%" rowspan="2"><strong>Subdivision</strong></th>
-                <th width="15%" rowspan="2"><strong>Actual Requirement of<br> Polling Personnel<br> of each category</strong></th>
+                <th width="5%" rowspan="2"><strong>Subdiv<br> ID</strong></th>
+                <th width="15%" rowspan="2"><strong>Subdivision</strong></th>
+                <th width="10%" rowspan="2"><strong>Actual <br>Requirement<br> of Polling <br>Personnel<br> of each <br>category</strong></th>
+                <th width="10%" rowspan="2"><strong>With 20%<br> Requirement</strong></th>
                 <th width="60%" colspan="8"><strong>Available Female</strong></th>
                 </tr>
                 <tr>
@@ -79,7 +83,7 @@
                 <th>P2</th>
                 <th>P3</th>
                 <th>MO</th>
-                <th>Exemted</th>
+                <th>Exempted</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -88,6 +92,7 @@
                   <td class="nopad">{{ report.subdivision_id }}</td>
                   <td class="nopad">{{ report.name }}</td>
                   <td class="nopad">{{ report.female_party }}</td>
+                  <td class="nopad">{{ (report.female_party*1.2).toFixed(0) }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.NA_F }}</td>
                   <td class="nopad" :class="report.P1_F_class">{{ report.AEO_F }}</td>
                   <td class="nopad" :class="report.PR_F_class">{{ report.PR_F }}</td>
@@ -100,7 +105,8 @@
                   <tr >
                     <td></td>
                     <td class="nopad"><strong>Total</strong></td>
-                    <td class="nopad">{{female_party_count}}</td>
+                    <td class="nopad">{{ female_party_count }}</td>
+                    <td class="nopad">{{(female_party_count*1.2).toFixed(0)}}</td>
                     <td class="nopad">{{NA_F_COUNT}}</td>
                     <td class="nopad">{{AEO_F_COUNT}}</td>
                     <td class="nopad">{{PR_F_COUNT}} </td>

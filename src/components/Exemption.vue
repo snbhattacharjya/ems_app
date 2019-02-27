@@ -609,6 +609,7 @@ export default {
       remarks: [],
       type:'',
       types:[
+        { name:'All',id: '0'},
         { name:'Office',id: '1'},
         { name:'Personnel',id: '2'},
         { name:'Remark',id: '3'},
@@ -781,6 +782,10 @@ export default {
        if(this.type!=''){
          var sw=this.type
          switch(sw){
+          case '0':
+          var mode='all'
+          var id=''
+          break
           case '1':
           var mode='office'
           var id=this.office_exc
@@ -841,6 +846,8 @@ export default {
 
     },
     revoke_exemption:function(){
+      this.selected_for_revoke=[]
+      this.select_exempted=[]
       if(this.type!='' && this.select_exempted.length!=0 ){
         if(confirm('Are you sure to revoke based on above selection and criteria?')){
       this.doing_office_exemption=true
@@ -851,6 +858,10 @@ export default {
 
       var sw=this.type
          switch(sw){
+          case '0':
+          var mode_revoke='all'
+
+          break
           case '1':
           var mode_revoke='office'
 

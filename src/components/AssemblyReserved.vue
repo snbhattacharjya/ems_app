@@ -140,10 +140,10 @@ export default {
 
                       this.count++
                     })
-                      this.dist_total_req_10 =Math.round(this.dist_total_req*1.1,0)
-                      this.dist_total_req_15 =Math.round(this.dist_total_req*1.15,0)
-                      this.dist_total_req_20 =Math.round(this.dist_total_req*1.2,0)
-                      this.dist_total_req_25 =Math.round(this.dist_total_req*1.25,0)
+                      this.dist_total_req_10 =Math.round((this.dist_total_req*4)*1.1,0)
+                      this.dist_total_req_15 =Math.round((this.dist_total_req*4)*1.15,0)
+                      this.dist_total_req_20 =Math.round((this.dist_total_req*4)*1.2,0)
+                      this.dist_total_req_25 =Math.round((this.dist_total_req*4)*1.25,0)
                     this.district=response.data['district']
                     this.tableloading=false
                     this.disable_save=false

@@ -19,6 +19,7 @@
         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
 
 
+
         </v-layout>
       <v-layout row wrap  class="my-5">
         <!-- <v-alert v-if="office_created" v-model="alert" dismissible type="success">
@@ -169,6 +170,8 @@
           this.tableloading=false
         })
       },
+
+
 
 
 

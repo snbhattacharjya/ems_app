@@ -579,4 +579,40 @@ export default [
         '@/components/DataSharingdeo'
       )
     },
+    {
+      path: `/serach_personnel`,
+      meta: {title:'Search Personnel | Welcome to WBPPMS'},
+      name: 'PersonnelSearch',
+      component: () => import(
+
+        '@/components/PersonnelSearch'
+      )
+    },
+    {
+      path: `/bankwise_personnel`,
+      meta: {title:'Bankwise Personnel Report| Welcome to WBPPMS'},
+      name: 'BankwisePersonnel',
+      component: () => import(
+
+        '@/components/BankwisePersonnel'
+      )
+    },
+    {
+      path: `/bank/:ifsc/list`,
+      meta: {title:'Bankwise Personnel List| Welcome to WBPPMS'},
+      name: 'BankwisePersonnellist',
+      component: () => import(
+
+        '@/components/BankwisePersonnellist'
+      )
+    },
+    {
+      path: `/epic_match`,
+      meta: {title:'EPIC Match Report| Welcome to WBPPMS'},
+      name: 'EpicMatch',
+      component: () => import(
+
+        '@/components/EpicMatch'
+      )
+    },
   ];
