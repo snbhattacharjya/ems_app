@@ -148,9 +148,14 @@
 
               })
               .catch(error => {
-
-
-                if(error.response.status == 400 || error.response.status== 401){
+                if(error.response.status == 499){
+                  this.show_message = true
+                  this.message_type = 'error'
+                  this.message_icon = 'warning'
+                  this.message_text = error.response.data
+                  this.snackbar =true
+                }
+                else if(error.response.status == 400 || error.response.status== 401){
                 this.captcha=''
                 this.reload_captcha()
                 this.password = ''

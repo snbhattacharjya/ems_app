@@ -8,8 +8,9 @@
       <v-btn v-if="this.getUser.level == 2" color="info" :to="'/remarkwise_report'">Remarkwise Personnel Report(PP2)</v-btn>
       <v-btn  color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
       <v-btn  color="info" :to="'/serach_personnel'">Search Personnel</v-btn>
+
       </v-layout>
-      <v-btn v-if="this.getUser.level == 12" color="info" :to="'/data_sharing_deo'">Data Sharing</v-btn>
+      <!-- <v-btn v-if="this.getUser.level == 12" color="info" :to="'/data_sharing_deo'">Data Sharing</v-btn> -->
       <section id="report">
         <v-layout row wrap>
          <v-flex xs11><h1 class="headline" >MIS Report As On {{ new Date().toLocaleDateString('en-GB') }}</h1></v-flex><v-flex xs1><v-btn id="printbtn" fab dark small color="primary" onclick="printJS({ printable: 'report', type: 'html', header: 'Polling Personnel Management System',css: 'https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css',ignoreElements:['printbtn'] })"><v-icon dark>print</v-icon></v-btn></v-flex>

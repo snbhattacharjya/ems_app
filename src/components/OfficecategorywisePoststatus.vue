@@ -35,6 +35,7 @@
                 <th width="15%" ><strong>P2 <br>(Available)</strong></th>
                 <th width="15%" ><strong>P3 <br>(Available)</strong></th>
                 <th width="15%" ><strong>MO <br>(Available)</strong></th>
+                <th width="15%" ><strong>Total<br>(Available)</strong></th>
                 </tr>
 
 
@@ -44,14 +45,18 @@
                   <tr v-for="report in reports_male" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{ report.name }}</td>
-                  <td class="nopad">{{ report.NA }}</td>
+                  <td class="nopad" v-if="report.NA>0 ">
+                    <v-btn title="Click to see personnel list" flat @click="seelist(report.id,'NA')">{{report.NA}}</v-btn>
+
+                  </td>
+                  <td class="nopad" v-else>{{report.NA}}</td>
                   <td class="nopad">{{ report.AEO }}</td>
                   <td class="nopad">{{ report.PR }}</td>
                   <td class="nopad">{{ report.P1}}<br></td>
                   <td class="nopad">{{ report.P2 }}<br></td>
                   <td class="nopad">{{ report.P3}}<br></td>
                   <td class="nopad">{{ report.MO }}<br></td>
-
+                  <td class="nopad">{{ report.NA+report.AEO+report.PR+report.P1+report.P2+report.P3+report.MO }}<br></td>
                   </tr>
                   <tr>
                     <td colspan="2" class="nopad">Total</td>
@@ -83,6 +88,7 @@
                 <th width="15%" ><strong>P2 <br>(Available)</strong></th>
                 <th width="15%" ><strong>P3 <br>(Available)</strong></th>
                 <th width="15%" ><strong>MO <br>(Available)</strong></th>
+                <th width="15%" ><strong>Total<br>(Available)</strong></th>
                 </tr>
 
 
@@ -92,14 +98,18 @@
                   <tr v-for="report in reports_female" :prop="report" :key="report.id">
                   <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{ report.name }}</td>
-                  <td class="nopad">{{ report.NA }}</td>
+                  <td class="nopad" v-if="report.NA>0 ">
+                    <v-btn title="Click to see personnel list" flat @click="seelist(report.id,'NA')">{{report.NA}}</v-btn>
+
+                  </td>
+                  <td class="nopad" v-else>{{report.NA}}</td>
                   <td class="nopad">{{ report.AEO }}</td>
                   <td class="nopad">{{ report.PR }}</td>
                   <td class="nopad">{{ report.P1}}<br></td>
                   <td class="nopad">{{ report.P2 }}<br></td>
                   <td class="nopad">{{ report.P3}}<br></td>
                   <td class="nopad">{{ report.MO }}<br></td>
-
+                  <td class="nopad">{{ report.NA+report.AEO+report.PR+report.P1+report.P2+report.P3+report.MO }}<br></td>
                   </tr>
                   <tr>
                     <td colspan="2" class="nopad">Total</td>
@@ -171,6 +181,17 @@ export default {
     },
 
   methods:{
+    seelist:function(id,post){
+      if(this.getUser.level==2){
+       //alert(id+'-'+post+'-'+this.district_id)
+       this.$router.replace("/personnelbyofficecat/"+id+'/'+post+'/'+this.district_id)
+     }else{
+       this.district= this.getUser.area
+      //alert(id+'-'+post+'-'+this.district)
+      this.$router.replace("/personnelbyofficecat/"+id+'/'+post+'/'+this.district)
+     }
+
+    },
      show:function(){
 
           this.tableloading=true
@@ -284,6 +305,7 @@ export default {
        this.district=this.district_id
      }else{
        this.district= this.getUser.district[0]
+       var district=this.getUser.district[0]
        this.show()
      }
 

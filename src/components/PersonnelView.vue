@@ -7,17 +7,18 @@
         {{ this.personnel_created }}
         </v-alert>
       <v-flex x12 v-if="this.getuser.level != 10">
-         <v-btn v-if="this.getuser.level == 12" color="info" :to="'/personnel_transfer'">Transfer Personnel</v-btn>
+         <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/personnel_transfer'">Transfer Personnel</v-btn>
          <v-btn v-if="this.getuser.level == 12" color="info" :to="'/exemption'">Exemption</v-btn>
          <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/poststatus_update'">Categorywise Personnel Update</v-btn>
-         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/poststatus_update_by_designation'">Designationwise Personnel Update</v-btn>
+         <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/poststatus_update_by_designation'">Designationwise Personnel Update</v-btn> -->
           <v-btn v-if="this.getuser.level == 12" color="info" :to="'/poststatus_mismatch'">Mismatch of Post Status</v-btn>
           <v-btn v-if="this.getuser.level == 8" color="info" :to="'/misreport/district'">Mis Report District</v-btn>
-          <v-btn v-if="this.getuser.level == 8" color="info" :to="'/poststatus_bulk_update'">Bulk Post Status Update</v-btn>
+          <!-- <v-btn v-if="this.getuser.level == 8" color="info" :to="'/poststatus_bulk_update'">Bulk Post Status Update</v-btn> -->
           <v-btn v-if="this.getuser.level == 12 || this.getuser.level == 8" color="info" :to="'/epicnumbererror'">Epic Number Error</v-btn>
           <v-btn  color="info" :to="'/serach_personnel'">Search Personnel</v-btn>
           <v-btn  color="info" :to="'/bankwise_personnel'">Bankwise report</v-btn>
           <v-btn  color="info" :to="'/epic_match'">Epic Match report</v-btn>
+          <v-btn  color="info" :to="'/epic_mismatch'">Epic Mismatch report</v-btn>
 
       <v-layout row wrap  >
       <v-flex xs4>
@@ -94,7 +95,7 @@
               <td >{{ props.item.mobile }}</td>
               <td>{{ props.item.updated_at=== null ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')  }}</td>
               <td class="justify-center layout px-0">
-                <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
+                <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn> -->
                 <!-- <v-btn flat :to="'/personnel/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn> -->
               </td>
             </template>

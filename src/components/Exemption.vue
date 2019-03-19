@@ -846,9 +846,8 @@ export default {
 
     },
     revoke_exemption:function(){
-      this.selected_for_revoke=[]
-      this.select_exempted=[]
-      if(this.type!='' && this.select_exempted.length!=0 ){
+
+      if(this.type!='' && this.select_exempted.length>0 ){
         if(confirm('Are you sure to revoke based on above selection and criteria?')){
       this.doing_office_exemption=true
 
@@ -870,7 +869,7 @@ export default {
 
           break
           case '3':
-          var mode_revoke='remark'
+          var mode_revoke='remarks'
 
           break
           case '4': var mode_revoke='age'
@@ -899,6 +898,7 @@ export default {
             this.officelist()
             this.select_exempted=[]
             this.personnl_selected=[]
+            this.office_csv=[]
             officeId=''
             remarkId=''
             designation=''

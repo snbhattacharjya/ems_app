@@ -12,7 +12,7 @@
                 <v-divider class="my-3 xs12"></v-divider>
                 </v-flex>
               </v-layout>
-              <v-layout row wrap fill-height>
+              <v-layout row wrap fill-height v-if="getUser.level != 1">
                   <v-flex  xs12 sm6 md3 >
                     <v-card color="green" class="white--text" fill-height elevation-6 height="150">
                       <v-card-title v-if="getUser.level === 10" primary-title>
@@ -69,6 +69,7 @@
 
               </v-layout>
               <v-layout row wrap>
+
                   <v-card-title primary-title class="layout"><div class="headline">Welcome to WBPPMS</div></v-card-title>
                   <v-card-text><v-divider class="my-3"></v-divider>West Bengal CEO's PP Portal.</v-card-text>
               </v-layout>

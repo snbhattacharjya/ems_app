@@ -615,4 +615,40 @@ export default [
         '@/components/EpicMatch'
       )
     },
+    {
+      path: `/epic_mismatch`,
+      meta: {title:'EPIC Mismatch Report| Welcome to WBPPMS'},
+      name: 'EpicMismatch',
+      component: () => import(
+
+        '@/components/EpicMismatch'
+      )
+    },
+    {
+      path: `/personnelbyofficecat/:cat/:post/:district`,
+      meta: {title:'Personnel list By Office Category Report| Welcome to WBPPMS'},
+      name: 'PersonnelbyOfficecat',
+      component: () => import(
+
+        '@/components/PersonnelbyOfficecat'
+      )
+    },
+    {
+      path: `/menu_management`,
+      meta: {title:'Menu Management| Welcome to WBPPMS'},
+      name: 'MenuManagement',
+      component: () => import(
+
+        '@/components/MenuManagement'
+      )
+    },
+    {
+      path: `/user_management`,
+      meta: {title:'User Management| Welcome to WBPPMS'},
+      name: 'UserManagement',
+      component: () => import(
+
+        '@/components/UserManagement'
+      )
+    },
   ];

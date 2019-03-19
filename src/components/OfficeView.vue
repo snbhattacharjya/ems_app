@@ -15,8 +15,8 @@
         <v-btn v-if="this.getuser.level == 12 ||this.getuser.level == 8  || this.getuser.level == 5" color="primary" :to="'/office_category_wise_group_status'">Office category wise Group Status Report(PP2)</v-btn>
         <v-btn v-if="this.getuser.level == 12 ||this.getuser.level == 8 || this.getuser.level == 5" color="primary" :to="'/office_institute_wise_group_status'">Office institute wise Group Status Report(PP2)</v-btn>
         <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/macro_level_pp_statistic'">Macro Level PP Statistic</v-btn> -->
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
-        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn>
+        <!-- <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_delete'">Delete Office</v-btn>
+        <v-btn v-if="this.getuser.level == 12" color="info" :to="'/office_restore'">Restore Office</v-btn> -->
 
 
 
@@ -60,7 +60,7 @@
         <td >{{ props.item.pin }}</td>
         <td>{{ props.item.updated_at=== "-0001-11-30 00:00:00" ?  "Not Updated": moment(props.item.updated_at).format('DD/MM/YYYY h:mm a')   }}</td>
         <td  class="justify-center layout px-0">
-          <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn>
+          <!-- <v-btn flat :to="'/office/'+props.item.id+ '/edit'"><v-icon small class="mr-2">edit</v-icon></v-btn> -->
           <!--<v-btn flat :to="'/office/'+props.item.id+ '/delete'"><v-icon small> delete</v-icon></v-btn>-->
         </td>
       </template>

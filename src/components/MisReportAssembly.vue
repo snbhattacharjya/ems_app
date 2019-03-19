@@ -28,6 +28,8 @@
               <v-btn v-if="getUser.level == 12 || getUser.level ==2"  color="primary" :to="'/assembly_wise_reserved'">Reserve Report</v-btn>
               <v-btn v-if="getUser.level == 12 " color="primary" :to="'/assembly_groupby_subdivision'">Subdivision wise Assembly Report</v-btn>
               <v-btn v-if="getUser.level == 12 " color="primary" :to="'/pollingpersonnel_progress_report'">Polling Personnel Progress Report</v-btn>
+              <v-btn v-if="getUser.level == 2 " color="info" :to="'/epic_match'">Epic Match report</v-btn>
+              <v-btn  color="info" :to="'/epic_mismatch'">Epic Mismatch report</v-btn>
               </v-layout>
             </v-layout>
           </v-flex>
@@ -54,7 +56,7 @@
                   <td class="nopad">{{ report.sl }}</td>
                   <td class="nopad">{{report.name}} ({{ report.id }})</td>
 
-                 <td v-if="getUser.level == 12" class="text--center" id="edt">
+                 <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.male_party_count"
                       lazy
@@ -74,9 +76,9 @@
                       ></v-text-field>
                     </v-edit-dialog>
 
-                    </td>
-                    <td v-else class="nopad">{{ report.male_party_count }}</td>
-                  <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    </td> -->
+                    <td  class="nopad">{{ report.male_party_count }}</td>
+                  <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.female_party_count"
                       lazy
@@ -95,9 +97,9 @@
 
                       ></v-text-field>
                     </v-edit-dialog>
-                   </td>
-                   <td v-else class="nopad">{{ report.female_party_count }}</td>
-                   <td v-if="getUser.level == 12" class="text--center" id="edt">
+                   </td> -->
+                   <td  class="nopad">{{ report.female_party_count }}</td>
+                   <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.male_aeo_count"
                       lazy
@@ -117,9 +119,9 @@
                       ></v-text-field>
                     </v-edit-dialog>
 
-                    </td>
-                    <td v-else class="nopad">{{ report.male_aeo_count }}</td>
-                    <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    </td> -->
+                    <td class="nopad">{{ report.male_aeo_count }}</td>
+                    <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.female_aeo_count"
                       lazy
@@ -139,9 +141,9 @@
                       ></v-text-field>
                     </v-edit-dialog>
 
-                    </td>
-                    <td v-else class="nopad">{{ report.female_aeo_count }}</td>
-                     <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    </td> -->
+                    <td class="nopad">{{ report.female_aeo_count }}</td>
+                     <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.male_mo_count"
                       lazy
@@ -161,9 +163,9 @@
                       ></v-text-field>
                     </v-edit-dialog>
 
-                    </td>
-                    <td v-else class="nopad">{{ report.male_mo_count }}</td>
-                    <td v-if="getUser.level == 12" class="text--center" id="edt">
+                    </td> -->
+                    <td  class="nopad">{{ report.male_mo_count }}</td>
+                    <!-- <td v-if="getUser.level == 12" class="text--center" id="edt">
                     <v-edit-dialog
                       :return-value.sync="report.female_mo_count"
                       lazy
@@ -183,8 +185,8 @@
                       ></v-text-field>
                     </v-edit-dialog>
 
-                    </td>
-                    <td v-else class="nopad">{{ report.female_mo_count }}</td>
+                    </td> -->
+                    <td class="nopad">{{ report.female_mo_count }}</td>
                   </tr>
                 </tbody>
               </table>
