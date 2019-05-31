@@ -5,6 +5,7 @@
           <v-card-title primary-title class="layout"><div class="headline">Contact</div></v-card-title>
           <v-card-text><v-divider class="mb-5"></v-divider>
           <a href="mailto:ceo-election-wb@nic.in">ceo-election-wb@nic.in</a>
+
           <v-flex xs12 class="my-5" v-if="this.getuser.level == 12 || this.getuser.level == 8 || this.getuser.level ==2">
             <v-tabs
       v-model="active"

@@ -10,6 +10,8 @@
 
                 </v-layout>
                 <v-divider class="my-3 xs12"></v-divider>
+
+                <v-btn color="info" flat title="Click to reload data" @click="reload" :loading="loading">Reload <v-icon style="cursor:pointer">autorenew</v-icon></v-btn>
                 </v-flex>
               </v-layout>
               <v-layout row wrap fill-height v-if="getUser.level != 1">
@@ -71,7 +73,9 @@
               <v-layout row wrap>
 
                   <v-card-title primary-title class="layout"><div class="headline">Welcome to WBPPMS</div></v-card-title>
-                  <v-card-text><v-divider class="my-3"></v-divider>West Bengal CEO's PP Portal.</v-card-text>
+                  <v-card-text><v-divider class="my-3"></v-divider>West Bengal CEO's PP Portal.
+                  <!-- <v-btn  color="info" :to="'/sendsms'">SMS</v-btn> -->
+                  </v-card-text>
               </v-layout>
             </v-container>
 <v-dialog
@@ -82,11 +86,13 @@
       <v-card>
         <v-card-title class="headline">Important Notice !!</v-card-title>
 
-        <v-card-text>
-          <strong class="green--text">WBPPMS will be closed very shortly in respect of New Entry and Updation</strong><br><br>
-         From the database it has been observed that offices have entered wrong information specially in <strong>Name, Designation, Garde Pay, Sacle of Pay, Basic Pay, Group(A,B,C,D), IFSC Code, Bank Account Number, Remarks</strong>. You are requested to correct all from your end and confirm to the respected District Election Officer.
+        <v-card-text v-if="this.title!=''">
+        <strong class="green--text">{{this.title}}</strong><br><br>
+        <span v-html="this.notice"></span>
         </v-card-text>
-
+        <v-card-text v-else class="text-xs-center">
+          <v-progress-circular indeterminate  color="primary"></v-progress-circular>
+        </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -116,11 +122,14 @@ export default {
       drawer: false,
       totalemployee: 0,
       dialog: false,
+      title:'',
+      notice:'',
+      loading:false,
 
     }
   },
   beforeUpdate() {
-    //this.totalemployee= this.getdashboard.totalMale + this.getDashboard.totalfemale
+
   },
   computed: {
     getdashboard:function(){
@@ -137,11 +146,32 @@ export default {
     close_notice:function(){
       this.dialog = false
       this.$cookies.set('read_notice',true);
-    }
+    },
+    get_notice:function(){
+        axios.get('/getnotice')
+        .then((response, data) => {
+            this.notice=response.data.notice,
+            this.title=response.data.title
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      reload:function(){
+        this.loading=true
+         axios.post('/dashboarddata')
+        .then((response, data) => {
+            this.$store.dispatch('storeDashboard', response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        this.loading=false
+      },
   },
   created(){
-
-      if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true)
+      this.get_notice()
+      if(!this.$cookies.isKey("read_notice") && this.$cookies.get("read_notice")!=true )
       this.dialog=true
 
   }

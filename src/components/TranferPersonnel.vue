@@ -8,14 +8,24 @@
         </v-alert>
 
       <v-flex  xs12>
+        <template v-if="this.getuser.level == 12">
+                <office-list
+                  v-model="office_id_from"
+                  v-validate="'required'"
+                  :error-messages="errors.collect('office_id')"
+                  data-vv-name="office_id"
+                  :selected="office_id"
+
+                ></office-list>
+              </template>
         <v-toolbar flat color="white">
-         <v-toolbar-title>Inter District Personnel Tranfer</v-toolbar-title>
+         <v-toolbar-title>Intra District Personnel Tranfer</v-toolbar-title>
           <v-divider class="mx-2" inset vertical></v-divider>
             <v-spacer></v-spacer>
+
             <v-text-field v-model="search" append-icon="search"  label="Search"  single-line  hide-details></v-text-field>
         </v-toolbar>
-          <v-data-table
- :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
+          <v-data-table :headers="headers" :items="personnels" :search="search" class="elevation-1" :loading="tableloading">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.id }}</td>
               <td >{{ props.item.office_id }}</td>
@@ -88,6 +98,13 @@
                   ></v-date-picker>
                 </v-menu>
 
+                <office-list
+                  v-model="office_id_to"
+                  v-validate="'required'"
+                  :error-messages="errors.collect('office_id_to')"
+                  data-vv-name="office_id_to"
+                  :selected="office_id_to"
+                ></office-list>
         </v-card-text>
 
         <v-card-actions>
@@ -119,9 +136,13 @@
 </template>
 
 <script>
-//  import SubdivisionList from '@/components/SubdivisionList'
-//  import OfficeList from '@/components/OfficeList'
+ import OfficeList from '@/components/OfficeList'
   export default {
+    name:'TransferPersonnel',
+    components: {
+      OfficeList,
+
+    },
     data: () => ({
       id:'',
       dialog: false,
@@ -148,12 +169,11 @@
         { text: 'Actions', value: '', sortable: false },
       ],
       personnels: [],
-      searchInput: ''
+      searchInput: '',
+      office_id_to:'',
+      office_id_from: '',
     }),
-    components: {
-        //  'subdivision-list': SubdivisionList,
-        //  'office-list': OfficeList
-    },
+
     $_veeValidate: {
       validator: 'new'
     },
@@ -165,7 +185,13 @@
           return this.$store.getters.getpersonnel
        },
     },
-
+    watch:{
+      office_id_from:function(val){
+        if(val!=''){
+          this.initialize()
+        }
+      }
+    },
     mounted() {
 
     },
@@ -180,8 +206,10 @@
         this.alert=false
         window.sessionStorage.setItem('is_personnel_transfered',null)
       }
-
+      if(this.getuser.level == 10){
         this.initialize()
+      }
+
 
 
     },
@@ -197,7 +225,28 @@
       },
       initialize () {
         this.tableloading=true
-        axios.post('/transferlist',{mode:'inter'},{headers: {'Content-Type': 'application/json'}})
+        if(this.getuser.level == 10){
+          axios.post('/transferlist',{mode:'intra',office_id_from:this.getuser.user_id})
+        .then((response, data) => {
+          if(response.data.length === 0){
+            this.tableloading=false
+            this.personnels=[]
+          }
+         else{
+           this.personnels=[]
+            response.data.forEach(item => {
+                this.personnels.push(item)
+              })
+              this.tableloading=false
+         }
+            })
+        .catch(error => {
+          console.log(error)
+          this.tableloading=false
+        })
+        }
+        if(this.getuser.level == 12){
+          axios.post('/transferlist',{mode:'intra',office_id_from: this.office_id_from})
         .then((response, data) => {
           if(response.data.length === 0){
             this.tableloading=false
@@ -216,6 +265,8 @@
           console.log(error)
           this.tableloading=false
         })
+        }
+
 
       },
       inittransfer:function(val){
@@ -230,19 +281,34 @@
             if(result){
               if(confirm('Are you sure to Transfer Personnel - '+this.id+' ? Please confirm.')){
                 this.deleting=true
+                if(this.getuser.level == 12){
+                  axios.post('/dotransfer',{mode:'intra',personnel_id:this.id,memo_no:this.memo_no.replace(/"/g, "").replace(/'/g, ""),memo_date:this.memo_date,office_id_from:this.office_id_from,office_id_to:this.office_id_to})
+                    .then((response, data) => {
+                    this.dialog=false
+                    this.initialize()
+                    alert('Personnel transfered successfully')
+                  })
+                  .catch(error => {
+                    console.log(error.response.data)
+                    this.tableloading=false
+                  })
+                }
 
-                axios.post('/dotransfer',{mode:'inter',personnel_id:this.id,memo_no:this.memo_no.replace(/"/g, "").replace(/'/g, ""),memo_date:this.memo_date})
-                .then((response, data) => {
+                else if(this.getuser.level == 10){
+                  axios.post('/dotransfer',{mode:'intra',personnel_id:this.id,memo_no:this.memo_no.replace(/"/g, "").replace(/'/g, ""),memo_date:this.memo_date,office_id_to:this.office_id_to})
+                  .then((response, data) => {
                   this.dialog=false
                   this.initialize()
                   alert('Personnel transfered successfully')
-                })
-                .catch(error => {
-                  console.log(error.response.data)
+                  })
+                  .catch(error => {
+                    console.log(error.response.data)
 
-                  this.tableloading=false
-                })
-              }
+                    this.tableloading=false
+                  })
+                }
+                  }
+
             }else{
 
             }

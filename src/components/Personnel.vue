@@ -179,7 +179,7 @@
                     data-vv-name="basic_pay"
                   ></v-text-field>
 
-                  <v-text-field v-show="this.show_grade"
+                  <v-text-field
                     prepend-icon="how_to_reg"
                     name="grade_pay"
                     label="Grade Pay(*)"
@@ -190,7 +190,7 @@
                     :error-messages="errors.collect('grade_pay')"
                     data-vv-name="grade_pay"
                   ></v-text-field>
-                  <v-select v-show="this.show_level"
+                  <v-select
                     :items="pay_levels"
                     prepend-icon="list"
                     label="Pay Level(*)"
@@ -245,10 +245,7 @@
                     data-vv-name="present_address"
                     @input="uppercase"
                   ></v-textarea>
-                  <v-switch
-      label="Permanent Address is same as above"
-      v-model="address" @change="copy_address" class="ml-3"
-    ></v-switch>
+                  <v-switch label="Permanent Address is same as above" v-model="address" @change="copy_address" class="ml-3"></v-switch>
                   <v-textarea
                     prepend-icon="account_balance"
                     name="permanent_address"
@@ -570,7 +567,7 @@ import _ from 'lodash'
           '13',
           '14',
         ],
-        pay_level:'',
+        pay_level:0,
         genders: [
           {
             id: 'M',
@@ -973,8 +970,8 @@ import _ from 'lodash'
           remark_reason: this.remark_comment,
           scale: this.scale,
           basic_pay: this.basic_pay,
-          grade_pay: this.grade_pay ? this.grade_pay : '0',
-          pay_level: this.pay_level? this.pay_level : '0',
+          grade_pay: this.grade_pay,
+          pay_level: this.pay_level,
           emp_group: this.emp_group,
           working_status: this.working_status,
           gender: this.gender,

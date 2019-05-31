@@ -544,12 +544,21 @@ export default [
       )
     },
     {
-      path: `/personnel_transfer`,
-      meta: {title:'Transfer Personnel | Welcome to WBPPMS'},
+      path: `/personnel/transfer/inter_district`,
+      meta: {title:'Inter District Transfer Personnel | Welcome to WBPPMS'},
       name: 'PersonnelTranfer',
       component: () => import(
 
         '@/components/PersonnelTransfer'
+      )
+    },
+    {
+      path: `/personnel/transfer/intra_district`,
+      meta: {title:'Intra District Transfer Personnel | Welcome to WBPPMS'},
+      name: 'PersonnelTranfer',
+      component: () => import(
+
+        '@/components/TranferPersonnel'
       )
     },
     {
@@ -649,6 +658,51 @@ export default [
       component: () => import(
 
         '@/components/UserManagement'
+      )
+    },
+    {
+      path: `/notice_management`,
+      meta: {title:'Notice Management| Welcome to WBPPMS'},
+      name: 'NoticeManagement',
+      component: () => import(
+
+        '@/components/NoticeManagement'
+      )
+    },
+	{
+      path: `/getoutsiteacpc`,
+      meta: {title:'Personnel Out Side AC| Welcome to WBPPMS'},
+      name: 'Getoutsiteacpc',
+      component: () => import(
+
+        '@/components/Getoutsiteacpc'
+      )
+    },
+    {
+      path: `/sendsms`,
+      meta: {title:'Send SMS to ALL | Welcome to WBPPMS'},
+      name: 'SendSms',
+      component: () => import(
+
+        '@/components/SendSms'
+      )
+    },
+    {
+      path: `/import`,
+      meta: {title:'Import | Welcome to WBPPMS'},
+      name: 'Import',
+      component: () => import(
+
+        '@/components/Import'
+      )
+    },
+    {
+      path: `/settings`,
+      meta: {title:'Settings | Welcome to WBPPMS'},
+      name: 'Settings',
+      component: () => import(
+
+        '@/components/Settings'
       )
     },
   ];
