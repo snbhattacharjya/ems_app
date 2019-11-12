@@ -2,6 +2,20 @@
 
 > EMS App
 
+## Build and run this app in a docker container
+
+> Build the docker image and along with the app:
+```bash
+$ docker build -t ems/app .
+```
+Now `ems_app/dist` directory contains all the published files to be served over http.
+
+> Run the app in docker image itself:
+```bash
+$ docker run -it -p 8080:8080 --rm --name ems-app ems/app
+```
+We should be able to access our Vue.js app on [localhost:8080](http://localhost:8080)
+
 ## Build Setup
 
 ``` bash
