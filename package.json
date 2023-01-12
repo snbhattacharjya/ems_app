@@ -23,7 +23,7 @@
     "vue": "^2.5.17",
     "vue-captcha": "^1.0.2",
     "vue-cookies": "^1.5.12",
-    "vue-json-csv": "^1.1.0",
+    "vue-json-csv": "^1.2.12",
     "vue-json-excel": "^0.2.96",
     "vue-nprogress": "^0.1.5",
     "vue-perfect-scrollbar": "^0.1.0",
